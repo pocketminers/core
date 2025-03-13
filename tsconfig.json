@@ -1,0 +1,43 @@
+{
+    "compilerOptions": {
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "outDir": "./dist",
+        "rootDir": "./",
+        "baseUrl": "./",
+        "paths": {
+            "@tests/*": [
+                "tests/*"
+            ],
+            "@service/*": [
+                "src/service/*"
+            ],
+            "@app/*": [
+                "src/app/*"
+            ],
+            "@common/*": [
+                "src/common/*"
+            ],
+            "@utilities/*": [
+                "src/common/utilities/*"
+            ],
+            "@templates/*": [
+                "src/common/templates/*"
+            ],
+            "@config/*": [
+                "src/common/configs/*"
+            ],
+        },
+        "jsx": "react-jsx"
+    },
+    "include": [
+        "tests/**/*.ts",
+        "tests/**/*.tsx",
+        "src/app/**/*.ts",
+        "src/app/**/.tsx",
+        "src/service/**/*.ts",
+        "src/common/**/*.ts",
+        "src/common/artifacts/**/*.tsx",
+        "src/service/db-psql/**/*.tsx",
+    ]
+}
