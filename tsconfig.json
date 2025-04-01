@@ -1,17 +1,33 @@
 {
     "compilerOptions": {
+        "composite": true,
+        "incremental": true,
+        "target": "ES2022",
+        "lib": [
+            "ES2022"
+        ],
+        "moduleResolution": "node",
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "outDir": "./dist",
-        "rootDir": "./",
-        "baseUrl": "./",
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "sourceMap": true,
+        "declarationMap": true,
+        "declaration": true,
+        "emitDeclarationOnly": false,
+        "noEmit": false,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "rootDir": "./src",
+        "baseUrl": "./src",
         "paths": {
-            "@/*": [ "./src/*" ]
+            "@/*": [ "./" ],
+            "@utilities/*": [ "./utilities/*" ]
         },
-        "jsx": "react-jsx"
     },
     "include": [
-        "tests/**/*.ts",
-        "src/**/*.ts",
+        "src/**/*.ts"
     ]
 }
