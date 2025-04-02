@@ -14,6 +14,8 @@ class PocketMessage {
   }
 }
 
+const empty = null;
+
 export {
     PocketMessage
 }
