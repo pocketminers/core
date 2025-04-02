@@ -1,7 +1,7 @@
 {
     "name": "@pocketminers/core",
     "description": "Core package for PocketMiners",
-    "version": "0.0.1-pre2",
+    "version": "0.0.1-pre3",
     "author": "Pocket Labs LLC",
     "license": "MIT",
     "main": "./dist/esm/index.js",
@@ -19,6 +19,12 @@
     },
     "unpkg": "dist/browser/index.js",
     "jsdelivr": "dist/browser/index.js",
+    "files": [
+        "dist",
+        "src",
+        "README.md",
+        "LICENSE"
+    ],
     "exports": {
         ".": {
             "import": "./dist/esm/index.js",
