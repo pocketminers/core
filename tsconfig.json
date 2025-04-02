@@ -20,14 +20,18 @@
         "noEmit": false,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "rootDir": "./src",
+        "rootDir": "./",
         "baseUrl": "./src",
         "paths": {
             "@/*": [ "./" ],
             "@utilities/*": [ "./utilities/*" ]
         },
+        "types": [
+            "jest"
+        ]
     },
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "tests/**/*.ts"
     ]
 }
