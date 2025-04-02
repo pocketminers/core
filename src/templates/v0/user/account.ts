@@ -165,7 +165,6 @@ interface PocketUserAccountContact {
     value: string;
     verified: boolean;
     verification: PocketUserAccountVerifiedContact | null;
-
 }
 
 

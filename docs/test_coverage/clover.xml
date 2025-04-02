@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1743635946403" clover="3.2.0">
-  <project timestamp="1743635946403" name="All files">
-    <metrics statements="188" coveredstatements="188" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="188" coveredelements="188" complexity="0" loc="188" ncloc="188" packages="1" files="1" classes="1"/>
+<coverage generated="1743636268101" clover="3.2.0">
+  <project timestamp="1743636268101" name="All files">
+    <metrics statements="187" coveredstatements="187" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="187" coveredelements="187" complexity="0" loc="187" ncloc="187" packages="1" files="1" classes="1"/>
     <file name="account.ts" path="/Users/j/Code/pocket-monorepo-private/packages/core/src/templates/v0/user/account.ts">
-      <metrics statements="188" coveredstatements="188" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="187" coveredstatements="187" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
@@ -191,7 +191,6 @@
       <line num="185" count="1" type="stmt"/>
       <line num="186" count="1" type="stmt"/>
       <line num="187" count="1" type="stmt"/>
-      <line num="188" count="1" type="stmt"/>
     </file>
   </project>
 </coverage>
