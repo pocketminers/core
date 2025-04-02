@@ -1,7 +1,7 @@
 {
     "name": "@pocketminers/core",
     "description": "Core package for PocketMiners",
-    "version": "0.0.1-pre1",
+    "version": "0.0.1-pre2",
     "author": "Pocket Labs LLC",
     "license": "MIT",
     "main": "./dist/esm/index.js",
@@ -32,11 +32,12 @@
     "scripts": {
         "lint": "npx eslint src",
         "test": "jest --config jest.config.js --passWithNoTests",
+        "test:watch": "jest --config jest.config.js --passWithNoTests --watch",
         "build:clean": "rimraf dist",
         "build:browser": "NODE_ENV=production tsc -p tsconfig.browser.json && tsc-alias -p tsconfig.browser.json",
         "build:cjs": "NODE_ENV=production tsc -p tsconfig.cjs.json && tsc-alias -p tsconfig.cjs.json",
         "build:esm": "NODE_ENV=production tsc -p tsconfig.esm.json && tsc-alias -p tsconfig.esm.json",
-        "build": "npm run build:browser && npm run build:cjs && npm run build:esm"
+        "build": "npm run build:clean && npm run build:browser && npm run build:cjs && npm run build:esm"
     },
     "devDependencies": {
         "@eslint/js": "^9.18.0",

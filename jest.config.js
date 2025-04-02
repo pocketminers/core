@@ -1,6 +1,6 @@
 import { pathsToModuleNameMapper } from "ts-jest";
 
-import tsconfig from "./tsconfig.json" assert { type: "json" };
+import tsconfig from "./tsconfig.aliases.json" assert { type: "json" };
 
 export default {
     clearMocks: true,
@@ -9,7 +9,7 @@ export default {
     coverageProvider: "v8",
     maxWorkers: 5,
     testEnvironment: "node",
-    testPathIgnorePatterns: ["/node_modules/", "/dist/", "/docs/", "/__coverage__/"],
+    testPathIgnorePatterns: ["/node_modules/", "/dist/", "/docs/"],
     roots: [
         "<rootDir>/src",
         "<rootDir>/tests"
@@ -24,12 +24,14 @@ export default {
     moduleNameMapper: pathsToModuleNameMapper(tsconfig.compilerOptions.paths, { prefix: "<rootDir>/" }),
     transform: {
         "^.+\\.(ts)$": [ "ts-jest", {
-            tsconfig: "<rootDir>/tsconfig.json"
+            tsconfig: "<rootDir>/tsconfig.prod.json"
         }],
     },
     extensionsToTreatAsEsm: [".ts"],
     transformIgnorePatterns: [
-        "/node_modules/"
+        "/node_modules/",
+        "/docs/",
+        "/dist/"
     ],
     detectOpenHandles: true,
     verbose: true,
