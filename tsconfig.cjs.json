@@ -1,7 +1,16 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.prod.json",
   "compilerOptions": {
     "outDir": "./dist/cjs",
     "module": "CommonJS"
-  }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "docs",
+    "tests",
+  ],
 }

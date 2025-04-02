@@ -1,7 +1,16 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.prod.json",
   "compilerOptions": {
     "outDir": "./dist/esm",
     "module": "ES2022"
-  }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "docs",
+    "tests",
+  ],
 }
