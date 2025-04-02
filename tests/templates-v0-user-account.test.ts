@@ -4,7 +4,13 @@ import {
     type PocketUserAccountContactType,
     type PocketUserAccountVerifiedContact,
     type PocketUserAccountTimestamps,
-    PocketUserAccountContactTypes
+    PocketUserAccountContactTypes,
+    PocketUserAccountMetadataAnnotations,
+    PocketUserAccountMetadataLabels,
+    PocketUserAccountMetadata,
+    PocketUserAccountStorageItem,
+    PocketUserAccountStorageTypes,
+    PocketUserAccountStorage
 } from '../src/templates/v0/user/account';
 
 
@@ -14,6 +20,13 @@ describe('PocketUserAccount', () => {
             id: '123',
             name: 'John Doe',
             contacts: [],
+            storage: [],
+            metadata: {
+                name: 'John Doe',
+                description: 'A test user account',
+                annotations: {},
+                labels: {}
+            },
             timestamps: {
                 createdAt: '2023-01-01T00:00:00Z',
                 updatedAt: null,
@@ -137,5 +150,115 @@ describe('PocketUserAccountTimestamps', () => {
         expect(timestamps).toHaveProperty('lastActivityAt');
     });
 });
+describe('PocketUserAccountMetadataAnnotations', () => {
+    it('should allow key-value pairs with valid types', () => {
+        const annotations: PocketUserAccountMetadataAnnotations = {
+            key1: 'value1',
+            key2: 123,
+            key3: true,
+            key4: null,
+            key5: { nested: 'object' },
+            key6: ['array', 42, false]
+        };
+
+        expect(annotations).toHaveProperty('key1', 'value1');
+        expect(annotations).toHaveProperty('key2', 123);
+        expect(annotations).toHaveProperty('key3', true);
+        expect(annotations).toHaveProperty('key4', null);
+        expect(annotations).toHaveProperty('key5', { nested: 'object' });
+        expect(annotations).toHaveProperty('key6', ['array', 42, false]);
+    });
+});
+
+describe('PocketUserAccountMetadataLabels', () => {
+    it('should allow tags and key-value pairs', () => {
+        const labels: PocketUserAccountMetadataLabels = {
+            tags: ['tag1', 42],
+            customKey: 'customValue'
+        };
+
+        expect(labels).toHaveProperty('tags', ['tag1', 42]);
+        expect(labels).toHaveProperty('customKey', 'customValue');
+    });
+});
+
+describe('PocketUserAccountMetadata', () => {
+    it('should have the correct properties', () => {
+        const metadata: PocketUserAccountMetadata = {
+            name: 'Test Metadata',
+            description: 'Metadata description',
+            annotations: { key: 'value' },
+            labels: { tags: ['tag1'], customKey: 'customValue' }
+        };
+
+        expect(metadata).toHaveProperty('name', 'Test Metadata');
+        expect(metadata).toHaveProperty('description', 'Metadata description');
+        expect(metadata).toHaveProperty('annotations', { key: 'value' });
+        expect(metadata).toHaveProperty('labels', { tags: ['tag1'], customKey: 'customValue' });
+    });
+});
+
+describe('PocketUserAccountStorageItem', () => {
+    it('should have the correct properties', () => {
+        const storageItem: PocketUserAccountStorageItem = {
+            name: 'File1',
+            description: 'A test file',
+            type: 'FILE',
+            size: 1024,
+            value: 'file-content'
+        };
+
+        expect(storageItem).toHaveProperty('name', 'File1');
+        expect(storageItem).toHaveProperty('description', 'A test file');
+        expect(storageItem).toHaveProperty('type', 'FILE');
+        expect(storageItem).toHaveProperty('size', 1024);
+        expect(storageItem).toHaveProperty('value', 'file-content');
+    });
+});
+
+describe('PocketUserAccountStorageTypes', () => {
+    it('should have the correct storage types', () => {
+        expect(PocketUserAccountStorageTypes).toHaveProperty('FILE');
+        expect(PocketUserAccountStorageTypes).toHaveProperty('DIRECTORY');
+        expect(PocketUserAccountStorageTypes).toHaveProperty('IPFS_FILE_CID');
+        expect(PocketUserAccountStorageTypes).toHaveProperty('IPFS_DIRECTORY_CID');
+        expect(PocketUserAccountStorageTypes).toHaveProperty('DATABASE');
+        expect(PocketUserAccountStorageTypes).toHaveProperty('CACHE');
+        expect(PocketUserAccountStorageTypes).toHaveProperty('MEMORY');
+        expect(PocketUserAccountStorageTypes).toHaveProperty('TEMPORARY');
+        expect(PocketUserAccountStorageTypes).toHaveProperty('COOKIE');
+        expect(PocketUserAccountStorageTypes).toHaveProperty('LOCAL_STORAGE');
+        expect(PocketUserAccountStorageTypes).toHaveProperty('SESSION_STORAGE');
+        expect(PocketUserAccountStorageTypes).toHaveProperty('OTHER');
+    });
+});
+
+describe('PocketUserAccountStorage', () => {
+    it('should have the correct properties', () => {
+        const storage: PocketUserAccountStorage = {
+            name: 'User Storage',
+            description: 'Storage description',
+            type: 'FILE',
+            size: 2048,
+            items: [
+                {
+                    name: 'File1',
+                    description: 'A test file',
+                    type: 'FILE',
+                    size: 1024,
+                    value: 'file-content'
+                }
+            ]
+        };
+
+        expect(storage).toHaveProperty('name', 'User Storage');
+        expect(storage).toHaveProperty('description', 'Storage description');
+        expect(storage).toHaveProperty('type', 'FILE');
+        expect(storage).toHaveProperty('size', 2048);
+        expect(storage.items).toHaveLength(1);
+        expect(storage.items[0]).toHaveProperty('name', 'File1');
+    });
+});
+
 
 
