@@ -1,8 +1,10 @@
 import { pathsToModuleNameMapper } from "ts-jest";
 
 import tsconfig from "./tsconfig.aliases.json" assert { type: "json" };
+// import tsconfig from "./tsconfig.aliases.json"
 
 export default {
+    preset: "ts-jest",
     clearMocks: true,
     collectCoverage: true,
     coverageDirectory: "docs/test_coverage",
@@ -24,7 +26,8 @@ export default {
     moduleNameMapper: pathsToModuleNameMapper(tsconfig.compilerOptions.paths, { prefix: "<rootDir>/" }),
     transform: {
         "^.+\\.(ts)$": [ "ts-jest", {
-            tsconfig: "<rootDir>/tsconfig.prod.json"
+            tsconfig: "<rootDir>/tsconfig.json",
+            useESM: true,
         }],
     },
     extensionsToTreatAsEsm: [".ts"],

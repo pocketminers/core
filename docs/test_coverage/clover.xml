@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1743649125629" clover="3.2.0">
-  <project timestamp="1743649125630" name="All files">
-    <metrics statements="208" coveredstatements="208" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2" elements="216" coveredelements="216" complexity="0" loc="208" ncloc="208" packages="2" files="2" classes="2"/>
+<coverage generated="1743654346951" clover="3.2.0">
+  <project timestamp="1743654346951" name="All files">
+    <metrics statements="206" coveredstatements="206" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2" elements="214" coveredelements="214" complexity="0" loc="206" ncloc="206" packages="2" files="2" classes="2"/>
     <package name="templates.v0.user">
       <metrics statements="187" coveredstatements="187" conditionals="2" coveredconditionals="2" methods="0" coveredmethods="0"/>
       <file name="account.ts" path="/Users/j/Code/pocket-monorepo-private/packages/core/src/templates/v0/user/account.ts">
@@ -196,9 +196,9 @@
       </file>
     </package>
     <package name="utilities">
-      <metrics statements="21" coveredstatements="21" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+      <metrics statements="19" coveredstatements="19" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
       <file name="message.ts" path="/Users/j/Code/pocket-monorepo-private/packages/core/src/utilities/message.ts">
-        <metrics statements="21" coveredstatements="21" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+        <metrics statements="19" coveredstatements="19" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="3" count="2" type="cond" truecount="1" falsecount="0"/>
@@ -218,8 +218,6 @@
         <line num="17" count="1" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
       </file>
     </package>
   </project>

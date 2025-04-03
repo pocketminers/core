@@ -45,7 +45,8 @@
         "build:cjs": "NODE_ENV=production tsc -p tsconfig.cjs.json && tsc-alias -p tsconfig.cjs.json",
         "build:esm": "NODE_ENV=production tsc -p tsconfig.esm.json && tsc-alias -p tsconfig.esm.json",
         "build:docs": "typedoc --options ./typedoc.json",
-        "build": "npm run build:clean && npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:docs"
+        "build": "npm run build:clean && npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:docs",
+        "build:no-docs": "npm run build:clean && npm run build:browser && npm run build:cjs && npm run build:esm"
     },
     "devDependencies": {
         "@eslint/js": "^9.23.0",

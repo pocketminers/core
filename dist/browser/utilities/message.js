@@ -15,6 +15,5 @@ var PocketMessage = /** @class */ (function () {
     };
     return PocketMessage;
 }());
-var empty = null;
 export { PocketMessage };
 //# sourceMappingURL=message.js.map

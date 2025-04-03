@@ -16,5 +16,4 @@ class PocketMessage {
     }
 }
 exports.PocketMessage = PocketMessage;
-const empty = null;
 //# sourceMappingURL=message.js.map
