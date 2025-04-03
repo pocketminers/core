@@ -4,10 +4,17 @@
         "./src/templates/index.ts",
         "./src/utilities/index.ts"
     ],
-    "entryPointStrategy": "expand",
+    "entryPointStrategy": "resolve",
     "sort": ["alphabetical"],
+    "tsconfig": "./tsconfig.json",
     "name": "Core",
     "exclude": ["node_modules/**", "test/**", "dist/**" ],
     "includeVersion": true,
-    "out": "docs/json"
+    "out": "docs/release",
+    "cleanOutputDir": true,
+    "searchInComments": true,
+    "readme": "none",
+    "validation": {
+        "invalidLink": false,
+    }
 }
