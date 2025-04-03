@@ -37,7 +37,7 @@
     },
     "homepage": "https://github.com/pocketminers/core#readme",
     "scripts": {
-        "lint": "npx eslint --config eslint.config.js ./src",
+        "lint": "eslint --config eslint.config.js ./src",
         "test": "jest --config jest.config.js --passWithNoTests",
         "test:watch": "jest --config jest.config.js --passWithNoTests --watch",
         "build:clean": "rimraf dist",
@@ -45,8 +45,8 @@
         "build:cjs": "NODE_ENV=production tsc -p tsconfig.cjs.json && tsc-alias -p tsconfig.cjs.json",
         "build:esm": "NODE_ENV=production tsc -p tsconfig.esm.json && tsc-alias -p tsconfig.esm.json",
         "build:docs": "typedoc --options ./typedoc.json",
-        "build": "npm run build:clean && npm run build:browser && npm run build:cjs && npm run build:esm && npm run build:docs",
-        "build:no-docs": "npm run build:clean && npm run build:browser && npm run build:cjs && npm run build:esm"
+        "build": "yarn run build:clean && yarn run build:browser && yarn run build:cjs && yarn run build:esm && yarn run build:docs",
+        "build:no-docs": "yarn run build:clean && yarn run build:browser && yarn run build:cjs && yarn run build:esm"
     },
     "devDependencies": {
         "@eslint/js": "^9.23.0",
@@ -79,7 +79,7 @@
             "last 1 safari version"
         ]
     },
-    "exlude": [
+    "exclude": [
         "node_modules",
         "docs"
     ],
