@@ -1,10 +1,13 @@
 {
     "$schema": "https://typedoc.org/schema.json",
     "entryPoints": [
+        "./src/templates/index.ts",
         "./src/utilities/index.ts"
     ],
     "entryPointStrategy": "expand",
     "sort": ["alphabetical"],
     "name": "Core",
-    "exclude": ["node_modules/**", "test/**", ]
+    "exclude": ["node_modules/**", "test/**", "dist/**" ],
+    "includeVersion": true,
+    "out": "docs/json"
 }

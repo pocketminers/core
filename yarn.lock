@@ -2906,10 +2906,10 @@ type-fest@^4.38.0:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-4.39.0.tgz#c7758be50a83a5b879e7a59ea52421e9816b3928"
   integrity sha512-w2IGJU1tIgcrepg9ZJ82d8UmItNQtOFJG0HCUE3SzMokKkTsruVDALl2fAdiEzJlfduoU+VyXJWIIUZ+6jV+nw==
 
-typedoc-plugin-inline-sources@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-inline-sources/-/typedoc-plugin-inline-sources-1.2.1.tgz#7b65a69532e65c0a0fce7cfce00d2f90b31ab136"
-  integrity sha512-H+5AR5zhsGLB4ufrAQUO75bNUS74zoxDCRtFCEF2fEnrH62zM1YLi36x2utxWMCvrVRdpF1wLq2z0E3wxldmkQ==
+typedoc-plugin-markdown@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-4.6.1.tgz#b710f8965938e44cd99be53f414074c2b1818186"
+  integrity sha512-SrJv9zkpCWdG1cvtWniFU6M7MkCZuheN2R3fuqDPF+O+PeZ8bzmfj1ju/BJwoPWIKyFJVPhK8Sg6tBrM1y+VoA==
 
 typedoc@^0.28.1:
   version "0.28.1"
