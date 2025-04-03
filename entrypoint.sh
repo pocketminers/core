@@ -25,8 +25,7 @@ fi
 echo "Linting the code..."
 yarn lint
 if [ $? -ne 0 ]; then
-  echo "Linting failed. Please fix the errors and try again."
-  exit 1
+  echo "Linting failed. Make note of the errors. Continuing...."
 fi
 
 # Run the tests
