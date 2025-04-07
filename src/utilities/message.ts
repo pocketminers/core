@@ -1,17 +1,24 @@
 class PocketMessage {
-  static getErrorMessage(error: unknown): string {
-    if (error instanceof Error) {
-      return error.message;
-    }
-    return String(error);
-  }
+    public id: Identifier;
+    public status: string;
+    public error: string | undefined;
+    public errorStack: string | undefined;
+    public body: any;
+    public data: any;
 
-  static getErrorStack(error: unknown): string | undefined {
-    if (error instanceof Error) {
-      return error.stack;
+    static getErrorMessage(error: unknown): string {
+        if (error instanceof Error) {
+        return error.message;
+        }
+        return String(error);
     }
-    return undefined;
-  }
+
+    static getErrorStack(error: unknown): string | undefined {
+        if (error instanceof Error) {
+        return error.stack;
+        }
+        return undefined;
+    }
 }
 
 export {

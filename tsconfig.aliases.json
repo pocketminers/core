@@ -3,7 +3,9 @@
         "paths": {
             "@/*": [ "./" ],
             "@utilities/*": [ "./utilities/*" ],
-            "@templates/*": [ "./templates/*" ]
+            "@templates/*": [ "./templates/*" ],
+            "@components/*": [ "./components/*" ],
+            "@p2p/*": [ "./p2p/*" ],
         }
     }
 }

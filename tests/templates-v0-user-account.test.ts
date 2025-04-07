@@ -5,9 +5,9 @@ import {
     type PocketUserAccountVerifiedContact,
     type PocketUserAccountTimestamps,
     PocketUserAccountContactTypes,
-    PocketUserAccountMetadataAnnotations,
-    PocketUserAccountMetadataLabels,
-    PocketUserAccountMetadata,
+    PocketMetadataAnnotations,
+    PocketMetadataLabels,
+    PocketMetadata,
     PocketUserAccountStorageItem,
     PocketUserAccountStorageTypes,
     PocketUserAccountStorage
@@ -150,9 +150,9 @@ describe('PocketUserAccountTimestamps', () => {
         expect(timestamps).toHaveProperty('lastActivityAt');
     });
 });
-describe('PocketUserAccountMetadataAnnotations', () => {
+describe('PocketMetadataAnnotations', () => {
     it('should allow key-value pairs with valid types', () => {
-        const annotations: PocketUserAccountMetadataAnnotations = {
+        const annotations: PocketMetadataAnnotations = {
             key1: 'value1',
             key2: 123,
             key3: true,
@@ -170,9 +170,9 @@ describe('PocketUserAccountMetadataAnnotations', () => {
     });
 });
 
-describe('PocketUserAccountMetadataLabels', () => {
+describe('PocketMetadataLabels', () => {
     it('should allow tags and key-value pairs', () => {
-        const labels: PocketUserAccountMetadataLabels = {
+        const labels: PocketMetadataLabels = {
             tags: ['tag1', 42],
             customKey: 'customValue'
         };
@@ -182,9 +182,9 @@ describe('PocketUserAccountMetadataLabels', () => {
     });
 });
 
-describe('PocketUserAccountMetadata', () => {
+describe('PocketMetadata', () => {
     it('should have the correct properties', () => {
-        const metadata: PocketUserAccountMetadata = {
+        const metadata: PocketMetadata = {
             name: 'Test Metadata',
             description: 'Metadata description',
             annotations: { key: 'value' },
