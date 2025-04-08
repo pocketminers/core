@@ -1,2 +1,2 @@
-export * from './dates';
+export * from './date.utilities';
 export * from './message';

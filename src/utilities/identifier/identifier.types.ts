@@ -5,10 +5,10 @@ import { BaseTypes, HashedStorageItem } from "@component/base";
  */
 enum IdentifierFormats {
     UUID = "UUID",
-    Random = "Random",
+    Series = "Series",
     Name = "Name",
     Timestamp = "Timestamp",
-    Password = "Password"
+    Random = "Random"
 }
 
 

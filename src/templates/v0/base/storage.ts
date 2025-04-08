@@ -1,6 +1,7 @@
 import { BaseMetadata } from "@templates/v0/base/metadata";
 import { BaseValue, NumberOrEmpty, StringOrEmpty } from "@templates/v0/base/value";
 
+
 /**
  * StorageItem represents an item in the user's storage.
  * It includes properties such as name, description, type, size, and value.
@@ -10,9 +11,10 @@ interface BaseStorageItem<T> {
     description?: StringOrEmpty;
     type: string | number | symbol;
     size: NumberOrEmpty;
-    value: BaseValue | T;
+    value: BaseValue<T>;
     metadata?: BaseMetadata;
 }
+
 
 /**
  * BaseStorageTypes is an enumeration of the different types of storage
@@ -34,20 +36,26 @@ enum BaseStorageLocations {
     OTHER = "OTHER"
 }
 
+
+/**
+ * BaseStorageLocation is a type that can be any of the keys in the BaseStorageLocations enum.
+ * It is used to represent the location of a storage item.
+ */
 type BaseStorageLocation = keyof typeof BaseStorageLocations;
+
 
 /**
  * Storage contains a collection of the user's storage, including the type and size.
  */
 interface BaseStorage<
     L extends BaseStorageLocation = BaseStorageLocations.MEMORY,
-    T = any
+    T extends BaseValue = any
 > {
     name?: string;
     description?: StringOrEmpty;
     location?: L;
     size?: NumberOrEmpty;
-    items: BaseStorageItem<T>[];
+    items: Array<BaseStorageItem<T>>;
 
     addItem: (item: BaseStorageItem<T>) => void;
     removeItem: (itemName: string) => void;
@@ -59,12 +67,9 @@ interface BaseStorage<
 }
 
 
-
-
-
 export {
     type BaseStorage,
     type BaseStorageItem,
-    type BaseStorageType,
-    BaseStorageTypes
+    type BaseStorageLocation,
+    BaseStorageLocations,
 }
