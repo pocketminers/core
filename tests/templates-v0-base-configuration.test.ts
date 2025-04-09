@@ -37,7 +37,6 @@ describe("BaseArgument", () => {
 
     it("should throw an error if name is not provided", () => {
         try {
-            
             const argument: BaseArgument<string, BaseIdentifierTypes.Undefined> = {
                 data: {
                     // @ts-ignore

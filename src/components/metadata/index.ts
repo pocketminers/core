@@ -2,36 +2,37 @@ import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templa
 import { BaseMetadata, BaseMetadataAnnotations, BaseMetadataEntry, BaseMetadataLabels } from "@templates/v0/base/metadata";
 import { BaseObjectType, BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseTimestamps } from "@templates/v0/base/timestamps";
+import { Freezer } from "@utilities/freezer";
 
 class Metadata
 <
     I extends BaseIdentifierType,
-    T extends BaseObjectType,
+    O extends BaseObjectType,
 >
     implements
-        BaseMetadata<I, T>
+        BaseMetadata<I, O>
 {
     public readonly annotations: BaseMetadataAnnotations;
-    public readonly labels: BaseMetadataLabels<I, T>;
+    public readonly labels: BaseMetadataLabels<I, O>;
     public readonly timestamps: BaseTimestamps;
 
     constructor({
         id,
-        name = "",
+        name,
         type,
-        description = "",
-        tags = [],
+        description,
+        tags,
         timestamps = {
             created: { date: new Date() },
             updated: { date: new Date() }
         },
-        annotations = {},
-        labels = {}
-    }: BaseMetadataEntry<I,T> = {} ) {
-        this.annotations = {
+        annotations,
+        labels
+    }: BaseMetadataEntry<I, O> = {} ) {
+        this.annotations = this.addAnnotations({
             description,
             ...annotations
-        };
+        });
 
         this.labels = {
             id,
@@ -42,15 +43,50 @@ class Metadata
         };
 
         this.timestamps = {
-            created: timestamps.created,
-            updated: timestamps.updated,
+            created: timestamps.created || { date: new Date() },
+            updated: timestamps.updated || { date: new Date() },
             ...timestamps
         };
 
-        Object.freeze(this.annotations);
-        Object.freeze(this.labels);
-
+        Freezer.deepFreeze(this);
     }
+
+    private addAnnotations(
+        annotations: BaseMetadataAnnotations
+    ): BaseMetadataAnnotations {
+        for (const key in annotations) {
+            if (annotations[key] === undefined) {
+                delete annotations[key];
+            }
+        }
+        return {
+            ...this.annotations,
+            ...annotations
+        };
+    }
+
+    public toJSON(): {
+        annotations: BaseMetadataAnnotations;
+        labels: BaseMetadataLabels<I, O>;
+        timestamps: BaseTimestamps;
+    } {
+        return {
+            annotations: this.annotations,
+            labels: this.labels,
+            timestamps: this.timestamps
+        };
+    }
+
+
+    public toString(): string {
+        return JSON.stringify({
+            annotations: this.annotations,
+            labels: this.labels,
+            timestamps: this.timestamps
+        });
+    }
+
+
 }
 
 export {

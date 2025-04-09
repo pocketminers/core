@@ -20,12 +20,12 @@ interface BaseMetadataAnnotations
 interface BaseMetadataLabels
 <
     I extends BaseIdentifierType,
-    T extends BaseObjectType
+    O extends BaseObjectType
 >
     extends 
         Partial<Record<'id', BaseIdentifier<I>>>,
         Partial<Record<'name', StringOrEmpty>>,
-        Partial<Record<'type', T>>,
+        Partial<Record<'type', O>>,
         Partial<Record<'tags', Array<StringOrEmpty>>>,
         Partial<Record<BaseValueKey, BaseValue>>
 {}
@@ -37,11 +37,11 @@ interface BaseMetadataLabels
 interface BaseMetadata
 <
     I extends BaseIdentifierType,
-    T extends BaseObjectType,
+    O extends BaseObjectType
 >
     extends
         Partial<Record<'annotations', BaseMetadataAnnotations>>,
-        Partial<Record<'labels', BaseMetadataLabels<I, T>>>,
+        Partial<Record<'labels', BaseMetadataLabels<I, O>>>,
         Partial<Record<'timestamps', BaseTimestamps>>
 {}
 
@@ -53,17 +53,17 @@ interface BaseMetadata
 interface BaseMetadataEntry
 <
     I extends BaseIdentifierType,
-    T extends BaseObjectType
+    O extends BaseObjectType
 >
     extends
         Partial<Record<'id', BaseIdentifier<I>>>,
-        Partial<Record<'type', T>>,
+        Partial<Record<'type', O>>,
         Partial<Record<'name', StringOrEmpty>>,
         Partial<Record<'description', StringOrEmpty>>,
         Partial<Record<'tags', Array<StringOrEmpty>>>,
         Partial<Record<'timestamps', BaseTimestamps>>,
         Partial<Record<'annotations', BaseMetadataAnnotations>>,
-        Partial<Record<'labels', BaseMetadataLabels<I, T>>>
+        Partial<Record<'labels', BaseMetadataLabels<I, O>>>
 {}
 
 
