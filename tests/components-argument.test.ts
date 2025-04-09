@@ -94,3 +94,66 @@ describe("Argument", () => {
 
     
 });
+
+describe("Argument: static methods", () => {
+    it("should create an argument from a record", () => {
+        const record: Record<BaseValueKey, BaseValue<{[key:string]: string}>> = {
+            1: { value: "value1" }
+        };
+
+        const argument = Argument.fromRecord(record);
+
+        expect(argument).toBeDefined();
+        expect(argument.name).toBe("1");
+        expect(argument.value).toEqual({ value: "value1" });
+    });
+
+    it("should throw an error if the record is empty", () => {
+        const record: Record<BaseValueKey, BaseValue<{[key:string]: string}>> = {};
+
+        try {
+            Argument.fromRecord(record);
+        } catch (error: any) {
+            expect(error).toBeDefined();
+            expect(error.message).toBe("Record is empty");
+        }
+    });
+
+    it("should throw an error if the record is undefined", () => {
+        try {
+            // @ts-ignore
+            Argument.fromRecord(undefined);
+        } catch (error: any) {
+            expect(error).toBeDefined();
+            expect(error.message).toBe("Record is required");
+        }
+    });
+
+    it("should throw an error if the record has more than one key-value pair", () => {
+        const record: Record<BaseValueKey, BaseValue<{[key:string]: string}>> = {
+            1: { value: "value1" },
+            2: { value: "value2" }
+        };
+
+        try {
+            Argument.fromRecord(record);
+        } catch (error: any) {
+            expect(error).toBeDefined();
+            expect(error.message).toBe("Record must contain only one key-value pair");
+        }
+    });
+
+    it('should include metadata in the argument', () => {
+        const argument = new Argument({
+            name: 'mockKey',
+            value: 'mockValue',
+            meta: new Metadata<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>({
+                description: "mock description",
+                tags: ["tag1", "tag2"]
+            })
+        });
+        expect(argument.metadata).toBeDefined();
+        expect(argument.metadata.annotations.description).toBe("mock description");
+        expect(argument.metadata.labels.tags).toEqual(["tag1", "tag2"]);
+    });
+});

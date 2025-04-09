@@ -120,6 +120,15 @@ class Metadata
         ) {
             throw new Error("Cannot update timestamps.created");
         }
+
+        if( 
+            timestamps?.updated
+            && timestamps.updated.date !== undefined
+            && timestamps.updated.date !== this.timestamps.updated?.date
+        ) {
+            throw new Error("Cannot manually update timestamps.updated, the value is set to the current date");
+        }
+
         if (
             labels?.id
             && labels.id.type_ !== BaseIdentifierTypes.Undefined
@@ -148,9 +157,9 @@ class Metadata
                 ...labels
             },
             timestamps: {
-                updated: { date: new Date() },
                 ...this.timestamps,
-                ...timestamps
+                ...timestamps,
+                updated: { date: new Date() }
             }
         });
     }

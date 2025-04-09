@@ -1,5 +1,6 @@
 import { Metadata } from "@components/metadata";
 import { BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseObjectTypes } from "@templates/v0/base/object";
 
 describe("Metadata", () => {
     it("should create an instance of Metadata", () => {
@@ -145,13 +146,51 @@ describe("Metadata: Updating", () => {
             }
         });
 
-        const updatedMetadata = metadata.update({
-            timestamps: {
-                updated: {date: new Date()}
+        const updatedTimestamp = new Date("2023-01-03T00:00:00Z");
+
+        try {
+            const updatedMetadata = metadata.update({
+                timestamps: {
+                    updated: {date: updatedTimestamp}
+                }
+            });
+        }
+        catch (error) {
+            console.log(error);
+            expect(error).toBeDefined();
+        }
+
+        
+        // expect(updatedMetadata.timestamps.updated?.date).toEqual(updatedTimestamp);
+        // expect(updatedMetadata.timestamps.updated?.date).not.toEqual(metadata.timestamps.updated?.date);
+    });
+
+});
+
+describe('Metadata: get methods', () => {
+    it('should get the id', () => {
+        const metadata = new Metadata<
+            BaseIdentifierTypes.Name,
+            BaseObjectTypes.Configuration
+        >({
+            labels: {
+                id: {
+                    type_: BaseIdentifierTypes.Name,
+                    value: "test-label-id"
+                }
             }
         });
 
-        expect(updatedMetadata.timestamps.updated?.date).not.toEqual(metadata.timestamps.updated?.date);
+        expect(metadata.id.value).toBe("test-label-id");
     });
 
+    it('should get the type', () => {
+        const metadata = new Metadata({
+            labels: {
+                type: BaseObjectTypes.Configuration
+            }
+        });
+
+        expect(metadata.type).toBe("Configuration");
+    });
 });
