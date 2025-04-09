@@ -193,6 +193,74 @@ describe("DateUtilities", () => {
 
 
     /**
+     * Test cases for adding different Time increments to a date
+     */
+
+    it("should add 1 year to a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.addTime({ date,  years: 1 });
+        expect(newDate.toISOString()).toBe("2024-10-01T12:00:00.000Z");
+    });
+
+    it("should add 1 month to a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.addTime({ date, months: 1 });
+        expect(newDate.toISOString()).toBe("2023-11-01T12:00:00.000Z");
+    });
+
+    it("should add 1 week to a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.addTime({ date, weeks: 1 });
+        expect(newDate.toISOString()).toBe("2023-10-08T12:00:00.000Z");
+    });
+
+    it("should add 1 day to a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.addTime({ date, days: 1 });
+        expect(newDate.toISOString()).toBe("2023-10-02T12:00:00.000Z");
+    });
+
+    it("should add 1 hour to a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.addTime({ date, hours: 1 });
+        expect(newDate.toISOString()).toBe("2023-10-01T13:00:00.000Z");
+    });
+
+    it("should add 1 minute to a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.addTime({ date, minutes: 1 });
+        expect(newDate.toISOString()).toBe("2023-10-01T12:01:00.000Z");
+    });
+
+    it("should add 1 second to a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.addTime({ date, seconds: 1 });
+        expect(newDate.toISOString()).toBe("2023-10-01T12:00:01.000Z");
+    });
+
+    it("should add 1 millisecond to a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.addTime({ date, milliseconds: 1 });
+        expect(newDate.toISOString()).toBe("2023-10-01T12:00:00.001Z");
+    });
+
+    it("should add 1 year, 1 month, 1 week, 1 day, 1 hour, 1 minute, 1 second, and 1 millisecond to a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.addTime({
+            date,
+            years: 1,
+            months: 1,
+            weeks: 1,
+            days: 1,
+            hours: 1,
+            minutes: 1,
+            seconds: 1,
+            milliseconds: 1
+        });
+        expect(newDate.toISOString()).toBe("2024-11-09T14:01:01.001Z");
+    });
+
+    /**
      * Test cases for subtracting days, hours, and minutes from a date
      */
     it("should subtract days from a date", () => {
@@ -248,6 +316,79 @@ describe("DateUtilities", () => {
         const date = new Date("2023-10-01T12:00:00Z");
         const newDate = DateUtilities.subtractMilliseconds(date, 500);
         expect(newDate.toISOString()).toBe("2023-10-01T11:59:59.500Z");
+    });
+
+    it("should subtract large amount of milliseconds from a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.subtractMilliseconds(date, 1000000000000);
+        expect(newDate.toISOString()).toBe("1992-01-23T11:13:20.000Z");
+    });
+
+    /**
+     * Test cases for subtracting different Time increments from a date
+     */
+    it("should subtract 1 year from a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.subtractTime({ date,  years: 1 });
+        expect(newDate.toISOString()).toBe("2022-10-01T12:00:00.000Z");
+    });
+
+    it("should subtract 1 month from a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.subtractTime({ date, months: 1 });
+        expect(newDate.toISOString()).toBe("2023-09-01T12:00:00.000Z");
+    });
+
+    it("should subtract 1 week from a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.subtractTime({ date, weeks: 1 });
+        expect(newDate.toISOString()).toBe("2023-09-24T12:00:00.000Z");
+    });
+
+    it("should subtract 1 day from a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.subtractTime({ date, days: 1 });
+        expect(newDate.toISOString()).toBe("2023-09-30T12:00:00.000Z");
+    });
+
+    it("should subtract 1 hour from a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.subtractTime({ date, hours: 1 });
+        expect(newDate.toISOString()).toBe("2023-10-01T11:00:00.000Z");
+    });
+
+    it("should subtract 1 minute from a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.subtractTime({ date, minutes: 1 });
+        expect(newDate.toISOString()).toBe("2023-10-01T11:59:00.000Z");
+    });
+
+    it("should subtract 1 second from a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.subtractTime({ date, seconds: 1 });
+        expect(newDate.toISOString()).toBe("2023-10-01T11:59:59.000Z");
+    });
+
+    it("should subtract 1 millisecond from a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.subtractTime({ date, milliseconds: 1 });
+        expect(newDate.toISOString()).toBe("2023-10-01T11:59:59.999Z");
+    });
+
+    it("should subtract 1 year, 1 month, 1 week, 1 day, 1 hour, 1 minute, 1 second, and 1 millisecond from a date", () => {
+        const date = new Date("2023-10-01T12:00:00Z");
+        const newDate = DateUtilities.subtractTime({
+            date,
+            years: 1,
+            months: 1,
+            weeks: 1,
+            days: 1,
+            hours: 1,
+            minutes: 1,
+            seconds: 1,
+            milliseconds: 1
+        });
+        expect(newDate.toISOString()).toBe("2022-08-24T10:58:58.999Z");
     });
 
 

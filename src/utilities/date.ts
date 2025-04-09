@@ -57,6 +57,18 @@ class DateUtilities {
         return Math.floor(date.getTime() / 1000);
     }
 
+    /**
+     * Generates a date string in the locale date format.
+     * 
+     * The locale date format is based on the user's locale settings and may vary 
+     * depending on the user's location and language preferences. It is useful for 
+     * displaying dates in a format that is familiar to the user.
+     * 
+     * Example output: "10/3/2023, 2:28:00 PM"
+     * 
+     * @param date - The `Date` object to be converted to a locale date string. Defaults to the current date and time if not provided.
+     * @returns A string representing the date in the locale date format.
+     */
     public static generateLocaleDateString(date: Date = new Date()): string {
         return date.toLocaleString();
     }
@@ -198,6 +210,51 @@ class DateUtilities {
     }
 
     /**
+     * Add Time to a date.
+     * @param date - The date to which time will be added.
+     * @param years - The number of years to add.
+     * @param months - The number of months to add.
+     * @param weeks - The number of weeks to add.
+     * @param days - The number of days to add.
+     * @param hours - The number of hours to add.
+     * @param minutes - The number of minutes to add.
+     * @param seconds - The number of seconds to add.
+     * @param milliseconds - The number of milliseconds to add.
+     * @returns A new Date object with the added time.
+     */
+    public static addTime({
+        date = new Date(),
+        years = 0,
+        months = 0,
+        weeks = 0,
+        days = 0,
+        hours = 0,
+        minutes = 0,
+        seconds = 0,
+        milliseconds = 0
+    }: {
+        date?: Date,
+        years?: number,
+        months?: number,
+        weeks?: number,
+        days?: number,
+        hours?: number,
+        minutes?: number,
+        seconds?: number,
+        milliseconds?: number
+    } = {}): Date {
+        date.setFullYear(date.getFullYear() + years);
+        date.setMonth(date.getMonth() + months);
+        date.setDate(date.getDate() + weeks * 7 + days);
+        date.setHours(date.getHours() + hours);
+        date.setMinutes(date.getMinutes() + minutes);
+        date.setSeconds(date.getSeconds() + seconds);
+        date.setMilliseconds(date.getMilliseconds() + milliseconds);
+        
+        return date;
+    }
+
+    /**
      * Subtract Years from a date.
      * @param date - The date from which years will be subtracted.
      * @param years - The number of years to subtract.
@@ -291,6 +348,51 @@ class DateUtilities {
         const result = new Date(date);
         result.setMilliseconds(result.getMilliseconds() - milliseconds);
         return result;
+    }
+
+    /**
+     * Subtract Time from a date.
+     * @param date - The date from which time will be subtracted.
+     * @param years - The number of years to subtract.
+     * @param months - The number of months to subtract.
+     * @param weeks - The number of weeks to subtract.
+     * @param days - The number of days to subtract.
+     * @param hours - The number of hours to subtract.
+     * @param minutes - The number of minutes to subtract.
+     * @param seconds - The number of seconds to subtract.
+     * @param milliseconds - The number of milliseconds to subtract.
+     * @returns A new Date object with the subtracted time.
+     */
+    public static subtractTime({
+        date = new Date(),
+        years = 0,
+        months = 0,
+        weeks = 0,
+        days = 0,
+        hours = 0,
+        minutes = 0,
+        seconds = 0,
+        milliseconds = 0
+    }: {
+        date?: Date,
+        years?: number,
+        months?: number,
+        weeks?: number,
+        days?: number,
+        hours?: number,
+        minutes?: number,
+        seconds?: number,
+        milliseconds?: number
+    } = {}): Date {
+        date.setFullYear(date.getFullYear() - years);
+        date.setMonth(date.getMonth() - months);
+        date.setDate(date.getDate() - weeks * 7 - days);
+        date.setHours(date.getHours() - hours);
+        date.setMinutes(date.getMinutes() - minutes);
+        date.setSeconds(date.getSeconds() - seconds);
+        date.setMilliseconds(date.getMilliseconds() - milliseconds);
+
+        return date;
     }
 }
 
