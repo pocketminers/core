@@ -34,13 +34,13 @@ class Metadata
             ...annotations
         });
 
-        this.labels = {
+        this.labels = this.addLabels({
             id,
             name,
-            tags,
             type,
+            tags,
             ...labels
-        };
+        });
 
         this.timestamps = {
             created: timestamps.created || { date: new Date() },
@@ -65,6 +65,20 @@ class Metadata
         };
     }
 
+    private addLabels(
+        labels: BaseMetadataLabels<I, O>
+    ): BaseMetadataLabels<I, O> {
+        for (const key in labels) {
+            if (labels[key] === undefined) {
+                delete labels[key];
+            }
+        }
+        return {
+            ...this.labels,
+            ...labels
+        };
+    }
+
     public toJSON(): {
         annotations: BaseMetadataAnnotations;
         labels: BaseMetadataLabels<I, O>;
@@ -77,7 +91,6 @@ class Metadata
         };
     }
 
-
     public toString(): string {
         return JSON.stringify({
             annotations: this.annotations,
@@ -86,7 +99,69 @@ class Metadata
         });
     }
 
+    public update({
+        annotations,
+        labels,
+        timestamps
+    }: {
+        annotations?: BaseMetadataAnnotations;
+        labels?: BaseMetadataLabels<I, O>;
+        timestamps?: BaseTimestamps;
+    }): Metadata<I, O> {
+        // These Values are immuteable:
+        // - timestamps.created
+        // - labels.id
+        // - labels.type
 
+        if (
+            timestamps?.created
+            && timestamps.created.date !== undefined
+            && timestamps.created.date !== this.timestamps.created?.date
+        ) {
+            throw new Error("Cannot update timestamps.created");
+        }
+        if (
+            labels?.id
+            && labels.id.type_ !== BaseIdentifierTypes.Undefined
+            && labels.id.value !== "undefined"
+            && labels.id.value !== this.labels.id?.value
+        ) {
+            throw new Error("Cannot update labels.id");
+        }
+        if (
+            labels?.type
+            && labels.type !== BaseObjectTypes.Undefined
+            && labels.type !== this.labels.type
+        ) {
+            throw new Error("Cannot update labels.type");
+        }
+
+
+        return new Metadata<I, O>({
+            ...this.toJSON(),
+            annotations: {
+                ...this.annotations,
+                ...annotations
+            },
+            labels: {
+                ...this.labels,
+                ...labels
+            },
+            timestamps: {
+                updated: { date: new Date() },
+                ...this.timestamps,
+                ...timestamps
+            }
+        });
+    }
+
+    public get id(): BaseIdentifier<I> {
+        return this.labels.id as BaseIdentifier<I>;
+    }
+
+    public get type(): O {
+        return this.labels.type as O;
+    }
 }
 
 export {
