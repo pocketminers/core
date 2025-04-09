@@ -1,21 +1,21 @@
 {
     "$schema": "https://typedoc.org/schema.json",
-    "entryPoints": [
-        "./src/components/index.ts",
-        "./src/templates/index.ts",
-        "./src/utilities/index.ts"
-    ],
-    "entryPointStrategy": "resolve",
-    "sort": ["alphabetical"],
-    "tsconfig": "./tsconfig.json",
-    "name": "Core",
+    // "gitRemote": "github.com/pocketminers.core.git",
+    // "gitRevision": "main",
+    // "entryPointStrategy": "merge",
+    "categorizeByGroup": false,
+    "sort": ["enum-value-ascending"],
+    "tsconfig": "./tsconfig.prod.json",
+    // "name": "@pocketminers/core",
     "exclude": ["node_modules/**", "test/**", "dist/**" ],
     "includeVersion": true,
-    "out": "docs/release",
-    "cleanOutputDir": true,
+    "excludeReferences": true,
+    // "out": "docs/release",
+    // "cleanOutputDir": true,
     "searchInComments": true,
-    "readme": "none",
+    // "readme": "none",
     "validation": {
-        "invalidLink": false,
-    }
+        "invalidLink": false
+    },
+    "alwaysCreateEntryPointModule": false
 }
