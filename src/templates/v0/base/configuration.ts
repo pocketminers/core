@@ -53,7 +53,7 @@ interface BaseParameter
  */
 interface BaseProperty
 <
-    V extends BaseValue,
+    V,
     I extends BaseIdentifierType
 >
     extends
@@ -79,7 +79,7 @@ interface BaseProperty
  */
 interface BaseConfiguration
 <
-    V extends BaseValue,
+    V,
     I extends BaseIdentifierTypes
 >
     extends
