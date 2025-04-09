@@ -3,20 +3,19 @@ import { BaseObject, BaseObjectTypes } from "./object";
 import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
 
 
-
 /**
  * BaseArgument is a generic type that represents an argument object.
  */
 interface BaseArgument
 <
-    T,
+    V,
     I extends BaseIdentifierType
 >
     extends
         BaseObject<
             {
                 name: BaseValueKey;
-                value: BaseValue<T>;
+                value: BaseValue<V>;
             },
             I | BaseIdentifierTypes.Multihash,
             BaseObjectTypes.Argument
@@ -29,7 +28,7 @@ interface BaseArgument
  */
 interface BaseParameter
 <
-    T,
+    V,
     I extends BaseIdentifierType
 >
     extends
@@ -38,9 +37,9 @@ interface BaseParameter
             {
                 name: BaseValueKey;
                 description: StringOrEmpty;
-                default: BaseValue<T>;
+                default: BaseValue<V>;
                 required: boolean;
-                optional: Array<BaseValue<T>>;
+                optional: Array<BaseValue<V>>;
             },
             I | BaseIdentifierTypes.Multihash,
             BaseObjectTypes.Parameter
@@ -52,16 +51,25 @@ interface BaseParameter
  * Configuration is a generic type that represents a configuration object.
  * It can contain any number of properties, each of which can be of any type.
  */
-interface BaseProperty<T extends BaseValue>
+interface BaseProperty
+<
+    V extends BaseValue,
+    I extends BaseIdentifierType
+>
     extends
-        BaseObject<{
-            name: BaseValueKey;
-            description: StringOrEmpty;
-            value: T;
-            default: T;
-            required: boolean;
-            optional: Array<T>;
-        }>
+        BaseObject
+        <
+            {
+                name: BaseValueKey;
+                description: StringOrEmpty;
+                value: V;
+                default: V;
+                required: boolean;
+                optional: Array<V>;
+            },
+            I | BaseIdentifierTypes.Multihash,
+            BaseObjectTypes.Property
+        >
 {}
 
 
@@ -69,12 +77,21 @@ interface BaseProperty<T extends BaseValue>
  * Configuration is a generic type that represents a configuration object.
  * It can contain any number of properties, each of which can be of any type.
  */
-interface BaseConfiguration<T extends BaseValue, I extends BaseIdentifierTypes>
+interface BaseConfiguration
+<
+    V extends BaseValue,
+    I extends BaseIdentifierTypes
+>
     extends
-        BaseObject<{
-            arguments: Array<BaseArgument<T, I>>;
-            parameters: Array<BaseParameter<T, I>>;
-        }>
+        BaseObject
+        <
+            {
+                arguments: Array<BaseArgument<V, I>>;
+                parameters: Array<BaseParameter<V, I>>;
+            },
+            I | BaseIdentifierTypes.Multihash,
+            BaseObjectTypes.Configuration
+        >
 {}
 
 
