@@ -1,42 +1,45 @@
-import { BaseMetadata } from "@templates/v0/base/metadata";
-import { BaseValue } from "@templates/v0/base/value";
-import { BaseObject } from "./object";
-import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
+import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
+import { BaseObject, BaseObjectTypes } from "./object";
+import { BaseIdentifierTypes } from "./identifier";
+
 
 
 /**
- * Configuration is a generic type that represents a configuration object.
- * It can contain any number of properties, each of which can be of any type.
+ * BaseArgument is a generic type that represents an argument object.
  */
 interface BaseArgument<T>
     extends
         BaseObject<
             {
-                name: string;
+                name: BaseValueKey;
                 value: BaseValue<T>;
-            }
+            },
+            BaseIdentifierTypes.Multihash | BaseIdentifierTypes.Undefined,
+            BaseObjectTypes.Argument
         >
 {}
 
 
 /**
- * Configuration is a generic type that represents a configuration object.
- * It can contain any number of properties, each of which can be of any type.
+ * BaseParameter is a generic type that represents a parameter object.
  */
 interface BaseParameter
 <
-    T extends BaseValue,
-    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+    T
 >
     extends
-        BaseObject<{
-            name: string;
-            description: string;
-            default: T;
-            required: boolean;
-            optional: Array<T>;
-        }>
-
+        BaseObject
+        <
+            {
+                name: BaseValueKey;
+                description: StringOrEmpty;
+                default: BaseValue<T>;
+                required: boolean;
+                optional: Array<BaseValue<T>>;
+            },
+            BaseIdentifierTypes.Multihash,
+            BaseObjectTypes.Parameter
+        >
 {}
 
 
@@ -47,6 +50,8 @@ interface BaseParameter
 interface BaseProperty<T extends BaseValue>
     extends
         BaseObject<{
+            name: BaseValueKey;
+            description: StringOrEmpty;
             value: T;
             default: T;
             required: boolean;

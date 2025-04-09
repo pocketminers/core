@@ -136,7 +136,7 @@ type BaseIdentifierType = keyof typeof BaseIdentifierTypes
  */
 interface BaseIdentifier<I extends BaseIdentifierType>
     extends
-        Record<'id', string | number | symbol>,
+        Record<'value', string | number | symbol>,
         Record<'type_', I>
 {}
 

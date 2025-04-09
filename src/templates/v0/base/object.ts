@@ -6,7 +6,37 @@
 
 import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
 import { BaseMetadata } from "./metadata";
-import { BaseValue, BaseValueKey } from "./value";
+
+
+/**
+ * BaseObjectTypes is an enum that defines the various types of base objects.
+ * These types are used to categorize different objects in the Pocket Network.
+ * Each type is represented as a string.
+ */
+enum BaseObjectTypes {
+    Argument = 'Argument',
+    Parameter = 'Parameter',
+    Property = 'Property',
+    Configuration = 'Configuration',
+    ConfigurationGroup = 'ConfigurationGroup',
+    Process = 'Process',
+    ProcessGroup = 'ProcessGroup',
+    Command = 'Command',
+    CommandGroup = 'CommandGroup',
+    Job = 'Job',
+    JobGroup = 'JobGroup',
+    JobTemplate = 'JobTemplate',
+    Custom = 'Custom',
+    Undefined = 'Undefined',
+    Unknown = 'Unknown'
+}
+
+
+/**
+ * BaseObjectType is a type alias for the keys of the BaseObjectTypes enum.
+ * It represents the different types of base objects that can be used in the Pocket Network.
+ */
+type BaseObjectType = keyof typeof BaseObjectTypes;
 
 
 /**
@@ -15,15 +45,18 @@ import { BaseValue, BaseValueKey } from "./value";
  */
 interface BaseObject
 <
-    T extends Record<BaseValueKey, BaseValue>,
-    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+    D,
+    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined,
+    T extends BaseObjectType = BaseObjectTypes.Undefined,
 >
     extends
-        Record<'data', T>,
-        Partial<Record<'metadata', BaseMetadata<I>>>
+        Record<'data', D>,
+        Partial<Record<'metadata', BaseMetadata<I, T>>>
 {}
 
 
 export {
-    type BaseObject
+    type BaseObject,
+    type BaseObjectType,
+    BaseObjectTypes,
 }

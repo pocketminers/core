@@ -1,23 +1,20 @@
 import { Metadata } from "@components/metadata";
 import { BaseArgument } from "@templates/v0/base/configuration";
 import { BaseIdentifier, BaseIdentifierTypes } from "@templates/v0/base/identifier";
-import { BaseMetadataEntry } from "@templates/v0/base/metadata";
+import { BaseMetadataAnnotations, BaseMetadataEntry, BaseMetadataLabels } from "@templates/v0/base/metadata";
 import { BaseObjectTypes } from "@templates/v0/base/object";
+import { BaseTimestamps } from "@templates/v0/base/timestamps";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
 import { Freezer } from "@utilities/freezer";
 import { MultiHashUtilities } from "@utilities/multiHash";
 
 
+type AllowedArgumentBaseIdentifiers = BaseIdentifierTypes.Multihash | BaseIdentifierTypes.Undefined;
 
 /**
- * Argument is a generic class that represents a key-value pair.
- * 
+ * BaseArgument is a generic class that represents a key-value pair.
  */
-class Argument
-<
-    T,
-    I extends BaseIdentifierTypes.Multihash | BaseIdentifierTypes.Undefined = BaseIdentifierTypes.Undefined,
->
+class Argument<T>
     implements
         BaseArgument<T>
     
@@ -27,7 +24,7 @@ class Argument
         value: BaseValue<T>;
     }
 
-    public readonly metadata: Metadata<I | BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>;
+    public metadata: Metadata<AllowedArgumentBaseIdentifiers, BaseObjectTypes.Argument>;
 
     constructor({
         name,
@@ -36,22 +33,33 @@ class Argument
     }: {
         name: BaseValueKey,
         value: BaseValue<T>,
-        meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>
+        meta?: BaseMetadataEntry<AllowedArgumentBaseIdentifiers, BaseObjectTypes.Argument>
     }){
         this.data = {
             name,
             value
         };
 
-        this.metadata = new Metadata<I, BaseObjectTypes.Argument>({
+        this.metadata = new Metadata<AllowedArgumentBaseIdentifiers, BaseObjectTypes.Argument>({
             id: {
-                type_: meta?.id?.type_ as I || BaseIdentifierTypes.Undefined,
-                value: meta?.id?.value || "undefined"
+                type_: BaseIdentifierTypes.Undefined,
+                value: "undefined"
             },
             ...meta
         });
 
-        Freezer.deepFreeze(this);
+        MultiHashUtilities.generateIdentifier(this.toString())
+            .then((identifier: BaseIdentifier<BaseIdentifierTypes.Multihash>) => {
+                this.metadata = new Metadata<AllowedArgumentBaseIdentifiers, BaseObjectTypes.Argument>({
+                    id: identifier,
+                    ...meta
+                });
+            })
+            .catch((error: Error) => {
+                console.error("Error generating identifier:", error);
+            });
+
+        Freezer.deepFreeze(this.data);
     }
 
     public get name(): BaseValueKey {
@@ -62,7 +70,7 @@ class Argument
         return this.data.value;
     }
 
-    public toString(): string {
+    toString(): string {
         return `${String(this.name)}: ${this.value instanceof String ? this.value 
             : this.value instanceof Number ? this.value.toString() 
             : this.value instanceof Boolean ? this.value.toString()
@@ -71,21 +79,13 @@ class Argument
             : 'undefined'}`;
     }
 
-    public toKeyValuePair(): Array<[BaseValueKey, BaseValue<T>]> {
+    toKeyValuePair(): Array<[BaseValueKey, BaseValue<T>]> {
         return [[this.name, this.value]];
     }
 
-    public toRecord(): Record<BaseValueKey, BaseValue<T>> {
+    toRecord(): Record<BaseValueKey, BaseValue<T>> {
         return {
             [this.name]: this.value
-        };
-    }
-
-    public async toHashedIdentifier (): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>> {
-        const hash = await MultiHashUtilities.generateIdentifier(this.toString());
-        return {
-            type_: BaseIdentifierTypes.Multihash,
-            value: hash.value
         };
     }
 }

@@ -5,7 +5,8 @@
         "incremental": true,
         "target": "ES2022",
         "lib": [
-            "ES2022"
+            "ES2022",
+            "DOM"
         ],
         "moduleResolution": "node",
         "resolveJsonModule": true,
@@ -24,7 +25,8 @@
         "rootDir": "./",
         "baseUrl": "./src",
         "types": [
-            "jest"
+            "jest",
+            "node"
         ]
     },
     "include": [

@@ -1,4 +1,5 @@
-import { BaseTimestamp } from "@templates/v0/base/timestamps";
+import { DateEntry } from "@templates/v0/base/timestamps";
+import { TimestampItem } from "./timestamp.item";
 
 class TimestampFactory {
     private static instance: TimestampFactory;
@@ -12,9 +13,11 @@ class TimestampFactory {
         return TimestampFactory.instance;
     }
     
-    public createTimestamp(): BaseTimestamp {
-        return {
-            date: new Date()
-        }
+    public static createTimestamp(date: DateEntry = new Date()): TimestampItem {
+        return new TimestampItem(date);
     }
+}
+
+export {
+    TimestampFactory
 }
