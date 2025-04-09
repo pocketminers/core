@@ -133,6 +133,30 @@ var Argument = /** @class */ (function () {
             });
         });
     };
+    Argument.fromRecord = function (record, meta) {
+        if (record === undefined) {
+            throw new Error("Record is required");
+        }
+        if (Object.keys(record).length === 0) {
+            throw new Error("Record is empty");
+        }
+        if (Object.keys(record).length > 1) {
+            throw new Error("Record must contain only one key-value pair");
+        }
+        var name = Object.keys(record)[0];
+        var value = record[name];
+        if (name === undefined) {
+            throw new Error("Name is required");
+        }
+        if (value === undefined) {
+            throw new Error("Value is required");
+        }
+        return new Argument({
+            name: name,
+            value: value,
+            meta: meta
+        });
+    };
     return Argument;
 }());
 export { Argument };

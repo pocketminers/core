@@ -25,6 +25,7 @@ declare class Argument<T, I extends BaseIdentifierType = BaseIdentifierTypes.Und
     toKeyValuePair(): Array<[BaseValueKey, BaseValue<T>]>;
     toRecord(): Record<BaseValueKey, BaseValue<T>>;
     toHashedIdentifier(): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>>;
+    static fromRecord<T>(record: Record<BaseValueKey, BaseValue<T>>, meta?: BaseMetadataEntry<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>): Argument<T, BaseIdentifierTypes.Undefined>;
 }
 export { Argument };
 //# sourceMappingURL=argument.d.ts.map

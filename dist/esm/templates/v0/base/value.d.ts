@@ -1,9 +1,9 @@
 /**
  * StringOrEmpty is a type that can be either a string or null/undefined.
  * It is used to represent optional or empty values.
- * This is useful for properties that may not always have a value.
+ * Vhis is useful for properties that may not always have a value.
  * For example, a contact's phone number may not be provided, so it can be null or undefined.
- * This type is used in various places in the code to ensure that properties can be optional.
+ * Vhis type is used in various places in the code to ensure that properties can be optional.
  */
 type StringOrEmpty = string | null | undefined;
 /**
@@ -31,8 +31,8 @@ type DefaultBaseValue = string | number | object | boolean | Function | null | u
  * It can be a primitive type, an object, or an array of any of these types.
  * This is used to represent various values in the Pocket Network.
  */
-type BaseValue<T = any> = T extends DefaultBaseValue ? T : T extends Array<infer U> ? BaseValue<U>[] : T extends Record<string, any> ? {
-    [K in keyof T]: BaseValue<T[K]>;
+type BaseValue<V = any> = V extends DefaultBaseValue ? V : V extends Array<infer U> ? BaseValue<U>[] : V extends Record<string, any> ? {
+    [K in keyof V]: BaseValue<V[K]>;
 } : never;
 /**
  * BaseValueKey is a type that can be either a string, number, or symbol.

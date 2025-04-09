@@ -52,6 +52,30 @@ class Argument {
             value: hash.value
         };
     }
+    static fromRecord(record, meta) {
+        if (record === undefined) {
+            throw new Error("Record is required");
+        }
+        if (Object.keys(record).length === 0) {
+            throw new Error("Record is empty");
+        }
+        if (Object.keys(record).length > 1) {
+            throw new Error("Record must contain only one key-value pair");
+        }
+        const name = Object.keys(record)[0];
+        const value = record[name];
+        if (name === undefined) {
+            throw new Error("Name is required");
+        }
+        if (value === undefined) {
+            throw new Error("Value is required");
+        }
+        return new Argument({
+            name,
+            value,
+            meta
+        });
+    }
 }
 export { Argument };
 //# sourceMappingURL=argument.js.map
