@@ -1,4 +1,4 @@
-import { BaseTimestamp, DateEntry } from "@templates/v0/base/timestamps";
+import { BaseTimestamp, BaseTimestampEntry, BaseTimestampUnit, DateEntry } from "@templates/v0/base/timestamps";
 import { Checks } from "@utilities/checks";
 import { DateUtilities } from "@utilities/date";
 
@@ -42,8 +42,7 @@ class TimestampItem
 
     /**
      * The toString method returns the date as a string.
-     *
-     * @returns The date as a string.
+
      */
     public toISO(): string {
         return DateUtilities.generateISODateString(this.date);
@@ -51,8 +50,7 @@ class TimestampItem
 
     /**
      * The toLocaleString method returns the date as a locale string.
-     *
-     * @returns The date as a string.
+
      */
     public toLocaleString(): string {
         return DateUtilities.generateLocaleDateString(this.date);
@@ -60,8 +58,7 @@ class TimestampItem
 
     /**
      * The toUTCString method returns the date as a UTC string.
-     *
-     * @returns The date as a string.
+
      */
     public toUNIX(): number {
         return DateUtilities.generateUnixTimestampNumber(this.date);
@@ -69,8 +66,7 @@ class TimestampItem
 
     /**
      * The toRFC method returns the date as an RFC string.
-     *
-     * @returns The date as a string.
+
      */
     public toRFC(): string {
         return DateUtilities.generateRFCDateString(this.date);
@@ -90,27 +86,20 @@ class TimestampItem
         minutes = 0,
         seconds = 0,
         milliseconds = 0
-    }: {
-        years?: number,
-        months?: number,
-        weeks?: number,
-        days?: number,
-        hours?: number,
-        minutes?: number,
-        seconds?: number,
-        milliseconds?: number
-    } = {}): TimestampItem {
-        const date = DateUtilities.addTime({
-            date: this.date,
-            years,
-            months,
-            weeks,
-            days,
-            hours,
-            minutes,
-            seconds,
-            milliseconds
-        });
+    }: BaseTimestampEntry = {}): TimestampItem {
+        const date = DateUtilities.addTime(
+            this.date,
+            {
+                years,
+                months,
+                weeks,
+                days,
+                hours,
+                minutes,
+                seconds,
+                milliseconds
+            }
+        );
 
         return new TimestampItem(date);
     }
@@ -129,27 +118,21 @@ class TimestampItem
         minutes = 0,
         seconds = 0,
         milliseconds = 0
-    }: {
-        years?: number,
-        months?: number,
-        weeks?: number,
-        days?: number,
-        hours?: number,
-        minutes?: number,
-        seconds?: number,
-        milliseconds?: number
-    } = {}): TimestampItem {
-        const date = DateUtilities.subtractTime({
-            date: this.date,
-            years,
-            months,
-            weeks,
-            days,
-            hours,
-            minutes,
-            seconds,
-            milliseconds
-        });
+    }: BaseTimestampEntry 
+    = {}): TimestampItem {
+        const date = DateUtilities.subtractTime(
+            this.date,
+            {
+                years,
+                months,
+                weeks,
+                days,
+                hours,
+                minutes,
+                seconds,
+                milliseconds
+            }
+        );
 
         return new TimestampItem(date);
     }

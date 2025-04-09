@@ -2,6 +2,47 @@ import { BaseValueKey, NumberOrEmpty, StringOrEmpty } from "@templates/v0/base/v
 
 
 /**
+ * BaseTimestampUnits represents the different units of time that can be used in the Pocket Network.
+ * It includes milliseconds, seconds, minutes, hours, days, weeks, months, and years.
+ */
+enum BaseTimestampUnits {
+    milliseconds = 'milliseconds',
+    seconds = 'seconds',
+    minutes = 'minutes',
+    hours = 'hours',
+    days = 'days',
+    weeks = 'weeks',
+    months = 'months',
+    years = 'years'
+}
+
+
+/**
+ * BaseTimeStampUnit represents the different units of time that can be used in the Pocket Network.
+ * It includes milliseconds, seconds, minutes, hours, days, weeks, months, and years.
+ */
+type BaseTimestampUnit = keyof typeof BaseTimestampUnits;
+
+
+/**
+ * BaseTimestampEntry represents a timestamp entry that can be either a number or a string.
+ * It can also be an empty string or a number representing a timestamp.
+ * This type is used to represent various timestamp-related properties in the Pocket Network.
+ */
+interface BaseTimestampEntry
+    extends
+        Partial<Record<BaseTimestampUnits.milliseconds, number>>,
+        Partial<Record<BaseTimestampUnits.seconds, number>>,
+        Partial<Record<BaseTimestampUnits.minutes, number>>,
+        Partial<Record<BaseTimestampUnits.hours, number>>,
+        Partial<Record<BaseTimestampUnits.days, number>>,
+        Partial<Record<BaseTimestampUnits.weeks, number>>,
+        Partial<Record<BaseTimestampUnits.months, number>>,
+        Partial<Record<BaseTimestampUnits.years, number>>
+{}
+
+
+/**
  * DateEntry represents a date entry that can be either a Date object, a string, or a number.
  * It can also be an empty string or a number representing a timestamp.
  * This type is used to represent various date-related properties in the Pocket Network.
@@ -58,5 +99,8 @@ export {
     type BaseTimestamp,
     type BaseTimestampFormat,
     type BaseTimestamps,
+    type BaseTimestampUnit,
+    type BaseTimestampEntry,
+    BaseTimestampUnits,
     BaseTimestampFormats
 }

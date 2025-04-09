@@ -1,6 +1,6 @@
 import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
-import { BaseTimestamps } from "@templates//timestamps";
+import { BaseTimestamps } from "@templates/v0/base/timestamps";
 
 
 /**

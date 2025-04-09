@@ -5,6 +5,7 @@
  * These methods are useful for formatting dates in a standardized way for use in APIs, databases, and other applications.
  */
 
+import { BaseTimestampEntry } from "@templates/v0/base/timestamps";
 import { Checks } from "./checks";
 
 
@@ -222,34 +223,17 @@ class DateUtilities {
      * @param milliseconds - The number of milliseconds to add.
      * @returns A new Date object with the added time.
      */
-    public static addTime({
-        date = new Date(),
-        years = 0,
-        months = 0,
-        weeks = 0,
-        days = 0,
-        hours = 0,
-        minutes = 0,
-        seconds = 0,
-        milliseconds = 0
-    }: {
-        date?: Date,
-        years?: number,
-        months?: number,
-        weeks?: number,
-        days?: number,
-        hours?: number,
-        minutes?: number,
-        seconds?: number,
-        milliseconds?: number
-    } = {}): Date {
-        date.setFullYear(date.getFullYear() + years);
-        date.setMonth(date.getMonth() + months);
-        date.setDate(date.getDate() + weeks * 7 + days);
-        date.setHours(date.getHours() + hours);
-        date.setMinutes(date.getMinutes() + minutes);
-        date.setSeconds(date.getSeconds() + seconds);
-        date.setMilliseconds(date.getMilliseconds() + milliseconds);
+    public static addTime(
+        date: Date,
+        time: BaseTimestampEntry
+    ): Date {
+        date.setFullYear(date.getFullYear() + ( time.years !== undefined ? time.years : 0));
+        date.setMonth(date.getMonth() + (time.months !== undefined ? time.months : 0));
+        date.setDate(date.getDate() + ((time.weeks !== undefined ? time.weeks : 0) * 7) + (time.days !== undefined ? time.days : 0));
+        date.setHours(date.getHours() + (time.hours !== undefined ? time.hours : 0));
+        date.setMinutes(date.getMinutes() + (time.minutes !== undefined ? time.minutes : 0));
+        date.setSeconds(date.getSeconds() + (time.seconds !== undefined ? time.seconds : 0));
+        date.setMilliseconds(date.getMilliseconds() + (time.milliseconds !== undefined ? time.milliseconds : 0));
         
         return date;
     }
@@ -353,44 +337,20 @@ class DateUtilities {
     /**
      * Subtract Time from a date.
      * @param date - The date from which time will be subtracted.
-     * @param years - The number of years to subtract.
-     * @param months - The number of months to subtract.
-     * @param weeks - The number of weeks to subtract.
-     * @param days - The number of days to subtract.
-     * @param hours - The number of hours to subtract.
-     * @param minutes - The number of minutes to subtract.
-     * @param seconds - The number of seconds to subtract.
-     * @param milliseconds - The number of milliseconds to subtract.
+     * @param time - An object representing the time to subtract, including years, months, weeks, days, hours, minutes, seconds, and milliseconds.
      * @returns A new Date object with the subtracted time.
      */
-    public static subtractTime({
-        date = new Date(),
-        years = 0,
-        months = 0,
-        weeks = 0,
-        days = 0,
-        hours = 0,
-        minutes = 0,
-        seconds = 0,
-        milliseconds = 0
-    }: {
-        date?: Date,
-        years?: number,
-        months?: number,
-        weeks?: number,
-        days?: number,
-        hours?: number,
-        minutes?: number,
-        seconds?: number,
-        milliseconds?: number
-    } = {}): Date {
-        date.setFullYear(date.getFullYear() - years);
-        date.setMonth(date.getMonth() - months);
-        date.setDate(date.getDate() - weeks * 7 - days);
-        date.setHours(date.getHours() - hours);
-        date.setMinutes(date.getMinutes() - minutes);
-        date.setSeconds(date.getSeconds() - seconds);
-        date.setMilliseconds(date.getMilliseconds() - milliseconds);
+    public static subtractTime(
+        date: Date,
+        time: BaseTimestampEntry
+    ): Date {
+        date.setFullYear(date.getFullYear() - (time.years !== undefined ? time.years : 0));
+        date.setMonth(date.getMonth() - (time.months !== undefined ? time.months : 0));
+        date.setDate(date.getDate() - ((time.weeks !== undefined ? time.weeks : 0) * 7) - (time.days !== undefined ? time.days : 0));
+        date.setHours(date.getHours() - (time.hours !== undefined ? time.hours : 0));
+        date.setMinutes(date.getMinutes() - (time.minutes !== undefined ? time.minutes : 0));
+        date.setSeconds(date.getSeconds() - (time.seconds !== undefined ? time.seconds : 0));
+        date.setMilliseconds(date.getMilliseconds() - (time.milliseconds !== undefined ? time.milliseconds : 0));
 
         return date;
     }
