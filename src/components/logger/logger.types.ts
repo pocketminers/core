@@ -1,4 +1,4 @@
-import { BaseTimeStamp } from "@templates/v0/base/timestamps";
+import { BaseTimestamp } from "@templates/v0/base/timestamps";
 
 
 /**
@@ -34,7 +34,7 @@ interface LogBookItemEntry
     extends
         Record<"level", L>,
         Record<"message", string>,
-        Record<"timestamp", BaseTimeStamp>,
+        Record<"timestamp", BaseTimestamp>,
         Record<"context", string>,
         Record<"data", D> {}
 

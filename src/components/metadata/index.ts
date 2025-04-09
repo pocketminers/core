@@ -9,10 +9,10 @@ class Metadata
     T extends BaseObjectType,
 >
     implements
-        BaseMetadata<I,T>
+        BaseMetadata<I, T>
 {
     public readonly annotations: BaseMetadataAnnotations;
-    public readonly labels: BaseMetadataLabels<I,T>;
+    public readonly labels: BaseMetadataLabels<I, T>;
     public readonly timestamps: BaseTimestamps;
 
     constructor({

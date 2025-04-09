@@ -1,2 +1,3 @@
-export * from './account';
+"use strict";
+// export * from './account';
 //# sourceMappingURL=index.js.map

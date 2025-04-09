@@ -1,4 +1,10 @@
 class PocketMessage {
+    id;
+    status;
+    error;
+    errorStack;
+    body;
+    data;
     static getErrorMessage(error) {
         if (error instanceof Error) {
             return error.message;

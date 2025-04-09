@@ -22,7 +22,7 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "rootDir": "./src",
-        "baseUrl": "./"
+        "baseUrl": "./src"
     },
     "include": [
         "src/**/*.ts"

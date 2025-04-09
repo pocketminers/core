@@ -1,20 +1,24 @@
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 import { BaseObject, BaseObjectTypes } from "./object";
-import { BaseIdentifierTypes } from "./identifier";
+import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
 
 
 
 /**
  * BaseArgument is a generic type that represents an argument object.
  */
-interface BaseArgument<T>
+interface BaseArgument
+<
+    T,
+    I extends BaseIdentifierType
+>
     extends
         BaseObject<
             {
                 name: BaseValueKey;
                 value: BaseValue<T>;
             },
-            BaseIdentifierTypes.Multihash | BaseIdentifierTypes.Undefined,
+            I | BaseIdentifierTypes.Multihash,
             BaseObjectTypes.Argument
         >
 {}
@@ -25,7 +29,8 @@ interface BaseArgument<T>
  */
 interface BaseParameter
 <
-    T
+    T,
+    I extends BaseIdentifierType
 >
     extends
         BaseObject
@@ -37,7 +42,7 @@ interface BaseParameter
                 required: boolean;
                 optional: Array<BaseValue<T>>;
             },
-            BaseIdentifierTypes.Multihash,
+            I | BaseIdentifierTypes.Multihash,
             BaseObjectTypes.Parameter
         >
 {}
@@ -64,11 +69,11 @@ interface BaseProperty<T extends BaseValue>
  * Configuration is a generic type that represents a configuration object.
  * It can contain any number of properties, each of which can be of any type.
  */
-interface BaseConfiguration<T extends BaseValue>
+interface BaseConfiguration<T extends BaseValue, I extends BaseIdentifierTypes>
     extends
         BaseObject<{
-            arguments: Array<BaseArgument<T>>;
-            parameters: Array<BaseParameter<T>>;
+            arguments: Array<BaseArgument<T, I>>;
+            parameters: Array<BaseParameter<T, I>>;
         }>
 {}
 

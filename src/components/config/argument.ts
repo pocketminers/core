@@ -1,6 +1,6 @@
 import { Metadata } from "@components/metadata";
 import { BaseArgument } from "@templates/v0/base/configuration";
-import { BaseIdentifier, BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
 import { BaseMetadataEntry } from "@templates/v0/base/metadata";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
@@ -16,10 +16,10 @@ import { MultiHashUtilities } from "@utilities/multiHash";
 class Argument
 <
     T,
-    I extends BaseIdentifierTypes.Multihash | BaseIdentifierTypes.Undefined = BaseIdentifierTypes.Undefined,
+    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined,
 >
     implements
-        BaseArgument<T>
+        BaseArgument<T, I>
     
 {
     public readonly data: {
@@ -27,7 +27,7 @@ class Argument
         value: BaseValue<T>;
     }
 
-    public readonly metadata: Metadata<I | BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>;
+    public readonly metadata: Metadata<I, BaseObjectTypes.Argument>;
 
     constructor({
         name,

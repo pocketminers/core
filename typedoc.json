@@ -1,6 +1,7 @@
 {
     "$schema": "https://typedoc.org/schema.json",
     "entryPoints": [
+        "./src/components/index.ts",
         "./src/templates/index.ts",
         "./src/utilities/index.ts"
     ],

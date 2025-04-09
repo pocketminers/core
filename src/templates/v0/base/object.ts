@@ -26,6 +26,8 @@ enum BaseObjectTypes {
     Job = 'Job',
     JobGroup = 'JobGroup',
     JobTemplate = 'JobTemplate',
+    StorageItem = 'StorageItem',
+    Storage = 'Storage',
     Custom = 'Custom',
     Undefined = 'Undefined',
     Unknown = 'Unknown'

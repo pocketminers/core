@@ -63,4 +63,35 @@ describe("Argument", () => {
         expect(identifier.type_).toBe(BaseIdentifierTypes.Multihash);
         expect(identifier.value).toEqual("0xc9cf365eb43aaabd2632b78401d968494edd9b8e206e318a815af0f1522ae16c")
     });
+
+    it('should add a specified identifier to the argument', async () => {
+        const argument = new Argument<{[key:string]: string}, BaseIdentifierTypes.Name>({ name: mockKey, value: mockValue, meta: new Metadata<BaseIdentifierTypes.Name, BaseObjectTypes.Argument>({
+            id: {
+                type_: BaseIdentifierTypes.Name,
+                value: "mockId"
+            }
+        })});
+        expect(argument.metadata.labels.id).toEqual({
+            type_: BaseIdentifierTypes.Name,
+            value: "mockId"
+        });
+        console.log(`argument.metadata.labels.id: ${String(argument.metadata.labels.id?.value)}`);
+        expect(argument.metadata.labels.id?.type_).toBe(BaseIdentifierTypes.Name);
+
+        const identifier = await argument.toHashedIdentifier();
+        expect(identifier).toBeDefined();
+        expect(identifier.type_).toBe(BaseIdentifierTypes.Multihash);
+        expect(identifier.value).toEqual("0xc9cf365eb43aaabd2632b78401d968494edd9b8e206e318a815af0f1522ae16c");
+    });
+
+    it('should be able to have a number as the name', () => {
+        const argument = new Argument({ name: 1, value: mockValue });
+        expect(argument.name).toBe(1);
+    });
+
+    it('should be able to have a symbol as the name', () => {
+        const argument = new Argument({ name: Symbol('⭐️'), value: mockValue });
+        console.log(`argument.name: ${String(argument.name)}`);
+        expect(argument.name).not.toBeUndefined();
+    });
 });

@@ -51,6 +51,8 @@ class BaseComponent<
 type BaseComponentsTypes = {
     [key in BaseComponentPartsType]: BaseComponentsTypes[key];
 }
+
+
 export {
     BaseComponent,
     BaseComponentParts,
