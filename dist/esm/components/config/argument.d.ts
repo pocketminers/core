@@ -29,6 +29,7 @@ declare class Argument<V, I extends BaseIdentifierType = BaseIdentifierTypes.Und
      */
     get value(): BaseValue<V>;
     toString(): string;
+    toJsonString(): string;
     toKeyValuePair(): Array<[BaseValueKey, BaseValue<V>]>;
     toRecord(): Record<BaseValueKey, BaseValue<V>>;
     toHashedIdentifier(): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>>;

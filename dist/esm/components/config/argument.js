@@ -31,7 +31,12 @@ class Argument extends PocketObject {
         return this.data.value;
     }
     toString() {
-        return JSON.stringify(this.data); // Serialize with proper JSON format, including quotation marks
+        const name = String(this.name);
+        const value = this.value !== undefined ? JSON.stringify(this.value).replaceAll(/\"/g, '"') : "undefined"; // Convert value to string, handle undefined
+        return `${name}: ${value}`;
+    }
+    toJsonString() {
+        return JSON.stringify(this.data).replaceAll(/\"/g, '"'); // Serialize with proper JSON format, including quotation marks
     }
     toKeyValuePair() {
         return [[this.name, this.value]];
@@ -98,7 +103,28 @@ class Argument extends PocketObject {
         }
         let parsed;
         try {
-            parsed = JSON.parse(str); // Parse the JSON string back to an object
+            console.log("Parsing string:", str);
+            if (str.includes(":")) {
+                const [name, ...value] = str.split(":").map(part => part.trim());
+                if (value.length === 0) {
+                    throw new Error("Value is required in the serialized string");
+                }
+                const valueString = value.join(":").trim();
+                if (valueString === "") {
+                    throw new Error("Value is required in the serialized string");
+                }
+                parsed = {
+                    name,
+                    value: JSON.parse(valueString)
+                };
+            }
+            else {
+                const [name, value] = str.split("=").map(part => part.trim());
+                parsed = {
+                    name,
+                    value: JSON.parse(value)
+                };
+            }
         }
         catch (error) {
             throw new Error("Invalid string format for deserialization");

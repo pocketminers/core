@@ -108,7 +108,12 @@ var Argument = /** @class */ (function (_super) {
         configurable: true
     });
     Argument.prototype.toString = function () {
-        return JSON.stringify(this.data); // Serialize with proper JSON format, including quotation marks
+        var name = String(this.name);
+        var value = this.value !== undefined ? JSON.stringify(this.value).replaceAll(/\"/g, '"') : "undefined"; // Convert value to string, handle undefined
+        return "".concat(name, ": ").concat(value);
+    };
+    Argument.prototype.toJsonString = function () {
+        return JSON.stringify(this.data).replaceAll(/\"/g, '"'); // Serialize with proper JSON format, including quotation marks
     };
     Argument.prototype.toKeyValuePair = function () {
         return [[this.name, this.value]];
@@ -185,7 +190,28 @@ var Argument = /** @class */ (function (_super) {
         }
         var parsed;
         try {
-            parsed = JSON.parse(str); // Parse the JSON string back to an object
+            console.log("Parsing string:", str);
+            if (str.includes(":")) {
+                var _a = __read(str.split(":").map(function (part) { return part.trim(); })), name_1 = _a[0], value = _a.slice(1);
+                if (value.length === 0) {
+                    throw new Error("Value is required in the serialized string");
+                }
+                var valueString = value.join(":").trim();
+                if (valueString === "") {
+                    throw new Error("Value is required in the serialized string");
+                }
+                parsed = {
+                    name: name_1,
+                    value: JSON.parse(valueString)
+                };
+            }
+            else {
+                var _b = __read(str.split("=").map(function (part) { return part.trim(); }), 2), name_2 = _b[0], value = _b[1];
+                parsed = {
+                    name: name_2,
+                    value: JSON.parse(value)
+                };
+            }
         }
         catch (error) {
             throw new Error("Invalid string format for deserialization");
