@@ -59,3 +59,5 @@ export {
     BaseComponentsTypes
 }
 
+export * from './object';
+

@@ -56,6 +56,7 @@ var Metadata = /** @class */ (function () {
     Metadata.prototype.update = function (_a) {
         // These Values are immuteable:
         // - timestamps.created
+        // - timestamps.updated
         // - labels.id
         // - labels.type
         var _b, _c, _d;
@@ -97,6 +98,24 @@ var Metadata = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Metadata.createDefaultMetadata = function () {
+        return new Metadata({
+            id: {
+                type_: BaseIdentifierTypes.Undefined,
+                value: "undefined"
+            },
+            name: "",
+            type: BaseObjectTypes.Undefined,
+            description: "",
+            tags: [],
+            timestamps: {
+                created: { date: new Date() },
+                updated: { date: new Date() }
+            },
+            annotations: {},
+            labels: {}
+        });
+    };
     return Metadata;
 }());
 export { Metadata };

@@ -59,5 +59,6 @@ export {
     type NumberOrEmpty,
     type BooleanOrEmpty,
     type BaseValue,
-    type BaseValueKey
+    type BaseValueKey,
+    type DefaultBaseValue
 }

@@ -39,5 +39,5 @@ type BaseValue<V = any> = V extends DefaultBaseValue ? V : V extends Array<infer
  * It is used to represent keys in objects or maps.
  */
 type BaseValueKey = string | number | symbol;
-export { type StringOrEmpty, type NumberOrEmpty, type BooleanOrEmpty, type BaseValue, type BaseValueKey };
+export { type StringOrEmpty, type NumberOrEmpty, type BooleanOrEmpty, type BaseValue, type BaseValueKey, type DefaultBaseValue };
 //# sourceMappingURL=value.d.ts.map

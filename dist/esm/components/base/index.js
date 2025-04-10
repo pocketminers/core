@@ -21,4 +21,5 @@ class BaseComponent {
     }
 }
 export { BaseComponent, BaseComponentParts };
+export * from './object';
 //# sourceMappingURL=index.js.map

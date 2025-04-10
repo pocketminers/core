@@ -1,4 +1,4 @@
-import { Metadata } from "../metadata";
+import { PocketObject } from "../base/object";
 import { BaseArgument } from "../../templates/v0/base/configuration";
 import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "../../templates/v0/base/identifier";
 import { BaseMetadataEntry } from "../../templates/v0/base/metadata";
@@ -8,24 +8,33 @@ import { BaseValue, BaseValueKey } from "../../templates/v0/base/value";
  * Argument is a generic class that represents a key-value pair.
  *
  */
-declare class Argument<T, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined> implements BaseArgument<T, I> {
-    readonly data: {
-        name: BaseValueKey;
-        value: BaseValue<T>;
-    };
-    readonly metadata: Metadata<I, BaseObjectTypes.Argument>;
+declare class Argument<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined> extends PocketObject<{
+    name: BaseValueKey;
+    value: BaseValue<V>;
+}, I, BaseObjectTypes.Argument> implements BaseArgument<V, I> {
+    /**
+     * Constructor for the Argument class.
+     */
     constructor({ name, value, meta }: {
         name: BaseValueKey;
-        value: BaseValue<T>;
+        value: BaseValue<V>;
         meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>;
     });
+    /**
+     * The name of the argument.
+     */
     get name(): BaseValueKey;
-    get value(): BaseValue<T>;
+    /**
+     * The value of the argument.
+     */
+    get value(): BaseValue<V>;
     toString(): string;
-    toKeyValuePair(): Array<[BaseValueKey, BaseValue<T>]>;
-    toRecord(): Record<BaseValueKey, BaseValue<T>>;
+    toKeyValuePair(): Array<[BaseValueKey, BaseValue<V>]>;
+    toRecord(): Record<BaseValueKey, BaseValue<V>>;
     toHashedIdentifier(): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>>;
-    static fromRecord<T>(record: Record<BaseValueKey, BaseValue<T>>, meta?: BaseMetadataEntry<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>): Argument<T, BaseIdentifierTypes.Undefined>;
+    static fromRecord<V>(record: Record<BaseValueKey, BaseValue<V>>, meta?: BaseMetadataEntry<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>): Argument<V, BaseIdentifierTypes.Undefined>;
+    static fromKeyValuePair<V>(keyValuePair: [BaseValueKey, BaseValue<V>], meta?: BaseMetadataEntry<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>): Argument<V, BaseIdentifierTypes.Undefined>;
+    static fromString<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined>(str: string, meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>): Argument<V, I>;
 }
 export { Argument };
 //# sourceMappingURL=argument.d.ts.map

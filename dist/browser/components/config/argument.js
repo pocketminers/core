@@ -1,14 +1,18 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
     };
-    return __assign.apply(this, arguments);
-};
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -61,29 +65,32 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
+import { PocketObject } from "../base/object";
 import { Metadata } from "../metadata";
 import { BaseIdentifierTypes } from "../../templates/v0/base/identifier";
-import { Freezer } from "../../utilities/freezer";
 import { MultiHashUtilities } from "../../utilities/multiHash";
 /**
  * Argument is a generic class that represents a key-value pair.
  *
  */
-var Argument = /** @class */ (function () {
+var Argument = /** @class */ (function (_super) {
+    __extends(Argument, _super);
+    /**
+     * Constructor for the Argument class.
+     */
     function Argument(_a) {
         var name = _a.name, value = _a.value, meta = _a.meta;
-        var _b, _c;
-        this.data = {
+        var data = {
             name: name,
             value: value
         };
-        this.metadata = new Metadata(__assign({ id: {
-                type_: ((_b = meta === null || meta === void 0 ? void 0 : meta.id) === null || _b === void 0 ? void 0 : _b.type_) || BaseIdentifierTypes.Undefined,
-                value: ((_c = meta === null || meta === void 0 ? void 0 : meta.id) === null || _c === void 0 ? void 0 : _c.value) || "undefined"
-            } }, meta));
-        Freezer.deepFreeze(this);
+        var metadata = meta !== undefined ? new Metadata(meta) : new Metadata();
+        return _super.call(this, data, metadata) || this;
     }
     Object.defineProperty(Argument.prototype, "name", {
+        /**
+         * The name of the argument.
+         */
         get: function () {
             return this.data.name;
         },
@@ -91,6 +98,9 @@ var Argument = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(Argument.prototype, "value", {
+        /**
+         * The value of the argument.
+         */
         get: function () {
             return this.data.value;
         },
@@ -98,15 +108,7 @@ var Argument = /** @class */ (function () {
         configurable: true
     });
     Argument.prototype.toString = function () {
-        return "".concat(String(this.name), ": ").concat(this.value instanceof String ? this.value
-            : this.value instanceof Number ? this.value.toString()
-                : this.value instanceof Boolean ? this.value.toString()
-                    : this.value instanceof Array ? "[".concat(this.value.map(function (v) { return v === null || v === void 0 ? void 0 : v.toString(); }).join(", "), "]")
-                        : this.value instanceof Object ? "{".concat(Object.entries(this.value).map(function (_a) {
-                            var _b = __read(_a, 2), k = _b[0], v = _b[1];
-                            return "".concat(k, ": ").concat(v);
-                        }).join(", "), "}")
-                            : 'undefined');
+        return JSON.stringify(this.data); // Serialize with proper JSON format, including quotation marks
     };
     Argument.prototype.toKeyValuePair = function () {
         return [[this.name, this.value]];
@@ -157,7 +159,50 @@ var Argument = /** @class */ (function () {
             meta: meta
         });
     };
+    Argument.fromKeyValuePair = function (keyValuePair, meta) {
+        if (keyValuePair === undefined) {
+            throw new Error("Key-value pair is required");
+        }
+        if (keyValuePair.length !== 2) {
+            throw new Error("Key-value pair must contain exactly two elements");
+        }
+        var _a = __read(keyValuePair, 2), name = _a[0], value = _a[1];
+        if (name === undefined) {
+            throw new Error("Name is required");
+        }
+        if (value === undefined) {
+            throw new Error("Value is required");
+        }
+        return new Argument({
+            name: name,
+            value: value,
+            meta: meta
+        });
+    };
+    Argument.fromString = function (str, meta) {
+        if (!str) {
+            throw new Error("String is required");
+        }
+        var parsed;
+        try {
+            parsed = JSON.parse(str); // Parse the JSON string back to an object
+        }
+        catch (error) {
+            throw new Error("Invalid string format for deserialization");
+        }
+        if (parsed.name === undefined || parsed.name === null) {
+            throw new Error("Name is required in the serialized string");
+        }
+        if (parsed.value === undefined) {
+            throw new Error("Value is required in the serialized string");
+        }
+        return new Argument({
+            name: parsed.name,
+            value: parsed.value,
+            meta: meta
+        });
+    };
     return Argument;
-}());
+}(PocketObject));
 export { Argument };
 //# sourceMappingURL=argument.js.map

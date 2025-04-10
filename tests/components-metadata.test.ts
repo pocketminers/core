@@ -156,7 +156,6 @@ describe("Metadata: Updating", () => {
             });
         }
         catch (error) {
-            console.log(error);
             expect(error).toBeDefined();
         }
 

@@ -1,6 +1,6 @@
-import { BaseIdentifier, BaseIdentifierType } from "../../templates/v0/base/identifier";
+import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "../../templates/v0/base/identifier";
 import { BaseMetadata, BaseMetadataAnnotations, BaseMetadataEntry, BaseMetadataLabels } from "../../templates/v0/base/metadata";
-import { BaseObjectType } from "../../templates/v0/base/object";
+import { BaseObjectType, BaseObjectTypes } from "../../templates/v0/base/object";
 import { BaseTimestamps } from "../../templates/v0/base/timestamps";
 declare class Metadata<I extends BaseIdentifierType, O extends BaseObjectType> implements BaseMetadata<I, O> {
     readonly annotations: BaseMetadataAnnotations;
@@ -22,6 +22,7 @@ declare class Metadata<I extends BaseIdentifierType, O extends BaseObjectType> i
     }): Metadata<I, O>;
     get id(): BaseIdentifier<I>;
     get type(): O;
+    static createDefaultMetadata<I extends BaseIdentifierType = BaseIdentifierTypes.Undefined, O extends BaseObjectType = BaseObjectTypes.Undefined>(): Metadata<I, O>;
 }
 export { Metadata };
 //# sourceMappingURL=index.d.ts.map

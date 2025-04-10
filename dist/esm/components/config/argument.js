@@ -1,41 +1,37 @@
+import { PocketObject } from "../base/object";
 import { Metadata } from "../metadata";
 import { BaseIdentifierTypes } from "../../templates/v0/base/identifier";
-import { Freezer } from "../../utilities/freezer";
 import { MultiHashUtilities } from "../../utilities/multiHash";
 /**
  * Argument is a generic class that represents a key-value pair.
  *
  */
-class Argument {
-    data;
-    metadata;
+class Argument extends PocketObject {
+    /**
+     * Constructor for the Argument class.
+     */
     constructor({ name, value, meta }) {
-        this.data = {
+        const data = {
             name,
             value
         };
-        this.metadata = new Metadata({
-            id: {
-                type_: meta?.id?.type_ || BaseIdentifierTypes.Undefined,
-                value: meta?.id?.value || "undefined"
-            },
-            ...meta
-        });
-        Freezer.deepFreeze(this);
+        const metadata = meta !== undefined ? new Metadata(meta) : new Metadata();
+        super(data, metadata);
     }
+    /**
+     * The name of the argument.
+     */
     get name() {
         return this.data.name;
     }
+    /**
+     * The value of the argument.
+     */
     get value() {
         return this.data.value;
     }
     toString() {
-        return `${String(this.name)}: ${this.value instanceof String ? this.value
-            : this.value instanceof Number ? this.value.toString()
-                : this.value instanceof Boolean ? this.value.toString()
-                    : this.value instanceof Array ? `[${this.value.map(v => v?.toString()).join(", ")}]`
-                        : this.value instanceof Object ? `{${Object.entries(this.value).map(([k, v]) => `${k}: ${v}`).join(", ")}}`
-                            : 'undefined'}`;
+        return JSON.stringify(this.data); // Serialize with proper JSON format, including quotation marks
     }
     toKeyValuePair() {
         return [[this.name, this.value]];
@@ -73,6 +69,49 @@ class Argument {
         return new Argument({
             name,
             value,
+            meta
+        });
+    }
+    static fromKeyValuePair(keyValuePair, meta) {
+        if (keyValuePair === undefined) {
+            throw new Error("Key-value pair is required");
+        }
+        if (keyValuePair.length !== 2) {
+            throw new Error("Key-value pair must contain exactly two elements");
+        }
+        const [name, value] = keyValuePair;
+        if (name === undefined) {
+            throw new Error("Name is required");
+        }
+        if (value === undefined) {
+            throw new Error("Value is required");
+        }
+        return new Argument({
+            name,
+            value,
+            meta
+        });
+    }
+    static fromString(str, meta) {
+        if (!str) {
+            throw new Error("String is required");
+        }
+        let parsed;
+        try {
+            parsed = JSON.parse(str); // Parse the JSON string back to an object
+        }
+        catch (error) {
+            throw new Error("Invalid string format for deserialization");
+        }
+        if (parsed.name === undefined || parsed.name === null) {
+            throw new Error("Name is required in the serialized string");
+        }
+        if (parsed.value === undefined) {
+            throw new Error("Value is required in the serialized string");
+        }
+        return new Argument({
+            name: parsed.name,
+            value: parsed.value,
             meta
         });
     }

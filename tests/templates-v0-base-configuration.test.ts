@@ -44,10 +44,8 @@ describe("BaseArgument", () => {
                     value: "value"
                 }
             }
-            console.log(`Argument: ${String(argument.data.name)}`);
         }
         catch (error) {
-            console.log(`Error: ${error}`);
             expect(error).toBeDefined();
         }
     });
@@ -109,10 +107,8 @@ describe("BaseParameter", () => {
                     optional: ["optional"]
                 }
             }
-            console.log(`Parameter Name: ${String(parameter.data.name)}`);
         }
         catch (error) {
-            console.log(`Error: ${error}`);
             expect(error).toBeDefined();
         }
     });
@@ -178,10 +174,8 @@ describe("BaseProperty", () => {
                     optional: ["optional"]
                 }
             }
-            console.log(`Property Name: ${String(property.data.name)}`);
         }
         catch (error) {
-            console.log(`Error: ${error}`);
             expect(error).toBeDefined();
         }
     });
@@ -237,10 +231,8 @@ describe("BaseConfiguration", () => {
                     optional: ["optional"]
                 }
             }
-            console.log(`Configuration Name: ${String(configuration.data.arguments[0].data.name)}`);
         }
         catch (error) {
-            console.log(`Error: ${error}`);
             expect(error).toBeDefined();
         }
     });
