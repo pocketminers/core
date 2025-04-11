@@ -1,27 +1,75 @@
-import { BaseObject, BaseObjectType, BaseObjectTypes } from "../../templates/v0/base/object";
-import { BaseMetadata } from "../../templates/v0/base/metadata";
+import { BaseObject, BaseObjectType } from "../../templates/v0/base/object";
 import { BaseIdentifierType, BaseIdentifierTypes } from "../../templates/v0/base/identifier";
 import { Metadata } from "@components/metadata";
 import { Freezer } from "@utilities/freezer";
+import { MultiHashUtilities } from "@utilities/multiHash";
+import { MetadataFactory } from "@components/metadata/metadata.factory";
 
 
 class PocketObject
 <
     D,
     I extends BaseIdentifierType,
-    T extends BaseObjectType
+    O extends BaseObjectType
 >
-    implements BaseObject<D, I, T>
+    implements BaseObject<D, I, O>
 {    
     data: D;
-    metadata: BaseMetadata<I, T>;
+    metadata: Metadata<I, O>;
 
-    constructor(data: D, metadata?: BaseMetadata<I, T>) {
+    constructor({
+        data,
+        metadata
+    }:{
+        data: D,
+        metadata?: Metadata<I, O>
+    }){
+        this.checkData(data);
+        this.checkMetadata(metadata);
+
         this.data = data;
-        this.metadata = metadata !== undefined ? metadata : Metadata.createDefaultMetadata<I, T>();
+        this.metadata = metadata !== undefined
+            ? new Metadata(metadata)
+            : MetadataFactory.createDefaultMetadata<I, O>();
 
         Freezer.deepFreeze(this);
     }
+
+    private checkData(data: D): void {
+        if (data === undefined) {
+            throw new Error("Data is required");
+        }
+    }
+
+    private checkMetadata(metadata?: Metadata<I, O>) {
+    }
+
+    /**
+     * TODO: Revisit this method to use the metadata object
+     */
+    private async checkDataHash(data: D, metadata?: Metadata<I,O>): Promise<Metadata<I, O>> {
+        this.checkData(data);
+
+        const hash = await MultiHashUtilities.generateMultihash(this.dataString);
+        
+        if (metadata === undefined) {
+            return MetadataFactory.createDefaultMetadata<I, O>({
+                id: {
+                    type_: BaseIdentifierTypes.Multihash as I,
+                    value: hash
+                }
+            });
+        }
+
+        const metadataHash = metadata.labels.id?.value;
+
+        if (metadataHash !== undefined && metadataHash !== hash) {
+            throw new Error("Data hash does not match metadata hash");
+        }
+
+        return metadata;
+    }
+
 
     public get dataString() {
         return JSON.stringify(this.data);
@@ -34,7 +82,10 @@ class PocketObject
     public get objectString() {
         return JSON.stringify(this);
     }
-    
+
+    public get objectType() {
+        return this.metadata.labels?.type;
+    }
 }
 
 export { 

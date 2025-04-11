@@ -24,6 +24,52 @@ describe("Argument", () => {
             expect(Object.isFrozen(argument.name)).toBe(true);
             expect(Object.isFrozen(argument.value)).toBe(true);
         });
+
+        it("should throw an error if name is undefined", () => {
+            try {
+                // @ts-ignore
+                new Argument({ name: undefined, value: mockValue });
+            } catch (error: any) {
+                console.log(`error: ${error.message}`);
+                expect(error).toBeDefined();
+                expect(error.message).toBe("Name is required");
+            }
+        });
+
+        it('should handle a number as the name', () => {
+            const argument = new Argument({ name: 1, value: mockValue });
+            expect(argument.name).toBe(1);
+        });
+
+        it('should handle a symbol as the name', () => {
+            const argument = new Argument({ name: Symbol('⭐️'), value: mockValue });
+            expect(argument.name).not.toBeUndefined();
+        });
+
+        it("should allow and undefined value", () => { 
+            const argument = new Argument({ name: mockKey, value: undefined });
+            expect(argument.value).toBeUndefined();
+        });
+
+        it('should allow a string as the name', () => {
+            const argument = new Argument({ name: "mockKey", value: mockValue });
+            expect(argument.name).toBe("mockKey");
+        });
+
+        it('should allow metadata to be passed in', () => {
+            const argument = new Argument({
+                name: mockKey,
+                value: mockValue,
+                meta: new Metadata<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>({
+                    description: "mock description",
+                    tags: ["tag1", "tag2"]
+                })
+            });
+
+            expect(argument.metadata).toBeDefined();
+            expect(argument.metadata.annotations?.description).toBe("mock description");
+            expect(argument.metadata.labels?.tags).toEqual(["tag1", "tag2"]);
+        });
     });
 
     describe("Argument: methods", () => {
@@ -46,6 +92,15 @@ describe("Argument", () => {
 
             expect(argument.toRecord()).toEqual({
                 [mockKey]: mockValue
+            });
+        });
+
+        it("should return a JSON representation of the argument", () => {
+            const argument = new Argument({ name: mockKey, value: mockValue });
+
+            expect(argument.toJSON()).toEqual({
+                name: mockKey,
+                value: mockValue
             });
         });
 
@@ -100,70 +155,6 @@ describe("Argument", () => {
         });
     });
 
-
-    describe("Argument: static methods", () => {
-        it("should create an argument from a record", () => {
-            const record: Record<BaseValueKey, BaseValue<{[key:string]: string}>> = {
-                1: { value: "value1" }
-            };
-
-            const argument = Argument.fromRecord(record);
-
-            expect(argument).toBeDefined();
-            expect(argument.name).toBe("1");
-            expect(argument.value).toEqual({ value: "value1" });
-        });
-
-        it("should throw an error if the record is empty", () => {
-            const record: Record<BaseValueKey, BaseValue<{[key:string]: string}>> = {};
-
-            try {
-                Argument.fromRecord(record);
-            } catch (error: any) {
-                expect(error).toBeDefined();
-                expect(error.message).toBe("Record is empty");
-            }
-        });
-
-        it("should throw an error if the record is undefined", () => {
-            try {
-                // @ts-ignore
-                Argument.fromRecord(undefined);
-            } catch (error: any) {
-                expect(error).toBeDefined();
-                expect(error.message).toBe("Record is required");
-            }
-        });
-
-        it("should throw an error if the record has more than one key-value pair", () => {
-            const record: Record<BaseValueKey, BaseValue<{[key:string]: string}>> = {
-                1: { value: "value1" },
-                2: { value: "value2" }
-            };
-
-            try {
-                Argument.fromRecord(record);
-            } catch (error: any) {
-                expect(error).toBeDefined();
-                expect(error.message).toBe("Record must contain only one key-value pair");
-            }
-        });
-
-        it('should include metadata in the argument', () => {
-            const argument = new Argument({
-                name: 'mockKey',
-                value: 'mockValue',
-                meta: new Metadata<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>({
-                    description: "mock description",
-                    tags: ["tag1", "tag2"]
-                })
-            });
-            expect(argument.metadata).toBeDefined();
-            expect(argument.metadata.annotations?.description).toBe("mock description");
-            expect(argument.metadata.labels?.tags).toEqual(["tag1", "tag2"]);
-        });
-    });
-
     describe("Argument: error handling", () => {
         it("should throw an error if the name is undefined", () => {
             try {
@@ -183,69 +174,6 @@ describe("Argument", () => {
                 expect(error).toBeDefined();
                 expect(error.message).toBe("Value is required");
             }
-        });
-    });
-
-    describe("Argument: serialization", () => {
-        it("should serialize the argument to a JSON string", () => {
-            const argument = new Argument({ name: mockKey, value: mockValue });
-            const jsonString = argument.toJsonString();
-
-            expect(jsonString).toBe(JSON.stringify(argument.data))
-        });
-
-        it("should deserialize the argument from a JSON string", () => {
-            const jsonString = `{"2": {"value": "mockValue"}}`;
-            const argument = Argument.fromRecord(JSON.parse(jsonString));
-
-            expect(argument.name).toBe(String(mockKey));
-            expect(argument.value).toEqual(mockValue);
-        });
-
-        it("should throw an error if the JSON string is invalid", () => {
-            const invalidJsonString = `{invalid: "json"}`;
-
-            try {
-                Argument.fromRecord(JSON.parse(invalidJsonString));
-            } catch (error: any) {
-                expect(error).toBeDefined();
-                expect(error.message).toBe("Expected property name or '}' in JSON at position 1 (line 1 column 2)");
-            }
-        });
-
-        it("should throw an error if the JSON string is empty", () => {
-            const emptyJsonString = "";
-
-            try {
-                Argument.fromRecord(JSON.parse(emptyJsonString));
-            } catch (error: any) {
-                expect(error).toBeDefined();
-                expect(error.message).toBe("Unexpected end of JSON input");
-            }
-        });
-
-        it('should serialize and deserialize to String', () => {
-            const argument = new Argument({ name: mockKey, value: mockValue });
-            const serialized = argument.toString();
-            const deserialized = Argument.fromString<{[key:string]: string}>(serialized);
-            console.log(`deserialized: ${JSON.stringify(deserialized)}`);
-            expect(deserialized).toBeDefined();
-        });
-
-        it('should serialize and deserialize to KeyValuePair', () => {
-            const argument = new Argument({ name: mockKey, value: mockValue });
-            const serialized = argument.toKeyValuePair();
-            const deserialized = Argument.fromKeyValuePair(serialized[0]);
-            console.log(`deserialized: ${JSON.stringify(deserialized)}`);
-            expect(deserialized).toBeDefined();
-        });
-
-        it('should serialize and deserialize to Record', () => {
-            const argument = new Argument({ name: mockKey, value: mockValue });
-            const serialized = argument.toRecord();
-            const deserialized = Argument.fromRecord(serialized);
-            console.log(`deserialized: ${JSON.stringify(deserialized)}`);
-            expect(deserialized).toBeDefined();
         });
     });
 });

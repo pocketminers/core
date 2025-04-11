@@ -30,12 +30,13 @@ declare class Argument<V, I extends BaseIdentifierType = BaseIdentifierTypes.Und
     get value(): BaseValue<V>;
     toString(): string;
     toJsonString(): string;
+    toJSON(): {
+        name: BaseValueKey;
+        value: BaseValue<V>;
+    };
     toKeyValuePair(): Array<[BaseValueKey, BaseValue<V>]>;
     toRecord(): Record<BaseValueKey, BaseValue<V>>;
     toHashedIdentifier(): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>>;
-    static fromRecord<V>(record: Record<BaseValueKey, BaseValue<V>>, meta?: BaseMetadataEntry<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>): Argument<V, BaseIdentifierTypes.Undefined>;
-    static fromKeyValuePair<V>(keyValuePair: [BaseValueKey, BaseValue<V>], meta?: BaseMetadataEntry<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>): Argument<V, BaseIdentifierTypes.Undefined>;
-    static fromString<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined>(str: string, meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>): Argument<V, I>;
 }
 export { Argument };
 //# sourceMappingURL=argument.d.ts.map

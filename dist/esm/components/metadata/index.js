@@ -113,24 +113,6 @@ class Metadata {
     get type() {
         return this.labels.type;
     }
-    static createDefaultMetadata() {
-        return new Metadata({
-            id: {
-                type_: BaseIdentifierTypes.Undefined,
-                value: "undefined"
-            },
-            name: "",
-            type: BaseObjectTypes.Undefined,
-            description: "",
-            tags: [],
-            timestamps: {
-                created: { date: new Date() },
-                updated: { date: new Date() }
-            },
-            annotations: {},
-            labels: {}
-        });
-    }
 }
 export { Metadata };
 //# sourceMappingURL=index.js.map

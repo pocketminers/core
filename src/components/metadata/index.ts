@@ -173,29 +173,6 @@ class Metadata
     public get type(): O {
         return this.labels.type as O;
     }
-
-    public static createDefaultMetadata
-    <
-        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined,
-        O extends BaseObjectType = BaseObjectTypes.Undefined
-    >(): Metadata<I, O> {
-        return new Metadata<I, O>({
-            id: {
-                type_: BaseIdentifierTypes.Undefined as I,
-                value: "undefined"
-            },
-            name: "",
-            type: BaseObjectTypes.Undefined as O,
-            description: "",
-            tags: [],
-            timestamps: {
-                created: { date: new Date() },
-                updated: { date: new Date() }
-            },
-            annotations: {},
-            labels: {}
-        });
-    }
 }
 
 export {
