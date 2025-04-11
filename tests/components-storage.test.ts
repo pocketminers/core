@@ -1,13 +1,13 @@
-import { Storage } from "../src/components/base/storage";
+import { PocketStorage } from "../src/components/base/storage";
 import { BaseIdentifier, BaseIdentifierTypes } from "@templates/v0";
 import { BaseStorageLocations } from "@templates/v0/base/storage";
 import { Metadata } from "@components/metadata";
 
-describe("Storage", () => {
-    let storage: Storage<any, any>;
+describe("PocketStorage", () => {
+    let storage: PocketStorage<any, any>;
 
     beforeEach(() => {
-        storage = new Storage({
+        storage = new PocketStorage({
             location: BaseStorageLocations.MEMORY,
             allowDuplicates: false,
             allowEmpty: false,
@@ -46,7 +46,7 @@ describe("Storage", () => {
         for (let i = 0; i < 5; i++) {
             storage.addItem({ metadata: { id: `${i}`, type: "test" }, isEmpty: () => false });
         }
-        expect(() => storage.addItem({ metadata: { id: "6", type: "test" }, isEmpty: () => false })).toThrow("Storage is full");
+        expect(() => storage.addItem({ metadata: { id: "6", type: "test" }, isEmpty: () => false })).toThrow("PocketStorage is full");
     });
 
     it("should remove an item from the storage", () => {
@@ -105,7 +105,7 @@ describe("Storage", () => {
         const item1 = { metadata: { id: { value: 1, type_: BaseIdentifierTypes.Number} }, isEmpty: () => false };
         const item2 = { metadata: { id: { value: 2, type_: BaseIdentifierTypes.Number} }, isEmpty: () => false };
         storage.addItem(item1);
-        expect(() => storage.addItem(item2)).toThrow("Storage is full");
+        expect(() => storage.addItem(item2)).toThrow("PocketStorage is full");
     });
 
     it('should return the correct size of the storage', () => {

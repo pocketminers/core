@@ -3,9 +3,15 @@ import { BaseMetadataEntry } from "@templates/v0/base/metadata";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
 import { Argument } from "@components/config/argument";
+import { PocketFactory } from "@components/base/factory";
 
 
-class ArgumentFactory {
+class ArgumentFactory
+    extends PocketFactory<
+        Argument<any, BaseIdentifierTypes.Undefined>,
+        BaseObjectTypes.Argument
+    >
+{
 
     public static fromRecord
     <

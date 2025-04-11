@@ -1,5 +1,5 @@
-import { Storage } from "../base/storage";
-class ArgumentStorage extends Storage {
+import { PocketStorage } from "../base/storage";
+class ArgumentStorage extends PocketStorage {
     constructor({ location, items = [], allowDuplicates = false, allowEmpty = false, maxSize }) {
         super({
             location,

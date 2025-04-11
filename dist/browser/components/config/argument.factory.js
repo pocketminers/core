@@ -1,3 +1,18 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -15,8 +30,11 @@ var __read = (this && this.__read) || function (o, n) {
     return ar;
 };
 import { Argument } from "../config/argument";
-var ArgumentFactory = /** @class */ (function () {
+import { PocketFactory } from "../base/factory";
+var ArgumentFactory = /** @class */ (function (_super) {
+    __extends(ArgumentFactory, _super);
     function ArgumentFactory() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     ArgumentFactory.fromRecord = function (record, meta) {
         if (record === undefined) {
@@ -173,6 +191,6 @@ var ArgumentFactory = /** @class */ (function () {
         });
     };
     return ArgumentFactory;
-}());
+}(PocketFactory));
 export { ArgumentFactory };
 //# sourceMappingURL=argument.factory.js.map

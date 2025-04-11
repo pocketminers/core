@@ -1,1 +1,1 @@
-{"version":3,"file":"factory.js","sourceRoot":"","sources":["../../../../src/components/base/factory.ts"],"names":[],"mappings":";AAAA;IAAA;IAEA,CAAC;IAAD,oBAAC;AAAD,CAAC,AAFD,IAEC"}
+{"version":3,"file":"factory.js","sourceRoot":"","sources":["../../../../src/components/base/factory.ts"],"names":[],"mappings":"AAGA;IAeI,uBAAY,EAMX;YALG,IAAI,UAAA,EACJ,OAAO,aAAA;QAKP,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,OAAO,GAAG,OAAO,CAAC;IAC3B,CAAC;IACL,oBAAC;AAAD,CAAC,AAzBD,IAyBC;AAED,OAAO,EACH,aAAa,EAChB,CAAA"}

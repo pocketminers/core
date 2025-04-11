@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArgumentFactory = void 0;
 const argument_1 = require("../config/argument");
-class ArgumentFactory {
+const factory_1 = require("../base/factory");
+class ArgumentFactory extends factory_1.PocketFactory {
     static fromRecord(record, meta) {
         if (record === undefined) {
             throw new Error("Record is required");

@@ -1,5 +1,6 @@
 import { Argument } from "../config/argument";
-class ArgumentFactory {
+import { PocketFactory } from "../base/factory";
+class ArgumentFactory extends PocketFactory {
     static fromRecord(record, meta) {
         if (record === undefined) {
             throw new Error("Record is required");

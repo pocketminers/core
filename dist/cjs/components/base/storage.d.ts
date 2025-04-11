@@ -1,8 +1,8 @@
 import { Argument, Parameter } from "../config";
 import { BaseIdentifier, BaseObjectType } from "../../templates/v0";
 import { BaseStorage, BaseStorageLocation, BaseStorageLocations } from "../../templates/v0/base/storage";
-type StorageTypes = Argument<any> | Parameter<any>;
-declare class Storage<S extends StorageTypes, O extends BaseObjectType, L extends BaseStorageLocation = BaseStorageLocations.MEMORY> implements BaseStorage<S, O, L> {
+type StorageTypes = Argument<any, any> | Parameter<any, any>;
+declare class PocketStorage<S extends StorageTypes, O extends BaseObjectType, L extends BaseStorageLocation = BaseStorageLocations.MEMORY> implements BaseStorage<S, O, L> {
     /**
      * The location of the storage item.
      */
@@ -66,5 +66,5 @@ declare class Storage<S extends StorageTypes, O extends BaseObjectType, L extend
      */
     getType(): string;
 }
-export { Storage, type StorageTypes, };
+export { PocketStorage, type StorageTypes, };
 //# sourceMappingURL=storage.d.ts.map

@@ -1,6 +1,6 @@
 import { BaseStorageLocation, BaseStorageLocations } from "@templates/v0/base/storage";
 import { Argument } from "./argument";
-import { Storage } from "@components/base/storage";
+import { PocketStorage } from "@components/base/storage";
 import { BaseObjectTypes } from "@templates/v0";
 
 class ArgumentStorage
@@ -8,7 +8,7 @@ class ArgumentStorage
     L extends BaseStorageLocations = BaseStorageLocations.MEMORY
 >
     extends 
-        Storage<
+        PocketStorage<
             Argument<any>,
             BaseObjectTypes.Argument,
             L

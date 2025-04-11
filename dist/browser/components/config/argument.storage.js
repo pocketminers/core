@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Storage } from "../base/storage";
+import { PocketStorage } from "../base/storage";
 var ArgumentStorage = /** @class */ (function (_super) {
     __extends(ArgumentStorage, _super);
     function ArgumentStorage(_a) {
@@ -27,6 +27,6 @@ var ArgumentStorage = /** @class */ (function (_super) {
         }) || this;
     }
     return ArgumentStorage;
-}(Storage));
+}(PocketStorage));
 export { ArgumentStorage };
 //# sourceMappingURL=argument.storage.js.map

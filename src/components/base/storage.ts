@@ -2,9 +2,9 @@ import { Argument, Parameter } from "@components/config";
 import { BaseIdentifier, BaseObjectType } from "@templates/v0";
 import { BaseStorage, BaseStorageLocation, BaseStorageLocations } from "@templates/v0/base/storage";
 
-type StorageTypes = Argument<any> | Parameter<any>;
+type StorageTypes = Argument<any, any> | Parameter<any, any>;
 
-class Storage
+class PocketStorage
 <
     S extends StorageTypes,
     O extends BaseObjectType,
@@ -71,7 +71,7 @@ class Storage
         }
 
         if (this.maxSize !== undefined && this.items.length >= this.maxSize) {
-            throw new Error("Storage is full");
+            throw new Error("PocketStorage is full");
         }
 
         this.items.push(item);
@@ -132,6 +132,6 @@ class Storage
 
 
 export {
-    Storage,
+    PocketStorage,
     type StorageTypes,
 }

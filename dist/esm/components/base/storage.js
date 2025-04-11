@@ -1,4 +1,4 @@
-class Storage {
+class PocketStorage {
     /**
      * The location of the storage item.
      */
@@ -38,7 +38,7 @@ class Storage {
             throw new Error("Item already exists");
         }
         if (this.maxSize !== undefined && this.items.length >= this.maxSize) {
-            throw new Error("Storage is full");
+            throw new Error("PocketStorage is full");
         }
         this.items.push(item);
     }
@@ -89,5 +89,5 @@ class Storage {
         return this.items[0]?.metadata.type ?? "UNKNOWN";
     }
 }
-export { Storage, };
+export { PocketStorage, };
 //# sourceMappingURL=storage.js.map
