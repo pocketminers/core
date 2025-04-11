@@ -18,7 +18,7 @@ __exportStar(require("./configuration"), exports);
 __exportStar(require("./identifier"), exports);
 __exportStar(require("./metadata"), exports);
 __exportStar(require("./object"), exports);
-// export * from './storage';
+__exportStar(require("./storage"), exports);
 __exportStar(require("./timestamps"), exports);
 __exportStar(require("./value"), exports);
 //# sourceMappingURL=index.js.map
