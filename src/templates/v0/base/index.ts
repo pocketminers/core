@@ -1,4 +1,5 @@
 export * from './configuration';
+export * from './factory';
 export * from './identifier';
 export * from './metadata';
 export * from './object';

@@ -101,4 +101,5 @@ var Metadata = /** @class */ (function () {
     return Metadata;
 }());
 export { Metadata };
+export * from "./metadata.factory";
 //# sourceMappingURL=index.js.map

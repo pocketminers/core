@@ -59,6 +59,7 @@ export {
     BaseComponentsTypes
 }
 
+export * from './factory';
 export * from './object';
 export * from './storage';
 

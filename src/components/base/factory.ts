@@ -1,11 +1,16 @@
-import { BaseObjectType } from "@templates/v0";
+import { BaseFactory, BaseObjectType } from "@templates/v0";
 import { StorageTypes } from "./storage";
+
+
 
 class PocketFactory
 <
     S extends StorageTypes,
     O extends BaseObjectType,
-> {
+> 
+    implements
+        BaseFactory<S, O>
+{
     /**
      * The type of the object.
      */

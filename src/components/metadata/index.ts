@@ -178,3 +178,5 @@ class Metadata
 export {
     Metadata
 }
+
+export * from "./metadata.factory";

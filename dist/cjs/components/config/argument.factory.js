@@ -152,6 +152,17 @@ class ArgumentFactory extends factory_1.PocketFactory {
             });
         });
     }
+    static fromRecords(...records) {
+        if (!Array.isArray(records) || records.length === 0) {
+            throw new Error("An array of records is required");
+        }
+        return records.map(record => {
+            if (record === undefined || Object.keys(record).length === 0) {
+                throw new Error("Record is required");
+            }
+            return ArgumentFactory.fromRecord(record);
+        });
+    }
 }
 exports.ArgumentFactory = ArgumentFactory;
 //# sourceMappingURL=argument.factory.js.map

@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.91% </span>
+                <span class="strong">75.1% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>183/229</span>
+                <span class='fraction'>187/249</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>6/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.91% </span>
+                <span class="strong">75.1% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>183/229</span>
+                <span class='fraction'>187/249</span>
             </div>
         
             
@@ -291,7 +291,27 @@
 <a name='L226'></a><a href='#L226'>226</a>
 <a name='L227'></a><a href='#L227'>227</a>
 <a name='L228'></a><a href='#L228'>228</a>
-<a name='L229'></a><a href='#L229'>229</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -307,6 +327,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
@@ -517,6 +539,24 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
@@ -524,23 +564,25 @@ import { BaseMetadataEntry } from "@templates/v0/base/metadata";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
 import { Argument } from "@components/config/argument";
-import { PocketFactory } from "@components/base/factory";
+import PocketFactory  from "@components/base/factory";
 &nbsp;
 &nbsp;
 class ArgumentFactory
-    extends PocketFactory&lt;
-        Argument&lt;any, BaseIdentifierTypes.Undefined&gt;,
+    extends PocketFactory
+    &lt;
+        Argument&lt;any, any&gt;,
         BaseObjectTypes.Argument
     &gt;
 {
 &nbsp;
     public static fromRecord
     &lt;
-        V
+        V,
+        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
     &gt;(
         record: Record&lt;BaseValueKey, BaseValue&lt;V&gt;&gt;,
-        meta?: BaseMetadataEntry&lt;BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument&gt;
-    ): Argument&lt;V, BaseIdentifierTypes.Undefined&gt; {
+        meta?: BaseMetadataEntry&lt;I, BaseObjectTypes.Argument&gt;
+    ): Argument&lt;V, I&gt; {
         if (record === undefined) {
             throw new Error("Record is required");
         }
@@ -563,7 +605,7 @@ class ArgumentFactory
 <span class="cstat-no" title="statement not covered" >            throw new Error("Value is required");</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
 &nbsp;
-        return new Argument&lt;V, BaseIdentifierTypes.Undefined&gt;({
+        return new Argument&lt;V, I&gt;({
             name,
             value,
             meta
@@ -743,6 +785,24 @@ class ArgumentFactory
             });
         });
     }
+&nbsp;
+    public static <span class="fstat-no" title="function not covered" >fromRecords</span>
+<span class="cstat-no" title="statement not covered" >    &lt;</span>
+<span class="cstat-no" title="statement not covered" >        V,</span>
+<span class="cstat-no" title="statement not covered" >        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined</span>
+<span class="cstat-no" title="statement not covered" >    &gt;(...records: Record&lt;BaseValueKey, BaseValue&lt;V&gt;&gt;[]): Argument&lt;V, I&gt;[] {</span>
+<span class="cstat-no" title="statement not covered" >        if (!Array.isArray(records) || records.length === 0) {</span>
+<span class="cstat-no" title="statement not covered" >            throw new Error("An array of records is required");</span>
+<span class="cstat-no" title="statement not covered" >        }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        return records.map(record =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            if (record === undefined || Object.keys(record).length === 0) {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Record is required");</span>
+<span class="cstat-no" title="statement not covered" >            }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >            return ArgumentFactory.fromRecord&lt;V, I&gt;(record);</span>
+<span class="cstat-no" title="statement not covered" >        });</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
 }
 &nbsp;
 export {
@@ -754,7 +814,7 @@ export {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-11T05:01:00.420Z
+                at 2025-04-11T15:44:55.020Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

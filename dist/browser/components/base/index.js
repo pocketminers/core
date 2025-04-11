@@ -18,6 +18,7 @@ var BaseComponent = /** @class */ (function () {
     return BaseComponent;
 }());
 export { BaseComponent, BaseComponentParts };
+export * from './factory';
 export * from './object';
 export * from './storage';
 //# sourceMappingURL=index.js.map

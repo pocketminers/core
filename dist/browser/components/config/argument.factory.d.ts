@@ -4,8 +4,8 @@ import { BaseObjectTypes } from "../../templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "../../templates/v0/base/value";
 import { Argument } from "../config/argument";
 import { PocketFactory } from "../base/factory";
-declare class ArgumentFactory extends PocketFactory<Argument<any, BaseIdentifierTypes.Undefined>, BaseObjectTypes.Argument> {
-    static fromRecord<V>(record: Record<BaseValueKey, BaseValue<V>>, meta?: BaseMetadataEntry<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>): Argument<V, BaseIdentifierTypes.Undefined>;
+declare class ArgumentFactory extends PocketFactory<Argument<any, any>, BaseObjectTypes.Argument> {
+    static fromRecord<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined>(record: Record<BaseValueKey, BaseValue<V>>, meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>): Argument<V, I>;
     static fromKeyValuePair<V>(keyValuePair: [BaseValueKey, BaseValue<V>], meta?: BaseMetadataEntry<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>): Argument<V, BaseIdentifierTypes.Undefined>;
     static fromString<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined>(str: string, meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>): Argument<V, I>;
     /**
@@ -23,6 +23,7 @@ declare class ArgumentFactory extends PocketFactory<Argument<any, BaseIdentifier
         meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>;
     }[]): Argument<V, I>[];
     static fromKeyValuePairs<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined>(...keyValuePairs: [BaseValueKey, BaseValue<V>][]): Argument<V, I>[];
+    static fromRecords<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined>(...records: Record<BaseValueKey, BaseValue<V>>[]): Argument<V, I>[];
 }
 export { ArgumentFactory };
 //# sourceMappingURL=argument.factory.d.ts.map

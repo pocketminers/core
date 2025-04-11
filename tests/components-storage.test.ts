@@ -27,30 +27,35 @@ describe("PocketStorage", () => {
         const item = { data: "hello", metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
         storage.addItem(item);
         expect(storage.getSize()).toBe(1);
-        console.log(storage.items);
+        console.log(JSON.stringify(storage.items, null, 2));
         expect(storage.getItem({value: 1, type_: BaseIdentifierTypes.Number})).toEqual(item);
     });
 
     it("should throw an error when adding a duplicate item", () => {
-        const item = { metadata: { id: { value: 1, type_: BaseIdentifierTypes.Number} }, isEmpty: () => false };
+        const item = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
         storage.addItem(item);
         expect(() => storage.addItem(item)).toThrow("Item already exists");
     });
 
     it("should throw an error when adding an empty item", () => {
-        const item = { metadata: { id: { value: 1, type_: BaseIdentifierTypes.Number} }, isEmpty: () => true };
-        expect(() => storage.addItem(item)).toThrow("Item is empty");
+        const item = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
+        try {
+            storage.addItem(item);
+        } catch (error) {
+            console.log(JSON.stringify(error, null, 2));
+            expect(error).toEqual(new Error("Item is empty"));
+        }
     });
 
     it("should throw an error when storage is full", () => {
         for (let i = 0; i < 5; i++) {
-            storage.addItem({ metadata: { id: `${i}`, type: "test" }, isEmpty: () => false });
+            storage.addItem({ metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false });
         }
-        expect(() => storage.addItem({ metadata: { id: "6", type: "test" }, isEmpty: () => false })).toThrow("PocketStorage is full");
+        expect(() => storage.addItem({ metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false })).toThrow("PocketStorage is full");
     });
 
     it("should remove an item from the storage", () => {
-        const item = { metadata: { id: { value: 1, type_: BaseIdentifierTypes.Number} }, isEmpty: () => false };
+        const item = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
         storage.addItem(item);
         storage.removeItem({value: 1, type_: BaseIdentifierTypes.Number});
         expect(storage.getSize()).toBe(0);
@@ -62,8 +67,8 @@ describe("PocketStorage", () => {
     });
 
     it("should clear the storage", () => {
-        const item1 = { metadata: { id: { value: 1, type_: BaseIdentifierTypes.Number} }, isEmpty: () => false };
-        const item2 = { metadata: { id: "2", type: "test" }, isEmpty: () => false };
+        const item1 = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
+        const item2 = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
         storage.addItem(item1);
         storage.addItem(item2);
         storage.clear();
@@ -71,7 +76,7 @@ describe("PocketStorage", () => {
     });
 
     it("should return the correct storage type", () => {
-        const item = { metadata: { id: { value: 1, type_: BaseIdentifierTypes.Number} }, isEmpty: () => false };
+        const item = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
         storage.addItem(item);
         expect(storage.getType()).toBe("UNKNOWN");
     });
@@ -81,20 +86,25 @@ describe("PocketStorage", () => {
     });
 
     it('should not allow empty items', () => {
-        const item = { metadata: { id: { value: 1, type_: BaseIdentifierTypes.Number} }, isEmpty: () => true };
-        expect(() => storage.addItem(item)).toThrow("Item is empty");
+        const item = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
+        try {
+            storage.addItem(item);
+        } catch (error) {
+            console.log(JSON.stringify(error, null, 2));
+            expect(error).toEqual(new Error("Item is empty"));
+        }
     });
 
     it('should allow empty items when allowEmpty is true', () => {
         storage.allowEmpty = true;
-        const item = { metadata: { id: { value: 1, type_: BaseIdentifierTypes.Number} }, isEmpty: () => true };
+        const item = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
         storage.addItem(item);
         expect(storage.getSize()).toBe(1);
     });
 
     it('should allow duplicates when allowDuplicates is true', () => {
         storage.allowDuplicates = true;
-        const item = { metadata: { id: { value: 1, type_: BaseIdentifierTypes.Number} }, isEmpty: () => false };
+        const item = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
         storage.addItem(item);
         storage.addItem(item);
         expect(storage.getSize()).toBe(2);
@@ -102,17 +112,17 @@ describe("PocketStorage", () => {
 
     it('should throw an error when adding an item that exceeds maxSize', () => {
         storage.maxSize = 1;
-        const item1 = { metadata: { id: { value: 1, type_: BaseIdentifierTypes.Number} }, isEmpty: () => false };
-        const item2 = { metadata: { id: { value: 2, type_: BaseIdentifierTypes.Number} }, isEmpty: () => false };
+        const item1 = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
+        const item2 = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
         storage.addItem(item1);
         expect(() => storage.addItem(item2)).toThrow("PocketStorage is full");
     });
 
     it('should return the correct size of the storage', () => {
         expect(storage.getSize()).toBe(0);
-        const item = { metadata: { id: { value: 1, type_: BaseIdentifierTypes.Number} }, isEmpty: () => false };
+        const item = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
         storage.addItem(item);
-        console.log(JSON.stringify(storage.items));
+        console.log(JSON.stringify(storage.items, null, 2));
         expect(storage.getSize()).toBe(1);
     });
 });

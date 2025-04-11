@@ -38,6 +38,7 @@ class BaseComponent {
     }
 }
 exports.BaseComponent = BaseComponent;
+__exportStar(require("./factory"), exports);
 __exportStar(require("./object"), exports);
 __exportStar(require("./storage"), exports);
 //# sourceMappingURL=index.js.map

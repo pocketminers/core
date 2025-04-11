@@ -137,7 +137,6 @@ describe("ArgumentFactory", () => {
             const argument = new Argument({ name: mockKey, value: mockValue });
             const serialized = argument.toString();
             const deserialized = ArgumentFactory.fromString<{[key:string]: string}>(serialized);
-            console.log(`deserialized: ${JSON.stringify(deserialized)}`);
             expect(deserialized).toBeDefined();
         });
 
@@ -145,7 +144,6 @@ describe("ArgumentFactory", () => {
             const argument = new Argument({ name: mockKey, value: mockValue });
             const serialized = argument.toKeyValuePair();
             const deserialized = ArgumentFactory.fromKeyValuePair(serialized[0]);
-            console.log(`deserialized: ${JSON.stringify(deserialized)}`);
             expect(deserialized).toBeDefined();
         });
 
@@ -153,7 +151,6 @@ describe("ArgumentFactory", () => {
             const argument = new Argument({ name: mockKey, value: mockValue });
             const serialized = argument.toRecord();
             const deserialized = ArgumentFactory.fromRecord(serialized);
-            console.log(`deserialized: ${JSON.stringify(deserialized)}`);
             expect(deserialized).toBeDefined();
         });
 
@@ -161,7 +158,6 @@ describe("ArgumentFactory", () => {
             const argument = new Argument({ name: mockKey, value: mockValue });
             const serialized = argument.toJSON();
             const deserialized = ArgumentFactory.fromJSON(JSON.stringify(serialized));
-            console.log(`deserialized: ${JSON.stringify(deserialized)}`);
             expect(deserialized).toBeDefined();
         });
 
@@ -207,8 +203,6 @@ describe("ArgumentFactory", () => {
             const args = ArgumentFactory.fromKeyValuePairs(...keyValuePairs);
 
             for (const arg of args) {
-                console.log(`${arg.toString()}`);
-                console.log(`${arg.toJsonString()}`);
                 expect(arg.metadata).toBeDefined();
                 expect(arg.metadata.annotations).toBeDefined();
                 expect(arg.metadata.labels).toBeDefined();
@@ -231,8 +225,6 @@ describe("ArgumentFactory", () => {
             const args = ArgumentFactory.fromKeyValuePairs(...keyValuePairs);
 
             for (const arg of args) {
-                console.log(`${arg.toString()}`);
-                console.log(`${arg.toJsonString()}`);
                 expect(arg.metadata).toBeDefined();
                 expect(arg.metadata.annotations).toBeDefined();
                 expect(arg.metadata.labels).toBeDefined();

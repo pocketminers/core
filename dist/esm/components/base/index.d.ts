@@ -24,6 +24,7 @@ type BaseComponentsTypes = {
     [key in BaseComponentPartsType]: BaseComponentsTypes[key];
 };
 export { BaseComponent, BaseComponentParts, BaseComponentsTypes };
+export * from './factory';
 export * from './object';
 export * from './storage';
 //# sourceMappingURL=index.d.ts.map

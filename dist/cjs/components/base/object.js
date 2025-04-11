@@ -58,7 +58,12 @@ class PocketObject {
         return this.metadata.labels?.type;
     }
     isEmpty() {
-        return this.data === undefined || this.dataString === "{}";
+        return this.data === undefined
+            || this.dataString === "{}"
+            || this.dataString === "[]"
+            || this.dataString === ""
+            || this.dataString === "null"
+            || this.dataString === "undefined";
     }
 }
 exports.PocketObject = PocketObject;

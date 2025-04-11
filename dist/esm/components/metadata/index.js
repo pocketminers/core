@@ -115,4 +115,5 @@ class Metadata {
     }
 }
 export { Metadata };
+export * from "./metadata.factory";
 //# sourceMappingURL=index.js.map

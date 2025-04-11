@@ -24,4 +24,5 @@ declare class Metadata<I extends BaseIdentifierType, O extends BaseObjectType> i
     get type(): O;
 }
 export { Metadata };
+export * from "./metadata.factory";
 //# sourceMappingURL=index.d.ts.map
