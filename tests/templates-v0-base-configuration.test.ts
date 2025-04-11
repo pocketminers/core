@@ -1,5 +1,6 @@
-import { BaseArgument, BaseConfiguration, BaseParameter, BaseProperty } from "@templates/v0/base/configuration";
+import { BaseArgument, BaseConfiguration, BaseParameter, BaseParameterEntry, BaseProperty } from "@templates/v0/base/configuration";
 import { BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { ParameterEntry } from "index";
 
 
 describe("BaseArgument", () => {
@@ -54,44 +55,54 @@ describe("BaseArgument", () => {
 
 describe("BaseParameter", () => {
     it("should create an instance of BaseParameter", () => {
-        const parameter: BaseParameter<string, BaseIdentifierTypes.Undefined> = {
-            data: {
-                name: "test",
-                description: "description",
-                default: "default",
-                required: true,
-                optional: ["optional"]
-            }
+        const parameterEntry: ParameterEntry<string, BaseIdentifierTypes.Undefined> = {
+            name: "test",
+            description: "description",
+            default: "default",
+            required: true,
+            optional: ["optional"]
         }
 
-        expect(parameter.data.name).toBe("test");
-        expect(parameter.data.description).toBe("description");
-        expect(parameter.data.default).toBe("default");
-        expect(parameter.data.required).toBe(true);
-        expect(parameter.data.optional).toEqual(["optional"]);
+        expect(parameterEntry.name).toBe("test");
+        expect(parameterEntry.description).toBe("description");
+        expect(parameterEntry.default).toBe("default");
+        expect(parameterEntry.required).toBe(true);
+        expect(parameterEntry.optional).toEqual(["optional"]);
     });
 
     it("should accept a metadata object", () => {
-        const parameter: BaseParameter<string, BaseIdentifierTypes.Undefined> = {
-            data: {
+        const parameterEntry: BaseParameterEntry<string> = {
                 name: "test",
                 description: "description",
                 default: "default",
                 required: true,
                 optional: ["optional"]
-            },
-            metadata: {
-                annotations: {
-                    id: {
-                        type_: BaseIdentifierTypes.Undefined,
-                        value: "undefined"
-                    }
+            }
+        const metadata = {
+            annotations: {
+                id: {
+                    type_: BaseIdentifierTypes.Undefined,
+                    value: "undefined"
                 }
             }
         }
-
-        expect(parameter.metadata?.annotations?.id.type_).toBe(BaseIdentifierTypes.Undefined);
-        expect(parameter.metadata?.annotations?.id.value).toBe("undefined");
+        const parameterWithMetadata: BaseParameter<string, BaseIdentifierTypes.Undefined> = {
+                data: {
+                    name: parameterEntry.name,
+                    description: parameterEntry.description,
+                    default: parameterEntry.default,
+                    required: parameterEntry.required,
+                    optional: parameterEntry.optional
+                },
+                metadata
+        }
+        expect(parameterWithMetadata.data.name).toBe("test");
+        expect(parameterWithMetadata.data.description).toBe("description");
+        expect(parameterWithMetadata.data.default).toBe("default");
+        expect(parameterWithMetadata.data.required).toBe(true);
+        expect(parameterWithMetadata.data.optional).toEqual(["optional"]);
+        expect(parameterWithMetadata.metadata?.annotations?.id.type_).toBe(BaseIdentifierTypes.Undefined);
+        expect(parameterWithMetadata.metadata?.annotations?.id.value).toBe("undefined");
     });
 
     it("should throw an error if name is not provided", () => {
@@ -185,27 +196,25 @@ describe("BaseProperty", () => {
 describe("BaseConfiguration", () => {
     it("should create an instance of BaseConfiguration", () => {
         const configuration: BaseConfiguration<string, BaseIdentifierTypes.Undefined> = {
-            data: {
-                arguments: [
-                    {
-                        data: {
-                            name: "test",
-                            value: "value"
-                        }
-                    }
-                ],
-                parameters: [
-                    {
-                        data: {
-                            name: "test",
-                            description: "description",
-                            default: "default",
-                            required: true,
-                            optional: ["optional"]
-                        }
-                    }
-                ]
+            data: {arguments: [
+            {
+                data: {
+                name: "test",
+                value: "value"
+                }
             }
+            ],
+            parameters: [
+            {
+                data: {
+                name: "test",
+                description: "description",
+                default: "default",
+                required: true,
+                optional: ["optional"]
+                }
+            }
+            ]}
         }
 
         expect(configuration.data.arguments[0].data.name).toBe("test");

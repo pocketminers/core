@@ -4,6 +4,18 @@ import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
 
 
 /**
+ * BaseArgumentEntry is a generic type that represents an argument entry object.
+ */
+interface BaseArgumentEntry
+<
+    V
+>
+    extends
+        Record<'name', BaseValueKey>,
+        Record<'value', BaseValue<V>>
+{}
+
+/**
  * BaseArgument is a generic type that represents an argument object.
  */
 interface BaseArgument
@@ -12,14 +24,27 @@ interface BaseArgument
     I extends BaseIdentifierType
 >
     extends
-        BaseObject<
-            {
-                name: BaseValueKey;
-                value: BaseValue<V>;
-            },
+        BaseObject
+        <
+            BaseArgumentEntry<V>,
             I | BaseIdentifierTypes.Multihash,
             BaseObjectTypes.Argument
         >
+{}
+
+/**
+ * BaseParameterEntry is a generic type that represents a parameter entry object.
+ */
+interface BaseParameterEntry
+<
+    V
+>
+    extends
+        Record<'name', BaseValueKey>,
+        Record<'description', StringOrEmpty>,
+        Record<'default', BaseValue<V>>,
+        Record<'required', boolean>,
+        Record<'optional', Array<BaseValue<V>>>
 {}
 
 
@@ -34,16 +59,27 @@ interface BaseParameter
     extends
         BaseObject
         <
-            {
-                name: BaseValueKey;
-                description: StringOrEmpty;
-                default: BaseValue<V>;
-                required: boolean;
-                optional: Array<BaseValue<V>>;
-            },
+            BaseParameterEntry<V>,
             I | BaseIdentifierTypes.Multihash,
             BaseObjectTypes.Parameter
         >
+{}
+
+
+/**
+ * BasePropertyEntry is a generic type that represents a property entry object.
+ */
+interface BasePropertyEntry
+<
+    V
+>
+    extends
+        Record<'name', BaseValueKey>,
+        Record<'description', StringOrEmpty>,
+        Record<'value', BaseValue<V>>,
+        Record<'default', BaseValue<V>>,
+        Record<'required', boolean>,
+        Record<'optional', Array<BaseValue<V>>>
 {}
 
 
@@ -59,19 +95,22 @@ interface BaseProperty
     extends
         BaseObject
         <
-            {
-                name: BaseValueKey;
-                description: StringOrEmpty;
-                value: V;
-                default: V;
-                required: boolean;
-                optional: Array<V>;
-            },
+            BasePropertyEntry<V>,
             I | BaseIdentifierTypes.Multihash,
             BaseObjectTypes.Property
         >
 {}
 
+
+interface BaseConfigurationEntry
+<
+    V,
+    I extends BaseIdentifierType
+>
+    extends
+        Record<'arguments', Array<BaseArgument<V, I>>>,
+        Record<'parameters', Array<BaseParameter<V, I>>>
+{}
 
 /**
  * Configuration is a generic type that represents a configuration object.
@@ -85,10 +124,7 @@ interface BaseConfiguration
     extends
         BaseObject
         <
-            {
-                arguments: Array<BaseArgument<V, I>>;
-                parameters: Array<BaseParameter<V, I>>;
-            },
+            BaseConfigurationEntry<V, I>,
             I | BaseIdentifierTypes.Multihash,
             BaseObjectTypes.Configuration
         >
@@ -97,9 +133,13 @@ interface BaseConfiguration
 
 export {
     type BaseArgument,
+    type BaseArgumentEntry,
     type BaseParameter,
+    type BaseParameterEntry,
     type BaseProperty,
+    type BasePropertyEntry,
     type BaseConfiguration,
+    type BaseConfigurationEntry
 }
 
 

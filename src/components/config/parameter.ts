@@ -1,9 +1,27 @@
 import { PocketObject } from "@components/base";
 import { Metadata } from "@components/metadata";
 import { MetadataFactory } from "@components/metadata/metadata.factory";
-import { BaseIdentifierType, BaseIdentifierTypes, BaseMetadataEntry, BaseObjectType, BaseObjectTypes, BaseParameter } from "@templates/v0";
-import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
+import { BaseIdentifierType, BaseIdentifierTypes, BaseMetadataEntry, BaseObjectType, BaseObjectTypes, BaseParameter, BaseParameterEntry } from "@templates/v0";
+import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 
+
+/**
+ * BaseParameterEntry is a generic type that represents a parameter entry object.
+ */
+interface ParameterEntry
+<
+    V,
+    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+> extends
+    BaseParameterEntry<V>,
+    Partial<Record<'meta', BaseMetadataEntry<I, BaseObjectTypes.Parameter>>>
+{}
+
+
+/**
+ * Parameter is a generic class that represents a parameter object.
+ * It extends the PocketObject class and implements the BaseParameter interface.
+ */
 class Parameter
 <
     V,
@@ -11,13 +29,7 @@ class Parameter
 > 
     extends
         PocketObject<
-            {
-                name: BaseValueKey;
-                description: string;
-                default: BaseValue<V>;
-                required: boolean;
-                optional: Array<BaseValue<V>>;
-            },
+            BaseParameterEntry<V>,
             I,
             BaseObjectTypes.Parameter
         >
@@ -31,14 +43,7 @@ class Parameter
         required,
         optional,
         meta
-    }: {
-        name: BaseValueKey,
-        description: string,
-        default: BaseValue<V>,
-        required: boolean,
-        optional: Array<BaseValue<V>>,
-        meta?: BaseMetadataEntry<I, BaseObjectTypes.Parameter>
-    }) {
+    }: ParameterEntry<V, I>) {
         if (name === undefined) {
             throw new Error("Name is required");
         }
@@ -61,7 +66,7 @@ class Parameter
         return this.data.name;
     }
 
-    public get description(): string {
+    public get description(): StringOrEmpty {
         return this.data.description;
     }
 
@@ -87,5 +92,6 @@ class Parameter
 }
 
 export {
+    type ParameterEntry,
     Parameter
 }

@@ -28,6 +28,10 @@ import { PocketObject } from "../base";
 import { Metadata } from "../metadata";
 import { MetadataFactory } from "../metadata/metadata.factory";
 import { BaseObjectTypes } from "../../templates/v0";
+/**
+ * Parameter is a generic class that represents a parameter object.
+ * It extends the PocketObject class and implements the BaseParameter interface.
+ */
 var Parameter = /** @class */ (function (_super) {
     __extends(Parameter, _super);
     function Parameter(_a) {

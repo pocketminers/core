@@ -1,4 +1,4 @@
-import { Parameter } from "@components/config/parameter";2
+import { Parameter, ParameterEntry } from "@components/config/parameter";2
 import { BaseIdentifierTypes, BaseObjectTypes } from "@templates/v0";
 import { Metadata } from "@components/metadata";
 import { BaseParameter } from "@templates/v0/base/configuration";
@@ -49,18 +49,16 @@ describe("Parameter", () => {
     });
 
     it("should create a Parameter instance with custom metadata if provided", async () => {
-        const parameterData: BaseParameter<string, BaseIdentifierTypes.Undefined> = {
-            data: { 
-                name: "testKey",
-                description: "Test description",
-                default: "defaultValue",
-                required: true,
-                optional: ["optionalValue1", "optionalValue2"],
-            }
+        const parameterData: ParameterEntry<string, BaseIdentifierTypes.Undefined> = {
+            name: "testKey",
+            description: "Test description",
+            default: "defaultValue",
+            required: true,
+            optional: ["optionalValue1", "optionalValue2"],
         }
         
         const customMetadata: Metadata<BaseIdentifierTypes.Multihash, BaseObjectTypes.Parameter> = new Metadata<BaseIdentifierTypes.Multihash, BaseObjectTypes.Parameter>({
-            id: await MultiHashUtilities.generateIdentifier(JSON.stringify(parameterData.data)),
+            id: await MultiHashUtilities.generateIdentifier(JSON.stringify(parameterData)),
             type: BaseObjectTypes.Parameter,
             tags: ["tag1", "tag2"],
             description: "Custom metadata description"

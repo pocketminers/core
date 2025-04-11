@@ -1,28 +1,24 @@
 import { PocketObject } from "../base";
-import { BaseIdentifierType, BaseIdentifierTypes, BaseMetadataEntry, BaseObjectTypes, BaseParameter } from "../../templates/v0";
-import { BaseValue, BaseValueKey } from "../../templates/v0/base/value";
-declare class Parameter<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined> extends PocketObject<{
-    name: BaseValueKey;
-    description: string;
-    default: BaseValue<V>;
-    required: boolean;
-    optional: Array<BaseValue<V>>;
-}, I, BaseObjectTypes.Parameter> implements BaseParameter<V, I> {
-    constructor({ name, description, default: defaultValue, required, optional, meta }: {
-        name: BaseValueKey;
-        description: string;
-        default: BaseValue<V>;
-        required: boolean;
-        optional: Array<BaseValue<V>>;
-        meta?: BaseMetadataEntry<I, BaseObjectTypes.Parameter>;
-    });
+import { BaseIdentifierType, BaseIdentifierTypes, BaseMetadataEntry, BaseObjectTypes, BaseParameter, BaseParameterEntry } from "../../templates/v0";
+import { BaseValue, BaseValueKey, StringOrEmpty } from "../../templates/v0/base/value";
+/**
+ * BaseParameterEntry is a generic type that represents a parameter entry object.
+ */
+interface ParameterEntry<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined> extends BaseParameterEntry<V>, Partial<Record<'meta', BaseMetadataEntry<I, BaseObjectTypes.Parameter>>> {
+}
+/**
+ * Parameter is a generic class that represents a parameter object.
+ * It extends the PocketObject class and implements the BaseParameter interface.
+ */
+declare class Parameter<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined> extends PocketObject<BaseParameterEntry<V>, I, BaseObjectTypes.Parameter> implements BaseParameter<V, I> {
+    constructor({ name, description, default: defaultValue, required, optional, meta }: ParameterEntry<V, I>);
     get name(): BaseValueKey;
-    get description(): string;
+    get description(): StringOrEmpty;
     get default(): BaseValue<V>;
     get required(): boolean;
     get optional(): Array<BaseValue<V>>;
     toString(): string;
     toJSON(): string;
 }
-export { Parameter };
+export { type ParameterEntry, Parameter };
 //# sourceMappingURL=parameter.d.ts.map

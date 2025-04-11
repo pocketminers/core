@@ -1,17 +1,26 @@
 import { PocketObject } from "../base/object";
-import { BaseArgument } from "../../templates/v0/base/configuration";
+import { BaseArgument, BaseArgumentEntry } from "../../templates/v0/base/configuration";
 import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "../../templates/v0/base/identifier";
 import { BaseMetadataEntry } from "../../templates/v0/base/metadata";
 import { BaseObjectTypes } from "../../templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "../../templates/v0/base/value";
 /**
- * Argument is a generic class that represents a key-value pair.
+ * Argument is a generic class that represents an argument object.
+ * It extends the PocketObject class and implements the BaseArgument interface.
  *
+ * @template V - The type of the value associated with the argument.
+ * @template I - The type of the identifier associated with the argument.
+ *
+ * @extends PocketObject
+ * @implements BaseArgument
+ *
+ * @example
+ * const arg = new Argument({
+ *     name: "arg1",
+ *     value: "value1"
+ * });
  */
-declare class Argument<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined> extends PocketObject<{
-    name: BaseValueKey;
-    value: BaseValue<V>;
-}, I, BaseObjectTypes.Argument> implements BaseArgument<V, I> {
+declare class Argument<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined> extends PocketObject<BaseArgumentEntry<V>, I, BaseObjectTypes.Argument> implements BaseArgument<V, I> {
     /**
      * Constructor for the Argument class.
      */

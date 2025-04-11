@@ -8,8 +8,20 @@ const identifier_1 = require("../../templates/v0/base/identifier");
 const object_2 = require("../../templates/v0/base/object");
 const multiHash_1 = require("../../utilities/multiHash");
 /**
- * Argument is a generic class that represents a key-value pair.
+ * Argument is a generic class that represents an argument object.
+ * It extends the PocketObject class and implements the BaseArgument interface.
  *
+ * @template V - The type of the value associated with the argument.
+ * @template I - The type of the identifier associated with the argument.
+ *
+ * @extends PocketObject
+ * @implements BaseArgument
+ *
+ * @example
+ * const arg = new Argument({
+ *     name: "arg1",
+ *     value: "value1"
+ * });
  */
 class Argument extends object_1.PocketObject {
     /**

@@ -2,6 +2,10 @@ import { PocketObject } from "../base";
 import { Metadata } from "../metadata";
 import { MetadataFactory } from "../metadata/metadata.factory";
 import { BaseObjectTypes } from "../../templates/v0";
+/**
+ * Parameter is a generic class that represents a parameter object.
+ * It extends the PocketObject class and implements the BaseParameter interface.
+ */
 class Parameter extends PocketObject {
     constructor({ name, description, default: defaultValue, required, optional, meta }) {
         if (name === undefined) {

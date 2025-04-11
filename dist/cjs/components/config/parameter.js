@@ -5,6 +5,10 @@ const base_1 = require("../base");
 const metadata_1 = require("../metadata");
 const metadata_factory_1 = require("../metadata/metadata.factory");
 const v0_1 = require("../../templates/v0");
+/**
+ * Parameter is a generic class that represents a parameter object.
+ * It extends the PocketObject class and implements the BaseParameter interface.
+ */
 class Parameter extends base_1.PocketObject {
     constructor({ name, description, default: defaultValue, required, optional, meta }) {
         if (name === undefined) {

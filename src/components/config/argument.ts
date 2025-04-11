@@ -1,7 +1,7 @@
 import { PocketObject } from "@components/base/object";
 import { Metadata } from "@components/metadata";
 import { MetadataFactory } from "@components/metadata/metadata.factory";
-import { BaseArgument } from "@templates/v0/base/configuration";
+import { BaseArgument, BaseArgumentEntry } from "@templates/v0/base/configuration";
 import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
 import { BaseMetadataEntry } from "@templates/v0/base/metadata";
 import { BaseObjectType, BaseObjectTypes } from "@templates/v0/base/object";
@@ -9,9 +9,35 @@ import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
 import { Checks } from "@utilities/checks";
 import { MultiHashUtilities } from "@utilities/multiHash";
 
+
 /**
- * Argument is a generic class that represents a key-value pair.
+ * ArgumentEntry is a generic type that represents an argument entry object.
+ */
+interface ArgumentEntry
+<
+    V,
+    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+>
+    extends
+        BaseArgumentEntry<V>,
+        Record<'meta', BaseMetadataEntry<I, BaseObjectTypes.Argument>>
+{}
+
+/**
+ * Argument is a generic class that represents an argument object.
+ * It extends the PocketObject class and implements the BaseArgument interface.
  * 
+ * @template V - The type of the value associated with the argument.
+ * @template I - The type of the identifier associated with the argument.
+ * 
+ * @extends PocketObject
+ * @implements BaseArgument
+ * 
+ * @example
+ * const arg = new Argument({
+ *     name: "arg1",
+ *     value: "value1"
+ * });
  */
 class Argument
 <
@@ -20,10 +46,7 @@ class Argument
 >
     extends
         PocketObject<
-            {
-                name: BaseValueKey;
-                value: BaseValue<V>;
-            },
+            BaseArgumentEntry<V>,
             I,
             BaseObjectTypes.Argument
         >

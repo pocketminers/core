@@ -5,8 +5,20 @@ import { BaseIdentifierTypes } from "../../templates/v0/base/identifier";
 import { BaseObjectTypes } from "../../templates/v0/base/object";
 import { MultiHashUtilities } from "../../utilities/multiHash";
 /**
- * Argument is a generic class that represents a key-value pair.
+ * Argument is a generic class that represents an argument object.
+ * It extends the PocketObject class and implements the BaseArgument interface.
  *
+ * @template V - The type of the value associated with the argument.
+ * @template I - The type of the identifier associated with the argument.
+ *
+ * @extends PocketObject
+ * @implements BaseArgument
+ *
+ * @example
+ * const arg = new Argument({
+ *     name: "arg1",
+ *     value: "value1"
+ * });
  */
 class Argument extends PocketObject {
     /**
