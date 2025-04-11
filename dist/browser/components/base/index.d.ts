@@ -25,4 +25,5 @@ type BaseComponentsTypes = {
 };
 export { BaseComponent, BaseComponentParts, BaseComponentsTypes };
 export * from './object';
+export * from './storage';
 //# sourceMappingURL=index.d.ts.map
