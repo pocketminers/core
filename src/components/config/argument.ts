@@ -6,6 +6,7 @@ import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templa
 import { BaseMetadataEntry } from "@templates/v0/base/metadata";
 import { BaseObjectType, BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
+import { Checks } from "@utilities/checks";
 import { MultiHashUtilities } from "@utilities/multiHash";
 
 /**

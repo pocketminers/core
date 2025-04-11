@@ -86,6 +86,10 @@ class PocketObject
     public get objectType() {
         return this.metadata.labels?.type;
     }
+
+    public isEmpty(): boolean {
+        return this.data === undefined || this.dataString === "{}";
+    }
 }
 
 export { 

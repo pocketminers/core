@@ -49,11 +49,11 @@ interface BaseObject
 <
     D,
     I extends BaseIdentifierType = BaseIdentifierTypes.Undefined,
-    T extends BaseObjectType = BaseObjectTypes.Undefined,
+    O extends BaseObjectType = BaseObjectTypes.Undefined,
 >
     extends
         Record<'data', D>,
-        Partial<Record<'metadata', BaseMetadata<I, T>>>
+        Partial<Record<'metadata', BaseMetadata<I, O>>>
 {}
 
 

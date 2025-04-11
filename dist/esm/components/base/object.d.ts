@@ -18,6 +18,7 @@ declare class PocketObject<D, I extends BaseIdentifierType, O extends BaseObject
     get metadataString(): string;
     get objectString(): string;
     get objectType(): O | undefined;
+    isEmpty(): boolean;
 }
 export { PocketObject };
 //# sourceMappingURL=object.d.ts.map

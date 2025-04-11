@@ -1,79 +1,79 @@
-// import { BaseMetadata } from "@templates/v0/base/metadata";
-// import { BaseValue, NumberOrEmpty, StringOrEmpty } from "@templates/v0/base/value";
-// import { BaseIdentifierType } from "./identifier";
-// import { BaseObjectTypes } from "./object";
+import { BaseMetadata } from "@templates/v0/base/metadata";
+import { BaseValue, NumberOrEmpty, StringOrEmpty } from "@templates/v0/base/value";
+import { BaseIdentifier, BaseIdentifierType } from "./identifier";
+import { BaseObject, BaseObjectType, BaseObjectTypes } from "./object";
+import { StorageTypes } from "@components/base/storage";
 
 
 // /**
 //  * StorageItem represents an item in the user's storage.
 //  * It includes properties such as name, description, type, size, and value.
 //  */
-// interface BaseStorageItem<T, I extends BaseIdentifierType> {
+// interface BaseStorageItem<V, I extends BaseIdentifierType> {
 //     name: string;
 //     description?: StringOrEmpty;
 //     type: string | number | symbol;
 //     size: NumberOrEmpty;
-//     value: BaseValue<T>;
+//     value: BaseValue<V>;
 //     metadata?: BaseMetadata<I, BaseObjectTypes.StorageItem>;
 // }
 
 
-// /**
-//  * BaseStorageTypes is an enumeration of the different types of storage
-//  * that a user account can have. It includes types such as FILE, DIRECTORY, DATABASE, etc.
-//  */
-// enum BaseStorageLocations {
-//     FILE = "FILE",
-//     DIRECTORY = "DIRECTORY",
-//     IPFS_FILE_CID = "IPFS_FILE_CID",
-//     IPFS_DIRECTORY_CID = "IPFS_DIRECTORY_CID",
-//     MULTIFORMATS = "MULTIFORMATS",
-//     DATABASE = "DATABASE",
-//     CACHE = "CACHE",
-//     MEMORY = "MEMORY",
-//     TEMPORARY = "TEMPORARY",
-//     COOKIE = "COOKIE",
-//     LOCAL_STORAGE = "LOCAL_STORAGE",
-//     SESSION_STORAGE = "SESSION_STORAGE",
-//     OTHER = "OTHER"
-// }
+/**
+ * BaseStorageTypes is an enumeration of the different types of storage
+ * that a user account can have. It includes types such as FILE, DIRECTORY, DATABASE, etc.
+ */
+enum BaseStorageLocations {
+    FILE = "FILE",
+    DIRECTORY = "DIRECTORY",
+    IPFS_FILE_CID = "IPFS_FILE_CID",
+    IPFS_DIRECTORY_CID = "IPFS_DIRECTORY_CID",
+    MULTIFORMATS = "MULTIFORMATS",
+    DATABASE = "DATABASE",
+    CACHE = "CACHE",
+    MEMORY = "MEMORY",
+    TEMPORARY = "TEMPORARY",
+    COOKIE = "COOKIE",
+    LOCAL_STORAGE = "LOCAL_STORAGE",
+    SESSION_STORAGE = "SESSION_STORAGE",
+    OTHER = "OTHER"
+}
 
 
-// /**
-//  * BaseStorageLocation is a type that can be any of the keys in the BaseStorageLocations enum.
-//  * It is used to represent the location of a storage item.
-//  */
-// type BaseStorageLocation = keyof typeof BaseStorageLocations;
+/**
+ * BaseStorageLocation is a type that can be any of the keys in the BaseStorageLocations enum.
+ * It is used to represent the location of a storage item.
+ */
+type BaseStorageLocation = keyof typeof BaseStorageLocations;
 
 
-// /**
-//  * Storage contains a collection of the user's storage, including the type and size.
-//  */
-// interface BaseStorage
-// <
-//     I extends BaseIdentifierType,
-//     L extends BaseStorageLocation = BaseStorageLocations.MEMORY,
-//     T extends BaseValue = any,
-// > {
-//     name?: string;
-//     description?: StringOrEmpty;
-//     location?: L;
-//     size?: NumberOrEmpty;
-//     items: Array<BaseStorageItem<T>>;
+/**
+ * Storage contains a collection of the user's storage, including the type and size.
+ */
+interface BaseStorage
+<
+    S extends StorageTypes,
+    O extends BaseObjectType,
+    L extends BaseStorageLocation
+> {
+    location?: L;
+    items: Array<S>;
+    allowDuplicates: boolean;
+    allowEmpty: boolean;
+    maxSize: NumberOrEmpty;
 
-//     addItem: (item: BaseStorageItem<T>) => void;
-//     removeItem: (itemName: string) => void;
-//     getItem: (itemName: string) => BaseStorageItem<T> | undefined;
-//     clear: () => void;
-//     getSize: () => number;
-//     getLocation: () => BaseStorageLocation;
-//     getType: () => string;
-// }
+    addItem: (item: S) => void;
+    removeItem: (itemId: BaseIdentifier<any>) => void;
+    getItem: (itemId: BaseIdentifier<any>) => S | undefined;
+    clear: () => void;
+    getSize: () => number;
+    getLocation: () => L;
+    getType: () => string;
+}
 
 
-// export {
-//     type BaseStorage,
-//     type BaseStorageItem,
-//     type BaseStorageLocation,
-//     BaseStorageLocations,
-// }
+export {
+    type BaseStorage,
+    type BaseStorageLocation,
+    BaseStorageLocations,
+}

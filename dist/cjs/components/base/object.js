@@ -57,6 +57,9 @@ class PocketObject {
     get objectType() {
         return this.metadata.labels?.type;
     }
+    isEmpty() {
+        return this.data === undefined || this.dataString === "{}";
+    }
 }
 exports.PocketObject = PocketObject;
 //# sourceMappingURL=object.js.map

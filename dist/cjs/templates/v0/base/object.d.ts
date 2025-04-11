@@ -38,7 +38,7 @@ type BaseObjectType = keyof typeof BaseObjectTypes;
  * BaseObject is a generic interface that represents an object with a name, description, data, and metadata.
  * The data property can be of any type specified by the generic parameter T.
  */
-interface BaseObject<D, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined, T extends BaseObjectType = BaseObjectTypes.Undefined> extends Record<'data', D>, Partial<Record<'metadata', BaseMetadata<I, T>>> {
+interface BaseObject<D, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined, O extends BaseObjectType = BaseObjectTypes.Undefined> extends Record<'data', D>, Partial<Record<'metadata', BaseMetadata<I, O>>> {
 }
 export { type BaseObject, type BaseObjectType, BaseObjectTypes, };
 //# sourceMappingURL=object.d.ts.map

@@ -117,6 +117,9 @@ var PocketObject = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    PocketObject.prototype.isEmpty = function () {
+        return this.data === undefined || this.dataString === "{}";
+    };
     return PocketObject;
 }());
 export { PocketObject };
