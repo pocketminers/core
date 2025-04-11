@@ -156,5 +156,94 @@ describe("ArgumentFactory", () => {
             console.log(`deserialized: ${JSON.stringify(deserialized)}`);
             expect(deserialized).toBeDefined();
         });
-    });
+
+        it('should serialize and deserialize to JSON', () => {
+            const argument = new Argument({ name: mockKey, value: mockValue });
+            const serialized = argument.toJSON();
+            const deserialized = ArgumentFactory.fromJSON(JSON.stringify(serialized));
+            console.log(`deserialized: ${JSON.stringify(deserialized)}`);
+            expect(deserialized).toBeDefined();
+        });
+
+        it('shoudld create many arguments from an array of BaseArguments', () => {
+            const argumentsArray = [
+                new Argument({ name: "arg1", value: "value1" }),
+                new Argument({ name: "arg2", value: "value2" }),
+                new Argument({ name: "arg3", value: "value3" })
+            ];
+
+            const args = ArgumentFactory.fromArray(argumentsArray);
+
+            expect(args).toBeDefined();
+            expect(args.length).toBe(3);
+            expect(args[0].name).toBe("arg1");
+            expect(args[1].name).toBe("arg2");
+            expect(args[2].name).toBe("arg3");
+        });
+
+        it('should create arguments from multiple KeyValuePairs', () => {
+            const keyValuePairs: Array<[BaseValueKey, BaseValue<{[key:string]: string}>]> = [
+                ["arg1", { value: "value1" }],
+                ["arg2", { value: "value2" }],
+                ["arg3", { value: "value3" }]
+            ];
+
+            const args = ArgumentFactory.fromKeyValuePairs(...keyValuePairs);
+
+            expect(args).toBeDefined();
+            expect(args.length).toBe(3);
+            expect(args[0].name).toBe("arg1");
+            expect(args[1].name).toBe("arg2");
+            expect(args[2].name).toBe("arg3");
+        });
+
+        it('should create arguments from multiple KeyValuePairs with metadata', () => {
+            const keyValuePairs: Array<[BaseValueKey, BaseValue<string>]> = [
+                ["arg1", "value1" ],
+                ["arg2",  "value2" ],
+                ["arg3",  "value3"]
+            ];
+
+            const args = ArgumentFactory.fromKeyValuePairs(...keyValuePairs);
+
+            for (const arg of args) {
+                console.log(`${arg.toString()}`);
+                console.log(`${arg.toJsonString()}`);
+                expect(arg.metadata).toBeDefined();
+                expect(arg.metadata.annotations).toBeDefined();
+                expect(arg.metadata.labels).toBeDefined();
+            }
+
+            expect(args).toBeDefined();
+            expect(args.length).toBe(3);
+            expect(args[0].name).toBe("arg1");
+            expect(args[1].name).toBe("arg2");
+            expect(args[2].name).toBe("arg3");
+        });
+
+        it('should create arguments from multiple KeyValuePairs with metadata and tags', () => {
+            const keyValuePairs: Array<[BaseValueKey, BaseValue<string>]> = [
+                ["arg1", "value1" ],
+                ["arg2",  "value2" ],
+                ["arg3",  "value3"]
+            ];
+
+            const args = ArgumentFactory.fromKeyValuePairs(...keyValuePairs);
+
+            for (const arg of args) {
+                console.log(`${arg.toString()}`);
+                console.log(`${arg.toJsonString()}`);
+                expect(arg.metadata).toBeDefined();
+                expect(arg.metadata.annotations).toBeDefined();
+                expect(arg.metadata.labels).toBeDefined();
+            }
+
+            expect(args).toBeDefined();
+            expect(args.length).toBe(3);
+            expect(args[0].name).toBe("arg1");
+            expect(args[1].name).toBe("arg2");
+            expect(args[2].name).toBe("arg3");
+        });
+    })
+
 });

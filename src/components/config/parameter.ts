@@ -51,7 +51,9 @@ class Parameter
             optional
         };
 
-        const metadata = meta !== undefined ? new Metadata<I, BaseObjectTypes.Parameter>(meta) : MetadataFactory.createDefaultMetadata<I, BaseObjectTypes.Parameter>();
+        const metadata = meta !== undefined 
+            ? new Metadata<I, BaseObjectTypes.Parameter>({...meta, type: BaseObjectTypes.Parameter})
+            : MetadataFactory.createDefaultMetadata<I, BaseObjectTypes.Parameter>({type: BaseObjectTypes.Parameter});
         super({data, metadata});
     }
 

@@ -1,6 +1,7 @@
 import { PocketObject } from "../base";
 import { Metadata } from "../metadata";
 import { MetadataFactory } from "../metadata/metadata.factory";
+import { BaseObjectTypes } from "../../templates/v0";
 class Parameter extends PocketObject {
     constructor({ name, description, default: defaultValue, required, optional, meta }) {
         if (name === undefined) {
@@ -13,7 +14,9 @@ class Parameter extends PocketObject {
             required,
             optional
         };
-        const metadata = meta !== undefined ? new Metadata(meta) : MetadataFactory.createDefaultMetadata();
+        const metadata = meta !== undefined
+            ? new Metadata({ ...meta, type: BaseObjectTypes.Parameter })
+            : MetadataFactory.createDefaultMetadata({ type: BaseObjectTypes.Parameter });
         super({ data, metadata });
     }
     get name() {

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for templates/v0/base/object.ts</title>
+    <title>Code coverage report for templates/v0/base/metadata.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">templates/v0/base</a> object.ts</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">templates/v0/base</a> metadata.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>64/64</span>
+                <span class='fraction'>75/75</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>64/64</span>
+                <span class='fraction'>75/75</span>
             </div>
         
             
@@ -126,7 +126,18 @@
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -189,69 +200,91 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * file: object.ts
- * description: This file contains the definition of the BaseObject type and its associated types.
- * It is used to represent various types of objects that can be used in the Pocket Network.
- */
-&nbsp;
-import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
-import { BaseMetadata } from "./metadata";
-&nbsp;
-&nbsp;
-/**
- * BaseObjectTypes is an enum that defines the various types of base objects.
- * These types are used to categorize different objects in the Pocket Network.
- * Each type is represented as a string.
- */
-enum BaseObjectTypes {
-    Argument = 'Argument',
-    Parameter = 'Parameter',
-    Property = 'Property',
-    Configuration = 'Configuration',
-    ConfigurationGroup = 'ConfigurationGroup',
-    Process = 'Process',
-    ProcessGroup = 'ProcessGroup',
-    Command = 'Command',
-    CommandGroup = 'CommandGroup',
-    Job = 'Job',
-    JobGroup = 'JobGroup',
-    JobTemplate = 'JobTemplate',
-    StorageItem = 'StorageItem',
-    Storage = 'Storage',
-    Custom = 'Custom',
-    Undefined = 'Undefined',
-    Unknown = 'Unknown'
-}
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
+import { BaseTimestamps } from "@templates/v0/base/timestamps";
+import { BaseObjectType, BaseObjectTypes } from "./object";
 &nbsp;
 &nbsp;
 /**
- * BaseObjectType is a type alias for the keys of the BaseObjectTypes enum.
- * It represents the different types of base objects that can be used in the Pocket Network.
+ * Annotations are key-value pairs that provide additional information about the user account.
  */
-type BaseObjectType = keyof typeof BaseObjectTypes;
+interface BaseMetadataAnnotations 
+    extends
+        Partial&lt;Record&lt;'description', StringOrEmpty&gt;&gt;,
+        Partial&lt;Record&lt;BaseValueKey, BaseValue&gt;&gt;
+{}
 &nbsp;
 &nbsp;
 /**
- * BaseObject is a generic interface that represents an object with a name, description, data, and metadata.
- * The data property can be of any type specified by the generic parameter T.
+ * Labels are key-value pairs that can be used to categorize or tag the user account.
  */
-interface BaseObject
+interface BaseMetadataLabels
 &lt;
-    D,
-    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined,
-    T extends BaseObjectType = BaseObjectTypes.Undefined,
+    I extends BaseIdentifierType,
+    O extends BaseObjectType
+&gt;
+    extends 
+        Partial&lt;Record&lt;'id', BaseIdentifier&lt;I&gt;&gt;&gt;,
+        Partial&lt;Record&lt;'name', StringOrEmpty&gt;&gt;,
+        Partial&lt;Record&lt;'type', O&gt;&gt;,
+        Partial&lt;Record&lt;'tags', Array&lt;StringOrEmpty&gt;&gt;&gt;,
+        Partial&lt;Record&lt;BaseValueKey, BaseValue&gt;&gt;
+{}
+&nbsp;
+&nbsp;
+/**
+ * Metadata contains additional information about the user account, including annotations and labels.
+ */
+interface BaseMetadata
+&lt;
+    I extends BaseIdentifierType,
+    O extends BaseObjectType
 &gt;
     extends
-        Record&lt;'data', D&gt;,
-        Partial&lt;Record&lt;'metadata', BaseMetadata&lt;I, T&gt;&gt;&gt;
+        Partial&lt;Record&lt;'annotations', BaseMetadataAnnotations&gt;&gt;,
+        Partial&lt;Record&lt;'labels', BaseMetadataLabels&lt;I, O&gt;&gt;&gt;,
+        Partial&lt;Record&lt;'timestamps', BaseTimestamps&gt;&gt;
+{}
+&nbsp;
+&nbsp;
+/**
+ * BaseMetadataEntry is a generic interface that represents an entry in the metadata.
+ * It contains properties such as id, name, description, tags, timestamps, annotations, and labels.
+ */
+interface BaseMetadataEntry
+&lt;
+    I extends BaseIdentifierType,
+    O extends BaseObjectType
+&gt;
+    extends
+        Partial&lt;Record&lt;'id', BaseIdentifier&lt;I&gt;&gt;&gt;,
+        Partial&lt;Record&lt;'type', O&gt;&gt;,
+        Partial&lt;Record&lt;'name', StringOrEmpty&gt;&gt;,
+        Partial&lt;Record&lt;'description', StringOrEmpty&gt;&gt;,
+        Partial&lt;Record&lt;'tags', Array&lt;StringOrEmpty&gt;&gt;&gt;,
+        Partial&lt;Record&lt;'timestamps', BaseTimestamps&gt;&gt;,
+        Partial&lt;Record&lt;'annotations', BaseMetadataAnnotations&gt;&gt;,
+        Partial&lt;Record&lt;'labels', BaseMetadataLabels&lt;I, O&gt;&gt;&gt;
 {}
 &nbsp;
 &nbsp;
 export {
-    type BaseObject,
-    type BaseObjectType,
-    BaseObjectTypes,
+    type BaseMetadata,
+    type BaseMetadataAnnotations,
+    type BaseMetadataLabels,
+    type BaseMetadataEntry,
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

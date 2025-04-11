@@ -91,6 +91,66 @@ class ArgumentFactory {
             meta
         });
     }
+    /**
+     * Creates a new Argument instance from JSON.
+     */
+    static fromJSON(json, meta) {
+        if (!json) {
+            throw new Error("JSON string is required");
+        }
+        let parsed;
+        try {
+            parsed = JSON.parse(json);
+        }
+        catch (error) {
+            throw new Error("Invalid JSON string");
+        }
+        if (parsed.name === undefined || parsed.name === null) {
+            throw new Error("Name is required in the JSON string");
+        }
+        if (parsed.value === undefined) {
+            throw new Error("Value is required in the JSON string");
+        }
+        return new argument_1.Argument({
+            name: parsed.name,
+            value: parsed.value,
+            meta
+        });
+    }
+    /**
+     * Creates an array of Argument instances.
+     * @param args - An array of objects containing name, value, and optional metadata for each argument.
+     * @returns An array of Argument instances.
+     */
+    static fromArray(args) {
+        if (!Array.isArray(args) || args.length === 0) {
+            throw new Error("An array of arguments is required");
+        }
+        return args.map(({ name, value, meta }) => {
+            if (name === undefined || name === null) {
+                throw new Error("Name is required for each argument");
+            }
+            return new argument_1.Argument({
+                name,
+                value,
+                meta
+            });
+        });
+    }
+    static fromKeyValuePairs(...keyValuePairs) {
+        if (!Array.isArray(keyValuePairs) || keyValuePairs.length === 0) {
+            throw new Error("An array of key-value pairs is required");
+        }
+        return keyValuePairs.map(([name, value]) => {
+            if (name === undefined || name === null) {
+                throw new Error("Name is required for each argument");
+            }
+            return new argument_1.Argument({
+                name,
+                value
+            });
+        });
+    }
 }
 exports.ArgumentFactory = ArgumentFactory;
 //# sourceMappingURL=argument.factory.js.map

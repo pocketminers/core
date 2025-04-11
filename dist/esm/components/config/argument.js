@@ -2,6 +2,7 @@ import { PocketObject } from "../base/object";
 import { Metadata } from "../metadata";
 import { MetadataFactory } from "../metadata/metadata.factory";
 import { BaseIdentifierTypes } from "../../templates/v0/base/identifier";
+import { BaseObjectTypes } from "../../templates/v0/base/object";
 import { MultiHashUtilities } from "../../utilities/multiHash";
 /**
  * Argument is a generic class that represents a key-value pair.
@@ -19,7 +20,9 @@ class Argument extends PocketObject {
             name,
             value
         };
-        const metadata = meta !== undefined ? new Metadata(meta) : MetadataFactory.createDefaultMetadata();
+        const metadata = meta !== undefined
+            ? new Metadata({ type: BaseObjectTypes.Argument, ...meta })
+            : MetadataFactory.createDefaultMetadata({ type: BaseObjectTypes.Argument });
         super({ data, metadata });
     }
     /**

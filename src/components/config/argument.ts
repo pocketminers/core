@@ -51,7 +51,9 @@ class Argument
             value
         };
 
-        const metadata = meta !== undefined ? new Metadata<I, BaseObjectTypes.Argument>(meta) : MetadataFactory.createDefaultMetadata<I, BaseObjectTypes.Argument>();
+        const metadata = meta !== undefined 
+            ? new Metadata<I, BaseObjectTypes.Argument>({type: BaseObjectTypes.Argument, ...meta})
+            : MetadataFactory.createDefaultMetadata<I, BaseObjectTypes.Argument>({type: BaseObjectTypes.Argument});
         super({data, metadata});
     }
 

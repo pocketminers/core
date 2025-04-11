@@ -5,6 +5,7 @@ const object_1 = require("../base/object");
 const metadata_1 = require("../metadata");
 const metadata_factory_1 = require("../metadata/metadata.factory");
 const identifier_1 = require("../../templates/v0/base/identifier");
+const object_2 = require("../../templates/v0/base/object");
 const multiHash_1 = require("../../utilities/multiHash");
 /**
  * Argument is a generic class that represents a key-value pair.
@@ -22,7 +23,9 @@ class Argument extends object_1.PocketObject {
             name,
             value
         };
-        const metadata = meta !== undefined ? new metadata_1.Metadata(meta) : metadata_factory_1.MetadataFactory.createDefaultMetadata();
+        const metadata = meta !== undefined
+            ? new metadata_1.Metadata({ type: object_2.BaseObjectTypes.Argument, ...meta })
+            : metadata_factory_1.MetadataFactory.createDefaultMetadata({ type: object_2.BaseObjectTypes.Argument });
         super({ data, metadata });
     }
     /**

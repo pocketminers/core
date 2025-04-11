@@ -4,6 +4,7 @@ exports.Parameter = void 0;
 const base_1 = require("../base");
 const metadata_1 = require("../metadata");
 const metadata_factory_1 = require("../metadata/metadata.factory");
+const v0_1 = require("../../templates/v0");
 class Parameter extends base_1.PocketObject {
     constructor({ name, description, default: defaultValue, required, optional, meta }) {
         if (name === undefined) {
@@ -16,7 +17,9 @@ class Parameter extends base_1.PocketObject {
             required,
             optional
         };
-        const metadata = meta !== undefined ? new metadata_1.Metadata(meta) : metadata_factory_1.MetadataFactory.createDefaultMetadata();
+        const metadata = meta !== undefined
+            ? new metadata_1.Metadata({ ...meta, type: v0_1.BaseObjectTypes.Parameter })
+            : metadata_factory_1.MetadataFactory.createDefaultMetadata({ type: v0_1.BaseObjectTypes.Parameter });
         super({ data, metadata });
     }
     get name() {

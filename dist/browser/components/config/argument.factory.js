@@ -106,6 +106,72 @@ var ArgumentFactory = /** @class */ (function () {
             meta: meta
         });
     };
+    /**
+     * Creates a new Argument instance from JSON.
+     */
+    ArgumentFactory.fromJSON = function (json, meta) {
+        if (!json) {
+            throw new Error("JSON string is required");
+        }
+        var parsed;
+        try {
+            parsed = JSON.parse(json);
+        }
+        catch (error) {
+            throw new Error("Invalid JSON string");
+        }
+        if (parsed.name === undefined || parsed.name === null) {
+            throw new Error("Name is required in the JSON string");
+        }
+        if (parsed.value === undefined) {
+            throw new Error("Value is required in the JSON string");
+        }
+        return new Argument({
+            name: parsed.name,
+            value: parsed.value,
+            meta: meta
+        });
+    };
+    /**
+     * Creates an array of Argument instances.
+     * @param args - An array of objects containing name, value, and optional metadata for each argument.
+     * @returns An array of Argument instances.
+     */
+    ArgumentFactory.fromArray = function (args) {
+        if (!Array.isArray(args) || args.length === 0) {
+            throw new Error("An array of arguments is required");
+        }
+        return args.map(function (_a) {
+            var name = _a.name, value = _a.value, meta = _a.meta;
+            if (name === undefined || name === null) {
+                throw new Error("Name is required for each argument");
+            }
+            return new Argument({
+                name: name,
+                value: value,
+                meta: meta
+            });
+        });
+    };
+    ArgumentFactory.fromKeyValuePairs = function () {
+        var keyValuePairs = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            keyValuePairs[_i] = arguments[_i];
+        }
+        if (!Array.isArray(keyValuePairs) || keyValuePairs.length === 0) {
+            throw new Error("An array of key-value pairs is required");
+        }
+        return keyValuePairs.map(function (_a) {
+            var _b = __read(_a, 2), name = _b[0], value = _b[1];
+            if (name === undefined || name === null) {
+                throw new Error("Name is required for each argument");
+            }
+            return new Argument({
+                name: name,
+                value: value
+            });
+        });
+    };
     return ArgumentFactory;
 }());
 export { ArgumentFactory };

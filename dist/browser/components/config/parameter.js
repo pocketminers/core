@@ -13,9 +13,21 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 import { PocketObject } from "../base";
 import { Metadata } from "../metadata";
 import { MetadataFactory } from "../metadata/metadata.factory";
+import { BaseObjectTypes } from "../../templates/v0";
 var Parameter = /** @class */ (function (_super) {
     __extends(Parameter, _super);
     function Parameter(_a) {
@@ -30,7 +42,9 @@ var Parameter = /** @class */ (function (_super) {
             required: required,
             optional: optional
         };
-        var metadata = meta !== undefined ? new Metadata(meta) : MetadataFactory.createDefaultMetadata();
+        var metadata = meta !== undefined
+            ? new Metadata(__assign(__assign({}, meta), { type: BaseObjectTypes.Parameter }))
+            : MetadataFactory.createDefaultMetadata({ type: BaseObjectTypes.Parameter });
         return _super.call(this, { data: data, metadata: metadata }) || this;
     }
     Object.defineProperty(Parameter.prototype, "name", {

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for templates/v0/base/object.ts</title>
+    <title>Code coverage report for templates/v0/base/value.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">templates/v0/base</a> object.ts</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">templates/v0/base</a> value.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -126,7 +126,8 @@
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -189,70 +190,72 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * file: object.ts
- * description: This file contains the definition of the BaseObject type and its associated types.
- * It is used to represent various types of objects that can be used in the Pocket Network.
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * StringOrEmpty is a type that can be either a string or null/undefined.
+ * It is used to represent optional or empty values.
+ * Vhis is useful for properties that may not always have a value.
+ * For example, a contact's phone number may not be provided, so it can be null or undefined.
+ * Vhis type is used in various places in the code to ensure that properties can be optional.
  */
+type StringOrEmpty = string | null | undefined;
 &nbsp;
-import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
-import { BaseMetadata } from "./metadata";
+/**
+ * NumberOrEmpty is a type that can be either a number or null/undefined.
+ */
+type NumberOrEmpty = number | null | undefined;
 &nbsp;
 &nbsp;
 /**
- * BaseObjectTypes is an enum that defines the various types of base objects.
- * These types are used to categorize different objects in the Pocket Network.
- * Each type is represented as a string.
+ * BooleanOrEmpty is a type that can be either a boolean or null/undefined.
  */
-enum BaseObjectTypes {
-    Argument = 'Argument',
-    Parameter = 'Parameter',
-    Property = 'Property',
-    Configuration = 'Configuration',
-    ConfigurationGroup = 'ConfigurationGroup',
-    Process = 'Process',
-    ProcessGroup = 'ProcessGroup',
-    Command = 'Command',
-    CommandGroup = 'CommandGroup',
-    Job = 'Job',
-    JobGroup = 'JobGroup',
-    JobTemplate = 'JobTemplate',
-    StorageItem = 'StorageItem',
-    Storage = 'Storage',
-    Custom = 'Custom',
-    Undefined = 'Undefined',
-    Unknown = 'Unknown'
-}
+type BooleanOrEmpty = boolean | null | undefined;
 &nbsp;
 &nbsp;
 /**
- * BaseObjectType is a type alias for the keys of the BaseObjectTypes enum.
- * It represents the different types of base objects that can be used in the Pocket Network.
+ * Values can be of various types, including:
+ * - string
+ * - number
+ * - object
+ * - boolean
+ * - Function
+ * - undefined
+ * - null
+ * - array of any of the above types
  */
-type BaseObjectType = keyof typeof BaseObjectTypes;
+type DefaultBaseValue = string | number | object | boolean | Function | null | undefined | (string | number | object | boolean | Function | null | undefined)[];
 &nbsp;
 &nbsp;
 /**
- * BaseObject is a generic interface that represents an object with a name, description, data, and metadata.
- * The data property can be of any type specified by the generic parameter T.
+ * BaseValue is a recursive type that represents a value that can be of any type.
+ * It can be a primitive type, an object, or an array of any of these types.
+ * This is used to represent various values in the Pocket Network.
  */
-interface BaseObject
-&lt;
-    D,
-    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined,
-    T extends BaseObjectType = BaseObjectTypes.Undefined,
-&gt;
-    extends
-        Record&lt;'data', D&gt;,
-        Partial&lt;Record&lt;'metadata', BaseMetadata&lt;I, T&gt;&gt;&gt;
-{}
+type BaseValue&lt;V = any&gt; = V extends DefaultBaseValue 
+    ? V 
+    : V extends Array&lt;infer U&gt; 
+        ? BaseValue&lt;U&gt;[] 
+        : V extends Record&lt;string, any&gt; 
+            ? { [K in keyof V]: BaseValue&lt;V[K]&gt; } 
+            : never;
+&nbsp;
+&nbsp;
+/**
+ * BaseValueKey is a type that can be either a string, number, or symbol.
+ * It is used to represent keys in objects or maps.
+ */
+type BaseValueKey = string | number | symbol;
 &nbsp;
 &nbsp;
 export {
-    type BaseObject,
-    type BaseObjectType,
-    BaseObjectTypes,
-}</pre></td></tr></table></pre>
+    type StringOrEmpty,
+    type NumberOrEmpty,
+    type BooleanOrEmpty,
+    type BaseValue,
+    type BaseValueKey,
+    type DefaultBaseValue
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

@@ -74,7 +74,10 @@ class ArgumentFactory {
         });
     }
 
-    public static fromString<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined>(
+    public static fromString
+    <
+        V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+    >(
         str: string,
         meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>
     ): Argument<V, I> {
@@ -124,6 +127,93 @@ class ArgumentFactory {
             name: parsed.name,
             value: parsed.value,
             meta
+        });
+    }
+
+    /**
+     * Creates a new Argument instance from JSON.
+     */
+    public static fromJSON
+    <
+        V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+    >(
+        json: string,
+        meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>
+    ): Argument<V, I> {
+        if (!json) {
+            throw new Error("JSON string is required");
+        }
+        let parsed: { name: BaseValueKey; value: BaseValue<V> };
+        try {
+            parsed = JSON.parse(json);
+        } catch (error) {
+            throw new Error("Invalid JSON string");
+        }
+        if (parsed.name === undefined || parsed.name === null) {
+            throw new Error("Name is required in the JSON string");
+        }
+        if (parsed.value === undefined) {
+            throw new Error("Value is required in the JSON string");
+        }   
+
+        return new Argument<V, I>({
+            name: parsed.name,
+            value: parsed.value,
+            meta
+        });
+    }
+
+
+    /**
+     * Creates an array of Argument instances.
+     * @param args - An array of objects containing name, value, and optional metadata for each argument.
+     * @returns An array of Argument instances.
+     */
+    public static fromArray
+    <
+        V,
+        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+    >(args: {
+        name: BaseValueKey,
+        value: BaseValue<V>,
+        meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>
+    }[]): Argument<V, I>[] {
+        if (!Array.isArray(args) || args.length === 0) {
+            throw new Error("An array of arguments is required");
+        }
+
+        return args.map(({ name, value, meta }) => {
+            if (name === undefined || name === null) {
+                throw new Error("Name is required for each argument");
+            }
+
+            return new Argument<V, I>({
+                name,
+                value,
+                meta
+            });
+        });
+    }
+
+
+    public static fromKeyValuePairs
+    <
+        V,
+        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+    >(...keyValuePairs: [BaseValueKey, BaseValue<V>][]): Argument<V, I>[] {
+        if (!Array.isArray(keyValuePairs) || keyValuePairs.length === 0) {
+            throw new Error("An array of key-value pairs is required");
+        }
+
+        return keyValuePairs.map(([name, value]) => {
+            if (name === undefined || name === null) {
+                throw new Error("Name is required for each argument");
+            }
+
+            return new Argument<V, I>({
+                name,
+                value
+            });
         });
     }
 }
