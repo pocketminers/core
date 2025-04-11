@@ -14,10 +14,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./argument"), exports);
-__exportStar(require("./argument.factory"), exports);
-__exportStar(require("./argument.storage"), exports);
-__exportStar(require("./parameter"), exports);
-__exportStar(require("./parameter.factory"), exports);
-__exportStar(require("./parameter.storage"), exports);
+__exportStar(require("./argument.js"), exports);
+__exportStar(require("./argument.factory.js"), exports);
+__exportStar(require("./argument.storage.js"), exports);
+__exportStar(require("./parameter.js"), exports);
+__exportStar(require("./parameter.factory.js"), exports);
+__exportStar(require("./parameter.storage.js"), exports);
 //# sourceMappingURL=index.js.map

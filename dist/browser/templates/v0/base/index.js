@@ -1,9 +1,9 @@
-export * from './configuration';
-export * from './factory';
-export * from './identifier';
-export * from './metadata';
-export * from './object';
-export * from './storage';
-export * from './timestamps';
-export * from './value';
+export * from './configuration.js';
+export * from './factory.js';
+export * from './identifier.js';
+export * from './metadata.js';
+export * from './object.js';
+export * from './storage.js';
+export * from './timestamps.js';
+export * from './value.js';
 //# sourceMappingURL=index.js.map

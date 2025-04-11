@@ -1,4 +1,4 @@
-import { BaseTimestamp, BaseTimestampEntry, DateEntry } from "../../templates/v0/base/timestamps";
+import { BaseTimestamp, BaseTimestampEntry, DateEntry } from "../../templates/v0/base/timestamps.js";
 /**
  * TimestampItem represents a timestamp item that can be either a Date object, a string, or a number.
  * It can also be an empty string or a number representing a timestamp.

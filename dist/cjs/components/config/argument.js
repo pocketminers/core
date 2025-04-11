@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Argument = void 0;
-const object_1 = require("../base/object");
-const metadata_1 = require("../metadata");
-const metadata_factory_1 = require("../metadata/metadata.factory");
-const identifier_1 = require("../../templates/v0/base/identifier");
-const object_2 = require("../../templates/v0/base/object");
-const multiHash_1 = require("../../utilities/multiHash");
+const object_1 = require("../base/object.js");
+const metadata_1 = require("../metadata/index.js");
+const metadata_factory_1 = require("../metadata/metadata.factory.js");
+const identifier_1 = require("../../templates/v0/base/identifier.js");
+const object_2 = require("../../templates/v0/base/object.js");
+const multiHash_1 = require("../../utilities/multiHash.js");
 /**
  * Argument is a generic class that represents an argument object.
  * It extends the PocketObject class and implements the BaseArgument interface.

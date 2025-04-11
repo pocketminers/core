@@ -1,4 +1,4 @@
-import { BaseIdentifierTypes } from "../templates/v0/base/identifier";
+import { BaseIdentifierTypes } from "../templates/v0/base/identifier.js";
 class MultiHashUtilities {
     static async hashString(input) {
         const encoder = new TextEncoder();

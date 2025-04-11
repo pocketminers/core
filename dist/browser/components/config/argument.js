@@ -60,12 +60,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { PocketObject } from "../base/object";
-import { Metadata } from "../metadata";
-import { MetadataFactory } from "../metadata/metadata.factory";
-import { BaseIdentifierTypes } from "../../templates/v0/base/identifier";
-import { BaseObjectTypes } from "../../templates/v0/base/object";
-import { MultiHashUtilities } from "../../utilities/multiHash";
+import { PocketObject } from "../base/object.js";
+import { Metadata } from "../metadata/index.js";
+import { MetadataFactory } from "../metadata/metadata.factory.js";
+import { BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
+import { BaseObjectTypes } from "../../templates/v0/base/object.js";
+import { MultiHashUtilities } from "../../utilities/multiHash.js";
 /**
  * Argument is a generic class that represents an argument object.
  * It extends the PocketObject class and implements the BaseArgument interface.

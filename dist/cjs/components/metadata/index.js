@@ -15,9 +15,9 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Metadata = void 0;
-const identifier_1 = require("../../templates/v0/base/identifier");
-const object_1 = require("../../templates/v0/base/object");
-const freezer_1 = require("../../utilities/freezer");
+const identifier_1 = require("../../templates/v0/base/identifier.js");
+const object_1 = require("../../templates/v0/base/object.js");
+const freezer_1 = require("../../utilities/freezer.js");
 class Metadata {
     annotations;
     labels;
@@ -132,5 +132,5 @@ class Metadata {
     }
 }
 exports.Metadata = Metadata;
-__exportStar(require("./metadata.factory"), exports);
+__exportStar(require("./metadata.factory.js"), exports);
 //# sourceMappingURL=index.js.map

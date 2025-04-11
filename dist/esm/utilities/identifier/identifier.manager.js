@@ -1,9 +1,8 @@
-"use strict";
 // import { ArgumentEntry, BaseTypes, HashedStorageItem, Manager, StorageItemIndex } from "@component/base";
-// import { IdentityFactory } from "./identifier.factory";
+// import { IdentityFactory } from "./identifier.factory.js";
 // import { IdentifiableBaseType, Identifier, IdentifierFormat, IdentityStorageItem, IdentityStorageSchema } from "./identifier.types";
-// import { IdentityStorage } from "./identifier.storage";
-// import { IdentityManagerParameters } from "./identifier.params";
+// import { IdentityStorage } from "./identifier.storage.js";
+// import { IdentityManagerParameters } from "./identifier.params.js";
 // class IdentityManager
 //     extends Manager<
 //         BaseTypes.Identity,

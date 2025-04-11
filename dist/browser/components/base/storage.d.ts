@@ -1,6 +1,6 @@
-import { Argument, Parameter } from "../config";
-import { BaseIdentifier, BaseObjectType } from "../../templates/v0";
-import { BaseStorage, BaseStorageLocation, BaseStorageLocations } from "../../templates/v0/base/storage";
+import { Argument, Parameter } from "../config/index.js";
+import { BaseIdentifier, BaseObjectType } from "../../templates/v0/index.js";
+import { BaseStorage, BaseStorageLocation, BaseStorageLocations } from "../../templates/v0/base/storage.js";
 type StorageTypes = Argument<any, any> | Parameter<any, any>;
 declare class PocketStorage<S extends StorageTypes, O extends BaseObjectType, L extends BaseStorageLocation = BaseStorageLocations.MEMORY> implements BaseStorage<S, O, L> {
     /**

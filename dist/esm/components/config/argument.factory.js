@@ -1,5 +1,5 @@
-import { Argument } from "../config/argument";
-import { PocketFactory } from "../base/factory";
+import { Argument } from "../config/argument.js";
+import { PocketFactory } from "../base/factory.js";
 class ArgumentFactory extends PocketFactory {
     static fromRecord(record, meta) {
         if (record === undefined) {

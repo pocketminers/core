@@ -1,9 +1,9 @@
-import { PocketObject } from "../base/object";
-import { BaseArgument, BaseArgumentEntry } from "../../templates/v0/base/configuration";
-import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "../../templates/v0/base/identifier";
-import { BaseMetadataEntry } from "../../templates/v0/base/metadata";
-import { BaseObjectTypes } from "../../templates/v0/base/object";
-import { BaseValue, BaseValueKey } from "../../templates/v0/base/value";
+import { PocketObject } from "../base/object.js";
+import { BaseArgument, BaseArgumentEntry } from "../../templates/v0/base/configuration.js";
+import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
+import { BaseMetadataEntry } from "../../templates/v0/base/metadata.js";
+import { BaseObjectTypes } from "../../templates/v0/base/object.js";
+import { BaseValue, BaseValueKey } from "../../templates/v0/base/value.js";
 /**
  * Argument is a generic class that represents an argument object.
  * It extends the PocketObject class and implements the BaseArgument interface.

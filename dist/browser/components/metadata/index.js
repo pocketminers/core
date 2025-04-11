@@ -9,9 +9,9 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import { BaseIdentifierTypes } from "../../templates/v0/base/identifier";
-import { BaseObjectTypes } from "../../templates/v0/base/object";
-import { Freezer } from "../../utilities/freezer";
+import { BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
+import { BaseObjectTypes } from "../../templates/v0/base/object.js";
+import { Freezer } from "../../utilities/freezer.js";
 var Metadata = /** @class */ (function () {
     function Metadata(_a) {
         var _b = _a === void 0 ? {} : _a, id = _b.id, name = _b.name, type = _b.type, description = _b.description, tags = _b.tags, _c = _b.timestamps, timestamps = _c === void 0 ? {
@@ -101,5 +101,5 @@ var Metadata = /** @class */ (function () {
     return Metadata;
 }());
 export { Metadata };
-export * from "./metadata.factory";
+export * from "./metadata.factory.js";
 //# sourceMappingURL=index.js.map

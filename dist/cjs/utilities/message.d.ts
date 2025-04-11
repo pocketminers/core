@@ -1,4 +1,4 @@
-import { BaseIdentifier, BaseIdentifierTypes } from "../templates/v0/base/identifier";
+import { BaseIdentifier, BaseIdentifierTypes } from "../templates/v0/base/identifier.js";
 declare class PocketMessage {
     id?: BaseIdentifier<BaseIdentifierTypes.UUID>;
     status?: string;

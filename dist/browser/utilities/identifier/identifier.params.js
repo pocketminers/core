@@ -1,5 +1,4 @@
-"use strict";
-// import { ParameterEntry } from "../../templates/v0/base/configuration";
+// import { ParameterEntry } from "../../templates/v0/base/configuration.js";
 // import { IdentifierFormats } from "./identifier.types";
 // const IdentityManagerParameters: ParameterEntry[] = [
 //     {

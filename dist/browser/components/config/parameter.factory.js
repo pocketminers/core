@@ -13,8 +13,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Parameter } from "../config/parameter";
-import { PocketFactory } from "../base/factory";
+import { Parameter } from "../config/parameter.js";
+import { PocketFactory } from "../base/factory.js";
 var ParameterFactory = /** @class */ (function (_super) {
     __extends(ParameterFactory, _super);
     function ParameterFactory() {

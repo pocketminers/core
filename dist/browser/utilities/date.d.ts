@@ -4,7 +4,7 @@
  * It includes methods for generating ISO 8601, RFC 7231, UNIX timestamp, and UTC formatted strings.
  * These methods are useful for formatting dates in a standardized way for use in APIs, databases, and other applications.
  */
-import { BaseTimestampEntry } from "../templates/v0/base/timestamps";
+import { BaseTimestampEntry } from "../templates/v0/base/timestamps.js";
 declare class DateUtilities {
     /**
      * Generates a date string in ISO 8601 format.

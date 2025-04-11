@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MultiHashUtilities = void 0;
-const identifier_1 = require("../templates/v0/base/identifier");
+const identifier_1 = require("../templates/v0/base/identifier.js");
 class MultiHashUtilities {
     static async hashString(input) {
         const encoder = new TextEncoder();

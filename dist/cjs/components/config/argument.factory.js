@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArgumentFactory = void 0;
-const argument_1 = require("../config/argument");
-const factory_1 = require("../base/factory");
+const argument_1 = require("../config/argument.js");
+const factory_1 = require("../base/factory.js");
 class ArgumentFactory extends factory_1.PocketFactory {
     static fromRecord(record, meta) {
         if (record === undefined) {

@@ -1,7 +1,7 @@
-import { BaseIdentifier, BaseIdentifierType } from "../../v0/base/identifier";
-import { BaseValue, BaseValueKey, StringOrEmpty } from "../../v0/base/value";
-import { BaseTimestamps } from "../../v0/base/timestamps";
-import { BaseObjectType } from "./object";
+import { BaseIdentifier, BaseIdentifierType } from "../../v0/base/identifier.js";
+import { BaseValue, BaseValueKey, StringOrEmpty } from "../../v0/base/value.js";
+import { BaseTimestamps } from "../../v0/base/timestamps.js";
+import { BaseObjectType } from "./object.js";
 /**
  * Annotations are key-value pairs that provide additional information about the user account.
  */

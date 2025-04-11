@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PocketObject = void 0;
-const identifier_1 = require("../../templates/v0/base/identifier");
-const metadata_1 = require("../metadata");
-const freezer_1 = require("../../utilities/freezer");
-const multiHash_1 = require("../../utilities/multiHash");
-const metadata_factory_1 = require("../metadata/metadata.factory");
+const identifier_1 = require("../../templates/v0/base/identifier.js");
+const metadata_1 = require("../metadata/index.js");
+const freezer_1 = require("../../utilities/freezer.js");
+const multiHash_1 = require("../../utilities/multiHash.js");
+const metadata_factory_1 = require("../metadata/metadata.factory.js");
 class PocketObject {
     data;
     metadata;

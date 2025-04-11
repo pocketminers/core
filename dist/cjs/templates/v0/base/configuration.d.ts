@@ -1,6 +1,6 @@
-import { BaseValue, BaseValueKey, StringOrEmpty } from "../../v0/base/value";
-import { BaseObject, BaseObjectTypes } from "./object";
-import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
+import { BaseValue, BaseValueKey, StringOrEmpty } from "../../v0/base/value.js";
+import { BaseObject, BaseObjectTypes } from "./object.js";
+import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier.js";
 /**
  * BaseArgumentEntry is a generic type that represents an argument entry object.
  */

@@ -1,6 +1,6 @@
 import { APIClient, APIClientOptions } from "@wharfkit/antelope";
 import { ChainDefinitionType } from "@wharfkit/session";
-import { WAXAccountInfo, WAXBlockInfo, WAXChainInfo } from "./eos.types";
+import { WAXAccountInfo, WAXBlockInfo, WAXChainInfo } from "./eos.types.js";
 /**
  * EOS Blockchain Utility
  * - Utilizes EOS tools from Antelope

@@ -3,8 +3,8 @@
  * description: This file contains the definition of the BaseObject type and its associated types.
  * It is used to represent various types of objects that can be used in the Pocket Network.
  */
-import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
-import { BaseMetadata } from "./metadata";
+import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier.js";
+import { BaseMetadata } from "./metadata.js";
 /**
  * BaseObjectTypes is an enum that defines the various types of base objects.
  * These types are used to categorize different objects in the Pocket Network.

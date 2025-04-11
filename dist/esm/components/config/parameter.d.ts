@@ -1,6 +1,6 @@
-import { PocketObject } from "../base";
-import { BaseIdentifierType, BaseIdentifierTypes, BaseMetadataEntry, BaseObjectTypes, BaseParameter, BaseParameterEntry } from "../../templates/v0";
-import { BaseValue, BaseValueKey, StringOrEmpty } from "../../templates/v0/base/value";
+import { PocketObject } from "../base/index.js";
+import { BaseIdentifierType, BaseIdentifierTypes, BaseMetadataEntry, BaseObjectTypes, BaseParameter, BaseParameterEntry } from "../../templates/v0/index.js";
+import { BaseValue, BaseValueKey, StringOrEmpty } from "../../templates/v0/base/value.js";
 /**
  * BaseParameterEntry is a generic type that represents a parameter entry object.
  */

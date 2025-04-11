@@ -1,5 +1,5 @@
-import { Checks } from "../../utilities/checks";
-import { DateUtilities } from "../../utilities/date";
+import { Checks } from "../../utilities/checks.js";
+import { DateUtilities } from "../../utilities/date.js";
 /**
  * TimestampItem represents a timestamp item that can be either a Date object, a string, or a number.
  * It can also be an empty string or a number representing a timestamp.

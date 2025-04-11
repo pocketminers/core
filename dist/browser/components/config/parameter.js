@@ -24,10 +24,10 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import { PocketObject } from "../base";
-import { Metadata } from "../metadata";
-import { MetadataFactory } from "../metadata/metadata.factory";
-import { BaseObjectTypes } from "../../templates/v0";
+import { PocketObject } from "../base/index.js";
+import { Metadata } from "../metadata/index.js";
+import { MetadataFactory } from "../metadata/metadata.factory.js";
+import { BaseObjectTypes } from "../../templates/v0/index.js";
 /**
  * Parameter is a generic class that represents a parameter object.
  * It extends the PocketObject class and implements the BaseParameter interface.

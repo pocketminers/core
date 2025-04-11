@@ -6,6 +6,7 @@ WORKDIR /usr/app/core/
 
 # Check .dockerignore to ensure that the entrypoint.sh is not ignored
 COPY ./package.json yarn.lock ${HOME}/core/
+COPY ./package.publish.json ${HOME}/core/
 
 RUN yarn install
 

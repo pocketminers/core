@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParameterFactory = void 0;
-const parameter_1 = require("../config/parameter");
-const factory_1 = require("../base/factory");
+const parameter_1 = require("../config/parameter.js");
+const factory_1 = require("../base/factory.js");
 class ParameterFactory extends factory_1.PocketFactory {
     static checkParameterEntry(entry) {
         if (!entry) {

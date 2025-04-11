@@ -1,5 +1,5 @@
-import { StorageTypes } from "../../../components/base";
-import { BaseObjectType } from "./object";
+import { StorageTypes } from "../../../components/base/index.js";
+import { BaseObjectType } from "./object.js";
 interface BaseFactory<S extends StorageTypes, O extends BaseObjectType> {
     /**
      * The type of the object.

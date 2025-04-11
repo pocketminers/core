@@ -1,4 +1,3 @@
-"use strict";
 // import { BaseTypes, Factory } from "../base";
 // import { IdentifiableBaseType, Identifier, IdentifierFormat } from "./identifier.types";
 // class IdentityFactory

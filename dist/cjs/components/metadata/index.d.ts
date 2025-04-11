@@ -1,7 +1,7 @@
-import { BaseIdentifier, BaseIdentifierType } from "../../templates/v0/base/identifier";
-import { BaseMetadata, BaseMetadataAnnotations, BaseMetadataEntry, BaseMetadataLabels } from "../../templates/v0/base/metadata";
-import { BaseObjectType } from "../../templates/v0/base/object";
-import { BaseTimestamps } from "../../templates/v0/base/timestamps";
+import { BaseIdentifier, BaseIdentifierType } from "../../templates/v0/base/identifier.js";
+import { BaseMetadata, BaseMetadataAnnotations, BaseMetadataEntry, BaseMetadataLabels } from "../../templates/v0/base/metadata.js";
+import { BaseObjectType } from "../../templates/v0/base/object.js";
+import { BaseTimestamps } from "../../templates/v0/base/timestamps.js";
 declare class Metadata<I extends BaseIdentifierType, O extends BaseObjectType> implements BaseMetadata<I, O> {
     readonly annotations: BaseMetadataAnnotations;
     readonly labels: BaseMetadataLabels<I, O>;
@@ -24,5 +24,5 @@ declare class Metadata<I extends BaseIdentifierType, O extends BaseObjectType> i
     get type(): O;
 }
 export { Metadata };
-export * from "./metadata.factory";
+export * from "./metadata.factory.js";
 //# sourceMappingURL=index.d.ts.map

@@ -1,9 +1,9 @@
-import { PocketObject } from "../base/object";
-import { Metadata } from "../metadata";
-import { MetadataFactory } from "../metadata/metadata.factory";
-import { BaseIdentifierTypes } from "../../templates/v0/base/identifier";
-import { BaseObjectTypes } from "../../templates/v0/base/object";
-import { MultiHashUtilities } from "../../utilities/multiHash";
+import { PocketObject } from "../base/object.js";
+import { Metadata } from "../metadata/index.js";
+import { MetadataFactory } from "../metadata/metadata.factory.js";
+import { BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
+import { BaseObjectTypes } from "../../templates/v0/base/object.js";
+import { MultiHashUtilities } from "../../utilities/multiHash.js";
 /**
  * Argument is a generic class that represents an argument object.
  * It extends the PocketObject class and implements the BaseArgument interface.

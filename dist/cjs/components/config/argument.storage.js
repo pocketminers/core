@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArgumentStorage = void 0;
-const storage_1 = require("../base/storage");
+const storage_1 = require("../base/storage.js");
 class ArgumentStorage extends storage_1.PocketStorage {
     constructor({ location, items = [], allowDuplicates = false, allowEmpty = false, maxSize }) {
         super({

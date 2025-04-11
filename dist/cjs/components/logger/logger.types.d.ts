@@ -1,4 +1,4 @@
-import { BaseTimestamp } from "../../templates/v0/base/timestamps";
+import { BaseTimestamp } from "../../templates/v0/base/timestamps.js";
 /**
  * LogLevels are the different levels of logging that can be used in the application.
  * They include DEBUG, INFO, WARN, and ERROR.

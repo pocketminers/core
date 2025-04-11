@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MetadataFactory = void 0;
-const identifier_1 = require("../../templates/v0/base/identifier");
-const object_1 = require("../../templates/v0/base/object");
-const _1 = require(".");
+const identifier_1 = require("../../templates/v0/base/identifier.js");
+const object_1 = require("../../templates/v0/base/object.js");
+const _1 = require("./index.js");
 class MetadataFactory {
     static createDefaultMetadata(metadata) {
         if (metadata !== undefined) {

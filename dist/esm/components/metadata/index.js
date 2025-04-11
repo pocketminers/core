@@ -1,6 +1,6 @@
-import { BaseIdentifierTypes } from "../../templates/v0/base/identifier";
-import { BaseObjectTypes } from "../../templates/v0/base/object";
-import { Freezer } from "../../utilities/freezer";
+import { BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
+import { BaseObjectTypes } from "../../templates/v0/base/object.js";
+import { Freezer } from "../../utilities/freezer.js";
 class Metadata {
     annotations;
     labels;
@@ -115,5 +115,5 @@ class Metadata {
     }
 }
 export { Metadata };
-export * from "./metadata.factory";
+export * from "./metadata.factory.js";
 //# sourceMappingURL=index.js.map

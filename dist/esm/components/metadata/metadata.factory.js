@@ -1,6 +1,6 @@
-import { BaseIdentifierTypes } from "../../templates/v0/base/identifier";
-import { BaseObjectTypes } from "../../templates/v0/base/object";
-import { Metadata } from ".";
+import { BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
+import { BaseObjectTypes } from "../../templates/v0/base/object.js";
+import { Metadata } from "./index.js";
 class MetadataFactory {
     static createDefaultMetadata(metadata) {
         if (metadata !== undefined) {

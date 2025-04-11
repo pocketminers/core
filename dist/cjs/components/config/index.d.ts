@@ -1,7 +1,7 @@
-export * from './argument';
-export * from './argument.factory';
-export * from './argument.storage';
-export * from './parameter';
-export * from './parameter.factory';
-export * from './parameter.storage';
+export * from './argument.js';
+export * from './argument.factory.js';
+export * from './argument.storage.js';
+export * from './parameter.js';
+export * from './parameter.factory.js';
+export * from './parameter.storage.js';
 //# sourceMappingURL=index.d.ts.map

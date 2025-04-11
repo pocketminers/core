@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Parameter = void 0;
-const base_1 = require("../base");
-const metadata_1 = require("../metadata");
-const metadata_factory_1 = require("../metadata/metadata.factory");
-const v0_1 = require("../../templates/v0");
+const base_1 = require("../base/index.js");
+const metadata_1 = require("../metadata/index.js");
+const metadata_factory_1 = require("../metadata/metadata.factory.js");
+const v0_1 = require("../../templates/v0/index.js");
 /**
  * Parameter is a generic class that represents a parameter object.
  * It extends the PocketObject class and implements the BaseParameter interface.

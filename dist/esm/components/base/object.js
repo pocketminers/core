@@ -1,8 +1,8 @@
-import { BaseIdentifierTypes } from "../../templates/v0/base/identifier";
-import { Metadata } from "../metadata";
-import { Freezer } from "../../utilities/freezer";
-import { MultiHashUtilities } from "../../utilities/multiHash";
-import { MetadataFactory } from "../metadata/metadata.factory";
+import { BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
+import { Metadata } from "../metadata/index.js";
+import { Freezer } from "../../utilities/freezer.js";
+import { MultiHashUtilities } from "../../utilities/multiHash.js";
+import { MetadataFactory } from "../metadata/metadata.factory.js";
 class PocketObject {
     data;
     metadata;

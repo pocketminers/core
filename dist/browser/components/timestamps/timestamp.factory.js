@@ -1,4 +1,4 @@
-import { TimestampItem } from "./timestamp.item";
+import { TimestampItem } from "./timestamp.item.js";
 var TimestampFactory = /** @class */ (function () {
     function TimestampFactory() {
     }

@@ -1,4 +1,4 @@
-import { PocketStorage } from "../base/storage";
+import { PocketStorage } from "../base/storage.js";
 class ArgumentStorage extends PocketStorage {
     constructor({ location, items = [], allowDuplicates = false, allowEmpty = false, maxSize }) {
         super({

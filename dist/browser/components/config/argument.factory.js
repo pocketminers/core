@@ -29,8 +29,8 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-import { Argument } from "../config/argument";
-import { PocketFactory } from "../base/factory";
+import { Argument } from "../config/argument.js";
+import { PocketFactory } from "../base/factory.js";
 var ArgumentFactory = /** @class */ (function (_super) {
     __extends(ArgumentFactory, _super);
     function ArgumentFactory() {

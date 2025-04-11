@@ -1,5 +1,5 @@
-import { Parameter } from "../config/parameter";
-import { PocketFactory } from "../base/factory";
+import { Parameter } from "../config/parameter.js";
+import { PocketFactory } from "../base/factory.js";
 class ParameterFactory extends PocketFactory {
     static checkParameterEntry(entry) {
         if (!entry) {

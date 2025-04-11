@@ -14,10 +14,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./blockchain"), exports);
-__exportStar(require("./checks"), exports);
-__exportStar(require("./date"), exports);
-__exportStar(require("./freezer"), exports);
-__exportStar(require("./message"), exports);
-__exportStar(require("./multiHash"), exports);
+__exportStar(require("./blockchain/index.js"), exports);
+__exportStar(require("./checks.js"), exports);
+__exportStar(require("./date.js"), exports);
+__exportStar(require("./freezer.js"), exports);
+__exportStar(require("./message.js"), exports);
+__exportStar(require("./multiHash.js"), exports);
 //# sourceMappingURL=index.js.map

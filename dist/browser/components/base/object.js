@@ -34,11 +34,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { BaseIdentifierTypes } from "../../templates/v0/base/identifier";
-import { Metadata } from "../metadata";
-import { Freezer } from "../../utilities/freezer";
-import { MultiHashUtilities } from "../../utilities/multiHash";
-import { MetadataFactory } from "../metadata/metadata.factory";
+import { BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
+import { Metadata } from "../metadata/index.js";
+import { Freezer } from "../../utilities/freezer.js";
+import { MultiHashUtilities } from "../../utilities/multiHash.js";
+import { MetadataFactory } from "../metadata/metadata.factory.js";
 var PocketObject = /** @class */ (function () {
     function PocketObject(_a) {
         var data = _a.data, metadata = _a.metadata;

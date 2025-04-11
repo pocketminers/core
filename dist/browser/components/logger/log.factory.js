@@ -1,4 +1,3 @@
-"use strict";
 var LogFactory = /** @class */ (function () {
     function LogFactory() {
     }

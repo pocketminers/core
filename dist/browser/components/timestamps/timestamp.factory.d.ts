@@ -1,5 +1,5 @@
-import { DateEntry } from "../../templates/v0/base/timestamps";
-import { TimestampItem } from "./timestamp.item";
+import { DateEntry } from "../../templates/v0/base/timestamps.js";
+import { TimestampItem } from "./timestamp.item.js";
 declare class TimestampFactory {
     private static instance;
     private constructor();

@@ -7,7 +7,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DateUtilities = void 0;
-const checks_1 = require("./checks");
+const checks_1 = require("./checks.js");
 class DateUtilities {
     /**
      * Generates a date string in ISO 8601 format.

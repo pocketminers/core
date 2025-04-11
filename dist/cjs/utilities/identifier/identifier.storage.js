@@ -1,4 +1,3 @@
-"use strict";
 // import { HashedStorage, HashedStorageItem, StorageItemIndex } from "../base";
 // import { BaseTypes } from "../base/base.types";
 // import { IdentifiableBaseType, Identifier, IdentityStorageItem, IdentityStorageSchema } from "./identifier.types";

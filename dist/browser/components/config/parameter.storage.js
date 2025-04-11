@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { PocketStorage } from "../base/storage";
+import { PocketStorage } from "../base/storage.js";
 var ParameterStorage = /** @class */ (function (_super) {
     __extends(ParameterStorage, _super);
     function ParameterStorage(_a) {

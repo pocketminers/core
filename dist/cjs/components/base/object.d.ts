@@ -1,6 +1,6 @@
-import { BaseObject, BaseObjectType } from "../../templates/v0/base/object";
-import { BaseIdentifierType } from "../../templates/v0/base/identifier";
-import { Metadata } from "../metadata";
+import { BaseObject, BaseObjectType } from "../../templates/v0/base/object.js";
+import { BaseIdentifierType } from "../../templates/v0/base/identifier.js";
+import { Metadata } from "../metadata/index.js";
 declare class PocketObject<D, I extends BaseIdentifierType, O extends BaseObjectType> implements BaseObject<D, I, O> {
     data: D;
     metadata: Metadata<I, O>;
@@ -17,7 +17,7 @@ declare class PocketObject<D, I extends BaseIdentifierType, O extends BaseObject
     get dataString(): string;
     get metadataString(): string;
     get objectString(): string;
-    get objectType(): O | undefined;
+    get objectType(): O;
     isEmpty(): boolean;
 }
 export { PocketObject };
