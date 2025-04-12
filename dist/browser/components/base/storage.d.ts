@@ -1,7 +1,27 @@
 import { Argument, Parameter } from "../config/index.js";
 import { BaseIdentifier, BaseObjectType } from "../../templates/v0/index.js";
 import { BaseStorage, BaseStorageLocation, BaseStorageLocations } from "../../templates/v0/base/storage.js";
+/**
+ * StorageTypes is a generic type that represents the types of storage items.
+ * Currently, it can be either an Argument or a Parameter.
+ */
 type StorageTypes = Argument<any, any> | Parameter<any, any>;
+/**
+ * PocketStorageOptions is a generic type that represents the options for the PocketStorage class.
+ * It extends the BaseStorageOptions interface and provides additional properties.
+ *
+ * @template L The type of the storage location.
+ */
+interface PocketStorageOptions<L extends BaseStorageLocation = BaseStorageLocations.MEMORY> extends Record<'location', L>, Record<'allowDuplicates', boolean>, Record<'allowEmpty', boolean>, Record<'maxSize', number | undefined> {
+}
+/**
+ * PocketStorage is a generic class that represents a storage object.
+ * It implements the BaseStorage interface and provides methods to manage the storage.
+ *
+ * @template S The type of the storage item.
+ * @template O The type of the object.
+ * @template L The type of the storage location.
+ */
 declare class PocketStorage<S extends StorageTypes, O extends BaseObjectType, L extends BaseStorageLocation = BaseStorageLocations.MEMORY> implements BaseStorage<S, O, L> {
     /**
      * The location of the storage item.
@@ -23,13 +43,7 @@ declare class PocketStorage<S extends StorageTypes, O extends BaseObjectType, L 
      * The maximum size of the storage.
      */
     maxSize: number | undefined;
-    constructor({ location, items, allowDuplicates, allowEmpty, maxSize }: {
-        location: L;
-        items?: Array<S>;
-        allowDuplicates?: boolean;
-        allowEmpty?: boolean;
-        maxSize?: number;
-    });
+    constructor(items: Array<S>, { location, allowDuplicates, allowEmpty, maxSize }: PocketStorageOptions<L>);
     /**
      * Adds an item to the storage.
      * @param item The item to add.
@@ -66,5 +80,5 @@ declare class PocketStorage<S extends StorageTypes, O extends BaseObjectType, L 
      */
     getType(): string;
 }
-export { PocketStorage, type StorageTypes, };
+export { PocketStorage, type StorageTypes, type PocketStorageOptions };
 //# sourceMappingURL=storage.d.ts.map

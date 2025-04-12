@@ -1,9 +1,10 @@
 import { BaseObject, BaseObjectType } from "../../templates/v0/base/object";
-import { BaseIdentifierType, BaseIdentifierTypes } from "../../templates/v0/base/identifier";
+import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "../../templates/v0/base/identifier";
 import { Metadata } from "@components/metadata";
 import { Freezer } from "@utilities/freezer";
 import { MultiHashUtilities } from "@utilities/multiHash";
 import { MetadataFactory } from "@components/metadata/metadata.factory";
+import { Checks } from "@utilities/checks";
 
 
 class PocketObject
@@ -61,10 +62,30 @@ class PocketObject
             });
         }
 
-        const metadataHash = metadata.labels.id?.value;
+        if (metadata.labels.id?.type_ === BaseIdentifierTypes.Multihash) {
+            const metadataHash = metadata.labels.id?.value;
 
-        if (metadataHash !== undefined && metadataHash !== hash) {
-            throw new Error("Data hash does not match metadata hash");
+            console.log("Metadata hash: ", metadataHash);
+            console.log("Data hash: ", hash);
+
+            if (
+                Checks.isEmpty(metadataHash) === false
+                && metadataHash !== hash
+            ) {
+                throw new Error("Data hash does not match metadata hash");
+            }
+        }
+        else {
+            metadata = new Metadata({
+                ...metadata.toJSON(),
+                labels: {
+                    ...metadata.labels,
+                    id: {
+                        type_: BaseIdentifierTypes.Multihash as I,
+                        value: hash
+                    }
+                }
+            });
         }
 
         return metadata;
@@ -95,6 +116,20 @@ class PocketObject
             || this.dataString === "null"
             || this.dataString === "undefined";
     }
+
+    public async toMultiHashIdentifier(): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>> {
+        const meta = await this.checkDataHash(this.data, this.metadata);
+
+        if (meta.labels.id === undefined) {
+            throw new Error("Metadata id is required");
+        }
+
+        return {
+            type_: BaseIdentifierTypes.Multihash,
+            value: meta.labels.id?.value
+        }
+    }
+
 }
 
 export { 

@@ -6,6 +6,7 @@ const metadata_1 = require("../metadata/index.js");
 const freezer_1 = require("../../utilities/freezer.js");
 const multiHash_1 = require("../../utilities/multiHash.js");
 const metadata_factory_1 = require("../metadata/metadata.factory.js");
+const checks_1 = require("../../utilities/checks.js");
 class PocketObject {
     data;
     metadata;
@@ -39,9 +40,26 @@ class PocketObject {
                 }
             });
         }
-        const metadataHash = metadata.labels.id?.value;
-        if (metadataHash !== undefined && metadataHash !== hash) {
-            throw new Error("Data hash does not match metadata hash");
+        if (metadata.labels.id?.type_ === identifier_1.BaseIdentifierTypes.Multihash) {
+            const metadataHash = metadata.labels.id?.value;
+            console.log("Metadata hash: ", metadataHash);
+            console.log("Data hash: ", hash);
+            if (checks_1.Checks.isEmpty(metadataHash) === false
+                && metadataHash !== hash) {
+                throw new Error("Data hash does not match metadata hash");
+            }
+        }
+        else {
+            metadata = new metadata_1.Metadata({
+                ...metadata.toJSON(),
+                labels: {
+                    ...metadata.labels,
+                    id: {
+                        type_: identifier_1.BaseIdentifierTypes.Multihash,
+                        value: hash
+                    }
+                }
+            });
         }
         return metadata;
     }
@@ -64,6 +82,16 @@ class PocketObject {
             || this.dataString === ""
             || this.dataString === "null"
             || this.dataString === "undefined";
+    }
+    async toMultiHashIdentifier() {
+        const meta = await this.checkDataHash(this.data, this.metadata);
+        if (meta.labels.id === undefined) {
+            throw new Error("Metadata id is required");
+        }
+        return {
+            type_: identifier_1.BaseIdentifierTypes.Multihash,
+            value: meta.labels.id?.value
+        };
     }
 }
 exports.PocketObject = PocketObject;

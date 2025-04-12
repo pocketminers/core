@@ -7,12 +7,15 @@ describe("PocketStorage", () => {
     let storage: PocketStorage<any, any>;
 
     beforeEach(() => {
-        storage = new PocketStorage({
-            location: BaseStorageLocations.MEMORY,
-            allowDuplicates: false,
-            allowEmpty: false,
-            maxSize: 5,
-        });
+        storage = new PocketStorage(
+            [],
+            {
+                location: BaseStorageLocations.MEMORY,
+                allowDuplicates: false,
+                allowEmpty: false,
+                maxSize: 5,
+            }
+        );
     });
 
     it("should initialize with default values", () => {

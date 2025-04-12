@@ -1,3 +1,14 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -39,6 +50,7 @@ import { Metadata } from "../metadata/index.js";
 import { Freezer } from "../../utilities/freezer.js";
 import { MultiHashUtilities } from "../../utilities/multiHash.js";
 import { MetadataFactory } from "../metadata/metadata.factory.js";
+import { Checks } from "../../utilities/checks.js";
 var PocketObject = /** @class */ (function () {
     function PocketObject(_a) {
         var data = _a.data, metadata = _a.metadata;
@@ -63,14 +75,14 @@ var PocketObject = /** @class */ (function () {
     PocketObject.prototype.checkDataHash = function (data, metadata) {
         return __awaiter(this, void 0, void 0, function () {
             var hash, metadataHash;
-            var _a;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
                         this.checkData(data);
                         return [4 /*yield*/, MultiHashUtilities.generateMultihash(this.dataString)];
                     case 1:
-                        hash = _b.sent();
+                        hash = _c.sent();
                         if (metadata === undefined) {
                             return [2 /*return*/, MetadataFactory.createDefaultMetadata({
                                     id: {
@@ -79,9 +91,20 @@ var PocketObject = /** @class */ (function () {
                                     }
                                 })];
                         }
-                        metadataHash = (_a = metadata.labels.id) === null || _a === void 0 ? void 0 : _a.value;
-                        if (metadataHash !== undefined && metadataHash !== hash) {
-                            throw new Error("Data hash does not match metadata hash");
+                        if (((_a = metadata.labels.id) === null || _a === void 0 ? void 0 : _a.type_) === BaseIdentifierTypes.Multihash) {
+                            metadataHash = (_b = metadata.labels.id) === null || _b === void 0 ? void 0 : _b.value;
+                            console.log("Metadata hash: ", metadataHash);
+                            console.log("Data hash: ", hash);
+                            if (Checks.isEmpty(metadataHash) === false
+                                && metadataHash !== hash) {
+                                throw new Error("Data hash does not match metadata hash");
+                            }
+                        }
+                        else {
+                            metadata = new Metadata(__assign(__assign({}, metadata.toJSON()), { labels: __assign(__assign({}, metadata.labels), { id: {
+                                        type_: BaseIdentifierTypes.Multihash,
+                                        value: hash
+                                    } }) }));
                         }
                         return [2 /*return*/, metadata];
                 }
@@ -124,6 +147,26 @@ var PocketObject = /** @class */ (function () {
             || this.dataString === ""
             || this.dataString === "null"
             || this.dataString === "undefined";
+    };
+    PocketObject.prototype.toMultiHashIdentifier = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var meta;
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.checkDataHash(this.data, this.metadata)];
+                    case 1:
+                        meta = _b.sent();
+                        if (meta.labels.id === undefined) {
+                            throw new Error("Metadata id is required");
+                        }
+                        return [2 /*return*/, {
+                                type_: BaseIdentifierTypes.Multihash,
+                                value: (_a = meta.labels.id) === null || _a === void 0 ? void 0 : _a.value
+                            }];
+                }
+            });
+        });
     };
     return PocketObject;
 }());

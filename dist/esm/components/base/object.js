@@ -3,6 +3,7 @@ import { Metadata } from "../metadata/index.js";
 import { Freezer } from "../../utilities/freezer.js";
 import { MultiHashUtilities } from "../../utilities/multiHash.js";
 import { MetadataFactory } from "../metadata/metadata.factory.js";
+import { Checks } from "../../utilities/checks.js";
 class PocketObject {
     data;
     metadata;
@@ -36,9 +37,26 @@ class PocketObject {
                 }
             });
         }
-        const metadataHash = metadata.labels.id?.value;
-        if (metadataHash !== undefined && metadataHash !== hash) {
-            throw new Error("Data hash does not match metadata hash");
+        if (metadata.labels.id?.type_ === BaseIdentifierTypes.Multihash) {
+            const metadataHash = metadata.labels.id?.value;
+            console.log("Metadata hash: ", metadataHash);
+            console.log("Data hash: ", hash);
+            if (Checks.isEmpty(metadataHash) === false
+                && metadataHash !== hash) {
+                throw new Error("Data hash does not match metadata hash");
+            }
+        }
+        else {
+            metadata = new Metadata({
+                ...metadata.toJSON(),
+                labels: {
+                    ...metadata.labels,
+                    id: {
+                        type_: BaseIdentifierTypes.Multihash,
+                        value: hash
+                    }
+                }
+            });
         }
         return metadata;
     }
@@ -61,6 +79,16 @@ class PocketObject {
             || this.dataString === ""
             || this.dataString === "null"
             || this.dataString === "undefined";
+    }
+    async toMultiHashIdentifier() {
+        const meta = await this.checkDataHash(this.data, this.metadata);
+        if (meta.labels.id === undefined) {
+            throw new Error("Metadata id is required");
+        }
+        return {
+            type_: BaseIdentifierTypes.Multihash,
+            value: meta.labels.id?.value
+        };
     }
 }
 export { PocketObject };

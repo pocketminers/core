@@ -1,6 +1,6 @@
 import { BaseStorageLocation, BaseStorageLocations } from "@templates/v0/base/storage";
 import { Argument } from "./argument";
-import { PocketStorage } from "@components/base/storage";
+import { PocketStorage, PocketStorageOptions } from "@components/base/storage";
 import { BaseObjectTypes } from "@templates/v0";
 
 class ArgumentStorage
@@ -8,34 +8,32 @@ class ArgumentStorage
     L extends BaseStorageLocations = BaseStorageLocations.MEMORY
 >
     extends 
-        PocketStorage<
-            Argument<any>,
+        PocketStorage
+        <
+            Argument<any, any>,
             BaseObjectTypes.Argument,
             L
         >
 {
-    constructor({
-        location,
-        items = [],
-        allowDuplicates = false,
-        allowEmpty = false,
-        maxSize
-    }: {
-        location: L;
-        items?: Array<Argument<any>>;
-        allowDuplicates?: boolean;
-        allowEmpty?: boolean;
-        maxSize?: number;
-    }) {
-        super({
+    constructor(
+        items: Array<Argument<any, any>> = [],
+        {
             location,
-            items,
-            allowDuplicates,
-            allowEmpty,
+            allowDuplicates = false,
+            allowEmpty = false,
             maxSize
-        });
+        }: PocketStorageOptions<L>
+    ) {
+        super(
+            items,
+            {
+                location,
+                allowDuplicates,
+                allowEmpty,
+                maxSize
+            }
+        );
     }
-
 }
 
 export {

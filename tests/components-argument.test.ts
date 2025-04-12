@@ -120,7 +120,7 @@ describe("Argument", () => {
             console.log(`hash: ${JSON.stringify(hash)}`);
             expect(identifier).toBeDefined();
             expect(identifier.type_).toBe(BaseIdentifierTypes.Multihash);
-            expect(identifier.value).toEqual("0x3d663145e99775edbe437ad4d28344b3008535a631fd035a35f717130e0380c7")
+            expect(identifier.value).toEqual("0xa54680d91c029eea555938ae1e3d3284ab96d75b3f2676c78bc02272aba7eb84")
         });
 
         it('should add a specified identifier to the argument', async () => {
@@ -140,7 +140,7 @@ describe("Argument", () => {
             const identifier = await argument.toHashedIdentifier();
             expect(identifier).toBeDefined();
             expect(identifier.type_).toBe(BaseIdentifierTypes.Multihash);
-            expect(identifier.value).toEqual("0x3d663145e99775edbe437ad4d28344b3008535a631fd035a35f717130e0380c7");
+            expect(identifier.value).toEqual("0xa54680d91c029eea555938ae1e3d3284ab96d75b3f2676c78bc02272aba7eb84");
         });
 
         it('should be able to have a number as the name', () => {

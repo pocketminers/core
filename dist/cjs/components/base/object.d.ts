@@ -1,5 +1,5 @@
 import { BaseObject, BaseObjectType } from "../../templates/v0/base/object.js";
-import { BaseIdentifierType } from "../../templates/v0/base/identifier.js";
+import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
 import { Metadata } from "../metadata/index.js";
 declare class PocketObject<D, I extends BaseIdentifierType, O extends BaseObjectType> implements BaseObject<D, I, O> {
     data: D;
@@ -19,6 +19,7 @@ declare class PocketObject<D, I extends BaseIdentifierType, O extends BaseObject
     get objectString(): string;
     get objectType(): O;
     isEmpty(): boolean;
+    toMultiHashIdentifier(): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>>;
 }
 export { PocketObject };
 //# sourceMappingURL=object.d.ts.map

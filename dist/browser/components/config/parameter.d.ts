@@ -1,6 +1,7 @@
 import { PocketObject } from "../base/index.js";
 import { BaseIdentifierType, BaseIdentifierTypes, BaseMetadataEntry, BaseObjectTypes, BaseParameter, BaseParameterEntry } from "../../templates/v0/index.js";
 import { BaseValue, BaseValueKey, StringOrEmpty } from "../../templates/v0/base/value.js";
+import { Argument } from "./argument.js";
 /**
  * BaseParameterEntry is a generic type that represents a parameter entry object.
  */
@@ -19,6 +20,7 @@ declare class Parameter<V, I extends BaseIdentifierType = BaseIdentifierTypes.Un
     get optional(): Array<BaseValue<V>>;
     toString(): string;
     toJSON(): string;
+    toArgdefault(): Argument<V, I>;
 }
 export { type ParameterEntry, Parameter };
 //# sourceMappingURL=parameter.d.ts.map

@@ -1,8 +1,10 @@
 import { PocketObject } from "@components/base";
 import { Metadata } from "@components/metadata";
 import { MetadataFactory } from "@components/metadata/metadata.factory";
-import { BaseIdentifierType, BaseIdentifierTypes, BaseMetadataEntry, BaseObjectType, BaseObjectTypes, BaseParameter, BaseParameterEntry } from "@templates/v0";
+import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes, BaseMetadataEntry, BaseObjectType, BaseObjectTypes, BaseParameter, BaseParameterEntry } from "@templates/v0";
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
+import { Argument } from "./argument";
+import { MultiHashUtilities } from "@utilities/multiHash";
 
 
 /**
@@ -89,6 +91,19 @@ class Parameter
     public toJSON(): string {
         return JSON.stringify(this);
     }
+
+    public toArgdefault(): Argument<V, I> {
+        const metadata = this.metadata as unknown as Metadata<I, BaseObjectTypes.Argument>;
+
+        return new Argument({
+            name: this.name,
+            value: this.default,
+            meta: {
+                ...metadata,
+                type: BaseObjectTypes.Argument
+            }
+        });
+    }     
 }
 
 export {

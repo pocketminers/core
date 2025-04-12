@@ -28,6 +28,7 @@ import { PocketObject } from "../base/index.js";
 import { Metadata } from "../metadata/index.js";
 import { MetadataFactory } from "../metadata/metadata.factory.js";
 import { BaseObjectTypes } from "../../templates/v0/index.js";
+import { Argument } from "./argument.js";
 /**
  * Parameter is a generic class that represents a parameter object.
  * It extends the PocketObject class and implements the BaseParameter interface.
@@ -91,6 +92,14 @@ var Parameter = /** @class */ (function (_super) {
     };
     Parameter.prototype.toJSON = function () {
         return JSON.stringify(this);
+    };
+    Parameter.prototype.toArgdefault = function () {
+        var metadata = this.metadata;
+        return new Argument({
+            name: this.name,
+            value: this.default,
+            meta: __assign(__assign({}, metadata), { type: BaseObjectTypes.Argument })
+        });
     };
     return Parameter;
 }(PocketObject));

@@ -2,8 +2,41 @@ import { Argument, Parameter } from "@components/config";
 import { BaseIdentifier, BaseObjectType } from "@templates/v0";
 import { BaseStorage, BaseStorageLocation, BaseStorageLocations } from "@templates/v0/base/storage";
 
+
+/**
+ * StorageTypes is a generic type that represents the types of storage items.
+ * Currently, it can be either an Argument or a Parameter.
+ */
 type StorageTypes = Argument<any, any> | Parameter<any, any>;
 
+
+/**
+ * PocketStorageOptions is a generic type that represents the options for the PocketStorage class.
+ * It extends the BaseStorageOptions interface and provides additional properties.
+ * 
+ * @template L The type of the storage location.
+ */
+interface PocketStorageOptions
+<
+    L extends BaseStorageLocation = BaseStorageLocations.MEMORY
+> 
+    extends
+        Record<'location', L>,
+        Record<'allowDuplicates', boolean>,
+        Record<'allowEmpty', boolean>,
+        Record<'maxSize', number | undefined>
+{}
+
+
+
+/**
+ * PocketStorage is a generic class that represents a storage object.
+ * It implements the BaseStorage interface and provides methods to manage the storage.
+ * 
+ * @template S The type of the storage item.
+ * @template O The type of the object.
+ * @template L The type of the storage location.
+ */
 class PocketStorage
 <
     S extends StorageTypes,
@@ -37,19 +70,15 @@ class PocketStorage
      */
     public maxSize: number | undefined;
 
-    constructor({
-        location,
-        items = [],
-        allowDuplicates = false,
-        allowEmpty = false,
-        maxSize
-    }: {
-        location: L;
-        items?: Array<S>;
-        allowDuplicates?: boolean;
-        allowEmpty?: boolean;
-        maxSize?: number;
-    }) {
+    constructor(
+        items: Array<S> = [],
+        {
+            location,
+            allowDuplicates = false,
+            allowEmpty = false,
+            maxSize = 0
+        }: PocketStorageOptions<L>
+    ) {
         this.location = location;
         this.items = items;
         this.allowDuplicates = allowDuplicates;
@@ -70,7 +99,11 @@ class PocketStorage
             throw new Error("Item already exists");
         }
 
-        if (this.maxSize !== undefined && this.items.length >= this.maxSize) {
+        if (
+            this.maxSize !== undefined
+            && this.items.length >= this.maxSize
+            && this.maxSize > 0
+        ) {
             throw new Error("PocketStorage is full");
         }
 
@@ -134,4 +167,5 @@ class PocketStorage
 export {
     PocketStorage,
     type StorageTypes,
+    type PocketStorageOptions
 }

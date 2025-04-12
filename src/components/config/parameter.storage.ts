@@ -1,7 +1,17 @@
-import { BaseStorageLocations } from "@templates/v0/base/storage";
+import { BaseStorageLocation, BaseStorageLocations } from "@templates/v0/base/storage";
 import { Parameter } from "./parameter";
-import { PocketStorage } from "@components/base/storage";
-import { BaseObjectTypes } from "@templates/v0";
+import { PocketStorage, PocketStorageOptions } from "@components/base/storage";
+import { BaseIdentifierTypes, BaseObjectTypes } from "@templates/v0";
+
+interface ParameterEntry
+<
+    L extends BaseStorageLocation = BaseStorageLocations.MEMORY
+>
+    extends
+        Record<'location', L>,
+        Record<'items', Array<Parameter<any, any>>>,
+        Record<'allowDuplicates', boolean>,
+        Record<'allowEmpty', boolean> {}
 
 class ParameterStorage
 <
@@ -14,26 +24,24 @@ class ParameterStorage
             L
         >
 {
-    constructor({
-        location,
-        items = [],
-        allowDuplicates = false,
-        allowEmpty = false,
-        maxSize
-    }: {
-        location: L;
-        items?: Array<Parameter<any, any>>;
-        allowDuplicates?: boolean;
-        allowEmpty?: boolean;
-        maxSize?: number;
-    }) {
-        super({
+    constructor(
+        items: Array<Parameter<any, any>> = [],
+        {
             location,
-            items,
-            allowDuplicates,
-            allowEmpty,
+            allowDuplicates = false,
+            allowEmpty = false,
             maxSize
-        });
+        }: PocketStorageOptions<L>
+    ) {
+        super(
+            items,
+            {
+                location,
+                allowDuplicates,
+                allowEmpty,
+                maxSize
+            }
+        );
     }
 }
 

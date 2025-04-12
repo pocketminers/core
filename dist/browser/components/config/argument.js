@@ -149,7 +149,7 @@ var Argument = /** @class */ (function (_super) {
             var hash;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, MultiHashUtilities.generateIdentifier(this.toString())];
+                    case 0: return [4 /*yield*/, MultiHashUtilities.generateIdentifier(JSON.stringify(this.data))];
                     case 1:
                         hash = _a.sent();
                         return [2 /*return*/, {

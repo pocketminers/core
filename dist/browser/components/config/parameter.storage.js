@@ -16,11 +16,11 @@ var __extends = (this && this.__extends) || (function () {
 import { PocketStorage } from "../base/storage.js";
 var ParameterStorage = /** @class */ (function (_super) {
     __extends(ParameterStorage, _super);
-    function ParameterStorage(_a) {
-        var location = _a.location, _b = _a.items, items = _b === void 0 ? [] : _b, _c = _a.allowDuplicates, allowDuplicates = _c === void 0 ? false : _c, _d = _a.allowEmpty, allowEmpty = _d === void 0 ? false : _d, maxSize = _a.maxSize;
-        return _super.call(this, {
+    function ParameterStorage(items, _a) {
+        if (items === void 0) { items = []; }
+        var location = _a.location, _b = _a.allowDuplicates, allowDuplicates = _b === void 0 ? false : _b, _c = _a.allowEmpty, allowEmpty = _c === void 0 ? false : _c, maxSize = _a.maxSize;
+        return _super.call(this, items, {
             location: location,
-            items: items,
             allowDuplicates: allowDuplicates,
             allowEmpty: allowEmpty,
             maxSize: maxSize

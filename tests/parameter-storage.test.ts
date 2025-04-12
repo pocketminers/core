@@ -8,12 +8,15 @@ describe("ParameterStorage", () => {
     let storage: ParameterStorage;
 
     beforeEach(() => {
-        storage = new ParameterStorage({
-            location: BaseStorageLocations.MEMORY,
-            allowDuplicates: false,
-            allowEmpty: false,
-            maxSize: 5,
-        });
+        storage = new ParameterStorage(
+            [],
+            {
+                location: BaseStorageLocations.MEMORY,
+                allowDuplicates: false,
+                allowEmpty: false,
+                maxSize: 5,
+            }
+        );
     });
 
     it("should initialize with default values", () => {

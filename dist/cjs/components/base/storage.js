@@ -1,6 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PocketStorage = void 0;
+/**
+ * PocketStorage is a generic class that represents a storage object.
+ * It implements the BaseStorage interface and provides methods to manage the storage.
+ *
+ * @template S The type of the storage item.
+ * @template O The type of the object.
+ * @template L The type of the storage location.
+ */
 class PocketStorage {
     /**
      * The location of the storage item.
@@ -22,7 +30,7 @@ class PocketStorage {
      * The maximum size of the storage.
      */
     maxSize;
-    constructor({ location, items = [], allowDuplicates = false, allowEmpty = false, maxSize }) {
+    constructor(items = [], { location, allowDuplicates = false, allowEmpty = false, maxSize = 0 }) {
         this.location = location;
         this.items = items;
         this.allowDuplicates = allowDuplicates;
@@ -40,7 +48,9 @@ class PocketStorage {
         if (this.allowDuplicates === false && this.items.includes(item)) {
             throw new Error("Item already exists");
         }
-        if (this.maxSize !== undefined && this.items.length >= this.maxSize) {
+        if (this.maxSize !== undefined
+            && this.items.length >= this.maxSize
+            && this.maxSize > 0) {
             throw new Error("PocketStorage is full");
         }
         this.items.push(item);

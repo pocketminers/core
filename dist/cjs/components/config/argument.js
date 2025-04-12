@@ -75,7 +75,7 @@ class Argument extends object_1.PocketObject {
         };
     }
     async toHashedIdentifier() {
-        const hash = await multiHash_1.MultiHashUtilities.generateIdentifier(this.toString());
+        const hash = await multiHash_1.MultiHashUtilities.generateIdentifier(JSON.stringify(this.data));
         return {
             type_: identifier_1.BaseIdentifierTypes.Multihash,
             value: hash.value

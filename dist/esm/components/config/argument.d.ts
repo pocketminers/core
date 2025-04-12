@@ -5,6 +5,11 @@ import { BaseMetadataEntry } from "../../templates/v0/base/metadata.js";
 import { BaseObjectTypes } from "../../templates/v0/base/object.js";
 import { BaseValue, BaseValueKey } from "../../templates/v0/base/value.js";
 /**
+ * ArgumentEntry is a generic type that represents an argument entry object.
+ */
+interface ArgumentEntry<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined> extends BaseArgumentEntry<V>, Record<'meta', BaseMetadataEntry<I, BaseObjectTypes.Argument>> {
+}
+/**
  * Argument is a generic class that represents an argument object.
  * It extends the PocketObject class and implements the BaseArgument interface.
  *
@@ -47,5 +52,5 @@ declare class Argument<V, I extends BaseIdentifierType = BaseIdentifierTypes.Und
     toRecord(): Record<BaseValueKey, BaseValue<V>>;
     toHashedIdentifier(): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>>;
 }
-export { Argument };
+export { type ArgumentEntry, Argument };
 //# sourceMappingURL=argument.d.ts.map

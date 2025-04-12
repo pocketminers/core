@@ -1,6 +1,15 @@
+/**
+ * PocketStorage is a generic class that represents a storage object.
+ * It implements the BaseStorage interface and provides methods to manage the storage.
+ *
+ * @template S The type of the storage item.
+ * @template O The type of the object.
+ * @template L The type of the storage location.
+ */
 var PocketStorage = /** @class */ (function () {
-    function PocketStorage(_a) {
-        var location = _a.location, _b = _a.items, items = _b === void 0 ? [] : _b, _c = _a.allowDuplicates, allowDuplicates = _c === void 0 ? false : _c, _d = _a.allowEmpty, allowEmpty = _d === void 0 ? false : _d, maxSize = _a.maxSize;
+    function PocketStorage(items, _a) {
+        if (items === void 0) { items = []; }
+        var location = _a.location, _b = _a.allowDuplicates, allowDuplicates = _b === void 0 ? false : _b, _c = _a.allowEmpty, allowEmpty = _c === void 0 ? false : _c, _d = _a.maxSize, maxSize = _d === void 0 ? 0 : _d;
         this.location = location;
         this.items = items;
         this.allowDuplicates = allowDuplicates;
@@ -18,7 +27,9 @@ var PocketStorage = /** @class */ (function () {
         if (this.allowDuplicates === false && this.items.includes(item)) {
             throw new Error("Item already exists");
         }
-        if (this.maxSize !== undefined && this.items.length >= this.maxSize) {
+        if (this.maxSize !== undefined
+            && this.items.length >= this.maxSize
+            && this.maxSize > 0) {
             throw new Error("PocketStorage is full");
         }
         this.items.push(item);
@@ -72,5 +83,5 @@ var PocketStorage = /** @class */ (function () {
     };
     return PocketStorage;
 }());
-export { PocketStorage, };
+export { PocketStorage };
 //# sourceMappingURL=storage.js.map

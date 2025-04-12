@@ -126,7 +126,7 @@ class Argument
     }
 
     public async toHashedIdentifier (): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>> {
-        const hash = await MultiHashUtilities.generateIdentifier(this.toString());
+        const hash = await MultiHashUtilities.generateIdentifier(JSON.stringify(this.data));
         return {
             type_: BaseIdentifierTypes.Multihash,
             value: hash.value
@@ -135,5 +135,6 @@ class Argument
 }
 
 export {
+    type ArgumentEntry,
     Argument
 }

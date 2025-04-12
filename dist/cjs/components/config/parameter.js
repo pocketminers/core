@@ -5,6 +5,7 @@ const base_1 = require("../base/index.js");
 const metadata_1 = require("../metadata/index.js");
 const metadata_factory_1 = require("../metadata/metadata.factory.js");
 const v0_1 = require("../../templates/v0/index.js");
+const argument_1 = require("./argument.js");
 /**
  * Parameter is a generic class that represents a parameter object.
  * It extends the PocketObject class and implements the BaseParameter interface.
@@ -46,6 +47,17 @@ class Parameter extends base_1.PocketObject {
     }
     toJSON() {
         return JSON.stringify(this);
+    }
+    toArgdefault() {
+        const metadata = this.metadata;
+        return new argument_1.Argument({
+            name: this.name,
+            value: this.default,
+            meta: {
+                ...metadata,
+                type: v0_1.BaseObjectTypes.Argument
+            }
+        });
     }
 }
 exports.Parameter = Parameter;
