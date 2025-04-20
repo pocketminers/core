@@ -1,6 +1,7 @@
 import { Argument, Parameter } from "@components/config";
 import { BaseIdentifier, BaseObjectType } from "@templates/v0";
 import { BaseStorage, BaseStorageLocation, BaseStorageLocations } from "@templates/v0/base/storage";
+import { MerkleTree } from "@utilities/merkleTree";
 
 
 /**
@@ -160,6 +161,13 @@ class PocketStorage
      */
     public getType(): string {
         return this.items[0]?.metadata.type ?? "UNKNOWN";
+    }
+
+    public async getMerkleRoot(): Promise<string> {
+        const leaves = this.items.map(item => item.dataString);
+        const tree = new MerkleTree(leaves);
+        await tree.build();
+        return tree.getRoot();
     }
 }
 

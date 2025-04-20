@@ -7,11 +7,24 @@ class MerkleTree {
     constructor(leaves: string[]) {
         this.leaves = leaves;
         this.tree = [];
-        this.buildTree();
+    }
+
+    public async build(): Promise<void> {
+        if (this.leaves.length === 0) {
+            throw new Error("No leaves to build the tree");
+        }
+        if (this.leaves.length === 1) {
+            this.tree.push([await MultiHashUtilities.hashString(this.leaves[0])]);
+            return;
+        }
+        if (this.leaves.length % 2 !== 0) {
+            this.leaves.push(this.leaves[this.leaves.length - 1]);
+        }
+        await this.buildTree();
     }
 
     private async buildTree(): Promise<void> {
-        let currentLevel = await Promise.all(this.leaves.map(item => item.hashData()));
+        let currentLevel = await Promise.all(this.leaves.map(item => MultiHashUtilities.hashString(item)));
         this.tree.push(currentLevel);
 
         while (currentLevel.length > 1) {
@@ -25,7 +38,7 @@ class MerkleTree {
 
         for (let i = 0; i < level.length; i += 2) {
             if (i + 1 < level.length) {
-                const combinedHash = await MerkleTree.hashData(level[i] + level[i + 1]);
+                const combinedHash = await MultiHashUtilities.hashString(level[i] + level[i + 1]);
                 hashedLevel.push(combinedHash);
             } else {
                 hashedLevel.push(level[i]);
@@ -58,12 +71,12 @@ class MerkleTree {
 
         return proof;
     }
-    public verifyProof(leaf: string, proof: string[], root: string): boolean {
-        let currentHash = MultiHashUtilities.generateMultihash(leaf);
+    public async verifyProof(leaf: string, proof: string[], root: string): Promise<boolean> {
+        let currentHash = await MultiHashUtilities.generateMultihash(leaf);
 
         for (const siblingHash of proof) {
             const combinedHash = currentHash < siblingHash ? `${currentHash}${siblingHash}` : `${siblingHash}${currentHash}`;
-            currentHash = MultiHashUtilities.generateMultihash(combinedHash);
+            currentHash = await MultiHashUtilities.generateMultihash(combinedHash);
         }
 
         return currentHash === root;
@@ -92,3 +105,5 @@ class MerkleTree {
         return this.tree[level];
     }
 }
+
+export { MerkleTree };

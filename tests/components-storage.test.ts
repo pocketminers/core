@@ -128,4 +128,22 @@ describe("PocketStorage", () => {
         console.log(JSON.stringify(storage.items, null, 2));
         expect(storage.getSize()).toBe(1);
     });
+
+    it('should return the correct location of the storage', () => {
+        expect(storage.getLocation()).toBe(BaseStorageLocations.MEMORY);
+        const item = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
+        storage.addItem(item);
+        console.log(JSON.stringify(storage.items, null, 2));
+        expect(storage.getLocation()).toBe(BaseStorageLocations.MEMORY);
+    });
+
+    it('should build a merkle tree from the items', async () => {
+        const item1 = { metadata: new Metadata({id: {value: 1, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
+        const item2 = { metadata: new Metadata({id: {value: 2, type_: BaseIdentifierTypes.Number}}), isEmpty: () => false };
+        storage.addItem(item1);
+        storage.addItem(item2);
+        const merkleTree = await storage.getMerkleRoot();
+        console.log(JSON.stringify(merkleTree, null, 2));
+        expect(merkleTree).toEqual("3b7546ed79e3e5a7907381b093c5a182cbf364c5dd0443dfa956c8cca271cc33");
+    });
 });
