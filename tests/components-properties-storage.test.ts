@@ -20,7 +20,7 @@ describe("Properties", () => {
 
     test("should have default values", () => {
         expect(properties.location).toBe(BaseStorageLocations.MEMORY);
-        expect(properties.allowDuplicates).toBe(true);
+        expect(properties.allowDuplicates).toBe(false);
         expect(properties.allowEmpty).toBe(true);
         expect(properties.maxSize).toBe(0);
     });
@@ -65,5 +65,16 @@ describe("Properties", () => {
         expect(properties.items).toContain(param);
         expect(properties.items.length).toBe(1);
         expect(properties.items[0]).toBe(param);
+    });
+
+    test("should throw an error when adding a duplicate argument", () => {
+        const arg = new Argument({
+            name: "testArg",
+            value: "testValue"
+        });
+
+        properties.addItem(arg);
+
+        expect(() => properties.addItem(arg)).toThrow("Item already exists");
     });
 });

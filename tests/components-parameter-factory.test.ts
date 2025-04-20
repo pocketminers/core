@@ -64,8 +64,6 @@ describe("ParameterFactory", () => {
                 required: true,
                 optional: [],
             };
-            
-
 
             const parameter = ParameterFactory.fromRecord(entry);
 

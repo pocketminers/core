@@ -40,7 +40,7 @@ class Parameter
 {
     constructor({
         name,
-        description,
+        description ,
         default: defaultValue,
         required,
         optional,
@@ -72,15 +72,15 @@ class Parameter
         return this.data.description;
     }
 
-    public get default(): BaseValue<V> {
+    public get default(): BaseValue<V> | undefined {
         return this.data.default;
     }
 
-    public get required(): boolean {
+    public get required(): boolean | undefined {
         return this.data.required;
     }
 
-    public get optional(): Array<BaseValue<V>> {
+    public get optional(): Array<BaseValue<V>> | undefined {
         return this.data.optional;
     }
 
@@ -92,10 +92,10 @@ class Parameter
         return JSON.stringify(this);
     }
 
-    public toArgdefault(): Argument<V, I> {
+    public toArgDefault(): Argument<V | undefined, I> {
         const metadata = this.metadata as unknown as Metadata<I, BaseObjectTypes.Argument>;
 
-        return new Argument({
+        return new Argument<V | undefined,I>({
             name: this.name,
             value: this.default,
             meta: {

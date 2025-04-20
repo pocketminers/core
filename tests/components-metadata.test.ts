@@ -154,14 +154,15 @@ describe("Metadata: Updating", () => {
                     updated: {date: updatedTimestamp}
                 }
             });
+
+            expect(updatedMetadata.timestamps.updated?.date).toEqual(updatedTimestamp);
+            expect(updatedMetadata.timestamps.updated?.date).not.toEqual(metadata.timestamps.updated?.date);
         }
         catch (error) {
             expect(error).toBeDefined();
         }
 
-        
-        // expect(updatedMetadata.timestamps.updated?.date).toEqual(updatedTimestamp);
-        // expect(updatedMetadata.timestamps.updated?.date).not.toEqual(metadata.timestamps.updated?.date);
+    
     });
 
 });

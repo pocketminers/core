@@ -55,6 +55,30 @@ class ParameterFactory
         });
     }
 
+    public static create<V>({
+        name,
+        description,
+        default: defaultValue,
+        required,
+        optional,
+        meta
+    }: {
+        name: BaseValueKey,
+        description?: string,
+        default?: BaseValue<V>,
+        required?: boolean,
+        optional?: Array<BaseValue<V>>,
+        meta?: BaseMetadataEntry<any, BaseObjectTypes.Parameter>
+    }): Parameter<V, BaseIdentifierTypes.Undefined> {
+        return ParameterFactory.fromRecord({
+            name,
+            description,
+            default: defaultValue,
+            required,
+            optional
+        }, meta);
+    }
+
 }
 
 export {

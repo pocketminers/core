@@ -19,6 +19,8 @@ enum BaseObjectTypes {
     Property = 'Property',
     Configuration = 'Configuration',
     ConfigurationGroup = 'ConfigurationGroup',
+    Identifier = 'Identifier',
+    IdentifierGroup = 'IdentifierGroup',
     Process = 'Process',
     ProcessGroup = 'ProcessGroup',
     Command = 'Command',

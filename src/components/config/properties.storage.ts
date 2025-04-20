@@ -10,27 +10,35 @@ import { Checks } from "@utilities/checks";
  * Properties is a class that represents a storage object for arguments and parameters.
  * It extends the PocketStorage class and provides methods to manage the storage.
  */
-class Properties 
+class Properties<L extends BaseStorageLocation = BaseStorageLocations.MEMORY> 
     extends
         PocketStorage
         <
             Argument<any, any> | Parameter<any, any>,
             BaseObjectTypes.Argument | BaseObjectTypes.Parameter,
-            BaseStorageLocations.MEMORY
+            L
         >
 {
     constructor({
-        items = []
+        items = [],
+        location = BaseStorageLocations.MEMORY as L,
+        allowDuplicates = false,
+        allowEmpty = true,
+        maxSize = 0
     }: {
         items?: Array<Argument<any, any> | Parameter<any, any>>;
+        location?: L;
+        allowDuplicates?: boolean;
+        allowEmpty?: boolean;
+        maxSize?: number;
     } ={}) {
         super(
             items,
             {
-                location: BaseStorageLocations.MEMORY,
-                allowDuplicates: true,
-                allowEmpty: true,
-                maxSize: 0
+                location,
+                allowDuplicates,
+                allowEmpty,
+                maxSize
             }
         );
     }
@@ -38,18 +46,14 @@ class Properties
     public getArgument(name: BaseValueKey): Argument<any, any> | undefined{
         const args = this.arguments;
         const arg = args.find(arg => arg.name === name);
-        // if (!arg) {
-        //     throw new Error(`Argument "${String(name)}" not found.`);
-        // }
+
         return arg;
     }
 
     public getParameter(name: BaseValueKey): Parameter<any, any> | undefined {
         const params = this.parameters;
         const param = params.find(param => param.name === name);
-        // if (!param) {
-        //     throw new Error(`Parameter "${String(name)}" not found.`);
-        // }
+
         return param;
     }
 
@@ -62,7 +66,7 @@ class Properties
 
         const metadata = param.metadata as unknown as Metadata<any, BaseObjectTypes.Argument>;
         const defultValue = param.default;
-        const optionalValues = param.optional;
+        const optionalValues = param.optional !== undefined ? param.optional : [];
         let value = Checks.isEmpty(defultValue) === false ? defultValue : null;
 
         if (

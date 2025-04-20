@@ -1,6 +1,8 @@
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 import { BaseObject, BaseObjectTypes } from "./object";
 import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
+import { Metadata } from "@components/metadata";
+import { BaseMetadataEntry } from "./metadata";
 
 
 /**
@@ -41,10 +43,10 @@ interface BaseParameterEntry
 >
     extends
         Record<'name', BaseValueKey>,
-        Record<'description', StringOrEmpty>,
-        Record<'default', BaseValue<V>>,
-        Record<'required', boolean>,
-        Record<'optional', Array<BaseValue<V>>>
+        Partial<Record<'description', StringOrEmpty>>,
+        Partial<Record<'default', BaseValue<V>>>,
+        Partial<Record<'required', boolean>>,
+        Partial<Record<'optional', Array<BaseValue<V>>>>
 {}
 
 

@@ -1,20 +1,31 @@
 
-
-
+/**
+ * BaseComponentParts
+ * This enum defines the different parts of a component.
+ */
 enum BaseComponentParts {
     Factory = 'Factory',
     Storage = 'Storage',
     Manager = 'Manager',
     Configuration = 'Configuration',
-    Service = 'Service'
+    Service = 'Service',
+    Identity = 'Identity'
 }
 
 
+/**
+ * BaseComponentPartsType
+ * This type defines the different parts of a component.
+ */
 type BaseComponentPartsType = keyof typeof BaseComponentParts;
 
 
-
-class BaseComponent<
+/**
+ * BaseComponent
+ * This class represents a base component.
+ */
+class BaseComponent
+<
     C extends BaseComponentParts.Configuration,
     F extends BaseComponentParts.Factory,
     S extends BaseComponentParts.Storage,
