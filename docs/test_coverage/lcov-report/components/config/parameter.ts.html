@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">89.28% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>98/112</span>
+                <span class='fraction'>100/112</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/9</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">89.28% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>98/112</span>
+                <span class='fraction'>100/112</span>
             </div>
         
             
@@ -215,6 +215,30 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -223,8 +247,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -237,28 +259,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -327,15 +327,15 @@ class Parameter
 {
     constructor({
         name,
-        description,
+        description ,
         default: defaultValue,
         required,
         optional,
         meta
     }: ParameterEntry&lt;V, I&gt;) {
-        if (name === undefined) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >            throw new Error("Name is required");</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
+        if (name === undefined) {
+            throw new Error("Name is required");
+        }
 &nbsp;
         const data = {
             name,
@@ -347,7 +347,7 @@ class Parameter
 &nbsp;
         const metadata = meta !== undefined 
             ? new Metadata&lt;I, BaseObjectTypes.Parameter&gt;({...meta, type: BaseObjectTypes.Parameter})
-<span class="branch-0 cbranch-no" title="branch not covered" >            : MetadataFactory.createDefaultMetadata&lt;I, BaseObjectTypes.Parameter&gt;({type: BaseObjectTypes.Parameter});</span>
+            : MetadataFactory.createDefaultMetadata&lt;I, BaseObjectTypes.Parameter&gt;({type: BaseObjectTypes.Parameter});
         super({data, metadata});
     }
 &nbsp;
@@ -359,15 +359,15 @@ class Parameter
         return this.data.description;
     }
 &nbsp;
-    public get default(): BaseValue&lt;V&gt; {
+    public get default(): BaseValue&lt;V&gt; | undefined {
         return this.data.default;
     }
 &nbsp;
-    public get required(): boolean {
+    public get required(): boolean | undefined {
         return this.data.required;
     }
 &nbsp;
-    public get optional(): Array&lt;BaseValue&lt;V&gt;&gt; {
+    public get optional(): Array&lt;BaseValue&lt;V&gt;&gt; | undefined {
         return this.data.optional;
     }
 &nbsp;
@@ -379,10 +379,10 @@ class Parameter
 <span class="cstat-no" title="statement not covered" >        return JSON.stringify(this);</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
-    public <span class="fstat-no" title="function not covered" >toArgdefault(): Argument&lt;V, I&gt; {</span>
+    public <span class="fstat-no" title="function not covered" >toArgDefault(): Argument&lt;V | undefined, I&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        const metadata = this.metadata as unknown as Metadata&lt;I, BaseObjectTypes.Argument&gt;;</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        return new Argument({</span>
+<span class="cstat-no" title="statement not covered" >        return new Argument&lt;V | undefined,I&gt;({</span>
 <span class="cstat-no" title="statement not covered" >            name: this.name,</span>
 <span class="cstat-no" title="statement not covered" >            value: this.default,</span>
 <span class="cstat-no" title="statement not covered" >            meta: {</span>
@@ -403,7 +403,7 @@ export {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-12T21:36:21.072Z
+                at 2025-04-21T19:52:32.061Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

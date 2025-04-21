@@ -1,0 +1,168 @@
+import { PocketMessage } from "@components/messaging/message";
+import { BaseMessageCodes, BaseSuccessCodes, BaseMessageLevels, BaseWarningCodes } from "@templates/v0/base/message";
+
+describe("PocketMessage", () => {
+    it("should create a PocketMessage with default values", () => {
+        const message = new PocketMessage({
+            body: "Test message"
+        });
+
+        expect(message.code).toBe(BaseSuccessCodes.OK);
+        expect(message.level).toBe(BaseMessageLevels.SUCCESS);
+        expect(message.body).toBe("Test message");
+        expect(message.timestamp).toBeInstanceOf(Date);
+        expect(message.data).toEqual({});
+    });
+
+    it("should create a PocketMessage with custom values", () => {
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.CREATED,
+            level: BaseMessageLevels.SUCCESS,
+            body: "Custom message",
+            timestamp: new Date("2023-01-01"),
+            data: { key: "value" }
+        });
+
+        expect(message.code).toBe(BaseSuccessCodes.CREATED);
+        expect(message.level).toBe(BaseMessageLevels.SUCCESS);
+        expect(message.body).toBe("Custom message");
+        expect(message.timestamp).toEqual(new Date("2023-01-01"));
+        expect(message.data).toEqual({ key: "value" });
+    });
+
+    it("should freeze the PocketMessage object", () => {
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            body: "Test message"
+        });
+
+        expect(() => {
+            (message as any).code = BaseSuccessCodes.CREATED;
+        }).toThrow();
+
+        expect(() => {
+            (message as any).level = BaseMessageLevels.WARNING;
+        }).toThrow();
+    });
+
+    it("should use a default level if not provided", () => {
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            body: "Test message"
+        });
+
+        expect(message.level).toBe(BaseMessageLevels.SUCCESS);
+    });
+
+    it("should call the callback function if provided", () => {
+        const callback = jest.fn();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            body: "Test message",
+            callback
+        });
+
+        expect(callback).toHaveBeenCalledWith(message);
+    });
+
+    it("should not call the callback function if not provided", () => {
+        const callback = jest.fn();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            body: "Test message"
+        });
+
+        expect(callback).not.toHaveBeenCalled();
+    });
+
+    it("should print to console if printToConsole is true", () => {
+        const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            body: "Test message",
+            printToConsole: true
+        });
+
+        expect(consoleSpy).toHaveBeenCalledWith(message.body);
+        consoleSpy.mockRestore();
+    });
+
+    it("should not print to console if printToConsole is false", () => {
+        const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            body: "Test message",
+            printToConsole: false
+        });
+
+        expect(consoleSpy).not.toHaveBeenCalled();
+        consoleSpy.mockRestore();
+    });
+
+    it("should throw an error if an invalid code is provided", () => {
+        expect(() => {
+            new PocketMessage({
+                // @ts-expect-error
+                code: "INVALID_CODE" as BaseMessageCodes,
+                body: "Test message"
+            });
+        }).toThrow("Invalid code for INFO level: INVALID_CODE");
+    });
+
+    it("should throw an error if an invalid level is provided", () => {
+        expect(() => {
+            new PocketMessage({
+                code: BaseSuccessCodes.OK,
+                level: "INVALID_LEVEL" as BaseMessageLevels,
+                body: "Test message"
+            });
+        }).toThrow("Invalid level: INVALID_LEVEL");
+    });
+
+    it("should throw an error if an invalid code is provided for the specified level", () => {
+        expect(() => {
+            new PocketMessage({
+                code: BaseSuccessCodes.OK,
+                level: BaseMessageLevels.WARNING,
+                body: "Test message"
+            });
+        }).toThrow("Invalid code for WARNING level: 200");
+    });
+
+    it("should print the message to the console based on its level", () => {
+        const consoleInfoSpy = jest.spyOn(console, "info").mockImplementation();
+        const consoleLogSpy = jest.spyOn(console, "log").mockImplementation();
+        const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+        const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
+
+        new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            level: BaseMessageLevels.SUCCESS,
+            body: "Test message",
+            printToConsole: true
+        });
+
+        expect(consoleLogSpy).toHaveBeenCalledWith("Test message");
+        expect(consoleInfoSpy).not.toHaveBeenCalled();
+        expect(consoleWarnSpy).not.toHaveBeenCalled();
+        expect(consoleErrorSpy).not.toHaveBeenCalled();
+
+        consoleInfoSpy.mockRestore();
+        consoleLogSpy.mockRestore();
+        consoleWarnSpy.mockRestore();
+        consoleErrorSpy.mockRestore();
+    });
+
+    it("should print a warning message to the console", () => {
+        const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseWarningCodes.MOVED_PERMANENTLY,
+            level: BaseMessageLevels.WARNING,
+            body: "Warning message",
+            printToConsole: true
+        });
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith("Warning message");
+        consoleWarnSpy.mockRestore();
+    });
+});

@@ -20,7 +20,7 @@ describe("Properties", () => {
 
     test("should have default values", () => {
         expect(properties.location).toBe(BaseStorageLocations.MEMORY);
-        expect(properties.allowDuplicates).toBe(false);
+        expect(properties.allowDuplicates).toBe(true);
         expect(properties.allowEmpty).toBe(true);
         expect(properties.maxSize).toBe(0);
     });
@@ -74,7 +74,9 @@ describe("Properties", () => {
         });
 
         properties.addItem(arg);
+        properties.addItem(arg);
 
-        expect(() => properties.addItem(arg)).toThrow("Item already exists");
+        expect(properties.items.length).toBe(2);
+        
     });
 });

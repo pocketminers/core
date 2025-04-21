@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.63% </span>
+                <span class="strong">33.62% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>68/222</span>
+                <span class='fraction'>76/226</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30.63% </span>
+                <span class="strong">33.62% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>68/222</span>
+                <span class='fraction'>76/226</span>
             </div>
         
             
@@ -284,7 +284,11 @@
 <a name='L219'></a><a href='#L219'>219</a>
 <a name='L220'></a><a href='#L220'>220</a>
 <a name='L221'></a><a href='#L221'>221</a>
-<a name='L222'></a><a href='#L222'>222</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -306,20 +310,28 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -327,12 +339,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -517,27 +525,35 @@ import { Checks } from "@utilities/checks";
  * Properties is a class that represents a storage object for arguments and parameters.
  * It extends the PocketStorage class and provides methods to manage the storage.
  */
-class Properties 
+class Properties&lt;L extends BaseStorageLocation = BaseStorageLocations.MEMORY&gt; 
     extends
         PocketStorage
         &lt;
             Argument&lt;any, any&gt; | Parameter&lt;any, any&gt;,
             BaseObjectTypes.Argument | BaseObjectTypes.Parameter,
-            BaseStorageLocations.MEMORY
+            L
         &gt;
 {
     constructor({
-        items = []
+        items = [],
+        location = BaseStorageLocations.MEMORY as L,
+        allowDuplicates = true,
+        allowEmpty = true,
+        maxSize = 0
     }: {
         items?: Array&lt;Argument&lt;any, any&gt; | Parameter&lt;any, any&gt;&gt;;
+        location?: L;
+        allowDuplicates?: boolean;
+        allowEmpty?: boolean;
+        maxSize?: number;
     } ={}) {
         super(
             items,
             {
-                location: BaseStorageLocations.MEMORY,
-                allowDuplicates: true,
-                allowEmpty: true,
-                maxSize: 0
+                location,
+                allowDuplicates,
+                allowEmpty,
+                maxSize
             }
         );
     }
@@ -545,18 +561,14 @@ class Properties
     public <span class="fstat-no" title="function not covered" >getArgument(name: BaseValueKey): Argument&lt;any, any&gt; | undefined{</span>
 <span class="cstat-no" title="statement not covered" >        const args = this.arguments;</span>
 <span class="cstat-no" title="statement not covered" >        const arg = args.find(arg =&gt; arg.name === name);</span>
-<span class="cstat-no" title="statement not covered" >        // if (!arg) {</span>
-<span class="cstat-no" title="statement not covered" >        //     throw new Error(`Argument "${String(name)}" not found.`);</span>
-<span class="cstat-no" title="statement not covered" >        // }</span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        return arg;</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
     public <span class="fstat-no" title="function not covered" >getParameter(name: BaseValueKey): Parameter&lt;any, any&gt; | undefined {</span>
 <span class="cstat-no" title="statement not covered" >        const params = this.parameters;</span>
 <span class="cstat-no" title="statement not covered" >        const param = params.find(param =&gt; param.name === name);</span>
-<span class="cstat-no" title="statement not covered" >        // if (!param) {</span>
-<span class="cstat-no" title="statement not covered" >        //     throw new Error(`Parameter "${String(name)}" not found.`);</span>
-<span class="cstat-no" title="statement not covered" >        // }</span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        return param;</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
@@ -569,7 +581,7 @@ class Properties
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        const metadata = param.metadata as unknown as Metadata&lt;any, BaseObjectTypes.Argument&gt;;</span>
 <span class="cstat-no" title="statement not covered" >        const defultValue = param.default;</span>
-<span class="cstat-no" title="statement not covered" >        const optionalValues = param.optional;</span>
+<span class="cstat-no" title="statement not covered" >        const optionalValues = param.optional !== undefined ? param.optional : [];</span>
 <span class="cstat-no" title="statement not covered" >        let value = Checks.isEmpty(defultValue) === false ? defultValue : null;</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        if (</span>
@@ -733,7 +745,7 @@ export {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-12T21:36:21.072Z
+                at 2025-04-21T19:52:32.061Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -1,5 +1,5 @@
-import { BaseObject, BaseObjectType } from "../../templates/v0/base/object";
-import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "../../templates/v0/base/identifier";
+import { BaseObject, BaseObjectType } from "@templates/v0/base/object";
+import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
 import { Metadata } from "@components/metadata";
 import { Freezer } from "@utilities/freezer";
 import { MultiHashUtilities } from "@utilities/multiHash";

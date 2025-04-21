@@ -25,6 +25,8 @@ enum BaseObjectTypes {
     ProcessGroup = 'ProcessGroup',
     Command = 'Command',
     CommandGroup = 'CommandGroup',
+    Message = 'Message',
+    ErrorMessage = 'ErrorMessage',
     Job = 'Job',
     JobGroup = 'JobGroup',
     JobTemplate = 'JobTemplate',

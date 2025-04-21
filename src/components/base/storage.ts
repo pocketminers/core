@@ -163,10 +163,15 @@ class PocketStorage
         return this.items[0]?.metadata.type ?? "UNKNOWN";
     }
 
-    public async getMerkleRoot(): Promise<string> {
+    public async buildMerkleTree(): Promise<MerkleTree> {
         const leaves = this.items.map(item => item.dataString);
         const tree = new MerkleTree(leaves);
         await tree.build();
+        return tree;
+    }
+
+    public async getMerkleRoot(): Promise<string> {
+        const tree = await this.buildMerkleTree();
         return tree.getRoot();
     }
 }

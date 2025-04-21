@@ -22,7 +22,7 @@ class Properties<L extends BaseStorageLocation = BaseStorageLocations.MEMORY>
     constructor({
         items = [],
         location = BaseStorageLocations.MEMORY as L,
-        allowDuplicates = false,
+        allowDuplicates = true,
         allowEmpty = true,
         maxSize = 0
     }: {
