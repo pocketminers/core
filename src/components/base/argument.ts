@@ -1,8 +1,6 @@
-import { BaseArgument, BaseArgumentEntry, BaseValue, BaseValueKey } from "@templates/v0";
+import { BaseArgumentEntry, BaseValue, BaseValueKey } from "@templates/v0";
 import { Checks } from "@utilities/checks";
 import { Freezer } from "@utilities/freezer";
-import { fromString } from "multiformats/dist/src/bytes";
-import { fromJSON } from "multiformats/dist/src/cid";
 
 class PocketArgument
 <
@@ -33,27 +31,6 @@ class PocketArgument
         this.value = value;
 
         Freezer.deepFreeze(this);
-    }
-
-    public static from
-    <
-        T = any
-    >(
-        name: BaseValueKey,
-        value: BaseValue<T>
-    ): PocketArgument<T> {
-        if (Checks.isEmpty(name) == true) {
-            throw new Error("Name is required");
-        }
-
-        if (Checks.isEmpty(value) == true) {
-            throw new Error("Value is required");
-        }
-
-        return new PocketArgument<T>({
-            name,
-            value
-        });
     }
 
     /**
