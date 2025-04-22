@@ -1,5 +1,5 @@
 import { PocketMessage } from '@components/messaging/message';
-import { BaseClientErrorCodes, BaseMessageCodes, BaseMessageLevel, BaseMessageLevels, BaseServerErrorCodes, BaseWarningCodes } from '@templates/v0/base/message';
+import { BaseClientErrorCodes, BaseMessageLevels, BaseServerErrorCodes, BaseWarningCodes } from '@templates/v0/base/message';
 
 
 class PocketErrorMessage
@@ -17,23 +17,31 @@ class PocketErrorMessage
         error,
         timestamp,
         data,
-        throwError
+        throwError,
+        callback
     }: {
         code: C,
         level?: L,
         error: E,
         timestamp?: Date,
         data?: D,
-        throwError?: boolean
+        throwError?: boolean,
+        callback?: (message?: PocketMessage<C, L, E, D>) => Promise<void>
     }) {
         super({
             code,
             level: level !== undefined ? level : BaseMessageLevels.ERROR as L,
             body: error !== undefined ? error : {} as E,
             timestamp: timestamp !== undefined ? timestamp : new Date(),
-            data: data !== undefined ? data : {} as D
+            data: data !== undefined ? data : {} as D,
+            printToConsole: false,
+            callback: callback
         });
 
+        this.handleThrowError(throwError !== undefined ? throwError : false);
+    }
+
+    private handleThrowError(throwError: boolean): void {
         if (throwError) {
             throw this;
         }

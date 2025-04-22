@@ -5,7 +5,7 @@
  * It is used to represent various types of identifiers that can be used in the Pocket Network.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseIdentifierTypes = void 0;
+exports.BaseIdentifierTypeList = exports.BaseIdentifierTypes = void 0;
 /**
  * IdentifierType is an enumeration of various types of identifiers
  * that can be used in the Pocket Network. These identifiers include
@@ -101,4 +101,10 @@ var BaseIdentifierTypes;
      */
     BaseIdentifierTypes["Undefined"] = "Undefined";
 })(BaseIdentifierTypes || (exports.BaseIdentifierTypes = BaseIdentifierTypes = {}));
+/**
+ * BaseIdentifierTypeList is an array of all the values in the BaseIdentifierTypes enum.
+ * It is used to provide a list of all possible identifier types that can be used in the Pocket Network.
+ */
+const BaseIdentifierTypeList = Object.values(BaseIdentifierTypes);
+exports.BaseIdentifierTypeList = BaseIdentifierTypeList;
 //# sourceMappingURL=identifier.js.map

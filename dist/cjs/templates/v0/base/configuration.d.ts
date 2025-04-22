@@ -14,7 +14,7 @@ interface BaseArgument<V, I extends BaseIdentifierType> extends BaseObject<BaseA
 /**
  * BaseParameterEntry is a generic type that represents a parameter entry object.
  */
-interface BaseParameterEntry<V> extends Record<'name', BaseValueKey>, Record<'description', StringOrEmpty>, Record<'default', BaseValue<V>>, Record<'required', boolean>, Record<'optional', Array<BaseValue<V>>> {
+interface BaseParameterEntry<V> extends Record<'name', BaseValueKey>, Partial<Record<'description', StringOrEmpty>>, Partial<Record<'default', BaseValue<V>>>, Partial<Record<'required', boolean>>, Partial<Record<'optional', Array<BaseValue<V>>>> {
 }
 /**
  * BaseParameter is a generic type that represents a parameter object.

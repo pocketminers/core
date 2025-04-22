@@ -44,9 +44,7 @@
         "build:browser": "NODE_ENV=production tsc -p tsconfig.browser.json && tsc-alias -p tsconfig.browser.json",
         "build:cjs": "NODE_ENV=production tsc -p tsconfig.cjs.json && tsc-alias -p tsconfig.cjs.json",
         "build:esm": "NODE_ENV=production tsc -p tsconfig.esm.json && tsc-alias -p tsconfig.esm.json",
-        "build:docs": "typedoc --options ./typedoc.json",
-        "build": "yarn run build:clean && yarn run build:browser && yarn run build:cjs && yarn run build:esm",
-        "build:no-docs": "yarn run build:clean && yarn run build:browser && yarn run build:cjs && yarn run build:esm"
+        "build": "yarn run build:clean && yarn run build:browser && yarn run build:cjs && yarn run build:esm"
     },
     "devDependencies": {
         "@eslint/js": "^9.23.0",

@@ -45,7 +45,7 @@ class Parameter extends PocketObject {
     toJSON() {
         return JSON.stringify(this);
     }
-    toArgdefault() {
+    toArgDefault() {
         const metadata = this.metadata;
         return new Argument({
             name: this.name,

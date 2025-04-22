@@ -48,7 +48,7 @@ class Parameter extends base_1.PocketObject {
     toJSON() {
         return JSON.stringify(this);
     }
-    toArgdefault() {
+    toArgDefault() {
         const metadata = this.metadata;
         return new argument_1.Argument({
             name: this.name,

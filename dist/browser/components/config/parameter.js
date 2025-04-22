@@ -93,7 +93,7 @@ var Parameter = /** @class */ (function (_super) {
     Parameter.prototype.toJSON = function () {
         return JSON.stringify(this);
     };
-    Parameter.prototype.toArgdefault = function () {
+    Parameter.prototype.toArgDefault = function () {
         var metadata = this.metadata;
         return new Argument({
             name: this.name,

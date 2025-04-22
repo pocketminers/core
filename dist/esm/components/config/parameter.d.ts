@@ -15,12 +15,12 @@ declare class Parameter<V, I extends BaseIdentifierType = BaseIdentifierTypes.Un
     constructor({ name, description, default: defaultValue, required, optional, meta }: ParameterEntry<V, I>);
     get name(): BaseValueKey;
     get description(): StringOrEmpty;
-    get default(): BaseValue<V>;
-    get required(): boolean;
-    get optional(): Array<BaseValue<V>>;
+    get default(): BaseValue<V> | undefined;
+    get required(): boolean | undefined;
+    get optional(): Array<BaseValue<V>> | undefined;
     toString(): string;
     toJSON(): string;
-    toArgdefault(): Argument<V, I>;
+    toArgDefault(): Argument<V | undefined, I>;
 }
 export { type ParameterEntry, Parameter };
 //# sourceMappingURL=parameter.d.ts.map

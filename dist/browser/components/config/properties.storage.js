@@ -47,28 +47,22 @@ import { Checks } from "../../utilities/checks.js";
 var Properties = /** @class */ (function (_super) {
     __extends(Properties, _super);
     function Properties(_a) {
-        var _b = _a === void 0 ? {} : _a, _c = _b.items, items = _c === void 0 ? [] : _c;
+        var _b = _a === void 0 ? {} : _a, _c = _b.items, items = _c === void 0 ? [] : _c, _d = _b.location, location = _d === void 0 ? BaseStorageLocations.MEMORY : _d, _e = _b.allowDuplicates, allowDuplicates = _e === void 0 ? true : _e, _f = _b.allowEmpty, allowEmpty = _f === void 0 ? true : _f, _g = _b.maxSize, maxSize = _g === void 0 ? 0 : _g;
         return _super.call(this, items, {
-            location: BaseStorageLocations.MEMORY,
-            allowDuplicates: true,
-            allowEmpty: true,
-            maxSize: 0
+            location: location,
+            allowDuplicates: allowDuplicates,
+            allowEmpty: allowEmpty,
+            maxSize: maxSize
         }) || this;
     }
     Properties.prototype.getArgument = function (name) {
         var args = this.arguments;
         var arg = args.find(function (arg) { return arg.name === name; });
-        // if (!arg) {
-        //     throw new Error(`Argument "${String(name)}" not found.`);
-        // }
         return arg;
     };
     Properties.prototype.getParameter = function (name) {
         var params = this.parameters;
         var param = params.find(function (param) { return param.name === name; });
-        // if (!param) {
-        //     throw new Error(`Parameter "${String(name)}" not found.`);
-        // }
         return param;
     };
     Properties.prototype.getDefaultFromParameter = function (name, useOptional) {
@@ -79,7 +73,7 @@ var Properties = /** @class */ (function (_super) {
         }
         var metadata = param.metadata;
         var defultValue = param.default;
-        var optionalValues = param.optional;
+        var optionalValues = param.optional !== undefined ? param.optional : [];
         var value = Checks.isEmpty(defultValue) === false ? defultValue : null;
         if (useOptional === true
             && Checks.isEmpty(defultValue) === true

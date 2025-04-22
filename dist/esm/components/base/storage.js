@@ -1,3 +1,4 @@
+import { MerkleTree } from "../../utilities/merkleTree.js";
 /**
  * PocketStorage is a generic class that represents a storage object.
  * It implements the BaseStorage interface and provides methods to manage the storage.
@@ -97,6 +98,16 @@ class PocketStorage {
      */
     getType() {
         return this.items[0]?.metadata.type ?? "UNKNOWN";
+    }
+    async buildMerkleTree() {
+        const leaves = this.items.map(item => item.dataString);
+        const tree = new MerkleTree(leaves);
+        await tree.build();
+        return tree;
+    }
+    async getMerkleRoot() {
+        const tree = await this.buildMerkleTree();
+        return tree.getRoot();
     }
 }
 export { PocketStorage };

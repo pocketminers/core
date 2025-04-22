@@ -1,6 +1,24 @@
 import { BaseClientErrorCodes, BaseInfoCodes, BaseMessageCodes, BaseMessageLevels, BaseServerErrorCodes, BaseSuccessCodes, BaseWarningCodes } from "@templates/v0/base/message";
 import { Freezer } from "@utilities/freezer";
 
+
+interface PocketMessageEntry
+<
+    C extends BaseMessageCodes = BaseSuccessCodes.OK,
+    L extends BaseMessageLevels = BaseMessageLevels.SUCCESS,
+    B = any,
+    D = any,
+>
+    extends
+        Record<'code', BaseMessageCodes>,
+        Record<'level', BaseMessageLevels>,
+        Record<'body', any>,
+        Record<'timestamp', Date>,
+        Record<'data', any>,
+        Record<'printToConsole', boolean>,
+        Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>
+{}
+
 /**
  * PocketMessage is a class that represents a message with a code, level, body, timestamp, and optional data.
  * - It is used to encapsulate messages in the Pocket framework.
@@ -21,8 +39,7 @@ class PocketMessage
     body: B;
     timestamp: Date;
     data?: D;
-    printToConsole?: boolean;
-    callback?: (message: PocketMessage<C, L, B, D>) => void;
+    callback?: (message?: PocketMessage<C, L, B, D>) => Promise<void>;
 
     constructor({
         code,
@@ -39,7 +56,7 @@ class PocketMessage
         timestamp?: Date,
         data?: D,
         printToConsole?: boolean,
-        callback?: (message: PocketMessage<C, L, B, D>) => void
+        callback?: (message?: PocketMessage<C, L, B, D>) => Promise<void>
     }) {
 
         this.code = code !== undefined ? code : BaseSuccessCodes.OK as C;
@@ -50,13 +67,11 @@ class PocketMessage
         this.body = body !== undefined ? body : {} as B;
         this.timestamp = timestamp !== undefined ? timestamp : new Date();
         this.data = data !== undefined ? data : {} as D;
-        this.printToConsole = printToConsole;
         this.callback = callback;
 
         Freezer.deepFreeze(this);
 
-        this.handlePrintToConsole();
-        this.handleCallback();
+        this.handlePrintToConsole(printToConsole);
     }
 
     private getLevelFromCode(code: C): L {
@@ -110,14 +125,22 @@ class PocketMessage
         }
     }
 
-    private handleCallback(): void {
-        if (this.callback) {
-            this.callback(this);
+    /**
+     * Sets the callback function to be called when the message is created.
+     * @param callback - The callback function to be called.
+     */
+    public async handleCallback(): Promise<void> {
+        if (this.callback !== undefined) {
+            await this.callback(this);
         }
     }
 
-    private handlePrintToConsole(): void {
-        if (this.printToConsole) {
+    /**
+     * Sets the printToConsole property to true or false.
+     * @param printToConsole - Whether to print the message to the console.
+     */
+    private handlePrintToConsole(printToConsole?: boolean): void {
+        if (printToConsole !== undefined && printToConsole) {
             this.printMessage();
         }
     }

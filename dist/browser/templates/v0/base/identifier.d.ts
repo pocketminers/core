@@ -103,6 +103,11 @@ declare enum BaseIdentifierTypes {
  */
 type BaseIdentifierType = keyof typeof BaseIdentifierTypes;
 /**
+ * BaseIdentifierTypeList is an array of all the values in the BaseIdentifierTypes enum.
+ * It is used to provide a list of all possible identifier types that can be used in the Pocket Network.
+ */
+declare const BaseIdentifierTypeList: Array<BaseIdentifierType>;
+/**
  * BaseIdentifier is a generic type that represents an identifier in the Pocket Network.
  * It includes a unique ID and a type that specifies the kind of identifier it is.
  * The ID can be a string, number, or symbol, and the type is a specific identifier type.
@@ -113,5 +118,5 @@ type BaseIdentifierType = keyof typeof BaseIdentifierTypes;
  */
 interface BaseIdentifier<I extends BaseIdentifierType> extends Record<'value', string | number | symbol>, Record<'type_', I> {
 }
-export { type BaseIdentifier, type BaseIdentifierType, BaseIdentifierTypes };
+export { type BaseIdentifier, type BaseIdentifierType, BaseIdentifierTypes, BaseIdentifierTypeList };
 //# sourceMappingURL=identifier.d.ts.map

@@ -27,6 +27,15 @@ class ParameterFactory extends factory_1.PocketFactory {
             meta
         });
     }
+    static create({ name, description, default: defaultValue, required, optional, meta }) {
+        return ParameterFactory.fromRecord({
+            name,
+            description,
+            default: defaultValue,
+            required,
+            optional
+        }, meta);
+    }
 }
 exports.ParameterFactory = ParameterFactory;
 //# sourceMappingURL=parameter.factory.js.map

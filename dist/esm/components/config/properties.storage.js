@@ -8,28 +8,22 @@ import { Checks } from "../../utilities/checks.js";
  * It extends the PocketStorage class and provides methods to manage the storage.
  */
 class Properties extends PocketStorage {
-    constructor({ items = [] } = {}) {
+    constructor({ items = [], location = BaseStorageLocations.MEMORY, allowDuplicates = true, allowEmpty = true, maxSize = 0 } = {}) {
         super(items, {
-            location: BaseStorageLocations.MEMORY,
-            allowDuplicates: true,
-            allowEmpty: true,
-            maxSize: 0
+            location,
+            allowDuplicates,
+            allowEmpty,
+            maxSize
         });
     }
     getArgument(name) {
         const args = this.arguments;
         const arg = args.find(arg => arg.name === name);
-        // if (!arg) {
-        //     throw new Error(`Argument "${String(name)}" not found.`);
-        // }
         return arg;
     }
     getParameter(name) {
         const params = this.parameters;
         const param = params.find(param => param.name === name);
-        // if (!param) {
-        //     throw new Error(`Parameter "${String(name)}" not found.`);
-        // }
         return param;
     }
     getDefaultFromParameter(name, useOptional = false) {
@@ -39,7 +33,7 @@ class Properties extends PocketStorage {
         }
         const metadata = param.metadata;
         const defultValue = param.default;
-        const optionalValues = param.optional;
+        const optionalValues = param.optional !== undefined ? param.optional : [];
         let value = Checks.isEmpty(defultValue) === false ? defultValue : null;
         if (useOptional === true
             && Checks.isEmpty(defultValue) === true

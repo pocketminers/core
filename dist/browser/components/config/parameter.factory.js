@@ -43,6 +43,16 @@ var ParameterFactory = /** @class */ (function (_super) {
             meta: meta
         });
     };
+    ParameterFactory.create = function (_a) {
+        var name = _a.name, description = _a.description, defaultValue = _a.default, required = _a.required, optional = _a.optional, meta = _a.meta;
+        return ParameterFactory.fromRecord({
+            name: name,
+            description: description,
+            default: defaultValue,
+            required: required,
+            optional: optional
+        }, meta);
+    };
     return ParameterFactory;
 }(PocketFactory));
 export { ParameterFactory };

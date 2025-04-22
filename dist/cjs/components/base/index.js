@@ -15,6 +15,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseComponentParts = exports.BaseComponent = void 0;
+/**
+ * BaseComponentParts
+ * This enum defines the different parts of a component.
+ */
 var BaseComponentParts;
 (function (BaseComponentParts) {
     BaseComponentParts["Factory"] = "Factory";
@@ -22,7 +26,12 @@ var BaseComponentParts;
     BaseComponentParts["Manager"] = "Manager";
     BaseComponentParts["Configuration"] = "Configuration";
     BaseComponentParts["Service"] = "Service";
+    BaseComponentParts["Identity"] = "Identity";
 })(BaseComponentParts || (exports.BaseComponentParts = BaseComponentParts = {}));
+/**
+ * BaseComponent
+ * This class represents a base component.
+ */
 class BaseComponent {
     config;
     factory;

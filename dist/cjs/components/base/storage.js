@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PocketStorage = void 0;
+const merkleTree_1 = require("../../utilities/merkleTree.js");
 /**
  * PocketStorage is a generic class that represents a storage object.
  * It implements the BaseStorage interface and provides methods to manage the storage.
@@ -100,6 +101,16 @@ class PocketStorage {
      */
     getType() {
         return this.items[0]?.metadata.type ?? "UNKNOWN";
+    }
+    async buildMerkleTree() {
+        const leaves = this.items.map(item => item.dataString);
+        const tree = new merkleTree_1.MerkleTree(leaves);
+        await tree.build();
+        return tree;
+    }
+    async getMerkleRoot() {
+        const tree = await this.buildMerkleTree();
+        return tree.getRoot();
     }
 }
 exports.PocketStorage = PocketStorage;

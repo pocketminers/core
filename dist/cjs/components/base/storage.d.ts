@@ -1,6 +1,7 @@
 import { Argument, Parameter } from "../config/index.js";
 import { BaseIdentifier, BaseObjectType } from "../../templates/v0/index.js";
 import { BaseStorage, BaseStorageLocation, BaseStorageLocations } from "../../templates/v0/base/storage.js";
+import { MerkleTree } from "../../utilities/merkleTree.js";
 /**
  * StorageTypes is a generic type that represents the types of storage items.
  * Currently, it can be either an Argument or a Parameter.
@@ -79,6 +80,8 @@ declare class PocketStorage<S extends StorageTypes, O extends BaseObjectType, L 
      * @returns The type of the storage.
      */
     getType(): string;
+    buildMerkleTree(): Promise<MerkleTree>;
+    getMerkleRoot(): Promise<string>;
 }
 export { PocketStorage, type StorageTypes, type PocketStorageOptions };
 //# sourceMappingURL=storage.d.ts.map

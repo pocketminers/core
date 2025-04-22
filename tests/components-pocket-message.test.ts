@@ -1,5 +1,5 @@
 import { PocketMessage } from "@components/messaging/message";
-import { BaseMessageCodes, BaseSuccessCodes, BaseMessageLevels, BaseWarningCodes } from "@templates/v0/base/message";
+import { BaseMessageCodes, BaseSuccessCodes, BaseMessageLevels, BaseWarningCodes, BaseServerErrorCodes } from "@templates/v0/base/message";
 
 describe("PocketMessage", () => {
     it("should create a PocketMessage with default values", () => {
@@ -54,13 +54,15 @@ describe("PocketMessage", () => {
         expect(message.level).toBe(BaseMessageLevels.SUCCESS);
     });
 
-    it("should call the callback function if provided", () => {
+    it("should call the callback function if provided", async () => {
         const callback = jest.fn();
         const message = new PocketMessage({
             code: BaseSuccessCodes.OK,
             body: "Test message",
             callback
         });
+
+        await message.handleCallback();
 
         expect(callback).toHaveBeenCalledWith(message);
     });
@@ -73,6 +75,20 @@ describe("PocketMessage", () => {
         });
 
         expect(callback).not.toHaveBeenCalled();
+    });
+
+    it("should call the callback function if it is async", async () => {
+        const callback = jest.fn(async (): Promise<void> => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                }, 1000);
+            });
+        });
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            body: "Test message",
+            callback
+        });
     });
 
     it("should print to console if printToConsole is true", () => {
@@ -164,5 +180,18 @@ describe("PocketMessage", () => {
 
         expect(consoleWarnSpy).toHaveBeenCalledWith("Warning message");
         consoleWarnSpy.mockRestore();
+    });
+
+    it("should print an error message to the console", () => {
+        const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseServerErrorCodes.INTERNAL_SERVER_ERROR,
+            level: BaseMessageLevels.ERROR,
+            body: "Error message",
+            printToConsole: true
+        });
+
+        expect(consoleErrorSpy).toHaveBeenCalledWith("Error message");
+        consoleErrorSpy.mockRestore();
     });
 });

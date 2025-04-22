@@ -1,14 +1,18 @@
 import { Parameter } from "./parameter.js";
 import { Argument } from "./argument.js";
-import { BaseObjectTypes, BaseStorageLocations, BaseValueKey } from "../../templates/v0/index.js";
+import { BaseObjectTypes, BaseStorageLocation, BaseStorageLocations, BaseValueKey } from "../../templates/v0/index.js";
 import { PocketStorage } from "../base/index.js";
 /**
  * Properties is a class that represents a storage object for arguments and parameters.
  * It extends the PocketStorage class and provides methods to manage the storage.
  */
-declare class Properties extends PocketStorage<Argument<any, any> | Parameter<any, any>, BaseObjectTypes.Argument | BaseObjectTypes.Parameter, BaseStorageLocations.MEMORY> {
-    constructor({ items }?: {
+declare class Properties<L extends BaseStorageLocation = BaseStorageLocations.MEMORY> extends PocketStorage<Argument<any, any> | Parameter<any, any>, BaseObjectTypes.Argument | BaseObjectTypes.Parameter, L> {
+    constructor({ items, location, allowDuplicates, allowEmpty, maxSize }?: {
         items?: Array<Argument<any, any> | Parameter<any, any>>;
+        location?: L;
+        allowDuplicates?: boolean;
+        allowEmpty?: boolean;
+        maxSize?: number;
     });
     getArgument(name: BaseValueKey): Argument<any, any> | undefined;
     getParameter(name: BaseValueKey): Parameter<any, any> | undefined;

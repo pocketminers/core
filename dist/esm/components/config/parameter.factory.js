@@ -24,6 +24,15 @@ class ParameterFactory extends PocketFactory {
             meta
         });
     }
+    static create({ name, description, default: defaultValue, required, optional, meta }) {
+        return ParameterFactory.fromRecord({
+            name,
+            description,
+            default: defaultValue,
+            required,
+            optional
+        }, meta);
+    }
 }
 export { ParameterFactory };
 //# sourceMappingURL=parameter.factory.js.map

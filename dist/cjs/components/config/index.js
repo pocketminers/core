@@ -20,4 +20,5 @@ __exportStar(require("./argument.storage.js"), exports);
 __exportStar(require("./parameter.js"), exports);
 __exportStar(require("./parameter.factory.js"), exports);
 __exportStar(require("./parameter.storage.js"), exports);
+__exportStar(require("./properties.storage.js"), exports);
 //# sourceMappingURL=index.js.map

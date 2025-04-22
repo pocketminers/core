@@ -98,5 +98,10 @@ var BaseIdentifierTypes;
      */
     BaseIdentifierTypes["Undefined"] = "Undefined";
 })(BaseIdentifierTypes || (BaseIdentifierTypes = {}));
-export { BaseIdentifierTypes };
+/**
+ * BaseIdentifierTypeList is an array of all the values in the BaseIdentifierTypes enum.
+ * It is used to provide a list of all possible identifier types that can be used in the Pocket Network.
+ */
+const BaseIdentifierTypeList = Object.values(BaseIdentifierTypes);
+export { BaseIdentifierTypes, BaseIdentifierTypeList };
 //# sourceMappingURL=identifier.js.map

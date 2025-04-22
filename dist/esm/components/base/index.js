@@ -1,3 +1,7 @@
+/**
+ * BaseComponentParts
+ * This enum defines the different parts of a component.
+ */
 var BaseComponentParts;
 (function (BaseComponentParts) {
     BaseComponentParts["Factory"] = "Factory";
@@ -5,7 +9,12 @@ var BaseComponentParts;
     BaseComponentParts["Manager"] = "Manager";
     BaseComponentParts["Configuration"] = "Configuration";
     BaseComponentParts["Service"] = "Service";
+    BaseComponentParts["Identity"] = "Identity";
 })(BaseComponentParts || (BaseComponentParts = {}));
+/**
+ * BaseComponent
+ * This class represents a base component.
+ */
 class BaseComponent {
     config;
     factory;
