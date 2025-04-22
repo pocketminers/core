@@ -1,5 +1,6 @@
 import { Checks } from "../../utilities/checks.js";
 import { DateUtilities } from "../../utilities/date.js";
+import { Freezer } from "../../utilities/freezer.js";
 /**
  * PocketTimestamp represents a timestamp item that can be either a Date object, a string, or a number.
  * It can also be an empty string or a number representing a timestamp.
@@ -26,8 +27,7 @@ class PocketTimestamp {
         else {
             throw new Error("Invalid date entry");
         }
-        Object.freeze(this);
-        Object.freeze(this.date);
+        Freezer.deepFreeze(this);
     }
     /**
      * The toString method returns the date as a string.

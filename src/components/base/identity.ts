@@ -1,5 +1,7 @@
 import { PocketObject } from "@components/base";
 import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats, BaseObjectTypes, BaseValue } from "@templates/v0";
+import { Freezer } from "@utilities/freezer";
+import { IdentifierUtilities } from "@utilities/identifier";
 import { MultiHashUtilities } from "@utilities/multiHash";
 
 
@@ -55,28 +57,12 @@ class PocketIdentity
         }
 
         // check if the value is the correct format
-        PocketIdentity.checkIdentityType(format, value);
+        IdentifierUtilities.checkIdentityFormat(format, value);
 
         this.format = format;
         this.value = value;
-    }
 
-
-    private static checkIdentityType(
-        format: BaseIdentifierFormat,
-        value: string
-    ): void {
-        switch (format) {
-            case BaseIdentifierFormats.Multihash:
-
-                if (!MultiHashUtilities.isValidMultihash(value)) {
-                    throw new Error("Invalid multihash");
-                }
-                break;
-
-            default:
-                break
-        }
+        Freezer.deepFreeze(this);
     }
 }
 

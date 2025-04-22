@@ -30,6 +30,7 @@ class BaseComponent {
     }
 }
 export { BaseComponent, BaseComponentParts };
+export * from './argument.js';
 export * from './error.js';
 export * from './factory.js';
 export * from './identity.js';

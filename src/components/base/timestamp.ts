@@ -1,6 +1,7 @@
 import { BaseTimestamp, BaseTimestampEntry, BaseTimestampUnit, DateEntry } from "@templates/v0/base/timestamps";
 import { Checks } from "@utilities/checks";
 import { DateUtilities } from "@utilities/date";
+import { Freezer } from "@utilities/freezer";
 
 
 /**
@@ -36,8 +37,7 @@ class PocketTimestamp
             throw new Error("Invalid date entry");
         }
 
-        Object.freeze(this);
-        Object.freeze(this.date);
+        Freezer.deepFreeze(this);
     }
 
     /**

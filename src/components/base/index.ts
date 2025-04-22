@@ -70,7 +70,7 @@ export {
     BaseComponentsTypes
 }
 
-
+export * from './argument';
 export * from './error';
 export * from './factory';
 export * from './identity';

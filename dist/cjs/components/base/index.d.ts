@@ -37,6 +37,7 @@ type BaseComponentsTypes = {
     [key in BaseComponentPartsType]: BaseComponentsTypes[key];
 };
 export { BaseComponent, BaseComponentParts, BaseComponentsTypes };
+export * from './argument.js';
 export * from './error.js';
 export * from './factory.js';
 export * from './identity.js';

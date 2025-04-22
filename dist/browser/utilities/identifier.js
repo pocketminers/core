@@ -29,16 +29,16 @@ var IdentifierUtilities = /** @class */ (function () {
         identifier += suffix;
         if (format === undefined) {
             return {
-                id: identifier,
+                value: identifier,
                 format: BaseIdentifierFormats.Undefined
             };
         }
         return {
-            id: identifier,
+            value: identifier,
             format: format
         };
     };
-    IdentifierUtilities.checkIdentityType = function (format, value) {
+    IdentifierUtilities.checkIdentityFormat = function (format, value) {
         switch (format) {
             case BaseIdentifierFormats.Multihash:
                 if (!MultiHashUtilities.isValidMultihash(value)) {

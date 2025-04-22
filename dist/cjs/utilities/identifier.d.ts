@@ -9,21 +9,20 @@ declare class IdentifierUtilities {
             prefix?: string;
             suffix?: string;
             length?: number;
-            timestamp?: number;
             seriesStart?: number;
             seriesEnd?: number;
             seriesStep?: number;
         };
     }): {
-        id: string;
+        value: string;
         format: I;
     };
-    private static checkIdentityType;
-    private static generateUUIDv4;
-    private static generateRandomString;
-    private static generateISOTimestamp;
-    private static formatIdentifier;
-    private static checkForUUID;
+    static checkIdentityFormat(format: BaseIdentifierFormat, value: string): void;
+    static generateUUIDv4(): string;
+    static generateRandomString(length?: number): string;
+    static generateISOTimestamp(timestamp?: number): string;
+    static formatIdentifier(identifier: string): string;
+    static checkForUUID(identifier: string): boolean;
 }
 export { IdentifierUtilities };
 //# sourceMappingURL=identifier.d.ts.map

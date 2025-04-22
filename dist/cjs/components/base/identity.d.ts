@@ -25,12 +25,6 @@ declare class PocketIdentity<I extends BaseIdentifierFormat> implements BaseIden
         format: I;
         value: string;
     });
-    private static checkIdentityType;
-    private static generateUUIDv4;
-    private static generateRandomString;
-    private static generateISOTimestamp;
-    private static formatIdentifier;
-    private static checkForUUID;
 }
 export { type IdentityEntry, PocketIdentity };
 //# sourceMappingURL=identity.d.ts.map

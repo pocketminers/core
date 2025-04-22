@@ -47,6 +47,7 @@ class BaseComponent {
     }
 }
 exports.BaseComponent = BaseComponent;
+__exportStar(require("./argument.js"), exports);
 __exportStar(require("./error.js"), exports);
 __exportStar(require("./factory.js"), exports);
 __exportStar(require("./identity.js"), exports);

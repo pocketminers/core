@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PocketTimestamp = void 0;
 const checks_1 = require("../../utilities/checks.js");
 const date_1 = require("../../utilities/date.js");
+const freezer_1 = require("../../utilities/freezer.js");
 /**
  * PocketTimestamp represents a timestamp item that can be either a Date object, a string, or a number.
  * It can also be an empty string or a number representing a timestamp.
@@ -29,8 +30,7 @@ class PocketTimestamp {
         else {
             throw new Error("Invalid date entry");
         }
-        Object.freeze(this);
-        Object.freeze(this.date);
+        freezer_1.Freezer.deepFreeze(this);
     }
     /**
      * The toString method returns the date as a string.

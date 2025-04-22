@@ -22,7 +22,6 @@ class IdentifierUtilities {
             prefix?: string,
             suffix?: string,
             length?: number,
-            timestamp?: number,
             seriesStart?: number,
             seriesEnd?: number,
             seriesStep?: number,
@@ -64,7 +63,7 @@ class IdentifierUtilities {
         };
     }
 
-    private static checkIdentityType(
+    public static checkIdentityFormat(
         format: BaseIdentifierFormat,
         value: string
     ): void {
@@ -81,7 +80,7 @@ class IdentifierUtilities {
         }
     }
 
-    private static generateUUIDv4(): string {
+    public static generateUUIDv4(): string {
         {
             const id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -98,19 +97,19 @@ class IdentifierUtilities {
         }
     }
 
-    private static generateRandomString(length: number = 34): string {
+    public static generateRandomString(length: number = 34): string {
         return Math.random().toString(36).substring(2, length + 2);
     }
 
-    private static generateISOTimestamp(timestamp: number = Date.now()): string {
+    public static generateISOTimestamp(timestamp: number = Date.now()): string {
         return new Date(timestamp).toISOString();
     }
 
-    private static formatIdentifier(identifier: string): string {
+    public static formatIdentifier(identifier: string): string {
         return identifier;
     }
 
-    private static checkForUUID(identifier: string): boolean {
+    public static checkForUUID(identifier: string): boolean {
         return identifier.match(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/) !== null;
     }
 }

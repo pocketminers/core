@@ -38,12 +38,12 @@ type DefaultBaseValue = string | number | object | boolean | Function | null | u
  * It can be a primitive type, an object, or an array of any of these types.
  * This is used to represent various values in the Pocket Network.
  */
-type BaseValue<V = any> = V extends DefaultBaseValue 
-    ? V 
-    : V extends Array<infer U> 
+type BaseValue<T = any> = T extends DefaultBaseValue 
+    ? T 
+    : T extends Array<infer U> 
         ? BaseValue<U>[] 
-        : V extends Record<string, any> 
-            ? { [K in keyof V]: BaseValue<V[K]> } 
+        : T extends Record<string, any> 
+            ? { [K in keyof T]: BaseValue<T[K]> } 
             : never;
 
 

@@ -29,16 +29,16 @@ class IdentifierUtilities {
         identifier += suffix;
         if (format === undefined) {
             return {
-                id: identifier,
+                value: identifier,
                 format: v0_1.BaseIdentifierFormats.Undefined
             };
         }
         return {
-            id: identifier,
+            value: identifier,
             format
         };
     }
-    static checkIdentityType(format, value) {
+    static checkIdentityFormat(format, value) {
         switch (format) {
             case v0_1.BaseIdentifierFormats.Multihash:
                 if (!multiHash_1.MultiHashUtilities.isValidMultihash(value)) {
