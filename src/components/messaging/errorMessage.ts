@@ -18,7 +18,8 @@ class PocketErrorMessage
         timestamp,
         data,
         throwError,
-        callback
+        callback,
+        delayCallback = 0
     }: {
         code: C,
         level?: L,
@@ -26,7 +27,8 @@ class PocketErrorMessage
         timestamp?: Date,
         data?: D,
         throwError?: boolean,
-        callback?: (message?: PocketMessage<C, L, E, D>) => Promise<void>
+        callback?: (message?: PocketMessage<C, L, E, D>) => Promise<void>,
+        delayCallback?: number
     }) {
         super({
             code,
@@ -35,7 +37,8 @@ class PocketErrorMessage
             timestamp: timestamp !== undefined ? timestamp : new Date(),
             data: data !== undefined ? data : {} as D,
             printToConsole: false,
-            callback: callback
+            callback: callback,
+            delayCallback: delayCallback
         });
 
         this.handleThrowError(throwError !== undefined ? throwError : false);
