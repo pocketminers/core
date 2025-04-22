@@ -16,7 +16,8 @@ interface PocketMessageEntry
         Record<'timestamp', Date>,
         Record<'data', any>,
         Record<'printToConsole', boolean>,
-        Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>
+        Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>,
+        Record<'delayCallback', number>
 {}
 
 /**
@@ -48,7 +49,8 @@ class PocketMessage
         timestamp,
         data,
         printToConsole = false,
-        callback
+        callback,
+        delayCallback = 0
     }: {
         code?: C,
         level?: L,
@@ -56,7 +58,8 @@ class PocketMessage
         timestamp?: Date,
         data?: D,
         printToConsole?: boolean,
-        callback?: (message?: PocketMessage<C, L, B, D>) => Promise<void>
+        callback?: (message?: PocketMessage<C, L, B, D>) => Promise<void>,
+        delayCallback?: number
     }) {
 
         this.code = code !== undefined ? code : BaseSuccessCodes.OK as C;
@@ -72,6 +75,45 @@ class PocketMessage
         Freezer.deepFreeze(this);
 
         this.handlePrintToConsole(printToConsole);
+
+
+        // If a delayCallback is provided, set a timeout to call the callback
+        // after the specified delay
+        if (
+            delayCallback > 0
+            && this.callback !== undefined
+            && typeof this.callback === "function"
+        ) {
+            setTimeout(() => {
+                this.handleCallback().then(() => {
+                    null;
+                }
+                ).catch((error) => {
+                    console.error("Error executing callback:", error);
+                });
+            }, delayCallback); // Convert seconds to milliseconds
+        }
+        else if (
+            delayCallback === 0
+            && this.callback !== undefined
+            && typeof this.callback === "function"
+        ) {
+            // If no delayCallback is provided, call the callback immediately
+            this.handleCallback().then(() => {
+                null;
+            }
+            ).catch((error) => {
+                console.error("Error executing callback:", error);
+            });
+        }
+        else if (
+            delayCallback === -1
+            && this.callback !== undefined
+        ) {
+            // If no callback is provided, do nothing
+            console.log("Callback delayed indefinitely");
+        }
+        
     }
 
     private getLevelFromCode(code: C): L {
@@ -130,8 +172,13 @@ class PocketMessage
      * @param callback - The callback function to be called.
      */
     public async handleCallback(): Promise<void> {
-        if (this.callback !== undefined) {
-            await this.callback(this);
+        try {
+            if (this.callback !== undefined) {
+                await this.callback(this);
+            }
+        }
+        catch (error) {
+            console.error("Error executing callback:", error);
         }
     }
 

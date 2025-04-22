@@ -62,7 +62,7 @@ describe("PocketMessage", () => {
             callback
         });
 
-        await message.handleCallback();
+        // await message.handleCallback();
 
         expect(callback).toHaveBeenCalledWith(message);
     });
@@ -89,6 +89,8 @@ describe("PocketMessage", () => {
             body: "Test message",
             callback
         });
+
+        expect(callback).toHaveBeenCalled();
     });
 
     it("should print to console if printToConsole is true", () => {
@@ -193,5 +195,46 @@ describe("PocketMessage", () => {
 
         expect(consoleErrorSpy).toHaveBeenCalledWith("Error message");
         consoleErrorSpy.mockRestore();
+    });
+
+    it('should delay the callback function if delay is provided', async () => {
+        const callback = jest.fn();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            body: "Test message",
+            callback,
+            delayCallback: 1000
+        });
+
+        // Simulate the delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        expect(callback).toHaveBeenCalledWith(message);
+    });
+
+    it('should not delay the callback function if delay is not provided', async () => {
+        const callback = jest.fn();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            body: "Test message",
+            callback
+        });
+
+        expect(callback).toHaveBeenCalledWith(message);
+    });
+
+    it('should delay the callback function indefinietly if the delay is provided as -1', async () => {
+        const callback = jest.fn();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            body: "Test message",
+            callback,
+            delayCallback: -1
+        });
+
+        // Simulate the delay
+        await message.handleCallback();
+
+        expect(callback).toHaveBeenCalledWith(message);
     });
 });

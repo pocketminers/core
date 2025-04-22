@@ -201,6 +201,10 @@ interface BaseMessageEntry
         Partial<Record<'data', D>>
 {}
 
+/**
+ * BaseErrorMessageEntry is an interface that extends the BaseMessageEntry interface.
+ * It adds an error property, which is used to store an error object.
+ */
 interface BaseErrorMessageEntry
 <
     C extends BaseMessageCodes = BaseSuccessCodes.OK,

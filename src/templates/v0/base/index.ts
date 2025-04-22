@@ -1,6 +1,7 @@
 export * from './configuration';
 export * from './factory';
 export * from './identifier';
+export * from './message';
 export * from './metadata';
 export * from './object';
 export * from './storage';
