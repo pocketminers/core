@@ -139,12 +139,12 @@ const BaseIdentifierTypeList = Object.values(BaseIdentifierFormats) as Array<Bas
  *
  * @template I - The type of the identifier, which extends BaseIdentifierFormat.
  * @property {string | number | symbol} id - The unique identifier.
- * @property {I} type_ - The type of the identifier, which is a specific identifier type.
+ * @property {I} format - The type of the identifier, which is a specific identifier type.
  */
 interface BaseIdentifier<I extends BaseIdentifierFormat>
     extends
         Record<'value', string | number | symbol>,
-        Record<'type_', I>
+        Record<'format', I>
 {}
 
 

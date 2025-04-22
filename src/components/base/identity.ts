@@ -13,7 +13,7 @@ import { MultiHashUtilities } from "@utilities/multiHash";
  * 
  * @example
  * const identityEntry: IdentityEntry<string> = {
- *    type_: "exampleType",
+ *    format: "exampleType",
  *   value: "exampleValue"
  * };
  */
@@ -36,17 +36,17 @@ class PocketIdentity
     implements
         BaseIdentifier<I>
 {
-    public readonly type_: I
+    public readonly format: I
     public readonly value: string;
 
     constructor({
-        type_,
+        format,
         value
     }: {
-        type_: I;
+        format: I;
         value: string;
     }) {
-        if (type_ === undefined) {
+        if (format === undefined) {
             throw new Error("Type is required");
         }
 
@@ -54,19 +54,19 @@ class PocketIdentity
             throw new Error("Value is required");
         }
 
-        // check if the value is the correct type_
-        PocketIdentity.checkIdentityType(type_, value);
+        // check if the value is the correct format
+        PocketIdentity.checkIdentityType(format, value);
 
-        this.type_ = type_;
+        this.format = format;
         this.value = value;
     }
 
 
     private static checkIdentityType(
-        type_: BaseIdentifierFormat,
+        format: BaseIdentifierFormat,
         value: string
     ): void {
-        switch (type_) {
+        switch (format) {
             case BaseIdentifierFormats.Multihash:
 
                 if (!MultiHashUtilities.isValidMultihash(value)) {

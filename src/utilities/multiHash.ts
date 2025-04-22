@@ -25,7 +25,7 @@ class MultiHashUtilities {
     public static async generateIdentifier(input: string): Promise<BaseIdentifier<BaseIdentifierFormats.Multihash>> {
         const hash = await this.generateMultihash(input);
         return {
-            type_: BaseIdentifierFormats.Multihash,
+            format: BaseIdentifierFormats.Multihash,
             value: hash
         }
     }

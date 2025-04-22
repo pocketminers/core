@@ -51,7 +51,7 @@ describe("Properties", () => {
             optional: ['testOptionalVAlue'],
             meta: new Metadata<'Name', BaseObjectTypes.Parameter>({
                 name: "testParam",
-                id: { value: "testParamId", type_: "Name" },
+                id: { value: "testParamId", format: "Name" },
                 description: "Test parameter metadata description",
                 tags: ["test"]
             }),

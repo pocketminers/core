@@ -1,5 +1,4 @@
-import { PocketObject } from "@components/base";
-import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats, BaseObjectTypes, BaseValue } from "@templates/v0";
+import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats, BaseIdentifierTypeList } from "@templates/v0";
 import { MultiHashUtilities } from "@utilities/multiHash";
 
 
@@ -13,7 +12,7 @@ import { MultiHashUtilities } from "@utilities/multiHash";
  * 
  * @example
  * const identityEntry: IdentityEntry<string> = {
- *    type_: "exampleType",
+ *    format: "exampleType",
  *   value: "exampleValue"
  * };
  */
@@ -38,8 +37,7 @@ class IdentifierUtilities {
         options = {
             prefix: "",
             suffix: ""
-        },
-        type = undefined
+        }
     }: {
         format?: I,
         options?: {
@@ -62,41 +60,37 @@ class IdentifierUtilities {
 
         switch (format) {
             case "UUID":
-                identifier += IdentityFactory.generateUUIDv4();
-                break;
-            case "SERIES":
-                identifier += IdentityFactory.generateRandomString(options?.length);
-                break;
-            case "Timestamp":
-                identifier += IdentityFactory.generateISOTimestamp(options?.timestamp);
-                break;
-            case "Name":
-                // identifier += IdentityFactory.createName();
+                identifier += IdentifierUtilities.generateUUIDv4();
                 break;
             default:
-                throw new Error(`Invalid identifier format: ${format}`);
+                // check if the format is valid
+                if (format !== undefined && !BaseIdentifierTypeList.includes(format)) {
+                    throw new Error(`Invalid identifier format: ${format}`);
+                }
+                identifier += IdentifierUtilities.generateRandomString(options?.length);
+                break;
         }
 
         identifier += suffix;
 
-        if (type === undefined) {
+        if (format === undefined) {
             return {
                 id: identifier,
-                type: BaseTypes.Custom
+                format: BaseIdentifierFormats.Undefined as I
             };
         }
 
         return {
             id: identifier,
-            type
+            format
         };
     }
 
     private static checkIdentityType(
-        type_: BaseIdentifierFormat,
+        format: BaseIdentifierFormat,
         value: string
     ): void {
-        switch (type_) {
+        switch (format) {
             case BaseIdentifierFormats.Multihash:
 
                 if (!MultiHashUtilities.isValidMultihash(value)) {
@@ -119,7 +113,7 @@ class IdentifierUtilities {
             // check the generated id format using regex
             const idRegex = new RegExp(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
             if (!idRegex.test(id)) {
-                return PocketIdentity.generateUUIDv4();
+                return IdentifierUtilities.generateUUIDv4();
             }
         
             return id;
@@ -145,5 +139,5 @@ class IdentifierUtilities {
 
 export {
     type IdentityEntry,
-    PocketIdentity
+    IdentifierUtilities
 }

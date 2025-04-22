@@ -34,11 +34,11 @@ describe("ParameterStorage", () => {
             default: "defaultValue",
             required: true,
             optional: ["opt1", "opt2"],
-            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 1, type_: BaseIdentifierFormats.Number } })
+            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 1, format: BaseIdentifierFormats.Number } })
         });
         storage.addItem(parameter);
         expect(storage.getSize()).toBe(1);
-        expect(storage.getItem({ value: 1, type_: BaseIdentifierFormats.Number })).toEqual(parameter);
+        expect(storage.getItem({ value: 1, format: BaseIdentifierFormats.Number })).toEqual(parameter);
     });
 
     it("should throw an error when adding a duplicate parameter", () => {
@@ -48,7 +48,7 @@ describe("ParameterStorage", () => {
             default: "defaultValue",
             required: true,
             optional: ["opt1", "opt2"],
-            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 1, type_: BaseIdentifierFormats.Number } })
+            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 1, format: BaseIdentifierFormats.Number } })
         });
         storage.addItem(parameter);
         expect(() => storage.addItem(parameter)).toThrow("Item already exists");
@@ -62,7 +62,7 @@ describe("ParameterStorage", () => {
                 default: "defaultValue",
                 required: true,
                 optional: [],
-                meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 1, type_: BaseIdentifierFormats.Number } })
+                meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 1, format: BaseIdentifierFormats.Number } })
             });
             storage.addItem(parameter);
         }
@@ -72,7 +72,7 @@ describe("ParameterStorage", () => {
             default: "defaultValue",
             required: true,
             optional: [],
-            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 6, type_: BaseIdentifierFormats.Number } })
+            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 6, format: BaseIdentifierFormats.Number } })
         });
         expect(() => storage.addItem(parameter)).toThrow("PocketStorage is full");
     });
@@ -84,16 +84,16 @@ describe("ParameterStorage", () => {
             default: "defaultValue",
             required: true,
             optional: [],
-            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 1, type_: BaseIdentifierFormats.Number } })
+            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 1, format: BaseIdentifierFormats.Number } })
         });
         storage.addItem(parameter);
-        storage.removeItem({ value: 1, type_: BaseIdentifierFormats.Number });
+        storage.removeItem({ value: 1, format: BaseIdentifierFormats.Number });
         expect(storage.getSize()).toBe(0);
-        expect(storage.getItem({ value: 1, type_: BaseIdentifierFormats.Number })).toBeUndefined();
+        expect(storage.getItem({ value: 1, format: BaseIdentifierFormats.Number })).toBeUndefined();
     });
 
     it("should throw an error when removing a non-existent parameter", () => {
-        expect(() => storage.removeItem({ value: 1, type_: BaseIdentifierFormats.Number })).toThrow("Item not found");
+        expect(() => storage.removeItem({ value: 1, format: BaseIdentifierFormats.Number })).toThrow("Item not found");
     });
 
     it("should clear the storage", () => {
@@ -103,7 +103,7 @@ describe("ParameterStorage", () => {
             default: "defaultValue",
             required: true,
             optional: [],
-            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 1, type_: BaseIdentifierFormats.Number } })
+            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 1, format: BaseIdentifierFormats.Number } })
         });
         const parameter2 = new Parameter({
             name: "param2",
@@ -111,7 +111,7 @@ describe("ParameterStorage", () => {
             default: "defaultValue",
             required: true,
             optional: [],
-            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 2, type_: BaseIdentifierFormats.Number } })
+            meta: new Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter>({ id: { value: 2, format: BaseIdentifierFormats.Number } })
         });
         storage.addItem(parameter1);
         storage.addItem(parameter2);

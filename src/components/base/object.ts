@@ -55,13 +55,13 @@ class PocketObject
         if (metadata === undefined) {
             return Metadata.createDefaultMetadata<I, O>({
                 id: {
-                    type_: BaseIdentifierFormats.Multihash as I,
+                    format: BaseIdentifierFormats.Multihash as I,
                     value: hash
                 }
             });
         }
 
-        if (metadata.labels.id?.type_ === BaseIdentifierFormats.Multihash) {
+        if (metadata.labels.id?.format === BaseIdentifierFormats.Multihash) {
             const metadataHash = metadata.labels.id?.value;
 
             console.log("Metadata hash: ", metadataHash);
@@ -80,7 +80,7 @@ class PocketObject
                 labels: {
                     ...metadata.labels,
                     id: {
-                        type_: BaseIdentifierFormats.Multihash as I,
+                        format: BaseIdentifierFormats.Multihash as I,
                         value: hash
                     }
                 }
@@ -124,7 +124,7 @@ class PocketObject
         }
 
         return {
-            type_: BaseIdentifierFormats.Multihash,
+            format: BaseIdentifierFormats.Multihash,
             value: meta.labels.id?.value
         }
     }

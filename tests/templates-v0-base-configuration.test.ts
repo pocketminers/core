@@ -25,14 +25,14 @@ describe("BaseArgument", () => {
             metadata: {
                 annotations: {
                     id: {
-                        type_: BaseIdentifierFormats.Undefined,
+                        format: BaseIdentifierFormats.Undefined,
                         value: "undefined"
                     }
                 }
             }
         }
 
-        expect(argument.metadata?.annotations?.id.type_).toBe(BaseIdentifierFormats.Undefined);
+        expect(argument.metadata?.annotations?.id.format).toBe(BaseIdentifierFormats.Undefined);
         expect(argument.metadata?.annotations?.id.value).toBe("undefined");
     });
 
@@ -81,7 +81,7 @@ describe("BaseParameter", () => {
         const metadata = {
             annotations: {
                 id: {
-                    type_: BaseIdentifierFormats.Undefined,
+                    format: BaseIdentifierFormats.Undefined,
                     value: "undefined"
                 }
             }
@@ -101,7 +101,7 @@ describe("BaseParameter", () => {
         expect(parameterWithMetadata.data.default).toBe("default");
         expect(parameterWithMetadata.data.required).toBe(true);
         expect(parameterWithMetadata.data.optional).toEqual(["optional"]);
-        expect(parameterWithMetadata.metadata?.annotations?.id.type_).toBe(BaseIdentifierFormats.Undefined);
+        expect(parameterWithMetadata.metadata?.annotations?.id.format).toBe(BaseIdentifierFormats.Undefined);
         expect(parameterWithMetadata.metadata?.annotations?.id.value).toBe("undefined");
     });
 
@@ -160,14 +160,14 @@ describe("BaseProperty", () => {
             metadata: {
                 annotations: {
                     id: {
-                        type_: BaseIdentifierFormats.Undefined,
+                        format: BaseIdentifierFormats.Undefined,
                         value: "undefined"
                     }
                 }
             }
         }
 
-        expect(property.metadata?.annotations?.id.type_).toBe(BaseIdentifierFormats.Undefined);
+        expect(property.metadata?.annotations?.id.format).toBe(BaseIdentifierFormats.Undefined);
         expect(property.metadata?.annotations?.id.value).toBe("undefined");
     });
 

@@ -7,13 +7,13 @@ describe("Metadata", () => {
         const metadata = new Metadata({
             annotations: {
                 id: {
-                    type_: "string",
+                    format: "string",
                     value: "test-id"
                 }
             }
         });
 
-        expect(metadata.annotations.id.type_).toBe("string");
+        expect(metadata.annotations.id.format).toBe("string");
         expect(metadata.annotations.id.value).toBe("test-id");
     });
 
@@ -22,7 +22,7 @@ describe("Metadata", () => {
             const metadata = new Metadata({
                 annotations: {
                     id: {
-                        type_: "string",
+                        format: "string",
                         value: "test-id"
                     }
                 }
@@ -57,14 +57,14 @@ describe("Metadata", () => {
         const metadata = new Metadata({
             annotations: {
                 id: {
-                    type_: "string",
+                    format: "string",
                     value: "test-id"
                 }
             }
         });
 
         const serialized = JSON.stringify(metadata);
-        expect(serialized).toContain('"type_":"string"');
+        expect(serialized).toContain('"format":"string"');
         expect(serialized).toContain('"value":"test-id"');
     });
 
@@ -72,14 +72,14 @@ describe("Metadata", () => {
         const metadata = new Metadata({
             annotations: {
                 id: {
-                    type_: "string",
+                    format: "string",
                     value: "test-id"
                 }
             }
         });
 
         const stringRepresentation = metadata.toString();
-        expect(stringRepresentation).toContain('"type_":"string"');
+        expect(stringRepresentation).toContain('"format":"string"');
         expect(stringRepresentation).toContain('"value":"test-id"');
     });
 });
@@ -89,7 +89,7 @@ describe("Metadata: Updating", () => {
         const metadata = new Metadata({
             labels: {
                 id: {
-                    type_: BaseIdentifierFormats.Name,
+                    format: BaseIdentifierFormats.Name,
                     value: "test-label-id"
                 }
             }
@@ -175,7 +175,7 @@ describe('Metadata: get methods', () => {
         >({
             labels: {
                 id: {
-                    type_: BaseIdentifierFormats.Name,
+                    format: BaseIdentifierFormats.Name,
                     value: "test-label-id"
                 }
             }

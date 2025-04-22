@@ -39,7 +39,7 @@ describe("ParameterFactory", () => {
                 optional: [],
             };
             const meta: Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter> = new Metadata({
-                id: { value: 1, type_: BaseIdentifierFormats.Number },
+                id: { value: 1, format: BaseIdentifierFormats.Number },
                 type: BaseObjectTypes.Parameter,
                 name: "testMeta",
                 description: "Meta description",

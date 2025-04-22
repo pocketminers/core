@@ -132,7 +132,7 @@ class Metadata
 
         if (
             labels?.id
-            && labels.id.type_ !== BaseIdentifierFormats.Undefined
+            && labels.id.format !== BaseIdentifierFormats.Undefined
             && labels.id.value !== "undefined"
             && labels.id.value !== this.labels.id?.value
         ) {
@@ -187,7 +187,7 @@ class Metadata
 
         // Create default metadata
         const id: BaseIdentifier<I> = {
-            type_: BaseIdentifierFormats.Undefined as I,
+            format: BaseIdentifierFormats.Undefined as I,
             value: "undefined"
         };
         const name = "";

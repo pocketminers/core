@@ -127,7 +127,7 @@ class Argument
     public async toHashedIdentifier (): Promise<BaseIdentifier<BaseIdentifierFormats.Multihash>> {
         const hash = await MultiHashUtilities.generateIdentifier(JSON.stringify(this.data));
         return {
-            type_: BaseIdentifierFormats.Multihash,
+            format: BaseIdentifierFormats.Multihash,
             value: hash.value
         };
     }

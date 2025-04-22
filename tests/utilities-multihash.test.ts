@@ -43,7 +43,7 @@ describe("MultiHashUtilities", () => {
             const input = "test-string";
             const identifier = await MultiHashUtilities.generateIdentifier(input);
 
-            expect(identifier.type_).toBe("Multihash");
+            expect(identifier.format).toBe("Multihash");
             expect(identifier.value).toMatch(/^0x[a-f0-9]{64}$/); // Identifier value is a valid multihash
         });
 
