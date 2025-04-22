@@ -1,6 +1,6 @@
 import { ArgumentFactory } from "@components/config/argument.factory";
 import { Metadata } from "@components/base/metadata";
-import { BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
 import { Argument } from "@components/config/argument";
@@ -61,7 +61,7 @@ describe("ArgumentFactory", () => {
             const argument = new Argument({
                 name: 'mockKey',
                 value: 'mockValue',
-                meta: new Metadata<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>({
+                meta: new Metadata<BaseIdentifierFormats.Undefined, BaseObjectTypes.Argument>({
                     description: "mock description",
                     tags: ["tag1", "tag2"]
                 })

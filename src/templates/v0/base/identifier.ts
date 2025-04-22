@@ -10,7 +10,7 @@
  * that can be used in the Pocket Network. These identifiers include
  * common formats like UUIDs, hashes, and decentralized identifiers.
  */
-enum BaseIdentifierTypes {
+enum BaseIdentifierFormats {
     /**
      * A human-readable name used as an identifier.
      */
@@ -119,17 +119,17 @@ enum BaseIdentifierTypes {
 
 
 /**
- * BaseIdentifierTypeKey is a type that represents the keys of the BaseIdentifierType enum.
+ * BaseIdentifierTypeKey is a type that represents the keys of the BaseIdentifierFormat enum.
  * It is used to ensure that only valid keys from the enum can be used in certain contexts.
  */
-type BaseIdentifierType = keyof typeof BaseIdentifierTypes
+type BaseIdentifierFormat = keyof typeof BaseIdentifierFormats
 
 
 /**
- * BaseIdentifierTypeList is an array of all the values in the BaseIdentifierTypes enum.
+ * BaseIdentifierTypeList is an array of all the values in the BaseIdentifierFormats enum.
  * It is used to provide a list of all possible identifier types that can be used in the Pocket Network.
  */
-const BaseIdentifierTypeList = Object.values(BaseIdentifierTypes) as Array<BaseIdentifierType>;
+const BaseIdentifierTypeList = Object.values(BaseIdentifierFormats) as Array<BaseIdentifierFormat>;
 
 
 /**
@@ -137,22 +137,38 @@ const BaseIdentifierTypeList = Object.values(BaseIdentifierTypes) as Array<BaseI
  * It includes a unique ID and a type that specifies the kind of identifier it is.
  * The ID can be a string, number, or symbol, and the type is a specific identifier type.
  *
- * @template I - The type of the identifier, which extends BaseIdentifierType.
+ * @template I - The type of the identifier, which extends BaseIdentifierFormat.
  * @property {string | number | symbol} id - The unique identifier.
  * @property {I} type_ - The type of the identifier, which is a specific identifier type.
  */
-interface BaseIdentifier<I extends BaseIdentifierType>
+interface BaseIdentifier<I extends BaseIdentifierFormat>
     extends
         Record<'value', string | number | symbol>,
         Record<'type_', I>
 {}
 
 
+/**
+ * BaseIdentifierOptions represents the options for creating a BaseIdentifier.
+ */
+interface BaseIdentifierOptions
+    extends
+        Partial<Record<'prefix', string>>,
+        Partial<Record<'suffix', string>>,
+        Partial<Record<'length', number>>,
+        Partial<Record<'seriesStart', number>>,
+        Partial<Record<'seriesEnd', number>>,
+        Partial<Record<'seriesStep', number>>,
+        Partial<Record<'seriesCount', number>>
+{}
+
+
 
 export {
     type BaseIdentifier,
-    type BaseIdentifierType,
-    BaseIdentifierTypes,
+    type BaseIdentifierFormat,
+    type BaseIdentifierOptions,
+    BaseIdentifierFormats,
     BaseIdentifierTypeList
 }
 

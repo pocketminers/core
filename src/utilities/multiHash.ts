@@ -1,4 +1,4 @@
-import { BaseIdentifier, BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifier, BaseIdentifierFormats } from "@templates/v0/base/identifier";
 
 class MultiHashUtilities {
     public static async hashString(input: string): Promise<string> {
@@ -22,10 +22,10 @@ class MultiHashUtilities {
     /**
      * Generates a multihash from a given string input and returns it as a Identifier.
      */
-    public static async generateIdentifier(input: string): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>> {
+    public static async generateIdentifier(input: string): Promise<BaseIdentifier<BaseIdentifierFormats.Multihash>> {
         const hash = await this.generateMultihash(input);
         return {
-            type_: BaseIdentifierTypes.Multihash,
+            type_: BaseIdentifierFormats.Multihash,
             value: hash
         }
     }

@@ -29,38 +29,68 @@ interface IdentityEntry
 /**
  * PocketIdentity is a generic class that represents an identity object.
  */
-class PocketIdentity
-<
-    I extends BaseIdentifierFormat
->
-    implements
-        BaseIdentifier<I>
-{
-    public readonly type_: I
-    public readonly value: string;
+class IdentifierUtilities {
 
-    constructor({
-        type_,
-        value
+    public static create<
+            I extends BaseIdentifierFormat,
+        >({
+        format,
+        options = {
+            prefix: "",
+            suffix: ""
+        },
+        type = undefined
     }: {
-        type_: I;
-        value: string;
-    }) {
-        if (type_ === undefined) {
-            throw new Error("Type is required");
+        format?: I,
+        options?: {
+            prefix?: string,
+            suffix?: string,
+            length?: number,
+            timestamp?: number,
+            seriesStart?: number,
+            seriesEnd?: number,
+            seriesStep?: number,
+        },
+    } = {}): {
+        id: string,
+        format: I
+    } {
+        const prefix = options?.prefix || "";
+        const suffix = options?.suffix || "";
+
+        let identifier = prefix
+
+        switch (format) {
+            case "UUID":
+                identifier += IdentityFactory.generateUUIDv4();
+                break;
+            case "SERIES":
+                identifier += IdentityFactory.generateRandomString(options?.length);
+                break;
+            case "Timestamp":
+                identifier += IdentityFactory.generateISOTimestamp(options?.timestamp);
+                break;
+            case "Name":
+                // identifier += IdentityFactory.createName();
+                break;
+            default:
+                throw new Error(`Invalid identifier format: ${format}`);
         }
 
-        if (value === undefined) {
-            throw new Error("Value is required");
+        identifier += suffix;
+
+        if (type === undefined) {
+            return {
+                id: identifier,
+                type: BaseTypes.Custom
+            };
         }
 
-        // check if the value is the correct type_
-        PocketIdentity.checkIdentityType(type_, value);
-
-        this.type_ = type_;
-        this.value = value;
+        return {
+            id: identifier,
+            type
+        };
     }
-
 
     private static checkIdentityType(
         type_: BaseIdentifierFormat,

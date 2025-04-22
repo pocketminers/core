@@ -1,6 +1,6 @@
 import { Argument } from "@components/config/argument";
 import { Metadata } from "@components/base/metadata";
-import { BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
 import { MultiHashUtilities } from "@utilities/multiHash";
@@ -60,7 +60,7 @@ describe("Argument", () => {
             const argument = new Argument({
                 name: mockKey,
                 value: mockValue,
-                meta: new Metadata<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>({
+                meta: new Metadata<BaseIdentifierFormats.Undefined, BaseObjectTypes.Argument>({
                     description: "mock description",
                     tags: ["tag1", "tag2"]
                 })
@@ -105,7 +105,7 @@ describe("Argument", () => {
         });
 
         it('should add metadata to the argument', () => {
-            const argument = new Argument({ name: mockKey, value: mockValue, meta: new Metadata<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>({
+            const argument = new Argument({ name: mockKey, value: mockValue, meta: new Metadata<BaseIdentifierFormats.Undefined, BaseObjectTypes.Argument>({
                 description: "mock description",
                 tags: ["tag1", "tag2"]
             })});
@@ -119,27 +119,27 @@ describe("Argument", () => {
             const hash = await MultiHashUtilities.generateIdentifier(argument.toString());
             console.log(`hash: ${JSON.stringify(hash)}`);
             expect(identifier).toBeDefined();
-            expect(identifier.type_).toBe(BaseIdentifierTypes.Multihash);
+            expect(identifier.type_).toBe(BaseIdentifierFormats.Multihash);
             expect(identifier.value).toEqual("0xa54680d91c029eea555938ae1e3d3284ab96d75b3f2676c78bc02272aba7eb84")
         });
 
         it('should add a specified identifier to the argument', async () => {
-            const argument = new Argument<{[key:string]: string}, BaseIdentifierTypes.Name>({ name: mockKey, value: mockValue, meta: new Metadata<BaseIdentifierTypes.Name, BaseObjectTypes.Argument>({
+            const argument = new Argument<{[key:string]: string}, BaseIdentifierFormats.Name>({ name: mockKey, value: mockValue, meta: new Metadata<BaseIdentifierFormats.Name, BaseObjectTypes.Argument>({
                 id: {
-                    type_: BaseIdentifierTypes.Name,
+                    type_: BaseIdentifierFormats.Name,
                     value: "mockId"
                 }
             })});
             expect(argument.metadata.labels?.id).toEqual({
-                type_: BaseIdentifierTypes.Name,
+                type_: BaseIdentifierFormats.Name,
                 value: "mockId"
             });
             // console.log(`argument.metadata.labels.id: ${String(argument.metadata.labels.id?.value)}`);
-            expect(argument.metadata.labels?.id?.type_).toBe(BaseIdentifierTypes.Name);
+            expect(argument.metadata.labels?.id?.type_).toBe(BaseIdentifierFormats.Name);
 
             const identifier = await argument.toHashedIdentifier();
             expect(identifier).toBeDefined();
-            expect(identifier.type_).toBe(BaseIdentifierTypes.Multihash);
+            expect(identifier.type_).toBe(BaseIdentifierFormats.Multihash);
             expect(identifier.value).toEqual("0xa54680d91c029eea555938ae1e3d3284ab96d75b3f2676c78bc02272aba7eb84");
         });
 

@@ -1,5 +1,5 @@
 import { ParameterFactory } from "@components/config/parameter.factory";
-import { BaseIdentifierTypes, BaseParameterEntry } from "@templates/v0";
+import { BaseIdentifierFormats, BaseParameterEntry } from "@templates/v0";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { Parameter } from "@components/config/parameter";
 import { Metadata } from "@components/base/metadata";
@@ -38,8 +38,8 @@ describe("ParameterFactory", () => {
                 required: true,
                 optional: [],
             };
-            const meta: Metadata<BaseIdentifierTypes.Number, BaseObjectTypes.Parameter> = new Metadata({
-                id: { value: 1, type_: BaseIdentifierTypes.Number },
+            const meta: Metadata<BaseIdentifierFormats.Number, BaseObjectTypes.Parameter> = new Metadata({
+                id: { value: 1, type_: BaseIdentifierFormats.Number },
                 type: BaseObjectTypes.Parameter,
                 name: "testMeta",
                 description: "Meta description",

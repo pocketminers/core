@@ -1,6 +1,6 @@
 import { PocketObject } from "@components/base";
 import { Metadata } from "@components/base/metadata";
-import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes, BaseMetadataEntry, BaseObjectType, BaseObjectTypes, BaseParameter, BaseParameterEntry } from "@templates/v0";
+import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats, BaseMetadataEntry, BaseObjectType, BaseObjectTypes, BaseParameter, BaseParameterEntry } from "@templates/v0";
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 import { Argument } from "./argument";
 
@@ -11,7 +11,7 @@ import { Argument } from "./argument";
 interface ParameterEntry
 <
     V,
-    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+    I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
 > extends
     BaseParameterEntry<V>,
     Partial<Record<'meta', BaseMetadataEntry<I, BaseObjectTypes.Parameter>>>
@@ -25,7 +25,7 @@ interface ParameterEntry
 class Parameter
 <
     V,
-    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+    I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
 > 
     extends
         PocketObject<

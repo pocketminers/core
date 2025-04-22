@@ -1,4 +1,4 @@
-import { BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseMetadataEntry } from "@templates/v0/base/metadata";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
@@ -17,7 +17,7 @@ class ArgumentFactory
     public static fromRecord
     <
         V,
-        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     >(
         record: Record<BaseValueKey, BaseValue<V>>,
         meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>
@@ -56,8 +56,8 @@ class ArgumentFactory
         V
     >(
         keyValuePair: [BaseValueKey, BaseValue<V>],
-        meta?: BaseMetadataEntry<BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument>
-    ): Argument<V, BaseIdentifierTypes.Undefined> {
+        meta?: BaseMetadataEntry<BaseIdentifierFormats.Undefined, BaseObjectTypes.Argument>
+    ): Argument<V, BaseIdentifierFormats.Undefined> {
         if (keyValuePair === undefined) {
             throw new Error("Key-value pair is required");
         }
@@ -75,7 +75,7 @@ class ArgumentFactory
             throw new Error("Value is required");
         }
 
-        return new Argument<V, BaseIdentifierTypes.Undefined>({
+        return new Argument<V, BaseIdentifierFormats.Undefined>({
             name,
             value,
             meta
@@ -84,7 +84,7 @@ class ArgumentFactory
 
     public static fromString
     <
-        V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        V, I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     >(
         str: string,
         meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>
@@ -143,7 +143,7 @@ class ArgumentFactory
      */
     public static fromJSON
     <
-        V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        V, I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     >(
         json: string,
         meta?: BaseMetadataEntry<I, BaseObjectTypes.Argument>
@@ -180,7 +180,7 @@ class ArgumentFactory
     public static fromArray
     <
         V,
-        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     >(args: {
         name: BaseValueKey,
         value: BaseValue<V>,
@@ -207,7 +207,7 @@ class ArgumentFactory
     public static fromKeyValuePairs
     <
         V,
-        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     >(...keyValuePairs: [BaseValueKey, BaseValue<V>][]): Argument<V, I>[] {
         if (!Array.isArray(keyValuePairs) || keyValuePairs.length === 0) {
             throw new Error("An array of key-value pairs is required");
@@ -228,7 +228,7 @@ class ArgumentFactory
     public static fromRecords
     <
         V,
-        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     >(...records: Record<BaseValueKey, BaseValue<V>>[]): Argument<V, I>[] {
         if (!Array.isArray(records) || records.length === 0) {
             throw new Error("An array of records is required");

@@ -1,6 +1,6 @@
 import { BaseMetadata } from "@templates/v0/base/metadata";
 import { BaseValue, NumberOrEmpty, StringOrEmpty } from "@templates/v0/base/value";
-import { BaseIdentifier, BaseIdentifierType } from "./identifier";
+import { BaseIdentifier, BaseIdentifierFormat } from "./identifier";
 import { BaseObject, BaseObjectType, BaseObjectTypes } from "./object";
 import { StorageTypes } from "@components/base/storage";
 
@@ -9,7 +9,7 @@ import { StorageTypes } from "@components/base/storage";
 //  * StorageItem represents an item in the user's storage.
 //  * It includes properties such as name, description, type, size, and value.
 //  */
-// interface BaseStorageItem<V, I extends BaseIdentifierType> {
+// interface BaseStorageItem<V, I extends BaseIdentifierFormat> {
 //     name: string;
 //     description?: StringOrEmpty;
 //     type: string | number | symbol;

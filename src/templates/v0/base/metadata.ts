@@ -1,4 +1,4 @@
-import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 import { BaseTimestamps } from "@templates/v0/base/timestamps";
 import { BaseObjectType, BaseObjectTypes } from "./object";
@@ -19,7 +19,7 @@ interface BaseMetadataAnnotations
  */
 interface BaseMetadataLabels
 <
-    I extends BaseIdentifierType,
+    I extends BaseIdentifierFormat,
     O extends BaseObjectType
 >
     extends 
@@ -36,7 +36,7 @@ interface BaseMetadataLabels
  */
 interface BaseMetadata
 <
-    I extends BaseIdentifierType,
+    I extends BaseIdentifierFormat,
     O extends BaseObjectType
 >
     extends
@@ -52,7 +52,7 @@ interface BaseMetadata
  */
 interface BaseMetadataEntry
 <
-    I extends BaseIdentifierType,
+    I extends BaseIdentifierFormat,
     O extends BaseObjectType
 >
     extends

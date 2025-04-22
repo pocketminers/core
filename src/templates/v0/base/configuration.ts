@@ -1,6 +1,6 @@
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 import { BaseObject, BaseObjectTypes } from "./object";
-import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
+import { BaseIdentifierFormat, BaseIdentifierFormats } from "./identifier";
 import { Metadata } from "@components/base/metadata";
 import { BaseMetadataEntry } from "./metadata";
 
@@ -23,13 +23,13 @@ interface BaseArgumentEntry
 interface BaseArgument
 <
     V,
-    I extends BaseIdentifierType
+    I extends BaseIdentifierFormat
 >
     extends
         BaseObject
         <
             BaseArgumentEntry<V>,
-            I | BaseIdentifierTypes.Multihash,
+            I | BaseIdentifierFormats.Multihash,
             BaseObjectTypes.Argument
         >
 {}
@@ -56,13 +56,13 @@ interface BaseParameterEntry
 interface BaseParameter
 <
     V,
-    I extends BaseIdentifierType
+    I extends BaseIdentifierFormat
 >
     extends
         BaseObject
         <
             BaseParameterEntry<V>,
-            I | BaseIdentifierTypes.Multihash,
+            I | BaseIdentifierFormats.Multihash,
             BaseObjectTypes.Parameter
         >
 {}
@@ -92,13 +92,13 @@ interface BasePropertyEntry
 interface BaseProperty
 <
     V,
-    I extends BaseIdentifierType
+    I extends BaseIdentifierFormat
 >
     extends
         BaseObject
         <
             BasePropertyEntry<V>,
-            I | BaseIdentifierTypes.Multihash,
+            I | BaseIdentifierFormats.Multihash,
             BaseObjectTypes.Property
         >
 {}
@@ -107,7 +107,7 @@ interface BaseProperty
 interface BaseConfigurationEntry
 <
     V,
-    I extends BaseIdentifierType
+    I extends BaseIdentifierFormat
 >
     extends
         Record<'arguments', Array<BaseArgument<V, I>>>,
@@ -121,13 +121,13 @@ interface BaseConfigurationEntry
 interface BaseConfiguration
 <
     V,
-    I extends BaseIdentifierTypes
+    I extends BaseIdentifierFormats
 >
     extends
         BaseObject
         <
             BaseConfigurationEntry<V, I>,
-            I | BaseIdentifierTypes.Multihash,
+            I | BaseIdentifierFormats.Multihash,
             BaseObjectTypes.Configuration
         >
 {}

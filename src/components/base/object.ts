@@ -1,5 +1,5 @@
 import { BaseObject, BaseObjectType } from "@templates/v0/base/object";
-import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { Metadata } from "./metadata";
 import { Freezer } from "@utilities/freezer";
 import { MultiHashUtilities } from "@utilities/multiHash";
@@ -9,7 +9,7 @@ import { Checks } from "@utilities/checks";
 class PocketObject
 <
     D,
-    I extends BaseIdentifierType,
+    I extends BaseIdentifierFormat,
     O extends BaseObjectType
 >
     implements BaseObject<D, I, O>
@@ -55,13 +55,13 @@ class PocketObject
         if (metadata === undefined) {
             return Metadata.createDefaultMetadata<I, O>({
                 id: {
-                    type_: BaseIdentifierTypes.Multihash as I,
+                    type_: BaseIdentifierFormats.Multihash as I,
                     value: hash
                 }
             });
         }
 
-        if (metadata.labels.id?.type_ === BaseIdentifierTypes.Multihash) {
+        if (metadata.labels.id?.type_ === BaseIdentifierFormats.Multihash) {
             const metadataHash = metadata.labels.id?.value;
 
             console.log("Metadata hash: ", metadataHash);
@@ -80,7 +80,7 @@ class PocketObject
                 labels: {
                     ...metadata.labels,
                     id: {
-                        type_: BaseIdentifierTypes.Multihash as I,
+                        type_: BaseIdentifierFormats.Multihash as I,
                         value: hash
                     }
                 }
@@ -116,7 +116,7 @@ class PocketObject
             || this.dataString === "undefined";
     }
 
-    public async toMultiHashIdentifier(): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>> {
+    public async toMultiHashIdentifier(): Promise<BaseIdentifier<BaseIdentifierFormats.Multihash>> {
         const meta = await this.checkDataHash(this.data, this.metadata);
 
         if (meta.labels.id === undefined) {
@@ -124,7 +124,7 @@ class PocketObject
         }
 
         return {
-            type_: BaseIdentifierTypes.Multihash,
+            type_: BaseIdentifierFormats.Multihash,
             value: meta.labels.id?.value
         }
     }

@@ -4,7 +4,7 @@
  * It is used to represent various types of objects that can be used in the Pocket Network.
  */
 
-import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
+import { BaseIdentifierFormat, BaseIdentifierFormats } from "./identifier";
 import { BaseMetadata } from "./metadata";
 
 
@@ -52,7 +52,7 @@ type BaseObjectType = keyof typeof BaseObjectTypes;
 interface BaseObject
 <
     D,
-    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined,
+    I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined,
     O extends BaseObjectType = BaseObjectTypes.Undefined,
 >
     extends

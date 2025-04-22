@@ -1,7 +1,7 @@
 import { PocketObject } from "@components/base/object";
 import { Metadata } from "@components/base/metadata";
 import { BaseArgument, BaseArgumentEntry } from "@templates/v0/base/configuration";
-import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseMetadataEntry } from "@templates/v0/base/metadata";
 import { BaseObjectType, BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
@@ -15,7 +15,7 @@ import { MultiHashUtilities } from "@utilities/multiHash";
 interface ArgumentEntry
 <
     V,
-    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+    I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
 >
     extends
         BaseArgumentEntry<V>,
@@ -41,7 +41,7 @@ interface ArgumentEntry
 class Argument
 <
     V,
-    I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+    I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
 >
     extends
         PocketObject<
@@ -124,10 +124,10 @@ class Argument
         };
     }
 
-    public async toHashedIdentifier (): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>> {
+    public async toHashedIdentifier (): Promise<BaseIdentifier<BaseIdentifierFormats.Multihash>> {
         const hash = await MultiHashUtilities.generateIdentifier(JSON.stringify(this.data));
         return {
-            type_: BaseIdentifierTypes.Multihash,
+            type_: BaseIdentifierFormats.Multihash,
             value: hash.value
         };
     }

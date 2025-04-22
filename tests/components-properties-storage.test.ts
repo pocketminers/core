@@ -4,7 +4,7 @@ import { BaseStorageLocations } from "@templates/v0/base/storage";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValueKey } from "@templates/v0/base/value";
 import { Metadata } from "@components/base/metadata";
-import { MultiHashUtilities } from "@utilities/multiHash";import { BaseIdentifierTypes } from "index";
+import { MultiHashUtilities } from "@utilities/multiHash";import { BaseIdentifierFormats } from "index";
 4
 
 describe("Properties", () => {

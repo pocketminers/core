@@ -1,5 +1,5 @@
 import { Metadata } from "@components/base/metadata";
-import { BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 
 describe("Metadata", () => {
@@ -89,7 +89,7 @@ describe("Metadata: Updating", () => {
         const metadata = new Metadata({
             labels: {
                 id: {
-                    type_: BaseIdentifierTypes.Name,
+                    type_: BaseIdentifierFormats.Name,
                     value: "test-label-id"
                 }
             }
@@ -170,12 +170,12 @@ describe("Metadata: Updating", () => {
 describe('Metadata: get methods', () => {
     it('should get the id', () => {
         const metadata = new Metadata<
-            BaseIdentifierTypes.Name,
+            BaseIdentifierFormats.Name,
             BaseObjectTypes.Configuration
         >({
             labels: {
                 id: {
-                    type_: BaseIdentifierTypes.Name,
+                    type_: BaseIdentifierFormats.Name,
                     value: "test-label-id"
                 }
             }

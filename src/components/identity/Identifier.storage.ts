@@ -1,11 +1,11 @@
 // import { PocketStorage } from '@components/base';
 // import { PocketIdentity } from '@components/index';
-// import { BaseIdentifierType, BaseObjectTypes, BaseStorageLocation, BaseStorageLocations } from '@templates/v0';
+// import { BaseIdentifierFormat, BaseObjectTypes, BaseStorageLocation, BaseStorageLocations } from '@templates/v0';
 
 
 // class Identifiers
 // <
-//     I extends BaseIdentifierType,
+//     I extends BaseIdentifierFormat,
 //     L extends BaseStorageLocation
 // >
 //     extends

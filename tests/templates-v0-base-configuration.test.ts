@@ -1,11 +1,11 @@
 import { BaseArgument, BaseConfiguration, BaseParameter, BaseParameterEntry, BaseProperty } from "@templates/v0/base/configuration";
-import { BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { ParameterEntry } from "index";
 
 
 describe("BaseArgument", () => {
     it("should create an instance of BaseArgument", () => {
-        const argument: BaseArgument<string, BaseIdentifierTypes.Undefined> = {
+        const argument: BaseArgument<string, BaseIdentifierFormats.Undefined> = {
             data: {
                 name: "test",
                 value: "value"
@@ -17,7 +17,7 @@ describe("BaseArgument", () => {
     });
 
     it("should accept a metadata object", () => {
-        const argument: BaseArgument<string, BaseIdentifierTypes.Undefined> = {
+        const argument: BaseArgument<string, BaseIdentifierFormats.Undefined> = {
             data: {
                 name: "test",
                 value: "value"
@@ -25,20 +25,20 @@ describe("BaseArgument", () => {
             metadata: {
                 annotations: {
                     id: {
-                        type_: BaseIdentifierTypes.Undefined,
+                        type_: BaseIdentifierFormats.Undefined,
                         value: "undefined"
                     }
                 }
             }
         }
 
-        expect(argument.metadata?.annotations?.id.type_).toBe(BaseIdentifierTypes.Undefined);
+        expect(argument.metadata?.annotations?.id.type_).toBe(BaseIdentifierFormats.Undefined);
         expect(argument.metadata?.annotations?.id.value).toBe("undefined");
     });
 
     it("should throw an error if name is not provided", () => {
         try {
-            const argument: BaseArgument<string, BaseIdentifierTypes.Undefined> = {
+            const argument: BaseArgument<string, BaseIdentifierFormats.Undefined> = {
                 data: {
                     // @ts-ignore
                     name: undefined,
@@ -55,7 +55,7 @@ describe("BaseArgument", () => {
 
 describe("BaseParameter", () => {
     it("should create an instance of BaseParameter", () => {
-        const parameterEntry: ParameterEntry<string, BaseIdentifierTypes.Undefined> = {
+        const parameterEntry: ParameterEntry<string, BaseIdentifierFormats.Undefined> = {
             name: "test",
             description: "description",
             default: "default",
@@ -81,12 +81,12 @@ describe("BaseParameter", () => {
         const metadata = {
             annotations: {
                 id: {
-                    type_: BaseIdentifierTypes.Undefined,
+                    type_: BaseIdentifierFormats.Undefined,
                     value: "undefined"
                 }
             }
         }
-        const parameterWithMetadata: BaseParameter<string, BaseIdentifierTypes.Undefined> = {
+        const parameterWithMetadata: BaseParameter<string, BaseIdentifierFormats.Undefined> = {
                 data: {
                     name: parameterEntry.name,
                     description: parameterEntry.description,
@@ -101,14 +101,14 @@ describe("BaseParameter", () => {
         expect(parameterWithMetadata.data.default).toBe("default");
         expect(parameterWithMetadata.data.required).toBe(true);
         expect(parameterWithMetadata.data.optional).toEqual(["optional"]);
-        expect(parameterWithMetadata.metadata?.annotations?.id.type_).toBe(BaseIdentifierTypes.Undefined);
+        expect(parameterWithMetadata.metadata?.annotations?.id.type_).toBe(BaseIdentifierFormats.Undefined);
         expect(parameterWithMetadata.metadata?.annotations?.id.value).toBe("undefined");
     });
 
     it("should throw an error if name is not provided", () => {
         try {
             
-            const parameter: BaseParameter<string, BaseIdentifierTypes.Undefined> = {
+            const parameter: BaseParameter<string, BaseIdentifierFormats.Undefined> = {
                 data: {
                     // @ts-ignore
                     name: undefined,
@@ -128,7 +128,7 @@ describe("BaseParameter", () => {
 
 describe("BaseProperty", () => {
     it("should create an instance of BaseProperty", () => {
-        const property: BaseProperty<string, BaseIdentifierTypes.Undefined> = {
+        const property: BaseProperty<string, BaseIdentifierFormats.Undefined> = {
             data: {
                 name: "test",
                 description: "description",
@@ -148,7 +148,7 @@ describe("BaseProperty", () => {
     });
 
     it("should accept a metadata object", () => {
-        const property: BaseProperty<string, BaseIdentifierTypes.Undefined> = {
+        const property: BaseProperty<string, BaseIdentifierFormats.Undefined> = {
             data: {
                 name: "test",
                 description: "description",
@@ -160,21 +160,21 @@ describe("BaseProperty", () => {
             metadata: {
                 annotations: {
                     id: {
-                        type_: BaseIdentifierTypes.Undefined,
+                        type_: BaseIdentifierFormats.Undefined,
                         value: "undefined"
                     }
                 }
             }
         }
 
-        expect(property.metadata?.annotations?.id.type_).toBe(BaseIdentifierTypes.Undefined);
+        expect(property.metadata?.annotations?.id.type_).toBe(BaseIdentifierFormats.Undefined);
         expect(property.metadata?.annotations?.id.value).toBe("undefined");
     });
 
     it("should throw an error if name is not provided", () => {
         try {
             
-            const property: BaseProperty<string, BaseIdentifierTypes.Undefined> = {
+            const property: BaseProperty<string, BaseIdentifierFormats.Undefined> = {
                 data: {
                     // @ts-ignore
                     name: undefined,
@@ -195,7 +195,7 @@ describe("BaseProperty", () => {
 
 describe("BaseConfiguration", () => {
     it("should create an instance of BaseConfiguration", () => {
-        const configuration: BaseConfiguration<string, BaseIdentifierTypes.Undefined> = {
+        const configuration: BaseConfiguration<string, BaseIdentifierFormats.Undefined> = {
             data: {arguments: [
             {
                 data: {
@@ -229,7 +229,7 @@ describe("BaseConfiguration", () => {
     it("should throw an error if name is not provided", () => {
         try {
             
-            const configuration: BaseConfiguration<string, BaseIdentifierTypes.Undefined> = {
+            const configuration: BaseConfiguration<string, BaseIdentifierFormats.Undefined> = {
                 data: {
                     // @ts-ignore
                     name: undefined,

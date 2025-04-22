@@ -1,4 +1,4 @@
-import { BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseMetadataEntry } from "@templates/v0/base/metadata";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
@@ -38,7 +38,7 @@ class ParameterFactory
     public static fromRecord
     <
         V,
-        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     >(
         entry: BaseParameterEntry<V>,
         meta?: BaseMetadataEntry<I, BaseObjectTypes.Parameter>
@@ -69,7 +69,7 @@ class ParameterFactory
         required?: boolean,
         optional?: Array<BaseValue<V>>,
         meta?: BaseMetadataEntry<any, BaseObjectTypes.Parameter>
-    }): Parameter<V, BaseIdentifierTypes.Undefined> {
+    }): Parameter<V, BaseIdentifierFormats.Undefined> {
         return ParameterFactory.fromRecord({
             name,
             description,

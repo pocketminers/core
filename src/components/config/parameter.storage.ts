@@ -1,7 +1,7 @@
 import { BaseStorageLocation, BaseStorageLocations } from "@templates/v0/base/storage";
 import { Parameter } from "./parameter";
 import { PocketStorage, PocketStorageOptions } from "@components/base/storage";
-import { BaseIdentifierTypes, BaseObjectTypes } from "@templates/v0";
+import { BaseIdentifierFormats, BaseObjectTypes } from "@templates/v0";
 
 interface ParameterEntry
 <

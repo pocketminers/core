@@ -4,11 +4,11 @@ import { DateUtilities } from "@utilities/date";
 
 
 /**
- * TimestampItem represents a timestamp item that can be either a Date object, a string, or a number.
+ * PocketTimestamp represents a timestamp item that can be either a Date object, a string, or a number.
  * It can also be an empty string or a number representing a timestamp.
  * This type is used to represent various date-related properties in the Pocket Network.
  */
-class TimestampItem
+class PocketTimestamp
     implements
         BaseTimestamp
 {
@@ -86,7 +86,7 @@ class TimestampItem
         minutes = 0,
         seconds = 0,
         milliseconds = 0
-    }: BaseTimestampEntry = {}): TimestampItem {
+    }: BaseTimestampEntry = {}): PocketTimestamp {
         const date = DateUtilities.addTime(
             this.date,
             {
@@ -101,7 +101,7 @@ class TimestampItem
             }
         );
 
-        return new TimestampItem(date);
+        return new PocketTimestamp(date);
     }
 
 
@@ -119,7 +119,7 @@ class TimestampItem
         seconds = 0,
         milliseconds = 0
     }: BaseTimestampEntry 
-    = {}): TimestampItem {
+    = {}): PocketTimestamp {
         const date = DateUtilities.subtractTime(
             this.date,
             {
@@ -134,15 +134,15 @@ class TimestampItem
             }
         );
 
-        return new TimestampItem(date);
+        return new PocketTimestamp(date);
     }
 
-    public static createTimestamp(date: DateEntry = new Date()): TimestampItem {
-        return new TimestampItem(date);
+    public static createTimestamp(date: DateEntry = new Date()): PocketTimestamp {
+        return new PocketTimestamp(date);
     }
 
 }
 
 export {
-    TimestampItem
+    PocketTimestamp
 }

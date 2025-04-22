@@ -1,13 +1,13 @@
 import { ParameterFactory } from "@components/config";
 import { Properties } from "@components/config/properties.storage";
-import { BaseIdentifierTypeList, BaseIdentifierTypes } from "@templates/v0";
+import { BaseIdentifierTypeList, BaseIdentifierFormats } from "@templates/v0";
 
 const IdentityConfig = new Properties({
     items: [
         ParameterFactory.create({
             name: "format",
             description: "Format of the identity",
-            default: BaseIdentifierTypes.UUID,
+            default: BaseIdentifierFormats.UUID,
             required: true,
             optional: BaseIdentifierTypeList
         }),

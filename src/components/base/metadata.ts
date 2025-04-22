@@ -1,4 +1,4 @@
-import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
+import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseMetadata, BaseMetadataAnnotations, BaseMetadataEntry, BaseMetadataLabels } from "@templates/v0/base/metadata";
 import { BaseObjectType, BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseTimestamps } from "@templates/v0/base/timestamps";
@@ -6,7 +6,7 @@ import { Freezer } from "@utilities/freezer";
 
 class Metadata
 <
-    I extends BaseIdentifierType,
+    I extends BaseIdentifierFormat,
     O extends BaseObjectType,
 >
     implements
@@ -132,7 +132,7 @@ class Metadata
 
         if (
             labels?.id
-            && labels.id.type_ !== BaseIdentifierTypes.Undefined
+            && labels.id.type_ !== BaseIdentifierFormats.Undefined
             && labels.id.value !== "undefined"
             && labels.id.value !== this.labels.id?.value
         ) {
@@ -176,7 +176,7 @@ class Metadata
 
     public static createDefaultMetadata
     <
-        I extends BaseIdentifierType,
+        I extends BaseIdentifierFormat,
         O extends BaseObjectType
     >(
         metadata?: BaseMetadataEntry<I, O>
@@ -187,7 +187,7 @@ class Metadata
 
         // Create default metadata
         const id: BaseIdentifier<I> = {
-            type_: BaseIdentifierTypes.Undefined as I,
+            type_: BaseIdentifierFormats.Undefined as I,
             value: "undefined"
         };
         const name = "";

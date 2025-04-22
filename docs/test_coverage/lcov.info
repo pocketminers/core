@@ -2389,7 +2389,7 @@ end_of_record
 TN:
 SF:src/components/timestamps/timestamp.item.ts
 FN:12,<instance_members_initializer>
-FN:26,TimestampItem
+FN:26,PocketTimestamp
 FN:47,toISO
 FN:55,toLocaleString
 FN:63,toUNIX
@@ -2399,7 +2399,7 @@ FN:112,subtractTime
 FNF:8
 FNH:6
 FNDA:13,<instance_members_initializer>
-FNDA:13,TimestampItem
+FNDA:13,PocketTimestamp
 FNDA:1,toISO
 FNDA:1,toLocaleString
 FNDA:1,toUNIX
