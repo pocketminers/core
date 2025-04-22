@@ -5,13 +5,13 @@
 
 
 // class IdentityFactory
-//     extends Factory<BaseTypes.Identity>
+//     extends Factory<BaseTypes.PocketIdentity>
 // {
 
 
 
 //     constructor() {
-//         super(BaseTypes.Identity);
+//         super(BaseTypes.PocketIdentity);
 //     }
 
 //     public static create({

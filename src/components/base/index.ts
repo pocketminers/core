@@ -9,7 +9,7 @@ enum BaseComponentParts {
     Manager = 'Manager',
     Configuration = 'Configuration',
     Service = 'Service',
-    Identity = 'Identity'
+    PocketIdentity = 'PocketIdentity'
 }
 
 
@@ -70,7 +70,13 @@ export {
     BaseComponentsTypes
 }
 
+
+export * from './error';
 export * from './factory';
+export * from './identity';
+export * from './message';
+export * from './metadata';
 export * from './object';
 export * from './storage';
+export * from './timestamp';
 

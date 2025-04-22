@@ -2,7 +2,7 @@ import { Parameter, ParameterEntry } from "./parameter";
 import { Argument, ArgumentEntry } from "./argument";
 import { BaseObjectTypes, BaseStorageLocation, BaseStorageLocations, BaseValueKey } from "@templates/v0";
 import { PocketStorage } from "@components/base";
-import { Metadata } from "@components/metadata";
+import { Metadata } from "@components/base/metadata";
 import { Checks } from "@utilities/checks";
 
 

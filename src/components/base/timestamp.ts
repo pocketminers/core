@@ -137,6 +137,10 @@ class TimestampItem
         return new TimestampItem(date);
     }
 
+    public static createTimestamp(date: DateEntry = new Date()): TimestampItem {
+        return new TimestampItem(date);
+    }
+
 }
 
 export {

@@ -1,5 +1,5 @@
 // import { PocketStorage } from '@components/base';
-// import { Identity } from '@components/index';
+// import { PocketIdentity } from '@components/index';
 // import { BaseIdentifierType, BaseObjectTypes, BaseStorageLocation, BaseStorageLocations } from '@templates/v0';
 
 
@@ -11,7 +11,7 @@
 //     extends
 //         PocketStorage
 //         <
-//             Identity,
+//             PocketIdentity,
 //             L
 //         >
 // {
@@ -22,7 +22,7 @@
 //         allowEmpty = true,
 //         maxSize = 0
 //     }: {
-//         items?: Array<Identity>;
+//         items?: Array<PocketIdentity>;
 //         location?: L;
 //         allowDuplicates?: boolean;
 //         allowEmpty?: boolean;

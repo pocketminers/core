@@ -1,4 +1,4 @@
-import { PocketMessage } from '@components/messaging/message';
+import { PocketMessage } from '@components/base/message';
 import { BaseClientErrorCodes, BaseMessageLevels, BaseServerErrorCodes, BaseWarningCodes } from '@templates/v0/base/message';
 
 

@@ -1,7 +1,7 @@
 import { ParameterStorage } from "../src/components/config/parameter.storage";
 import { Parameter } from "../src/components/config/parameter";
 import { BaseStorageLocations } from "@templates/v0/base/storage";
-import { Metadata } from "@components/metadata";
+import { Metadata } from "@components/base/metadata";
 import { BaseIdentifierTypes, BaseObjectTypes } from "@templates/v0";
 
 describe("ParameterStorage", () => {

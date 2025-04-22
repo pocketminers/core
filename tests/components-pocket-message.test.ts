@@ -1,4 +1,4 @@
-import { PocketMessage } from "@components/messaging/message";
+import { PocketMessage } from "@components/base/message";
 import { BaseMessageCodes, BaseSuccessCodes, BaseMessageLevels, BaseWarningCodes, BaseServerErrorCodes } from "@templates/v0/base/message";
 
 describe("PocketMessage", () => {

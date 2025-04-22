@@ -1,5 +1,5 @@
 import { Argument } from "@components/config/argument";
-import { Metadata } from "@components/metadata";
+import { Metadata } from "@components/base/metadata";
 import { BaseIdentifierTypes } from "@templates/v0/base/identifier";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";

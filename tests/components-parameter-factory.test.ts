@@ -1,8 +1,8 @@
-import { ParameterFactory } from "../src/components/config/parameter.factory";
+import { ParameterFactory } from "@components/config/parameter.factory";
 import { BaseIdentifierTypes, BaseParameterEntry } from "@templates/v0";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { Parameter } from "@components/config/parameter";
-import { Metadata } from "@components/metadata";
+import { Metadata } from "@components/base/metadata";
 
 describe("ParameterFactory", () => {
     describe("checkParameterEntry", () => {

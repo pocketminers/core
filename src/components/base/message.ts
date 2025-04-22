@@ -278,5 +278,6 @@ class PocketMessage
 }
 
  export {
+    type PocketMessageEntry,
     PocketMessage
  }       

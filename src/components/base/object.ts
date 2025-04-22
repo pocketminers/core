@@ -1,9 +1,8 @@
 import { BaseObject, BaseObjectType } from "@templates/v0/base/object";
 import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
-import { Metadata } from "@components/metadata";
+import { Metadata } from "./metadata";
 import { Freezer } from "@utilities/freezer";
 import { MultiHashUtilities } from "@utilities/multiHash";
-import { MetadataFactory } from "@components/metadata/metadata.factory";
 import { Checks } from "@utilities/checks";
 
 
@@ -31,7 +30,7 @@ class PocketObject
         this.data = data;
         this.metadata = metadata !== undefined
             ? new Metadata(metadata)
-            : MetadataFactory.createDefaultMetadata<I, O>();
+            : Metadata.createDefaultMetadata<I, O>();
 
         Freezer.deepFreeze(this);
     }
@@ -54,7 +53,7 @@ class PocketObject
         const hash = await MultiHashUtilities.generateMultihash(this.dataString);
         
         if (metadata === undefined) {
-            return MetadataFactory.createDefaultMetadata<I, O>({
+            return Metadata.createDefaultMetadata<I, O>({
                 id: {
                     type_: BaseIdentifierTypes.Multihash as I,
                     value: hash

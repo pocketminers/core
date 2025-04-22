@@ -2,13 +2,16 @@ import { Argument, Parameter } from "@components/config";
 import { BaseIdentifier, BaseObjectType } from "@templates/v0";
 import { BaseStorage, BaseStorageLocation, BaseStorageLocations } from "@templates/v0/base/storage";
 import { MerkleTree } from "@utilities/merkleTree";
+import { PocketMessage } from "./message";
 
 
 /**
  * StorageTypes is a generic type that represents the types of storage items.
  * Currently, it can be either an Argument or a Parameter.
  */
-type StorageTypes = Argument<any, any> | Parameter<any, any>;
+type StorageTypes = 
+    | Argument<any, any>
+    | Parameter<any, any>;
 
 
 /**

@@ -1,7 +1,7 @@
 import { PocketStorage } from "../src/components/base/storage";
 import { BaseIdentifier, BaseIdentifierTypes } from "@templates/v0";
 import { BaseStorageLocations } from "@templates/v0/base/storage";
-import { Metadata } from "@components/metadata";
+import { Metadata } from "@components/base/metadata";
 
 describe("PocketStorage", () => {
     let storage: PocketStorage<any, any>;

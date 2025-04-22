@@ -1,10 +1,8 @@
 import { PocketObject } from "@components/base";
-import { Metadata } from "@components/metadata";
-import { MetadataFactory } from "@components/metadata/metadata.factory";
+import { Metadata } from "@components/base/metadata";
 import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes, BaseMetadataEntry, BaseObjectType, BaseObjectTypes, BaseParameter, BaseParameterEntry } from "@templates/v0";
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 import { Argument } from "./argument";
-import { MultiHashUtilities } from "@utilities/multiHash";
 
 
 /**
@@ -60,7 +58,7 @@ class Parameter
 
         const metadata = meta !== undefined 
             ? new Metadata<I, BaseObjectTypes.Parameter>({...meta, type: BaseObjectTypes.Parameter})
-            : MetadataFactory.createDefaultMetadata<I, BaseObjectTypes.Parameter>({type: BaseObjectTypes.Parameter});
+            : Metadata.createDefaultMetadata<I, BaseObjectTypes.Parameter>({type: BaseObjectTypes.Parameter});
         super({data, metadata});
     }
 

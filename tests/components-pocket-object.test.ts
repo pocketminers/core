@@ -1,11 +1,11 @@
 import { PocketObject } from "@components/base/object";
-import { MetadataFactory } from "@components/metadata/metadata.factory";
+import { Metadata } from "@components/base/metadata";
 
 
 describe('PocketObject', () => {
     it('should create a PocketObject with data and metadata', () => {
         const data = { key: 'value' };
-        const metadata = MetadataFactory.createDefaultMetadata();
+        const metadata = Metadata.createDefaultMetadata();
 
         const pocketObject = new PocketObject({data, metadata});
 
@@ -41,7 +41,7 @@ describe('PocketObject', () => {
     
     it('should return a string representation of the metadata', () => {
         const data = { key: 'value' };
-        const metadata = MetadataFactory.createDefaultMetadata();
+        const metadata = Metadata.createDefaultMetadata();
         const pocketObject = new PocketObject({data, metadata});
 
         expect(pocketObject.metadataString).toBe(JSON.stringify(metadata));
@@ -49,7 +49,7 @@ describe('PocketObject', () => {
 
     it('should return a string representation of the object', () => {
         const data = { key: 'value' };
-        const metadata = MetadataFactory.createDefaultMetadata();
+        const metadata = Metadata.createDefaultMetadata();
         const pocketObject = new PocketObject({data, metadata});
 
         expect(pocketObject.objectString).toBe(JSON.stringify(pocketObject));
@@ -67,7 +67,7 @@ describe('PocketObject', () => {
 
     it('should return the object type from metadata', () => {
         const data = { key: 'value' };
-        const metadata = MetadataFactory.createDefaultMetadata<
+        const metadata = Metadata.createDefaultMetadata<
             'Undefined',
             'Undefined'
         >();

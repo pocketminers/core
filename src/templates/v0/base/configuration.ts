@@ -1,7 +1,7 @@
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 import { BaseObject, BaseObjectTypes } from "./object";
 import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier";
-import { Metadata } from "@components/metadata";
+import { Metadata } from "@components/base/metadata";
 import { BaseMetadataEntry } from "./metadata";
 
 

@@ -1,6 +1,6 @@
 import { Parameter, ParameterEntry } from "@components/config/parameter";2
 import { BaseIdentifierTypes, BaseObjectTypes } from "@templates/v0";
-import { Metadata } from "@components/metadata";
+import { Metadata } from "@components/base/metadata";
 import { BaseParameter } from "@templates/v0/base/configuration";
 import { MultiHashUtilities } from "@utilities/multiHash";
 

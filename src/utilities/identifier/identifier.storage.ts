@@ -7,7 +7,7 @@
 
 
 // class IdentityStorage
-//     extends HashedStorage<BaseTypes.Identity, IdentityStorageSchema>
+//     extends HashedStorage<BaseTypes.PocketIdentity, IdentityStorageSchema>
 // {
 //     constructor({
 //         items = []
@@ -17,7 +17,7 @@
 //         items: []
 //     }) {
 //         super({
-//             type: BaseTypes.Identity
+//             type: BaseTypes.PocketIdentity
 //         });
 
 //         items.forEach((item) => {
@@ -48,8 +48,8 @@
 //             id: identifier,
 //             type
 //         };
-//         const item = new HashedStorageItem<BaseTypes.Identity, IdentityStorageSchema>({
-//             type: BaseTypes.Identity,
+//         const item = new HashedStorageItem<BaseTypes.PocketIdentity, IdentityStorageSchema>({
+//             type: BaseTypes.PocketIdentity,
 //             data: newItem
 //         });
 //         return this.addItem({ item });

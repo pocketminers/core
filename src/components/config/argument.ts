@@ -1,6 +1,5 @@
 import { PocketObject } from "@components/base/object";
-import { Metadata } from "@components/metadata";
-import { MetadataFactory } from "@components/metadata/metadata.factory";
+import { Metadata } from "@components/base/metadata";
 import { BaseArgument, BaseArgumentEntry } from "@templates/v0/base/configuration";
 import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
 import { BaseMetadataEntry } from "@templates/v0/base/metadata";
@@ -77,7 +76,7 @@ class Argument
 
         const metadata = meta !== undefined 
             ? new Metadata<I, BaseObjectTypes.Argument>({type: BaseObjectTypes.Argument, ...meta})
-            : MetadataFactory.createDefaultMetadata<I, BaseObjectTypes.Argument>({type: BaseObjectTypes.Argument});
+            : Metadata.createDefaultMetadata<I, BaseObjectTypes.Argument>({type: BaseObjectTypes.Argument});
         super({data, metadata});
     }
 

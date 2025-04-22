@@ -7,14 +7,14 @@
 
 // class IdentityManager
 //     extends Manager<
-//         BaseTypes.Identity,
+//         BaseTypes.PocketIdentity,
 //         IdentityFactory,
 //         IdentityStorage
 //     >
 // {
 //     constructor(args: ArgumentEntry[] = []) {
 //         super({
-//             type: BaseTypes.Identity,
+//             type: BaseTypes.PocketIdentity,
 //             factory: new IdentityFactory(),
 //             storage: new IdentityStorage(),
 //             args,
