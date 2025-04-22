@@ -22,6 +22,32 @@ describe("PocketArgument", () => {
         expect(argument.value).toBe("testValue");
     });
 
+    it('should create an instance with a number for the name', () => {
+        const name = 123;
+        const value = "testValue";
+        const argument = PocketArgument.from(name, value);
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe(name);
+        expect(argument.value).toBe(value);
+    });
+
+    it('should create an instance with a symbol for the name', () => {
+        const name = Symbol("⭐️");
+        const value = "testValue";
+        const argument = PocketArgument.from(name, value);
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe(name);
+        expect(argument.value).toBe(value);
+    });
+
+    it("should create an instance from a string", () => {
+        const str = "testName:testValue";
+        const argument = PocketArgument.fromString(str);
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe("testName");
+        expect(argument.value).toBe("testValue");
+    });
+
     it("should convert to JSON", () => {
         const name = "testName";
         const value = "testValue";
@@ -89,13 +115,6 @@ describe("PocketArgument", () => {
         }).toThrow("Invalid JSON string");
     });
 
-    it("should throw an error if string is invalid", () => {
-        const invalidString = "testName: testValue";
-        expect(() => {
-            PocketArgument.fromString(invalidString);
-        }).toThrow("Invalid string format for deserialization");
-    });
-
     it("should throw an error if string is empty", () => {
         expect(() => {
             PocketArgument.fromString("");
@@ -113,6 +132,6 @@ describe("PocketArgument", () => {
         const invalidString = "testName: ";
         expect(() => {
             PocketArgument.fromString(invalidString);
-        }).toThrow("Invalid string format for deserialization");
+        }).toThrow("Value is required");
     });
 });

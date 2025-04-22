@@ -72,9 +72,10 @@ class PocketArgument
         
         let parsed: { name: BaseValueKey; value: BaseValue<T> };
         try {
-            
-
-            if (str.startsWith("{") && str.endsWith("}")) {
+            if (
+                str.startsWith("{")
+                && str.endsWith("}")
+            ) {
                 // Check if the string is in JSON format
                 parsed = JSON.parse(str);
             }
@@ -83,7 +84,7 @@ class PocketArgument
                 const [name, value] = str.split("=").map(part => part.trim());
                 parsed = {
                     name,
-                    value: JSON.parse(value)
+                    value: value as BaseValue<T>
                 };
             }
             else if (str.includes(":")) {
@@ -91,14 +92,14 @@ class PocketArgument
                 const [name, value] = str.split(":").map(part => part.trim());
                 parsed = {
                     name,
-                    value: JSON.parse(value)
+                    value: value as BaseValue<T>
                 };
             }
             else {
                 throw new Error("Invalid string format");
             }
-        } catch (error) {
-            throw new Error("Invalid string format for deserialization");
+        } catch (error: any) {
+            throw new Error("Invalid string format for deserialization " + error.message);
         }
 
         if (parsed.name === undefined || parsed.name === null) {

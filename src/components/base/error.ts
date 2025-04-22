@@ -44,6 +44,14 @@ class PocketErrorMessage
         this.handleThrowError(throwError !== undefined ? throwError : false);
     }
 
+    public get Error(): E {
+        return this.body;
+    }
+
+    public get ErrorMessage(): string {
+        return this.body.message;
+    }
+
     private handleThrowError(throwError: boolean): void {
         if (throwError) {
             throw this;
