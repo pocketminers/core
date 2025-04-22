@@ -25,8 +25,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 import { PocketObject } from "../base/index.js";
-import { Metadata } from "../metadata/index.js";
-import { MetadataFactory } from "../metadata/metadata.factory.js";
+import { Metadata } from "../base/metadata.js";
 import { BaseObjectTypes } from "../../templates/v0/index.js";
 import { Argument } from "./argument.js";
 /**
@@ -49,7 +48,7 @@ var Parameter = /** @class */ (function (_super) {
         };
         var metadata = meta !== undefined
             ? new Metadata(__assign(__assign({}, meta), { type: BaseObjectTypes.Parameter }))
-            : MetadataFactory.createDefaultMetadata({ type: BaseObjectTypes.Parameter });
+            : Metadata.createDefaultMetadata({ type: BaseObjectTypes.Parameter });
         return _super.call(this, { data: data, metadata: metadata }) || this;
     }
     Object.defineProperty(Parameter.prototype, "name", {

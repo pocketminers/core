@@ -149,6 +149,10 @@ type BaseMessageCode = keyof typeof BaseInfoCodes | keyof typeof BaseSuccessCode
  */
 interface BaseMessageEntry<C extends BaseMessageCodes = BaseMessageCodes, L extends BaseMessageLevels = BaseMessageLevels.INFO, B = any, D = any> extends Record<'code', C>, Record<'level', L>, Record<'body', B>, Partial<Record<'timestamp', Date>>, Partial<Record<'data', D>> {
 }
+/**
+ * BaseErrorMessageEntry is an interface that extends the BaseMessageEntry interface.
+ * It adds an error property, which is used to store an error object.
+ */
 interface BaseErrorMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevels = BaseMessageLevels.INFO, E extends Error = any, D = any> extends Omit<BaseMessageEntry<C, L, E, D>, 'body'>, Record<'error', E> {
 }
 export { type BaseMessageEntry, type BaseMessageCode, type BaseMessageLevel, BaseMessageLevelHierarchy, type BaseMessageCodes, BaseInfoCodes, BaseSuccessCodes, BaseWarningCodes, BaseClientErrorCodes, BaseServerErrorCodes, BaseMessageLevels, type BaseErrorMessageEntry, };

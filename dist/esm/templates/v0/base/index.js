@@ -1,6 +1,7 @@
 export * from './configuration.js';
 export * from './factory.js';
 export * from './identifier.js';
+export * from './message.js';
 export * from './metadata.js';
 export * from './object.js';
 export * from './storage.js';

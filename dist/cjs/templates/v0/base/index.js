@@ -17,6 +17,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./configuration.js"), exports);
 __exportStar(require("./factory.js"), exports);
 __exportStar(require("./identifier.js"), exports);
+__exportStar(require("./message.js"), exports);
 __exportStar(require("./metadata.js"), exports);
 __exportStar(require("./object.js"), exports);
 __exportStar(require("./storage.js"), exports);

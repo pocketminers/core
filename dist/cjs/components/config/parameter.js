@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Parameter = void 0;
 const base_1 = require("../base/index.js");
-const metadata_1 = require("../metadata/index.js");
-const metadata_factory_1 = require("../metadata/metadata.factory.js");
+const metadata_1 = require("../base/metadata.js");
 const v0_1 = require("../../templates/v0/index.js");
 const argument_1 = require("./argument.js");
 /**
@@ -24,7 +23,7 @@ class Parameter extends base_1.PocketObject {
         };
         const metadata = meta !== undefined
             ? new metadata_1.Metadata({ ...meta, type: v0_1.BaseObjectTypes.Parameter })
-            : metadata_factory_1.MetadataFactory.createDefaultMetadata({ type: v0_1.BaseObjectTypes.Parameter });
+            : metadata_1.Metadata.createDefaultMetadata({ type: v0_1.BaseObjectTypes.Parameter });
         super({ data, metadata });
     }
     get name() {

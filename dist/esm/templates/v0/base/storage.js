@@ -2,7 +2,7 @@
 //  * StorageItem represents an item in the user's storage.
 //  * It includes properties such as name, description, type, size, and value.
 //  */
-// interface BaseStorageItem<V, I extends BaseIdentifierType> {
+// interface BaseStorageItem<V, I extends BaseIdentifierFormat> {
 //     name: string;
 //     description?: StringOrEmpty;
 //     type: string | number | symbol;

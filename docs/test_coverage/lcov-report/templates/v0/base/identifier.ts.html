@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>157/157</span>
+                <span class='fraction'>173/173</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>157/157</span>
+                <span class='fraction'>173/173</span>
             </div>
         
             
@@ -223,7 +223,39 @@
 <a name='L158'></a><a href='#L158'>158</a>
 <a name='L159'></a><a href='#L159'>159</a>
 <a name='L160'></a><a href='#L160'>160</a>
-<a name='L161'></a><a href='#L161'>161</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -395,7 +427,7 @@
  * that can be used in the Pocket Network. These identifiers include
  * common formats like UUIDs, hashes, and decentralized identifiers.
  */
-enum BaseIdentifierTypes {
+enum BaseIdentifierFormats {
     /**
      * A human-readable name used as an identifier.
      */
@@ -504,17 +536,17 @@ enum BaseIdentifierTypes {
 &nbsp;
 &nbsp;
 /**
- * BaseIdentifierTypeKey is a type that represents the keys of the BaseIdentifierType enum.
+ * BaseIdentifierTypeKey is a type that represents the keys of the BaseIdentifierFormat enum.
  * It is used to ensure that only valid keys from the enum can be used in certain contexts.
  */
-type BaseIdentifierType = keyof typeof BaseIdentifierTypes
+type BaseIdentifierFormat = keyof typeof BaseIdentifierFormats
 &nbsp;
 &nbsp;
 /**
- * BaseIdentifierTypeList is an array of all the values in the BaseIdentifierTypes enum.
+ * BaseIdentifierTypeList is an array of all the values in the BaseIdentifierFormats enum.
  * It is used to provide a list of all possible identifier types that can be used in the Pocket Network.
  */
-const BaseIdentifierTypeList = Object.values(BaseIdentifierTypes) as Array&lt;BaseIdentifierType&gt;;
+const BaseIdentifierTypeList = Object.values(BaseIdentifierFormats) as Array&lt;BaseIdentifierFormat&gt;;
 &nbsp;
 &nbsp;
 /**
@@ -522,22 +554,38 @@ const BaseIdentifierTypeList = Object.values(BaseIdentifierTypes) as Array&lt;Ba
  * It includes a unique ID and a type that specifies the kind of identifier it is.
  * The ID can be a string, number, or symbol, and the type is a specific identifier type.
  *
- * @template I - The type of the identifier, which extends BaseIdentifierType.
+ * @template I - The type of the identifier, which extends BaseIdentifierFormat.
  * @property {string | number | symbol} id - The unique identifier.
- * @property {I} type_ - The type of the identifier, which is a specific identifier type.
+ * @property {I} format - The type of the identifier, which is a specific identifier type.
  */
-interface BaseIdentifier&lt;I extends BaseIdentifierType&gt;
+interface BaseIdentifier&lt;I extends BaseIdentifierFormat&gt;
     extends
         Record&lt;'value', string | number | symbol&gt;,
-        Record&lt;'type_', I&gt;
+        Record&lt;'format', I&gt;
+{}
+&nbsp;
+&nbsp;
+/**
+ * BaseIdentifierOptions represents the options for creating a BaseIdentifier.
+ */
+interface BaseIdentifierOptions
+    extends
+        Partial&lt;Record&lt;'prefix', string&gt;&gt;,
+        Partial&lt;Record&lt;'suffix', string&gt;&gt;,
+        Partial&lt;Record&lt;'length', number&gt;&gt;,
+        Partial&lt;Record&lt;'seriesStart', number&gt;&gt;,
+        Partial&lt;Record&lt;'seriesEnd', number&gt;&gt;,
+        Partial&lt;Record&lt;'seriesStep', number&gt;&gt;,
+        Partial&lt;Record&lt;'seriesCount', number&gt;&gt;
 {}
 &nbsp;
 &nbsp;
 &nbsp;
 export {
     type BaseIdentifier,
-    type BaseIdentifierType,
-    BaseIdentifierTypes,
+    type BaseIdentifierFormat,
+    type BaseIdentifierOptions,
+    BaseIdentifierFormats,
     BaseIdentifierTypeList
 }
 &nbsp;
@@ -550,7 +598,7 @@ export {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-22T04:50:39.946Z
+                at 2025-04-22T21:08:49.340Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

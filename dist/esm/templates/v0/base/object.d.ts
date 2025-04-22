@@ -3,7 +3,7 @@
  * description: This file contains the definition of the BaseObject type and its associated types.
  * It is used to represent various types of objects that can be used in the Pocket Network.
  */
-import { BaseIdentifierType, BaseIdentifierTypes } from "./identifier.js";
+import { BaseIdentifierFormat, BaseIdentifierFormats } from "./identifier.js";
 import { BaseMetadata } from "./metadata.js";
 /**
  * BaseObjectTypes is an enum that defines the various types of base objects.
@@ -42,7 +42,7 @@ type BaseObjectType = keyof typeof BaseObjectTypes;
  * BaseObject is a generic interface that represents an object with a name, description, data, and metadata.
  * The data property can be of any type specified by the generic parameter T.
  */
-interface BaseObject<D, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined, O extends BaseObjectType = BaseObjectTypes.Undefined> extends Record<'data', D>, Partial<Record<'metadata', BaseMetadata<I, O>>> {
+interface BaseObject<D, I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined, O extends BaseObjectType = BaseObjectTypes.Undefined> extends Record<'data', D>, Partial<Record<'metadata', BaseMetadata<I, O>>> {
 }
 export { type BaseObject, type BaseObjectType, BaseObjectTypes, };
 //# sourceMappingURL=object.d.ts.map

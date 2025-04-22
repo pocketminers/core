@@ -1,8 +1,7 @@
-import { BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
-import { Metadata } from "../metadata/index.js";
+import { BaseIdentifierFormats } from "../../templates/v0/base/identifier.js";
+import { Metadata } from "./metadata.js";
 import { Freezer } from "../../utilities/freezer.js";
 import { MultiHashUtilities } from "../../utilities/multiHash.js";
-import { MetadataFactory } from "../metadata/metadata.factory.js";
 import { Checks } from "../../utilities/checks.js";
 class PocketObject {
     data;
@@ -13,7 +12,7 @@ class PocketObject {
         this.data = data;
         this.metadata = metadata !== undefined
             ? new Metadata(metadata)
-            : MetadataFactory.createDefaultMetadata();
+            : Metadata.createDefaultMetadata();
         Freezer.deepFreeze(this);
     }
     checkData(data) {
@@ -30,14 +29,14 @@ class PocketObject {
         this.checkData(data);
         const hash = await MultiHashUtilities.generateMultihash(this.dataString);
         if (metadata === undefined) {
-            return MetadataFactory.createDefaultMetadata({
+            return Metadata.createDefaultMetadata({
                 id: {
-                    type_: BaseIdentifierTypes.Multihash,
+                    format: BaseIdentifierFormats.Multihash,
                     value: hash
                 }
             });
         }
-        if (metadata.labels.id?.type_ === BaseIdentifierTypes.Multihash) {
+        if (metadata.labels.id?.format === BaseIdentifierFormats.Multihash) {
             const metadataHash = metadata.labels.id?.value;
             console.log("Metadata hash: ", metadataHash);
             console.log("Data hash: ", hash);
@@ -52,7 +51,7 @@ class PocketObject {
                 labels: {
                     ...metadata.labels,
                     id: {
-                        type_: BaseIdentifierTypes.Multihash,
+                        format: BaseIdentifierFormats.Multihash,
                         value: hash
                     }
                 }
@@ -86,7 +85,7 @@ class PocketObject {
             throw new Error("Metadata id is required");
         }
         return {
-            type_: BaseIdentifierTypes.Multihash,
+            format: BaseIdentifierFormats.Multihash,
             value: meta.labels.id?.value
         };
     }

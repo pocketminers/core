@@ -45,11 +45,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
-import { Metadata } from "../metadata/index.js";
+import { BaseIdentifierFormats } from "../../templates/v0/base/identifier.js";
+import { Metadata } from "./metadata.js";
 import { Freezer } from "../../utilities/freezer.js";
 import { MultiHashUtilities } from "../../utilities/multiHash.js";
-import { MetadataFactory } from "../metadata/metadata.factory.js";
 import { Checks } from "../../utilities/checks.js";
 var PocketObject = /** @class */ (function () {
     function PocketObject(_a) {
@@ -59,7 +58,7 @@ var PocketObject = /** @class */ (function () {
         this.data = data;
         this.metadata = metadata !== undefined
             ? new Metadata(metadata)
-            : MetadataFactory.createDefaultMetadata();
+            : Metadata.createDefaultMetadata();
         Freezer.deepFreeze(this);
     }
     PocketObject.prototype.checkData = function (data) {
@@ -84,14 +83,14 @@ var PocketObject = /** @class */ (function () {
                     case 1:
                         hash = _c.sent();
                         if (metadata === undefined) {
-                            return [2 /*return*/, MetadataFactory.createDefaultMetadata({
+                            return [2 /*return*/, Metadata.createDefaultMetadata({
                                     id: {
-                                        type_: BaseIdentifierTypes.Multihash,
+                                        format: BaseIdentifierFormats.Multihash,
                                         value: hash
                                     }
                                 })];
                         }
-                        if (((_a = metadata.labels.id) === null || _a === void 0 ? void 0 : _a.type_) === BaseIdentifierTypes.Multihash) {
+                        if (((_a = metadata.labels.id) === null || _a === void 0 ? void 0 : _a.format) === BaseIdentifierFormats.Multihash) {
                             metadataHash = (_b = metadata.labels.id) === null || _b === void 0 ? void 0 : _b.value;
                             console.log("Metadata hash: ", metadataHash);
                             console.log("Data hash: ", hash);
@@ -102,7 +101,7 @@ var PocketObject = /** @class */ (function () {
                         }
                         else {
                             metadata = new Metadata(__assign(__assign({}, metadata.toJSON()), { labels: __assign(__assign({}, metadata.labels), { id: {
-                                        type_: BaseIdentifierTypes.Multihash,
+                                        format: BaseIdentifierFormats.Multihash,
                                         value: hash
                                     } }) }));
                         }
@@ -161,7 +160,7 @@ var PocketObject = /** @class */ (function () {
                             throw new Error("Metadata id is required");
                         }
                         return [2 /*return*/, {
-                                type_: BaseIdentifierTypes.Multihash,
+                                format: BaseIdentifierFormats.Multihash,
                                 value: (_a = meta.labels.id) === null || _a === void 0 ? void 0 : _a.value
                             }];
                 }

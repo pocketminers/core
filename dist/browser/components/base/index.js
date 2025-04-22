@@ -9,7 +9,7 @@ var BaseComponentParts;
     BaseComponentParts["Manager"] = "Manager";
     BaseComponentParts["Configuration"] = "Configuration";
     BaseComponentParts["Service"] = "Service";
-    BaseComponentParts["Identity"] = "Identity";
+    BaseComponentParts["PocketIdentity"] = "PocketIdentity";
 })(BaseComponentParts || (BaseComponentParts = {}));
 /**
  * BaseComponent
@@ -27,7 +27,12 @@ var BaseComponent = /** @class */ (function () {
     return BaseComponent;
 }());
 export { BaseComponent, BaseComponentParts };
+export * from './error.js';
 export * from './factory.js';
+export * from './identity.js';
+export * from './message.js';
+export * from './metadata.js';
 export * from './object.js';
 export * from './storage.js';
+export * from './timestamp.js';
 //# sourceMappingURL=index.js.map

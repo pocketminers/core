@@ -25,9 +25,13 @@ class MultiHashUtilities {
     static async generateIdentifier(input) {
         const hash = await this.generateMultihash(input);
         return {
-            type_: identifier_1.BaseIdentifierTypes.Multihash,
+            format: identifier_1.BaseIdentifierFormats.Multihash,
             value: hash
         };
+    }
+    static isValidMultihash(input) {
+        const regex = /^0x[a-fA-F0-9]{64}$/;
+        return regex.test(input);
     }
 }
 exports.MultiHashUtilities = MultiHashUtilities;

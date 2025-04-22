@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Argument = void 0;
 const object_1 = require("../base/object.js");
-const metadata_1 = require("../metadata/index.js");
-const metadata_factory_1 = require("../metadata/metadata.factory.js");
+const metadata_1 = require("../base/metadata.js");
 const identifier_1 = require("../../templates/v0/base/identifier.js");
 const object_2 = require("../../templates/v0/base/object.js");
 const multiHash_1 = require("../../utilities/multiHash.js");
@@ -37,7 +36,7 @@ class Argument extends object_1.PocketObject {
         };
         const metadata = meta !== undefined
             ? new metadata_1.Metadata({ type: object_2.BaseObjectTypes.Argument, ...meta })
-            : metadata_factory_1.MetadataFactory.createDefaultMetadata({ type: object_2.BaseObjectTypes.Argument });
+            : metadata_1.Metadata.createDefaultMetadata({ type: object_2.BaseObjectTypes.Argument });
         super({ data, metadata });
     }
     /**
@@ -77,7 +76,7 @@ class Argument extends object_1.PocketObject {
     async toHashedIdentifier() {
         const hash = await multiHash_1.MultiHashUtilities.generateIdentifier(JSON.stringify(this.data));
         return {
-            type_: identifier_1.BaseIdentifierTypes.Multihash,
+            format: identifier_1.BaseIdentifierFormats.Multihash,
             value: hash.value
         };
     }

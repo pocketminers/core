@@ -1,4 +1,4 @@
-import { BaseIdentifierTypes } from "../templates/v0/base/identifier.js";
+import { BaseIdentifierFormats } from "../templates/v0/base/identifier.js";
 class MultiHashUtilities {
     static async hashString(input) {
         const encoder = new TextEncoder();
@@ -22,9 +22,13 @@ class MultiHashUtilities {
     static async generateIdentifier(input) {
         const hash = await this.generateMultihash(input);
         return {
-            type_: BaseIdentifierTypes.Multihash,
+            format: BaseIdentifierFormats.Multihash,
             value: hash
         };
+    }
+    static isValidMultihash(input) {
+        const regex = /^0x[a-fA-F0-9]{64}$/;
+        return regex.test(input);
     }
 }
 export { MultiHashUtilities };

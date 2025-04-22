@@ -26,7 +26,7 @@ var BaseComponentParts;
     BaseComponentParts["Manager"] = "Manager";
     BaseComponentParts["Configuration"] = "Configuration";
     BaseComponentParts["Service"] = "Service";
-    BaseComponentParts["Identity"] = "Identity";
+    BaseComponentParts["PocketIdentity"] = "PocketIdentity";
 })(BaseComponentParts || (exports.BaseComponentParts = BaseComponentParts = {}));
 /**
  * BaseComponent
@@ -47,7 +47,12 @@ class BaseComponent {
     }
 }
 exports.BaseComponent = BaseComponent;
+__exportStar(require("./error.js"), exports);
 __exportStar(require("./factory.js"), exports);
+__exportStar(require("./identity.js"), exports);
+__exportStar(require("./message.js"), exports);
+__exportStar(require("./metadata.js"), exports);
 __exportStar(require("./object.js"), exports);
 __exportStar(require("./storage.js"), exports);
+__exportStar(require("./timestamp.js"), exports);
 //# sourceMappingURL=index.js.map

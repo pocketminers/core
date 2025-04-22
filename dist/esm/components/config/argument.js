@@ -1,7 +1,6 @@
 import { PocketObject } from "../base/object.js";
-import { Metadata } from "../metadata/index.js";
-import { MetadataFactory } from "../metadata/metadata.factory.js";
-import { BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
+import { Metadata } from "../base/metadata.js";
+import { BaseIdentifierFormats } from "../../templates/v0/base/identifier.js";
 import { BaseObjectTypes } from "../../templates/v0/base/object.js";
 import { MultiHashUtilities } from "../../utilities/multiHash.js";
 /**
@@ -34,7 +33,7 @@ class Argument extends PocketObject {
         };
         const metadata = meta !== undefined
             ? new Metadata({ type: BaseObjectTypes.Argument, ...meta })
-            : MetadataFactory.createDefaultMetadata({ type: BaseObjectTypes.Argument });
+            : Metadata.createDefaultMetadata({ type: BaseObjectTypes.Argument });
         super({ data, metadata });
     }
     /**
@@ -74,7 +73,7 @@ class Argument extends PocketObject {
     async toHashedIdentifier() {
         const hash = await MultiHashUtilities.generateIdentifier(JSON.stringify(this.data));
         return {
-            type_: BaseIdentifierTypes.Multihash,
+            format: BaseIdentifierFormats.Multihash,
             value: hash.value
         };
     }

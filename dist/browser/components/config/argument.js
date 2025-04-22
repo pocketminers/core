@@ -61,9 +61,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { PocketObject } from "../base/object.js";
-import { Metadata } from "../metadata/index.js";
-import { MetadataFactory } from "../metadata/metadata.factory.js";
-import { BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
+import { Metadata } from "../base/metadata.js";
+import { BaseIdentifierFormats } from "../../templates/v0/base/identifier.js";
 import { BaseObjectTypes } from "../../templates/v0/base/object.js";
 import { MultiHashUtilities } from "../../utilities/multiHash.js";
 /**
@@ -98,7 +97,7 @@ var Argument = /** @class */ (function (_super) {
         };
         var metadata = meta !== undefined
             ? new Metadata(__assign({ type: BaseObjectTypes.Argument }, meta))
-            : MetadataFactory.createDefaultMetadata({ type: BaseObjectTypes.Argument });
+            : Metadata.createDefaultMetadata({ type: BaseObjectTypes.Argument });
         return _super.call(this, { data: data, metadata: metadata }) || this;
     }
     Object.defineProperty(Argument.prototype, "name", {
@@ -153,7 +152,7 @@ var Argument = /** @class */ (function (_super) {
                     case 1:
                         hash = _a.sent();
                         return [2 /*return*/, {
-                                type_: BaseIdentifierTypes.Multihash,
+                                format: BaseIdentifierFormats.Multihash,
                                 value: hash.value
                             }];
                 }

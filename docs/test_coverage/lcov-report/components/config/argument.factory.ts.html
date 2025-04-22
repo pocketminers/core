@@ -559,7 +559,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { BaseIdentifierType, BaseIdentifierTypes } from "@templates/v0/base/identifier";
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseMetadataEntry } from "@templates/v0/base/metadata";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
@@ -578,7 +578,7 @@ class ArgumentFactory
     public static fromRecord
     &lt;
         V,
-        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     &gt;(
         record: Record&lt;BaseValueKey, BaseValue&lt;V&gt;&gt;,
         meta?: BaseMetadataEntry&lt;I, BaseObjectTypes.Argument&gt;
@@ -617,8 +617,8 @@ class ArgumentFactory
         V
     &gt;(
         keyValuePair: [BaseValueKey, BaseValue&lt;V&gt;],
-        meta?: BaseMetadataEntry&lt;BaseIdentifierTypes.Undefined, BaseObjectTypes.Argument&gt;
-    ): Argument&lt;V, BaseIdentifierTypes.Undefined&gt; {
+        meta?: BaseMetadataEntry&lt;BaseIdentifierFormats.Undefined, BaseObjectTypes.Argument&gt;
+    ): Argument&lt;V, BaseIdentifierFormats.Undefined&gt; {
         if (keyValuePair === undefined) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >            throw new Error("Key-value pair is required");</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
@@ -636,7 +636,7 @@ class ArgumentFactory
 <span class="cstat-no" title="statement not covered" >            throw new Error("Value is required");</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
 &nbsp;
-        return new Argument&lt;V, BaseIdentifierTypes.Undefined&gt;({
+        return new Argument&lt;V, BaseIdentifierFormats.Undefined&gt;({
             name,
             value,
             meta
@@ -645,7 +645,7 @@ class ArgumentFactory
 &nbsp;
     public static fromString
     &lt;
-        V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        V, I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     &gt;(
         str: string,
         meta?: BaseMetadataEntry&lt;I, BaseObjectTypes.Argument&gt;
@@ -704,7 +704,7 @@ class ArgumentFactory
      */
     public static fromJSON
     &lt;
-        V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        V, I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     &gt;(
         json: string,
         meta?: BaseMetadataEntry&lt;I, BaseObjectTypes.Argument&gt;
@@ -741,7 +741,7 @@ class ArgumentFactory
     public static fromArray
     &lt;
         V,
-        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     &gt;(args: {
         name: BaseValueKey,
         value: BaseValue&lt;V&gt;,
@@ -768,7 +768,7 @@ class ArgumentFactory
     public static fromKeyValuePairs
     &lt;
         V,
-        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined
+        I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined
     &gt;(...keyValuePairs: [BaseValueKey, BaseValue&lt;V&gt;][]): Argument&lt;V, I&gt;[] {
         if (!Array.isArray(keyValuePairs) || keyValuePairs.length === 0) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >            throw new Error("An array of key-value pairs is required");</span>
@@ -789,7 +789,7 @@ class ArgumentFactory
     public static <span class="fstat-no" title="function not covered" >fromRecords</span>
 <span class="cstat-no" title="statement not covered" >    &lt;</span>
 <span class="cstat-no" title="statement not covered" >        V,</span>
-<span class="cstat-no" title="statement not covered" >        I extends BaseIdentifierType = BaseIdentifierTypes.Undefined</span>
+<span class="cstat-no" title="statement not covered" >        I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined</span>
 <span class="cstat-no" title="statement not covered" >    &gt;(...records: Record&lt;BaseValueKey, BaseValue&lt;V&gt;&gt;[]): Argument&lt;V, I&gt;[] {</span>
 <span class="cstat-no" title="statement not covered" >        if (!Array.isArray(records) || records.length === 0) {</span>
 <span class="cstat-no" title="statement not covered" >            throw new Error("An array of records is required");</span>
@@ -814,7 +814,7 @@ export {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-22T04:50:39.946Z
+                at 2025-04-22T21:08:49.340Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

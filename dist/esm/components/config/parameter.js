@@ -1,6 +1,5 @@
 import { PocketObject } from "../base/index.js";
-import { Metadata } from "../metadata/index.js";
-import { MetadataFactory } from "../metadata/metadata.factory.js";
+import { Metadata } from "../base/metadata.js";
 import { BaseObjectTypes } from "../../templates/v0/index.js";
 import { Argument } from "./argument.js";
 /**
@@ -21,7 +20,7 @@ class Parameter extends PocketObject {
         };
         const metadata = meta !== undefined
             ? new Metadata({ ...meta, type: BaseObjectTypes.Parameter })
-            : MetadataFactory.createDefaultMetadata({ type: BaseObjectTypes.Parameter });
+            : Metadata.createDefaultMetadata({ type: BaseObjectTypes.Parameter });
         super({ data, metadata });
     }
     get name() {

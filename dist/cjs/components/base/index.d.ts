@@ -8,7 +8,7 @@ declare enum BaseComponentParts {
     Manager = "Manager",
     Configuration = "Configuration",
     Service = "Service",
-    Identity = "Identity"
+    PocketIdentity = "PocketIdentity"
 }
 /**
  * BaseComponentPartsType
@@ -37,7 +37,12 @@ type BaseComponentsTypes = {
     [key in BaseComponentPartsType]: BaseComponentsTypes[key];
 };
 export { BaseComponent, BaseComponentParts, BaseComponentsTypes };
+export * from './error.js';
 export * from './factory.js';
+export * from './identity.js';
+export * from './message.js';
+export * from './metadata.js';
 export * from './object.js';
 export * from './storage.js';
+export * from './timestamp.js';
 //# sourceMappingURL=index.d.ts.map

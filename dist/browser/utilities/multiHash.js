@@ -34,7 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { BaseIdentifierTypes } from "../templates/v0/base/identifier.js";
+import { BaseIdentifierFormats } from "../templates/v0/base/identifier.js";
 var MultiHashUtilities = /** @class */ (function () {
     function MultiHashUtilities() {
     }
@@ -85,12 +85,16 @@ var MultiHashUtilities = /** @class */ (function () {
                     case 1:
                         hash = _a.sent();
                         return [2 /*return*/, {
-                                type_: BaseIdentifierTypes.Multihash,
+                                format: BaseIdentifierFormats.Multihash,
                                 value: hash
                             }];
                 }
             });
         });
+    };
+    MultiHashUtilities.isValidMultihash = function (input) {
+        var regex = /^0x[a-fA-F0-9]{64}$/;
+        return regex.test(input);
     };
     return MultiHashUtilities;
 }());

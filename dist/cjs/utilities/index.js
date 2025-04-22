@@ -18,6 +18,8 @@ __exportStar(require("./blockchain/index.js"), exports);
 __exportStar(require("./checks.js"), exports);
 __exportStar(require("./date.js"), exports);
 __exportStar(require("./freezer.js"), exports);
-__exportStar(require("./message.js"), exports);
+__exportStar(require("./identifier.js"), exports);
+__exportStar(require("./ipfs/index.js"), exports);
+__exportStar(require("./merkleTree.js"), exports);
 __exportStar(require("./multiHash.js"), exports);
 //# sourceMappingURL=index.js.map

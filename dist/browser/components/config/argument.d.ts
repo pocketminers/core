@@ -1,13 +1,13 @@
 import { PocketObject } from "../base/object.js";
 import { BaseArgument, BaseArgumentEntry } from "../../templates/v0/base/configuration.js";
-import { BaseIdentifier, BaseIdentifierType, BaseIdentifierTypes } from "../../templates/v0/base/identifier.js";
+import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "../../templates/v0/base/identifier.js";
 import { BaseMetadataEntry } from "../../templates/v0/base/metadata.js";
 import { BaseObjectTypes } from "../../templates/v0/base/object.js";
 import { BaseValue, BaseValueKey } from "../../templates/v0/base/value.js";
 /**
  * ArgumentEntry is a generic type that represents an argument entry object.
  */
-interface ArgumentEntry<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined> extends BaseArgumentEntry<V>, Record<'meta', BaseMetadataEntry<I, BaseObjectTypes.Argument>> {
+interface ArgumentEntry<V, I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined> extends BaseArgumentEntry<V>, Record<'meta', BaseMetadataEntry<I, BaseObjectTypes.Argument>> {
 }
 /**
  * Argument is a generic class that represents an argument object.
@@ -25,7 +25,7 @@ interface ArgumentEntry<V, I extends BaseIdentifierType = BaseIdentifierTypes.Un
  *     value: "value1"
  * });
  */
-declare class Argument<V, I extends BaseIdentifierType = BaseIdentifierTypes.Undefined> extends PocketObject<BaseArgumentEntry<V>, I, BaseObjectTypes.Argument> implements BaseArgument<V, I> {
+declare class Argument<V, I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined> extends PocketObject<BaseArgumentEntry<V>, I, BaseObjectTypes.Argument> implements BaseArgument<V, I> {
     /**
      * Constructor for the Argument class.
      */
@@ -50,7 +50,7 @@ declare class Argument<V, I extends BaseIdentifierType = BaseIdentifierTypes.Und
     };
     toKeyValuePair(): Array<[BaseValueKey, BaseValue<V>]>;
     toRecord(): Record<BaseValueKey, BaseValue<V>>;
-    toHashedIdentifier(): Promise<BaseIdentifier<BaseIdentifierTypes.Multihash>>;
+    toHashedIdentifier(): Promise<BaseIdentifier<BaseIdentifierFormats.Multihash>>;
 }
 export { type ArgumentEntry, Argument };
 //# sourceMappingURL=argument.d.ts.map
