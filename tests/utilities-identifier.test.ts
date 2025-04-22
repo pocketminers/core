@@ -5,7 +5,7 @@ describe('IdentifierUtilities', () => {
     describe('create', () => {
         it('should create an identifier with default options', () => {
             const result = IdentifierUtilities.create();
-            expect(result).toHaveProperty('id');
+            expect(result).toHaveProperty('value');
             expect(result).toHaveProperty('format');
         });
 
@@ -16,7 +16,7 @@ describe('IdentifierUtilities', () => {
                     suffix: '_suffix'
                 }
             });
-            expect(result.id).toMatch(/^prefix_.+_suffix$/);
+            expect(result.value).toMatch(/^prefix_.+_suffix$/);
         });
 
         it('should throw an error for invalid format', () => {
@@ -35,7 +35,7 @@ describe('IdentifierUtilities', () => {
             const result = IdentifierUtilities.create({
                 format: 'UUID'
             });
-            expect(result.id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+            expect(result.value).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
         });
     });
 });

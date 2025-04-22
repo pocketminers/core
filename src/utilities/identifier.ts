@@ -28,7 +28,7 @@ class IdentifierUtilities {
             seriesStep?: number,
         },
     } = {}): {
-        id: string,
+        value: string,
         format: I
     } {
         const prefix = options?.prefix || "";
@@ -53,13 +53,13 @@ class IdentifierUtilities {
 
         if (format === undefined) {
             return {
-                id: identifier,
+                value: identifier,
                 format: BaseIdentifierFormats.Undefined as I
             };
         }
 
         return {
-            id: identifier,
+            value: identifier,
             format
         };
     }
