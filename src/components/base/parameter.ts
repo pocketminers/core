@@ -16,7 +16,7 @@ class PocketParameter
     public readonly required: boolean;
     public readonly options: BaseValue<T>[];
 
-    constructor({
+    public constructor({
         name,
         description = "",
         default: defaultValue = undefined,

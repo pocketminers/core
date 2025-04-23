@@ -35,12 +35,12 @@ class PocketMessage
     D = any,
 >
 {
-    code: C;
-    level: L;
-    body: B;
-    timestamp: Date;
-    data?: D;
-    callback?: (message?: PocketMessage<C, L, B, D>) => Promise<void>;
+    public readonly code: C;
+    public readonly level: L;
+    public readonly body: B;
+    public readonly timestamp: Date;
+    public readonly data?: D;
+    public readonly callback?: (message?: PocketMessage<C, L, B, D>) => Promise<void>;
 
     constructor({
         code,
