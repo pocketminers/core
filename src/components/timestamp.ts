@@ -23,6 +23,12 @@ class PocketTimestamp
      * If the input is invalid, it throws an error.
      *
      * @param date - The date entry that can be either a Date object, a string, or a number.
+     * 
+     * @example
+     * const timestamp = new PocketTimestamp(new Date());
+     * console.log(timestamp.toISO()); // Output: ISO date string
+     * console.log(timestamp.toLocaleString()); // Output: Locale date string
+     * console.log(timestamp.toUNIX()); // Output: UNIX timestamp number
      */
     public constructor(date: DateEntry = Date.now()) {
         if (

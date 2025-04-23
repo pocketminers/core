@@ -1,4 +1,4 @@
-import { BaseArgumentEntry, BaseValue, BaseValueKey } from "@templates/v0";
+import { BaseArgument, BaseValue, BaseValueKey } from "@templates/v0";
 import { Checks } from "@utilities/checks";
 import { Freezer } from "@utilities/freezer";
 
@@ -39,7 +39,7 @@ class PocketArgument
     T = any,
 >
     implements
-        BaseArgumentEntry<T>
+        BaseArgument<T>
 {
     public readonly name: BaseValueKey;
     public readonly value: BaseValue<T>;

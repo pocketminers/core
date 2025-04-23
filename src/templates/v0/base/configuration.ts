@@ -27,6 +27,14 @@ interface BaseArgument
 /**
  * BaseArguments is a generic type that represents a collection of arguments.
  * - Extends the Array type to allow for any number of arguments.
+ * 
+ * @template T - The type of the value.
+ * 
+ * @example
+ * const arguments: BaseArguments<string> = [
+ *   { name: "arg1", value: "value1" },
+ *   { name: "arg2", value: "value2" }
+ * ];
  */
 interface BaseArguments
 <
@@ -66,6 +74,26 @@ interface BaseParameter
 /**
  * BaseParameters is a generic type that represents a collection of parameters.
  * - Extends the Array type to allow for any number of parameters.
+ * 
+ * @template T - The type of the value.
+ * 
+ * @example
+ * const parameters: BaseParameters<string> = [
+ *  {
+ *    name: "param1",
+ *    description: "This is a parameter",
+ *    default: "default value",
+ *    required: true,
+ *    optional: ["optional value 1", "optional value 2"]
+ *  },
+ *  {
+ *    name: "param2",
+ *    description: "This is another parameter",
+ *    default: "default value 2",
+ *    required: false,
+ *    optional: ["optional value 3"]
+ *  }
+ * ];
  */
 interface BaseParameters
 <
