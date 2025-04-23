@@ -1,4 +1,4 @@
-import { Metadata } from "@components/base/metadata";
+import { Metadata } from "@components/metadata";
 import { BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseObjectTypes } from "@templates/v0/base/object";
 

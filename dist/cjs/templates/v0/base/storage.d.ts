@@ -1,7 +1,6 @@
 import { NumberOrEmpty } from "../../v0/base/value.js";
 import { BaseIdentifier } from "./identifier.js";
 import { BaseObjectType } from "./object.js";
-import { StorageTypes } from "../../../components/base/storage.js";
 /**
  * BaseStorageTypes is an enumeration of the different types of storage
  * that a user account can have. It includes types such as FILE, DIRECTORY, DATABASE, etc.
@@ -29,7 +28,7 @@ type BaseStorageLocation = keyof typeof BaseStorageLocations;
 /**
  * Storage contains a collection of the user's storage, including the type and size.
  */
-interface BaseStorage<S extends StorageTypes, O extends BaseObjectType, L extends BaseStorageLocation> {
+interface BaseStorage<S extends any, O extends BaseObjectType, L extends BaseStorageLocation> {
     location?: L;
     items: Array<S>;
     allowDuplicates: boolean;

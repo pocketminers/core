@@ -1,179 +1,137 @@
-import { Argument } from "@components/config/argument";
-import { Metadata } from "@components/base/metadata";
-import { BaseIdentifierFormats } from "@templates/v0/base/identifier";
-import { BaseObjectTypes } from "@templates/v0/base/object";
-import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
-import { MultiHashUtilities } from "@utilities/multiHash";
+import { PocketArgument } from "@components/argument";
 
-describe("Argument", () => {
-    const mockKey: BaseValueKey = 2;
-    const mockValue: BaseValue<{[key:string]: string}> = { value: "mockValue" };
 
-    describe("Argument: constructor", () => {
-        it("should create an instance with the correct properties", () => {
-            const argument = new Argument({ name: mockKey, value: mockValue });
+describe("PocketArgument", () => {
+    it("should create an instance with name and value", () => {
+        const name = "testName";
+        const value = "testValue";
+        const argument = new PocketArgument({name, value});
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe(name);
+        expect(argument.value).toBe(value);
+    });
 
-            expect(argument.name).toBe(mockKey);
-            expect(argument.value).toBe(mockValue);
+    it("should create an instance from JSON", () => {
+        const json = JSON.stringify({
+            name: "testName",
+            value: "testValue"
         });
+        const argument = PocketArgument.fromJSON(json);
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe("testName");
+        expect(argument.value).toBe("testValue");
+    });
 
-        it("should freeze the instance and its properties", () => {
-            const argument = new Argument({ name: mockKey, value: mockValue });
+    it('should create an instance with a number for the name', () => {
+        const name = 123;
+        const value = "testValue";
+        const argument = new PocketArgument({name, value});
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe(name);
+        expect(argument.value).toBe(value);
+    });
 
-            expect(Object.isFrozen(argument)).toBe(true);
-            expect(Object.isFrozen(argument.name)).toBe(true);
-            expect(Object.isFrozen(argument.value)).toBe(true);
-        });
+    it('should create an instance with a symbol for the name', () => {
+        const name = Symbol("⭐️");
+        const value = "testValue";
+        const argument = new PocketArgument({name, value});
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe(name);
+        expect(argument.value).toBe(value);
+    });
 
-        it("should throw an error if name is undefined", () => {
-            try {
-                // @ts-ignore
-                new Argument({ name: undefined, value: mockValue });
-            } catch (error: any) {
-                console.log(`error: ${error.message}`);
-                expect(error).toBeDefined();
-                expect(error.message).toBe("Name is required");
-            }
-        });
+    it("should create an instance from a string", () => {
+        const str = "testName:testValue";
+        const argument = PocketArgument.fromString(str);
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe("testName");
+        expect(argument.value).toBe("testValue");
+    });
 
-        it('should handle a number as the name', () => {
-            const argument = new Argument({ name: 1, value: mockValue });
-            expect(argument.name).toBe(1);
-        });
+    it("should convert to JSON", () => {
+        const name = "testName";
+        const value = "testValue";
+        const argument = new PocketArgument({name, value});
+        const json = argument.toJSON();
+        expect(json).toBe(JSON.stringify({
+            name,
+            value
+        }));
+    });
 
-        it('should handle a symbol as the name', () => {
-            const argument = new Argument({ name: Symbol('⭐️'), value: mockValue });
-            expect(argument.name).not.toBeUndefined();
-        });
+    it("should convert to string", () => {
+        const name = "testName";
+        const value = "testValue";
+        const argument = new PocketArgument({name, value});
+        const str = argument.toString();
+        expect(str).toBe(`${name}: ${value}`);
+    });
 
-        it("should allow and undefined value", () => { 
-            const argument = new Argument({ name: mockKey, value: undefined });
-            expect(argument.value).toBeUndefined();
-        });
-
-        it('should allow a string as the name', () => {
-            const argument = new Argument({ name: "mockKey", value: mockValue });
-            expect(argument.name).toBe("mockKey");
-        });
-
-        it('should allow metadata to be passed in', () => {
-            const argument = new Argument({
-                name: mockKey,
-                value: mockValue,
-                meta: new Metadata<BaseIdentifierFormats.Undefined, BaseObjectTypes.Argument>({
-                    description: "mock description",
-                    tags: ["tag1", "tag2"]
-                })
-            });
-
-            expect(argument.metadata).toBeDefined();
-            expect(argument.metadata.annotations?.description).toBe("mock description");
-            expect(argument.metadata.labels?.tags).toEqual(["tag1", "tag2"]);
+    it("should convert to object", () => {
+        const name = "testName";
+        const value = "testValue";
+        const argument = new PocketArgument({name, value});
+        const obj = argument.toObject();
+        expect(obj).toEqual({
+            name,
+            value
         });
     });
 
-    describe("Argument: methods", () => {
-        it("should return a string representation of the argument", () => {
-            const name = 2;
-            const value = { value: "mockValue" };
-            const argument = new Argument({ name, value });
-
-            expect(argument.toString()).toBe(`${String(mockKey)}: ${JSON.stringify(mockValue)}`);
-        });
-
-        it("should return a key-value pair array", () => {
-            const argument = new Argument({ name: mockKey, value: mockValue });
-
-            expect(argument.toKeyValuePair()).toEqual([[mockKey, mockValue]]);
-        });
-
-        it("should return a record representation of the argument", () => {
-            const argument = new Argument({ name: mockKey, value: mockValue });
-
-            expect(argument.toRecord()).toEqual({
-                [mockKey]: mockValue
-            });
-        });
-
-        it("should return a JSON representation of the argument", () => {
-            const argument = new Argument({ name: mockKey, value: mockValue });
-
-            expect(argument.toJSON()).toEqual({
-                name: mockKey,
-                value: mockValue
-            });
-        });
-
-        it('should add metadata to the argument', () => {
-            const argument = new Argument({ name: mockKey, value: mockValue, meta: new Metadata<BaseIdentifierFormats.Undefined, BaseObjectTypes.Argument>({
-                description: "mock description",
-                tags: ["tag1", "tag2"]
-            })});
-
-            expect(argument.metadata).toBeDefined();
-        });
-
-        it('should generate a unique identifier for the argument', async () => {
-            const argument = new Argument({ name: mockKey, value: mockValue });
-            const identifier = await argument.toHashedIdentifier();
-            const hash = await MultiHashUtilities.generateIdentifier(argument.toString());
-            console.log(`hash: ${JSON.stringify(hash)}`);
-            expect(identifier).toBeDefined();
-            expect(identifier.format).toBe(BaseIdentifierFormats.Multihash);
-            expect(identifier.value).toEqual("0xa54680d91c029eea555938ae1e3d3284ab96d75b3f2676c78bc02272aba7eb84")
-        });
-
-        it('should add a specified identifier to the argument', async () => {
-            const argument = new Argument<{[key:string]: string}, BaseIdentifierFormats.Name>({ name: mockKey, value: mockValue, meta: new Metadata<BaseIdentifierFormats.Name, BaseObjectTypes.Argument>({
-                id: {
-                    format: BaseIdentifierFormats.Name,
-                    value: "mockId"
-                }
-            })});
-            expect(argument.metadata.labels?.id).toEqual({
-                format: BaseIdentifierFormats.Name,
-                value: "mockId"
-            });
-            // console.log(`argument.metadata.labels.id: ${String(argument.metadata.labels.id?.value)}`);
-            expect(argument.metadata.labels?.id?.format).toBe(BaseIdentifierFormats.Name);
-
-            const identifier = await argument.toHashedIdentifier();
-            expect(identifier).toBeDefined();
-            expect(identifier.format).toBe(BaseIdentifierFormats.Multihash);
-            expect(identifier.value).toEqual("0xa54680d91c029eea555938ae1e3d3284ab96d75b3f2676c78bc02272aba7eb84");
-        });
-
-        it('should be able to have a number as the name', () => {
-            const argument = new Argument({ name: 1, value: mockValue });
-            expect(argument.name).toBe(1);
-        });
-
-        it('should be able to have a symbol as the name', () => {
-            const argument = new Argument({ name: Symbol('⭐️'), value: mockValue });
-            // console.log(`argument.name: ${String(argument.name)}`);
-            expect(argument.name).not.toBeUndefined();
+    it("should convert to record", () => {
+        const name = "testName";
+        const value = "testValue";
+        const argument = new PocketArgument({name, value});
+        const record = argument.toRecord();
+        expect(record).toEqual({
+            [name]: value
         });
     });
 
-    describe("Argument: error handling", () => {
-        it("should throw an error if the name is undefined", () => {
-            try {
-                // @ts-ignore
-                new Argument({ name: undefined, value: mockValue });
-            } catch (error: any) {
-                expect(error).toBeDefined();
-                expect(error.message).toBe("Name is required");
-            }
-        });
+    it("should convert to key-value pair", () => {
+        const name = "testName";
+        const value = "testValue";
+        const argument = new PocketArgument({name, value});
+        const keyValuePair = argument.toKeyValuePair();
+        expect(keyValuePair).toEqual([name, value]);
+    });
 
-        it("should throw an error if the value is undefined", () => {
-            try {
-                // @ts-ignore
-                new Argument({ name: mockKey, value: undefined });
-            } catch (error: any) {
-                expect(error).toBeDefined();
-                expect(error.message).toBe("Value is required");
-            }
-        });
+    it("should throw an error if name is not provided", () => {
+        expect(() => {
+            new PocketArgument({name: "", value: "testValue"});
+        }).toThrow("Name is required");
+    });
+
+    it("should throw an error if value is not provided", () => {
+        expect(() => {
+            new PocketArgument({name: "testName", value: undefined});
+        }).toThrow("Value is required");
+    });
+
+    it("should throw an error if JSON is invalid", () => {
+        const invalidJson = "{ name: 'testName', value: 'testValue' }";
+        expect(() => {
+            PocketArgument.fromJSON(invalidJson);
+        }).toThrow("Invalid JSON string");
+    });
+
+    it("should throw an error if string is empty", () => {
+        expect(() => {
+            PocketArgument.fromString("");
+        }).toThrow("String is required");
+    });
+
+    it("should throw an error if string does not contain a key-value pair", () => {
+        const invalidString = "testName";
+        expect(() => {
+            PocketArgument.fromString(invalidString);
+        }).toThrow("Invalid string format for deserialization");
+    });
+
+    it("should throw an error if string does not contain a value", () => {
+        const invalidString = "testName: ";
+        expect(() => {
+            PocketArgument.fromString(invalidString);
+        }).toThrow("Value is required");
     });
 });

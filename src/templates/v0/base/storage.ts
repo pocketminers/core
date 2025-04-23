@@ -2,7 +2,7 @@ import { BaseMetadata } from "@templates/v0/base/metadata";
 import { BaseValue, NumberOrEmpty, StringOrEmpty } from "@templates/v0/base/value";
 import { BaseIdentifier, BaseIdentifierFormat } from "./identifier";
 import { BaseObject, BaseObjectType, BaseObjectTypes } from "./object";
-import { StorageTypes } from "@components/base/storage";
+// import { StorageTypes } from "@components/storage";
 
 
 // /**
@@ -52,7 +52,7 @@ type BaseStorageLocation = keyof typeof BaseStorageLocations;
  */
 interface BaseStorage
 <
-    S extends StorageTypes,
+    S extends any,
     O extends BaseObjectType,
     L extends BaseStorageLocation
 > {

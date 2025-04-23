@@ -1,3 +1,4 @@
+// import { StorageTypes } from "@components/storage";
 // /**
 //  * StorageItem represents an item in the user's storage.
 //  * It includes properties such as name, description, type, size, and value.
