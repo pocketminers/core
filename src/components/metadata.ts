@@ -1,10 +1,10 @@
 import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseMetadata, BaseMetadataAnnotations, BaseMetadataEntry, BaseMetadataLabels } from "@templates/v0/base/metadata";
-import { BaseObjectType, BaseObjectTypes } from "@templates/v0/base/object";
+import { BaseObjectType, BaseObjects } from "@templates/v0/base/object";
 import { BaseTimestamps } from "@templates/v0/base/timestamps";
 import { Freezer } from "@utilities/freezer";
 
-class Metadata
+class PocketMetadata
 <
     I extends BaseIdentifierFormat,
     O extends BaseObjectType,
@@ -107,7 +107,7 @@ class Metadata
         annotations?: BaseMetadataAnnotations;
         labels?: BaseMetadataLabels<I, O>;
         timestamps?: BaseTimestamps;
-    }): Metadata<I, O> {
+    }): PocketMetadata<I, O> {
         // These Values are immuteable:
         // - timestamps.created
         // - timestamps.updated
@@ -141,14 +141,14 @@ class Metadata
 
         if (
             labels?.type
-            && labels.type !== BaseObjectTypes.Undefined
+            && labels.type !== BaseObjects.Undefined
             && labels.type !== this.labels.type
         ) {
             throw new Error("Cannot update labels.type");
         }
 
 
-        return new Metadata<I, O>({
+        return new PocketMetadata<I, O>({
             ...this.toJSON(),
             annotations: {
                 ...this.annotations,
@@ -180,9 +180,9 @@ class Metadata
         O extends BaseObjectType
     >(
         metadata?: BaseMetadataEntry<I, O>
-    ): Metadata<I, O> {
+    ): PocketMetadata<I, O> {
         if (metadata !== undefined) {
-            return new Metadata<I, O>(metadata);
+            return new PocketMetadata<I, O>(metadata);
         }
 
         // Create default metadata
@@ -191,7 +191,7 @@ class Metadata
             value: "undefined"
         };
         const name = "";
-        const type = BaseObjectTypes.Undefined as O;
+        const type = BaseObjects.Undefined as O;
         const description = "";
         const tags: string[] = [];
         const timestamps: BaseTimestamps = {
@@ -210,7 +210,7 @@ class Metadata
             tags
         };
 
-        return new Metadata<I, O>({
+        return new PocketMetadata<I, O>({
             annotations,
             labels,
             timestamps
@@ -219,5 +219,5 @@ class Metadata
 }
 
 export {
-    Metadata
+    PocketMetadata
 }

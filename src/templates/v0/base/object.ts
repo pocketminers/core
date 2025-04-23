@@ -9,29 +9,15 @@ import { BaseMetadata } from "./metadata";
 
 
 /**
- * BaseObjectTypes is an enum that defines the various types of base objects.
+ * BaseObjects is an enum that defines the various types of base objects.
  * These types are used to categorize different objects in the Pocket Network.
  * Each type is represented as a string.
  */
-enum BaseObjectTypes {
-    Argument = 'Argument',
-    Parameter = 'Parameter',
-    Property = 'Property',
+enum BaseObjects {
     Configuration = 'Configuration',
-    ConfigurationGroup = 'ConfigurationGroup',
-    Identifier = 'Identifier',
-    IdentifierGroup = 'IdentifierGroup',
     Process = 'Process',
-    ProcessGroup = 'ProcessGroup',
     Command = 'Command',
-    CommandGroup = 'CommandGroup',
-    Message = 'Message',
-    ErrorMessage = 'ErrorMessage',
     Job = 'Job',
-    JobGroup = 'JobGroup',
-    JobTemplate = 'JobTemplate',
-    StorageItem = 'StorageItem',
-    Storage = 'Storage',
     Custom = 'Custom',
     Undefined = 'Undefined',
     Unknown = 'Unknown'
@@ -39,10 +25,10 @@ enum BaseObjectTypes {
 
 
 /**
- * BaseObjectType is a type alias for the keys of the BaseObjectTypes enum.
+ * BaseObjectType is a type alias for the keys of the BaseObjects enum.
  * It represents the different types of base objects that can be used in the Pocket Network.
  */
-type BaseObjectType = keyof typeof BaseObjectTypes;
+type BaseObjectType = keyof typeof BaseObjects;
 
 
 /**
@@ -53,7 +39,7 @@ interface BaseObject
 <
     D,
     I extends BaseIdentifierFormat = BaseIdentifierFormats.Undefined,
-    O extends BaseObjectType = BaseObjectTypes.Undefined,
+    O extends BaseObjectType = BaseObjects.Undefined,
 >
     extends
         Record<'data', D>,
@@ -64,5 +50,5 @@ interface BaseObject
 export {
     type BaseObject,
     type BaseObjectType,
-    BaseObjectTypes,
+    BaseObjects,
 }

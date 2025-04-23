@@ -1,7 +1,7 @@
 import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 import { BaseTimestamps } from "@templates/v0/base/timestamps";
-import { BaseObjectType, BaseObjectTypes } from "./object";
+import { BaseObjectType, BaseObjects } from "./object";
 
 
 /**
@@ -32,7 +32,7 @@ interface BaseMetadataLabels
 
 
 /**
- * Metadata contains additional information about the user account, including annotations and labels.
+ * PocketMetadata contains additional information about the user account, including annotations and labels.
  */
 interface BaseMetadata
 <

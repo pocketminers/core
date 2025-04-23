@@ -1,6 +1,6 @@
 import { BaseObject, BaseObjectType } from "@templates/v0/base/object";
 import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
-import { Metadata } from "./metadata";
+import { PocketMetadata } from "./metadata";
 import { Freezer } from "@utilities/freezer";
 import { MultiHashUtilities } from "@utilities/multiHash";
 import { Checks } from "@utilities/checks";
@@ -15,22 +15,22 @@ class PocketObject
     implements BaseObject<D, I, O>
 {    
     data: D;
-    metadata: Metadata<I, O>;
+    metadata: PocketMetadata<I, O>;
 
     constructor({
         data,
         metadata
     }:{
         data: D,
-        metadata?: Metadata<I, O>
+        metadata?: PocketMetadata<I, O>
     }){
         this.checkData(data);
         this.checkMetadata(metadata);
 
         this.data = data;
         this.metadata = metadata !== undefined
-            ? new Metadata(metadata)
-            : Metadata.createDefaultMetadata<I, O>();
+            ? new PocketMetadata(metadata)
+            : PocketMetadata.createDefaultMetadata<I, O>();
 
         Freezer.deepFreeze(this);
     }
@@ -41,19 +41,19 @@ class PocketObject
         }
     }
 
-    private checkMetadata(metadata?: Metadata<I, O>) {
+    private checkMetadata(metadata?: PocketMetadata<I, O>) {
     }
 
     /**
      * TODO: Revisit this method to use the metadata object
      */
-    private async checkDataHash(data: D, metadata?: Metadata<I,O>): Promise<Metadata<I, O>> {
+    private async checkDataHash(data: D, metadata?: PocketMetadata<I,O>): Promise<PocketMetadata<I, O>> {
         this.checkData(data);
 
         const hash = await MultiHashUtilities.generateMultihash(this.dataString);
         
         if (metadata === undefined) {
-            return Metadata.createDefaultMetadata<I, O>({
+            return PocketMetadata.createDefaultMetadata<I, O>({
                 id: {
                     format: BaseIdentifierFormats.Multihash as I,
                     value: hash
@@ -64,7 +64,7 @@ class PocketObject
         if (metadata.labels.id?.format === BaseIdentifierFormats.Multihash) {
             const metadataHash = metadata.labels.id?.value;
 
-            console.log("Metadata hash: ", metadataHash);
+            console.log("PocketMetadata hash: ", metadataHash);
             console.log("Data hash: ", hash);
 
             if (
@@ -75,7 +75,7 @@ class PocketObject
             }
         }
         else {
-            metadata = new Metadata({
+            metadata = new PocketMetadata({
                 ...metadata.toJSON(),
                 labels: {
                     ...metadata.labels,
@@ -120,7 +120,7 @@ class PocketObject
         const meta = await this.checkDataHash(this.data, this.metadata);
 
         if (meta.labels.id === undefined) {
-            throw new Error("Metadata id is required");
+            throw new Error("PocketMetadata id is required");
         }
 
         return {

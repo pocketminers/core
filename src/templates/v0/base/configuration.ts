@@ -1,145 +1,151 @@
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
-import { BaseObject, BaseObjectTypes } from "./object";
+import { BaseObject, BaseObjects } from "./object";
 import { BaseIdentifierFormat, BaseIdentifierFormats } from "./identifier";
 
 
 /**
- * BaseArgumentEntry is a generic type that represents an argument entry object.
- */
-interface BaseArgumentEntry
-<
-    V
->
-    extends
-        Record<'name', BaseValueKey>,
-        Record<'value', BaseValue<V>>
-{}
-
-/**
  * BaseArgument is a generic type that represents an argument object.
+ * 
+ * @template T - The type of the value.
+ * 
+ * @example
+ * const argument: BaseArgument<string> = {
+ *    name: "arg1",
+ *    value: "value1"
+ * };
  */
 interface BaseArgument
 <
-    V,
-    I extends BaseIdentifierFormat
->
-    extends
-        BaseObject
-        <
-            BaseArgumentEntry<V>,
-            I | BaseIdentifierFormats.Multihash,
-            BaseObjectTypes.Argument
-        >
-{}
-
-/**
- * BaseParameterEntry is a generic type that represents a parameter entry object.
- */
-interface BaseParameterEntry
-<
-    V
+    T = any
 >
     extends
         Record<'name', BaseValueKey>,
-        Partial<Record<'description', StringOrEmpty>>,
-        Partial<Record<'default', BaseValue<V>>>,
-        Partial<Record<'required', boolean>>,
-        Partial<Record<'optional', Array<BaseValue<V>>>>
+        Record<'value', BaseValue<T>>
+{}
+
+
+/**
+ * BaseArguments is a generic type that represents a collection of arguments.
+ * - Extends the Array type to allow for any number of arguments.
+ */
+interface BaseArguments
+<
+    T = any
+>
+    extends
+        Array<BaseArgument<T>>
 {}
 
 
 /**
  * BaseParameter is a generic type that represents a parameter object.
+ * 
+ * @template T - The type of the value.
+ * 
+ * @example
+ * const parameter: BaseParameter<string> = {
+ *   name: "param1",
+ *   description: "This is a parameter",
+ *   default: "default value",
+ *   required: true,
+ *   optional: ["optional value 1", "optional value 2"]
+ * };
  */
 interface BaseParameter
 <
-    V,
-    I extends BaseIdentifierFormat
->
-    extends
-        BaseObject
-        <
-            BaseParameterEntry<V>,
-            I | BaseIdentifierFormats.Multihash,
-            BaseObjectTypes.Parameter
-        >
-{}
-
-
-/**
- * BasePropertyEntry is a generic type that represents a property entry object.
- */
-interface BasePropertyEntry
-<
-    V
+    T = any,
 >
     extends
         Record<'name', BaseValueKey>,
         Record<'description', StringOrEmpty>,
-        Record<'value', BaseValue<V>>,
-        Record<'default', BaseValue<V>>,
         Record<'required', boolean>,
-        Record<'optional', Array<BaseValue<V>>>
+        Record<'default', BaseValue<T> | undefined>,
+        Record<'optional', Array<BaseValue<T>>>
+{}
+
+/**
+ * BaseParameters is a generic type that represents a collection of parameters.
+ * - Extends the Array type to allow for any number of parameters.
+ */
+interface BaseParameters
+<
+    T = any
+>
+    extends
+        Array<BaseParameter<T>>
 {}
 
 
 /**
- * Configuration is a generic type that represents a configuration object.
- * It can contain any number of properties, each of which can be of any type.
+ * BaseProperty is a generic type that represents a property object.
+ * - A BaseProperty is a BaseParameter with a value specified.
+ * - It is used to specify a parameter and the value it is set to.
+ * 
+ * @template T - The type of the value.
+ * 
+ * @example
+ * const property: BaseProperty<string> = {
+ *   name: "property1",
+ *   description: "This is a property",
+ *   value: "value1",
+ *   default: "value1",
+ *   required: true,
+ *   optional: ["value1", "value2"]
  */
 interface BaseProperty
 <
-    V,
-    I extends BaseIdentifierFormat
+    T
 >
     extends
-        BaseObject
-        <
-            BasePropertyEntry<V>,
-            I | BaseIdentifierFormats.Multihash,
-            BaseObjectTypes.Property
-        >
+        Record<'name', BaseValueKey>,
+        Record<'description', StringOrEmpty>,
+        Record<'value', BaseValue<T>>,
+        Record<'default', BaseValue<T>>,
+        Record<'required', boolean>,
+        Record<'optional', Array<BaseValue<T>>>
 {}
 
-
-interface BaseConfigurationEntry
-<
-    V,
-    I extends BaseIdentifierFormat
->
-    extends
-        Record<'arguments', Array<BaseArgument<V, I>>>,
-        Record<'parameters', Array<BaseParameter<V, I>>>
-{}
 
 /**
- * Configuration is a generic type that represents a configuration object.
- * It can contain any number of properties, each of which can be of any type.
+ * BaseConfiguration is a generic type that represents a configuration object.
+ * - It contains arguments and parameters.
+ * 
+ * @template T - The type of the value.
+ * 
+ * @example
+ * const configuration: BaseConfiguration<string> = {
+ *   arguments: [
+ *     { name: "arg1", value: "value1" },
+ *     { name: "arg2", value: "value2" }
+ *   ],
+ *   parameters: [
+ *     { 
+ *       name: "param1",
+ *       description: "This is a parameter",
+ *       default: "default value",
+ *       required: true,
+ *       optional: ["optional value 1"]
+ *     }
+ *   ]
+ * };
  */
 interface BaseConfiguration
 <
-    V,
-    I extends BaseIdentifierFormats
+    T = any
 >
     extends
-        BaseObject
-        <
-            BaseConfigurationEntry<V, I>,
-            I | BaseIdentifierFormats.Multihash,
-            BaseObjectTypes.Configuration
-        >
+        Record<'arguments', BaseArguments<T>>,
+        Record<'parameters', BaseParameters<T>>
 {}
 
 
 export {
     type BaseArgument,
-    type BaseArgumentEntry,
+    type BaseArguments,
     type BaseParameter,
-    type BaseParameterEntry,
+    type BaseParameters,
     type BaseProperty,
-    type BasePropertyEntry,
-    type BaseConfiguration,
-    type BaseConfigurationEntry
+    type BaseConfiguration
 }
 
 

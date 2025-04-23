@@ -10,14 +10,14 @@ interface PocketMessageEntry
     D = any,
 >
     extends
-        Record<'code', BaseMessageCodes>,
-        Record<'level', BaseMessageLevels>,
-        Record<'body', any>,
-        Record<'timestamp', Date>,
-        Record<'data', any>,
-        Record<'printToConsole', boolean>,
-        Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>,
-        Record<'delayCallback', number>
+        Partial<Record<'code', C>>,
+        Partial<Record<'level', L>>,
+        Partial<Record<'body', B>>,
+        Partial<Record<'timestamp', Date>>,
+        Partial<Record<'data', D>>,
+        Partial<Record<'printToConsole', boolean>>,
+        Partial<Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>>,
+        Partial<Record<'delayCallback', number>>
 {}
 
 /**
@@ -51,16 +51,7 @@ class PocketMessage
         printToConsole = false,
         callback,
         delayCallback = 0
-    }: {
-        code?: C,
-        level?: L,
-        body?: B,
-        timestamp?: Date,
-        data?: D,
-        printToConsole?: boolean,
-        callback?: (message?: PocketMessage<C, L, B, D>) => Promise<void>,
-        delayCallback?: number
-    }) {
+    }: PocketMessageEntry<C, L, B, D>) {
 
         this.code = code !== undefined ? code : BaseSuccessCodes.OK as C;
         const expectedLevel = this.getLevelFromCode(this.code);

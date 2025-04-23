@@ -5,7 +5,8 @@
             "@utilities/*": [ "./utilities/*" ],
             "@templates/*": [ "./templates/*" ],
             "@components/*": [ "./components/*" ],
-            "@p2p/*": [ "./p2p/*" ]
+            "@p2p/*": [ "./p2p/*" ],
+            "@services/*": [ "./services/*" ]
         }
     }
 }

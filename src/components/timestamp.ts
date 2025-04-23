@@ -86,7 +86,8 @@ class PocketTimestamp
         minutes = 0,
         seconds = 0,
         milliseconds = 0
-    }: BaseTimestampEntry = {}): PocketTimestamp {
+    }: BaseTimestampEntry 
+    = {}): PocketTimestamp {
         const date = DateUtilities.addTime(
             this.date,
             {

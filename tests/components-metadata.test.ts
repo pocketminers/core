@@ -1,10 +1,10 @@
-import { Metadata } from "@components/metadata";
+import { PocketMetadata } from "@components/metadata";
 import { BaseIdentifierFormats } from "@templates/v0/base/identifier";
-import { BaseObjectTypes } from "@templates/v0/base/object";
+import { BaseObjects, BaseObject} from "@templates/v0/base/object";
 
-describe("Metadata", () => {
-    it("should create an instance of Metadata", () => {
-        const metadata = new Metadata({
+describe("PocketMetadata", () => {
+    it("should create an instance of PocketMetadata", () => {
+        const metadata = new PocketMetadata({
             annotations: {
                 id: {
                     format: "string",
@@ -19,7 +19,7 @@ describe("Metadata", () => {
 
     it("should not allow updating annotations", () => {
         try {
-            const metadata = new Metadata({
+            const metadata = new PocketMetadata({
                 annotations: {
                     id: {
                         format: "string",
@@ -38,7 +38,7 @@ describe("Metadata", () => {
 
     it("should throw an error if annotations are invalid", () => {
         try {
-            const metadata = new Metadata({
+            const metadata = new PocketMetadata({
                 // @ts-ignore
                 annotations: null
             });
@@ -48,13 +48,13 @@ describe("Metadata", () => {
     });
 
     it("should handle optional annotations", () => {
-        const metadata = new Metadata({});
+        const metadata = new PocketMetadata({});
 
         expect(metadata.annotations).toBeDefined();
     });
 
     it("should serialize metadata correctly", () => {
-        const metadata = new Metadata({
+        const metadata = new PocketMetadata({
             annotations: {
                 id: {
                     format: "string",
@@ -69,7 +69,7 @@ describe("Metadata", () => {
     });
 
     it('should return a string representation of metadata', () => {
-        const metadata = new Metadata({
+        const metadata = new PocketMetadata({
             annotations: {
                 id: {
                     format: "string",
@@ -84,9 +84,9 @@ describe("Metadata", () => {
     });
 });
 
-describe("Metadata: Updating", () => {
+describe("PocketMetadata: Updating", () => {
     it('should not update immutable properties', () => {
-        const metadata = new Metadata({
+        const metadata = new PocketMetadata({
             labels: {
                 id: {
                     format: BaseIdentifierFormats.Name,
@@ -104,7 +104,7 @@ describe("Metadata: Updating", () => {
     });
 
     it('should not update immutable timestamps', () => {
-        const metadata = new Metadata({
+        const metadata = new PocketMetadata({
             timestamps: {
                 created: {date: new Date("2023-01-01T00:00:00Z")},
                 updated: {date: new Date("2023-01-02T00:00:00Z")}
@@ -120,7 +120,7 @@ describe("Metadata: Updating", () => {
     });
 
     it('should update mutable properties', () => {
-        const metadata = new Metadata({
+        const metadata = new PocketMetadata({
             annotations: {
                 foo: "bar"
             }
@@ -139,7 +139,7 @@ describe("Metadata: Updating", () => {
 
 
     it('should have an updated timestamp', () => {
-        const metadata = new Metadata({
+        const metadata = new PocketMetadata({
             timestamps: {
                 created: {date: new Date("2023-01-01T00:00:00Z")},
                 updated: {date: new Date("2023-01-02T00:00:00Z")}
@@ -167,11 +167,11 @@ describe("Metadata: Updating", () => {
 
 });
 
-describe('Metadata: get methods', () => {
+describe('PocketMetadata: get methods', () => {
     it('should get the id', () => {
-        const metadata = new Metadata<
+        const metadata = new PocketMetadata<
             BaseIdentifierFormats.Name,
-            BaseObjectTypes.Configuration
+            BaseObjects.Configuration
         >({
             labels: {
                 id: {
@@ -185,9 +185,9 @@ describe('Metadata: get methods', () => {
     });
 
     it('should get the type', () => {
-        const metadata = new Metadata({
+        const metadata = new PocketMetadata({
             labels: {
-                type: BaseObjectTypes.Configuration
+                type: BaseObjects.Configuration
             }
         });
 

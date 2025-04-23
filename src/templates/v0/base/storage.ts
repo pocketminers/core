@@ -1,7 +1,8 @@
 import { BaseMetadata } from "@templates/v0/base/metadata";
 import { BaseValue, NumberOrEmpty, StringOrEmpty } from "@templates/v0/base/value";
 import { BaseIdentifier, BaseIdentifierFormat } from "./identifier";
-import { BaseObject, BaseObjectType, BaseObjectTypes } from "./object";
+import { BaseObject, BaseObjectType, BaseObjects } from "./object";
+import { BaseComponents } from "./component";
 // import { StorageTypes } from "@components/storage";
 
 
@@ -15,7 +16,7 @@ import { BaseObject, BaseObjectType, BaseObjectTypes } from "./object";
 //     type: string | number | symbol;
 //     size: NumberOrEmpty;
 //     value: BaseValue<V>;
-//     metadata?: BaseMetadata<I, BaseObjectTypes.StorageItem>;
+//     metadata?: BaseMetadata<I, BaseObjects.StorageItem>;
 // }
 
 
@@ -52,19 +53,19 @@ type BaseStorageLocation = keyof typeof BaseStorageLocations;
  */
 interface BaseStorage
 <
-    S extends any,
+    C extends BaseComponents,
     O extends BaseObjectType,
     L extends BaseStorageLocation
 > {
     location?: L;
-    items: Array<S>;
+    items: Array<C>;
     allowDuplicates: boolean;
     allowEmpty: boolean;
     maxSize: NumberOrEmpty;
 
-    addItem: (item: S) => void;
+    addItem: (item: C) => void;
     removeItem: (itemId: BaseIdentifier<any>) => void;
-    getItem: (itemId: BaseIdentifier<any>) => S | undefined;
+    getItem: (itemId: BaseIdentifier<any>) => C | undefined;
     clear: () => void;
     getSize: () => number;
     getLocation: () => L;
