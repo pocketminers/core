@@ -1,5 +1,5 @@
 import { BaseMessageCodes, BaseMessageLevels, BaseSuccessCodes } from "../templates/v0/base/message.js";
-interface PocketMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevels = BaseMessageLevels.SUCCESS, B = any, D = any> extends Record<'code', BaseMessageCodes>, Record<'level', BaseMessageLevels>, Record<'body', any>, Record<'timestamp', Date>, Record<'data', any>, Record<'printToConsole', boolean>, Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>, Record<'delayCallback', number> {
+interface PocketMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevels = BaseMessageLevels.SUCCESS, B = any, D = any> extends Partial<Record<'code', C>>, Partial<Record<'level', L>>, Partial<Record<'body', B>>, Partial<Record<'timestamp', Date>>, Partial<Record<'data', D>>, Partial<Record<'printToConsole', boolean>>, Partial<Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>>, Partial<Record<'delayCallback', number>> {
 }
 /**
  * PocketMessage is a class that represents a message with a code, level, body, timestamp, and optional data.
@@ -7,6 +7,25 @@ interface PocketMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L
  * - The class is generic and can be used with different types of codes, levels, body, and data.
  * - This class also ensures that the message object is immutable after creation.
  * - This class does not extend the PocketObject class, as it does not include a metadata object.
+ *
+ * @template C - The type of the message code. Defaults to BaseSuccessCodes.OK.
+ * @template L - The type of the message level. Defaults to BaseMessageLevels.SUCCESS.
+ * @template B - The type of the message body. Defaults to any.
+ * @template D - The type of the message data. Defaults to any.
+ *
+ * @example
+ * const message = new PocketMessage({
+ *    code: BaseSuccessCodes.OK,
+ *    level: BaseMessageLevels.SUCCESS,
+ *    body: "Operation completed successfully",
+ *    timestamp: new Date(),
+ *    data: { id: 1 },
+ *    printToConsole: true,
+ *    callback: async (message) => {
+ *       console.log("Callback executed:", message);
+ *    },
+ *    delayCallback: 1000
+ * });
  */
 declare class PocketMessage<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevels = BaseMessageLevels.SUCCESS, B = any, D = any> {
     readonly code: C;
@@ -15,16 +34,7 @@ declare class PocketMessage<C extends BaseMessageCodes = BaseSuccessCodes.OK, L 
     readonly timestamp: Date;
     readonly data?: D;
     readonly callback?: (message?: PocketMessage<C, L, B, D>) => Promise<void>;
-    constructor({ code, level, body, timestamp, data, printToConsole, callback, delayCallback }: {
-        code?: C;
-        level?: L;
-        body?: B;
-        timestamp?: Date;
-        data?: D;
-        printToConsole?: boolean;
-        callback?: (message?: PocketMessage<C, L, B, D>) => Promise<void>;
-        delayCallback?: number;
-    });
+    constructor({ code, level, body, timestamp, data, printToConsole, callback, delayCallback }: PocketMessageEntry<C, L, B, D>);
     private getLevelFromCode;
     private checkCodeAndLevel;
     /**

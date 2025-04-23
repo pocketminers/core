@@ -278,10 +278,28 @@ class PocketArgument
         });
     }
 
+    /**
+     * Returns a string representation of the PocketArgument object.
+     * @example
+     * const arg = new PocketArgument({
+     *    name: "arg1",
+     *    value: "value1"
+     * });
+     * console.log(arg.toString()); // Output: "arg1: value1"
+     */
     public toString(): string {
         return `${String(this.name)}: ${this.value}`;
     }
 
+    /**
+     * Returns an object representation of the PocketArgument object.
+     * @example
+     * const arg = new PocketArgument({
+     *   name: "arg1",
+     *   value: "value1"
+     * });
+     * console.log(arg.toObject()); // Output: { name: "arg1", value: "value1" }
+     */
     public toObject(): {
         name: BaseValueKey;
         value: BaseValue<T>;
@@ -292,12 +310,30 @@ class PocketArgument
         };
     }
 
+    /**
+     * Returns a record representation of the PocketArgument object.
+     * @example
+     * const arg = new PocketArgument({
+     *   name: "arg1",
+     *   value: "value1"
+     * });
+     * console.log(arg.toRecord()); // Output: { arg1: "value1" }
+     */
     public toRecord(): Record<BaseValueKey, BaseValue<T>> {
         return {
             [this.name]: this.value
         };
     }
 
+    /**
+     * Returns a key-value pair representation of the PocketArgument object.
+     * @example
+     * const arg = new PocketArgument({
+     *   name: "arg1",
+     *   value: "value1"
+     * });
+     * console.log(arg.toKeyValuePair()); // Output: ["arg1", "value1"]
+     */
     public toKeyValuePair(): [BaseValueKey, BaseValue<T>] {
         return [this.name, this.value];
     }

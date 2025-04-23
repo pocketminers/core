@@ -34,6 +34,24 @@ type BaseObjectType = keyof typeof BaseObjects;
 /**
  * BaseObject is a generic interface that represents an object with a name, description, data, and metadata.
  * The data property can be of any type specified by the generic parameter T.
+ * 
+ * @template D - The type of the data. It can be any type.
+ * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
+ * @template O - The type of the object. It is one of the BaseObjectType types.
+ * 
+ * @example
+ * const myObject: BaseObject<string, BaseIdentifierFormats.Undefined, BaseObjects.Configuration> = {
+ *     data: "This is some data",
+ *     metadata: {
+ *         name: "My Object",
+ *         description: "This is a description",
+ *         identifier: {
+ *             format: BaseIdentifierFormats.Undefined,
+ *             value: "12345"
+ *         },
+ *         type: BaseObjects.Configuration
+ *     }
+ * };
  */
 interface BaseObject
 <

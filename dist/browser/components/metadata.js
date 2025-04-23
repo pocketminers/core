@@ -10,10 +10,10 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 import { BaseIdentifierFormats } from "../templates/v0/base/identifier.js";
-import { BaseObjectTypes } from "../templates/v0/base/object.js";
+import { BaseObjects } from "../templates/v0/base/object.js";
 import { Freezer } from "../utilities/freezer.js";
-var Metadata = /** @class */ (function () {
-    function Metadata(_a) {
+var PocketMetadata = /** @class */ (function () {
+    function PocketMetadata(_a) {
         var _b = _a === void 0 ? {} : _a, id = _b.id, name = _b.name, type = _b.type, description = _b.description, tags = _b.tags, _c = _b.timestamps, timestamps = _c === void 0 ? {
             created: { date: new Date() },
             updated: { date: new Date() }
@@ -23,7 +23,7 @@ var Metadata = /** @class */ (function () {
         this.timestamps = __assign({ created: timestamps.created || { date: new Date() }, updated: timestamps.updated || { date: new Date() } }, timestamps);
         Freezer.deepFreeze(this);
     }
-    Metadata.prototype.addAnnotations = function (annotations) {
+    PocketMetadata.prototype.addAnnotations = function (annotations) {
         for (var key in annotations) {
             if (annotations[key] === undefined) {
                 delete annotations[key];
@@ -31,7 +31,7 @@ var Metadata = /** @class */ (function () {
         }
         return __assign(__assign({}, this.annotations), annotations);
     };
-    Metadata.prototype.addLabels = function (labels) {
+    PocketMetadata.prototype.addLabels = function (labels) {
         for (var key in labels) {
             if (labels[key] === undefined) {
                 delete labels[key];
@@ -39,21 +39,21 @@ var Metadata = /** @class */ (function () {
         }
         return __assign(__assign({}, this.labels), labels);
     };
-    Metadata.prototype.toJSON = function () {
+    PocketMetadata.prototype.toJSON = function () {
         return {
             annotations: this.annotations,
             labels: this.labels,
             timestamps: this.timestamps
         };
     };
-    Metadata.prototype.toString = function () {
+    PocketMetadata.prototype.toString = function () {
         return JSON.stringify({
             annotations: this.annotations,
             labels: this.labels,
             timestamps: this.timestamps
         });
     };
-    Metadata.prototype.update = function (_a) {
+    PocketMetadata.prototype.update = function (_a) {
         // These Values are immuteable:
         // - timestamps.created
         // - timestamps.updated
@@ -78,29 +78,29 @@ var Metadata = /** @class */ (function () {
             throw new Error("Cannot update labels.id");
         }
         if ((labels === null || labels === void 0 ? void 0 : labels.type)
-            && labels.type !== BaseObjectTypes.Undefined
+            && labels.type !== BaseObjects.Undefined
             && labels.type !== this.labels.type) {
             throw new Error("Cannot update labels.type");
         }
-        return new Metadata(__assign(__assign({}, this.toJSON()), { annotations: __assign(__assign({}, this.annotations), annotations), labels: __assign(__assign({}, this.labels), labels), timestamps: __assign(__assign(__assign({}, this.timestamps), timestamps), { updated: { date: new Date() } }) }));
+        return new PocketMetadata(__assign(__assign({}, this.toJSON()), { annotations: __assign(__assign({}, this.annotations), annotations), labels: __assign(__assign({}, this.labels), labels), timestamps: __assign(__assign(__assign({}, this.timestamps), timestamps), { updated: { date: new Date() } }) }));
     };
-    Object.defineProperty(Metadata.prototype, "id", {
+    Object.defineProperty(PocketMetadata.prototype, "id", {
         get: function () {
             return this.labels.id;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Metadata.prototype, "type", {
+    Object.defineProperty(PocketMetadata.prototype, "type", {
         get: function () {
             return this.labels.type;
         },
         enumerable: false,
         configurable: true
     });
-    Metadata.createDefaultMetadata = function (metadata) {
+    PocketMetadata.createDefaultMetadata = function (metadata) {
         if (metadata !== undefined) {
-            return new Metadata(metadata);
+            return new PocketMetadata(metadata);
         }
         // Create default metadata
         var id = {
@@ -108,7 +108,7 @@ var Metadata = /** @class */ (function () {
             value: "undefined"
         };
         var name = "";
-        var type = BaseObjectTypes.Undefined;
+        var type = BaseObjects.Undefined;
         var description = "";
         var tags = [];
         var timestamps = {
@@ -124,13 +124,13 @@ var Metadata = /** @class */ (function () {
             type: type,
             tags: tags
         };
-        return new Metadata({
+        return new PocketMetadata({
             annotations: annotations,
             labels: labels,
             timestamps: timestamps
         });
     };
-    return Metadata;
+    return PocketMetadata;
 }());
-export { Metadata };
+export { PocketMetadata };
 //# sourceMappingURL=metadata.js.map

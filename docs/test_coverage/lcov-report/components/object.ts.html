@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.14% </span>
+                <span class="strong">57.93% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>75/136</span>
+                <span class='fraction'>84/145</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.14% </span>
+                <span class="strong">57.93% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>75/136</span>
+                <span class='fraction'>84/145</span>
             </div>
         
             
@@ -198,7 +198,25 @@
 <a name='L133'></a><a href='#L133'>133</a>
 <a name='L134'></a><a href='#L134'>134</a>
 <a name='L135'></a><a href='#L135'>135</a>
-<a name='L136'></a><a href='#L136'>136</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -335,12 +353,21 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { BaseObject, BaseObjectType } from "@templates/v0/base/object";
 import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
-import { Metadata } from "./metadata";
+import { PocketMetadata } from "./metadata";
 import { Freezer } from "@utilities/freezer";
 import { MultiHashUtilities } from "@utilities/multiHash";
 import { Checks } from "@utilities/checks";
 &nbsp;
 &nbsp;
+/**
+ * PocketObject is a class that represents an object in the Pocket framework.
+ * - It is a generic class that can be used with different types of data and metadata.
+ * - The class is designed to be immutable after creation.
+ * 
+ * @template D - The type of the data. It can be any type.
+ * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
+ * @template O - The type of the object. It is one of the BaseObjectType types.
+ */
 class PocketObject
 &lt;
     D,
@@ -350,22 +377,22 @@ class PocketObject
     implements BaseObject&lt;D, I, O&gt;
 {    
     data: D;
-    metadata: Metadata&lt;I, O&gt;;
+    metadata: PocketMetadata&lt;I, O&gt;;
 &nbsp;
     constructor({
         data,
         metadata
     }:{
         data: D,
-        metadata?: Metadata&lt;I, O&gt;
+        metadata?: PocketMetadata&lt;I, O&gt;
     }){
         this.checkData(data);
         this.checkMetadata(metadata);
 &nbsp;
         this.data = data;
         this.metadata = metadata !== undefined
-            ? new Metadata(metadata)
-            : Metadata.createDefaultMetadata&lt;I, O&gt;();
+            ? new PocketMetadata(metadata)
+            : PocketMetadata.createDefaultMetadata&lt;I, O&gt;();
 &nbsp;
         Freezer.deepFreeze(this);
     }
@@ -376,19 +403,19 @@ class PocketObject
 <span class="cstat-no" title="statement not covered" >        }</span>
     }
 &nbsp;
-    private checkMetadata(metadata?: Metadata&lt;I, O&gt;) {
+    private checkMetadata(metadata?: PocketMetadata&lt;I, O&gt;) {
     }
 &nbsp;
     /**
      * TODO: Revisit this method to use the metadata object
      */
-    private <span class="fstat-no" title="function not covered" >async checkDataHash(data: D, metadata?: Metadata&lt;I,O&gt;): Promise&lt;Metadata&lt;I, O&gt;&gt; {</span>
+    private <span class="fstat-no" title="function not covered" >async checkDataHash(data: D, metadata?: PocketMetadata&lt;I,O&gt;): Promise&lt;PocketMetadata&lt;I, O&gt;&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        this.checkData(data);</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        const hash = await MultiHashUtilities.generateMultihash(this.dataString);</span>
 <span class="cstat-no" title="statement not covered" >        </span>
 <span class="cstat-no" title="statement not covered" >        if (metadata === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >            return Metadata.createDefaultMetadata&lt;I, O&gt;({</span>
+<span class="cstat-no" title="statement not covered" >            return PocketMetadata.createDefaultMetadata&lt;I, O&gt;({</span>
 <span class="cstat-no" title="statement not covered" >                id: {</span>
 <span class="cstat-no" title="statement not covered" >                    format: BaseIdentifierFormats.Multihash as I,</span>
 <span class="cstat-no" title="statement not covered" >                    value: hash</span>
@@ -399,7 +426,7 @@ class PocketObject
 <span class="cstat-no" title="statement not covered" >        if (metadata.labels.id?.format === BaseIdentifierFormats.Multihash) {</span>
 <span class="cstat-no" title="statement not covered" >            const metadataHash = metadata.labels.id?.value;</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >            console.log("Metadata hash: ", metadataHash);</span>
+<span class="cstat-no" title="statement not covered" >            console.log("PocketMetadata hash: ", metadataHash);</span>
 <span class="cstat-no" title="statement not covered" >            console.log("Data hash: ", hash);</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >            if (</span>
@@ -410,7 +437,7 @@ class PocketObject
 <span class="cstat-no" title="statement not covered" >            }</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
 <span class="cstat-no" title="statement not covered" >        else {</span>
-<span class="cstat-no" title="statement not covered" >            metadata = new Metadata({</span>
+<span class="cstat-no" title="statement not covered" >            metadata = new PocketMetadata({</span>
 <span class="cstat-no" title="statement not covered" >                ...metadata.toJSON(),</span>
 <span class="cstat-no" title="statement not covered" >                labels: {</span>
 <span class="cstat-no" title="statement not covered" >                    ...metadata.labels,</span>
@@ -455,7 +482,7 @@ class PocketObject
 <span class="cstat-no" title="statement not covered" >        const meta = await this.checkDataHash(this.data, this.metadata);</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        if (meta.labels.id === undefined) {</span>
-<span class="cstat-no" title="statement not covered" >            throw new Error("Metadata id is required");</span>
+<span class="cstat-no" title="statement not covered" >            throw new Error("PocketMetadata id is required");</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        return {</span>
@@ -475,7 +502,7 @@ export {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-23T04:46:47.340Z
+                at 2025-04-23T23:26:46.537Z
             </div>
         <script src="../prettify.js"></script>
         <script>

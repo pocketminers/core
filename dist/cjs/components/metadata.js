@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Metadata = void 0;
+exports.PocketMetadata = void 0;
 const identifier_1 = require("../templates/v0/base/identifier.js");
 const object_1 = require("../templates/v0/base/object.js");
 const freezer_1 = require("../utilities/freezer.js");
-class Metadata {
+class PocketMetadata {
     annotations;
     labels;
     timestamps;
@@ -89,11 +89,11 @@ class Metadata {
             throw new Error("Cannot update labels.id");
         }
         if (labels?.type
-            && labels.type !== object_1.BaseObjectTypes.Undefined
+            && labels.type !== object_1.BaseObjects.Undefined
             && labels.type !== this.labels.type) {
             throw new Error("Cannot update labels.type");
         }
-        return new Metadata({
+        return new PocketMetadata({
             ...this.toJSON(),
             annotations: {
                 ...this.annotations,
@@ -118,7 +118,7 @@ class Metadata {
     }
     static createDefaultMetadata(metadata) {
         if (metadata !== undefined) {
-            return new Metadata(metadata);
+            return new PocketMetadata(metadata);
         }
         // Create default metadata
         const id = {
@@ -126,7 +126,7 @@ class Metadata {
             value: "undefined"
         };
         const name = "";
-        const type = object_1.BaseObjectTypes.Undefined;
+        const type = object_1.BaseObjects.Undefined;
         const description = "";
         const tags = [];
         const timestamps = {
@@ -142,12 +142,12 @@ class Metadata {
             type,
             tags
         };
-        return new Metadata({
+        return new PocketMetadata({
             annotations,
             labels,
             timestamps
         });
     }
 }
-exports.Metadata = Metadata;
+exports.PocketMetadata = PocketMetadata;
 //# sourceMappingURL=metadata.js.map

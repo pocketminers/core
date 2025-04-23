@@ -9,6 +9,25 @@ const freezer_1 = require("../utilities/freezer.js");
  * - The class is generic and can be used with different types of codes, levels, body, and data.
  * - This class also ensures that the message object is immutable after creation.
  * - This class does not extend the PocketObject class, as it does not include a metadata object.
+ *
+ * @template C - The type of the message code. Defaults to BaseSuccessCodes.OK.
+ * @template L - The type of the message level. Defaults to BaseMessageLevels.SUCCESS.
+ * @template B - The type of the message body. Defaults to any.
+ * @template D - The type of the message data. Defaults to any.
+ *
+ * @example
+ * const message = new PocketMessage({
+ *    code: BaseSuccessCodes.OK,
+ *    level: BaseMessageLevels.SUCCESS,
+ *    body: "Operation completed successfully",
+ *    timestamp: new Date(),
+ *    data: { id: 1 },
+ *    printToConsole: true,
+ *    callback: async (message) => {
+ *       console.log("Callback executed:", message);
+ *    },
+ *    delayCallback: 1000
+ * });
  */
 class PocketMessage {
     code;

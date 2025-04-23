@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.86% </span>
+                <span class="strong">86.34% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>243/283</span>
+                <span class='fraction'>253/293</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.86% </span>
+                <span class="strong">86.34% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>243/283</span>
+                <span class='fraction'>253/293</span>
             </div>
         
             
@@ -345,7 +345,17 @@
 <a name='L280'></a><a href='#L280'>280</a>
 <a name='L281'></a><a href='#L281'>281</a>
 <a name='L282'></a><a href='#L282'>282</a>
-<a name='L283'></a><a href='#L283'>283</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L283'></a><a href='#L283'>283</a>
+<a name='L284'></a><a href='#L284'>284</a>
+<a name='L285'></a><a href='#L285'>285</a>
+<a name='L286'></a><a href='#L286'>286</a>
+<a name='L287'></a><a href='#L287'>287</a>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -375,15 +385,25 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">18x</span>
@@ -639,14 +659,14 @@ interface PocketMessageEntry
     D = any,
 &gt;
     extends
-        Record&lt;'code', BaseMessageCodes&gt;,
-        Record&lt;'level', BaseMessageLevels&gt;,
-        Record&lt;'body', any&gt;,
-        Record&lt;'timestamp', Date&gt;,
-        Record&lt;'data', any&gt;,
-        Record&lt;'printToConsole', boolean&gt;,
-        Record&lt;'callback', (message?: PocketMessage&lt;C, L, B, D&gt;) =&gt; Promise&lt;void&gt;&gt;,
-        Record&lt;'delayCallback', number&gt;
+        Partial&lt;Record&lt;'code', C&gt;&gt;,
+        Partial&lt;Record&lt;'level', L&gt;&gt;,
+        Partial&lt;Record&lt;'body', B&gt;&gt;,
+        Partial&lt;Record&lt;'timestamp', Date&gt;&gt;,
+        Partial&lt;Record&lt;'data', D&gt;&gt;,
+        Partial&lt;Record&lt;'printToConsole', boolean&gt;&gt;,
+        Partial&lt;Record&lt;'callback', (message?: PocketMessage&lt;C, L, B, D&gt;) =&gt; Promise&lt;void&gt;&gt;&gt;,
+        Partial&lt;Record&lt;'delayCallback', number&gt;&gt;
 {}
 &nbsp;
 /**
@@ -655,6 +675,25 @@ interface PocketMessageEntry
  * - The class is generic and can be used with different types of codes, levels, body, and data.
  * - This class also ensures that the message object is immutable after creation.
  * - This class does not extend the PocketObject class, as it does not include a metadata object.
+ * 
+ * @template C - The type of the message code. Defaults to BaseSuccessCodes.OK.
+ * @template L - The type of the message level. Defaults to BaseMessageLevels.SUCCESS.
+ * @template B - The type of the message body. Defaults to any.
+ * @template D - The type of the message data. Defaults to any.
+ * 
+ * @example
+ * const message = new PocketMessage({
+ *    code: BaseSuccessCodes.OK,
+ *    level: BaseMessageLevels.SUCCESS,
+ *    body: "Operation completed successfully",
+ *    timestamp: new Date(),
+ *    data: { id: 1 },
+ *    printToConsole: true,
+ *    callback: async (message) =&gt; {
+ *       console.log("Callback executed:", message);
+ *    },
+ *    delayCallback: 1000
+ * });
  */
 class PocketMessage
 &lt;
@@ -680,16 +719,7 @@ class PocketMessage
         printToConsole = false,
         callback,
         delayCallback = 0
-    }: {
-        code?: C,
-        level?: L,
-        body?: B,
-        timestamp?: Date,
-        data?: D,
-        printToConsole?: boolean,
-        callback?: (message?: PocketMessage&lt;C, L, B, D&gt;) =&gt; Promise&lt;void&gt;,
-        delayCallback?: number
-    }) {
+    }: PocketMessageEntry&lt;C, L, B, D&gt;) {
 &nbsp;
         this.code = code !== undefined ? code : BaseSuccessCodes.OK as C;
         const expectedLevel = this.getLevelFromCode(this.code);
@@ -916,7 +946,7 @@ class PocketMessage
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-23T04:46:47.340Z
+                at 2025-04-23T23:26:46.537Z
             </div>
         <script src="../prettify.js"></script>
         <script>

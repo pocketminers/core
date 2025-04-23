@@ -12,7 +12,7 @@ exports.BaseStorageLocations = void 0;
 //     type: string | number | symbol;
 //     size: NumberOrEmpty;
 //     value: BaseValue<V>;
-//     metadata?: BaseMetadata<I, BaseObjectTypes.StorageItem>;
+//     metadata?: BaseMetadata<I, BaseObjects.StorageItem>;
 // }
 /**
  * BaseStorageTypes is an enumeration of the different types of storage

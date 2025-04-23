@@ -14,39 +14,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseComponentParts = exports.BaseComponent = void 0;
-/**
- * BaseComponentParts
- * This enum defines the different parts of a component.
- */
-var BaseComponentParts;
-(function (BaseComponentParts) {
-    BaseComponentParts["Factory"] = "Factory";
-    BaseComponentParts["Storage"] = "Storage";
-    BaseComponentParts["Manager"] = "Manager";
-    BaseComponentParts["Configuration"] = "Configuration";
-    BaseComponentParts["Service"] = "Service";
-    BaseComponentParts["PocketIdentity"] = "PocketIdentity";
-})(BaseComponentParts || (exports.BaseComponentParts = BaseComponentParts = {}));
-/**
- * BaseComponent
- * This class represents a base component.
- */
-class BaseComponent {
-    config;
-    factory;
-    storage;
-    manager;
-    service;
-    constructor({ config, factory, storage, manager, service }) {
-        this.config = config;
-        this.factory = factory;
-        this.storage = storage;
-        this.manager = manager;
-        this.service = service;
-    }
-}
-exports.BaseComponent = BaseComponent;
 __exportStar(require("./argument.js"), exports);
 __exportStar(require("./error.js"), exports);
 __exportStar(require("./identity.js"), exports);

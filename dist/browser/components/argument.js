@@ -16,7 +16,31 @@ var __read = (this && this.__read) || function (o, n) {
 };
 import { Checks } from "../utilities/checks.js";
 import { Freezer } from "../utilities/freezer.js";
+/**
+ * PocketArgument is a class that represents a key-value pair.
+ * - It is used to encapsulate arguments in the Pocket framework.
+ * - The class is generic and can be used with different types of values.
+ * - This class does not extend the PocketObject class, as it does not include a metadata object.
+ * - This class is designed to be immutable after creation.
+ * - The class includes methods for creating PocketArgument objects from strings, records, key-value pairs, and JSON.
+ *
+ * @template T - The type of the value. It can be any type.
+ *
+ * @example
+ * const arg = new PocketArgument({
+ *     name: "arg1",
+ *    value: "value1"
+ * });
+ * console.log(arg.toString()); // Output: "arg1: value1"
+ */
 var PocketArgument = /** @class */ (function () {
+    /**
+     * The constructor initializes the name and value properties with the provided arguments.
+     * If the name or value is empty, it throws an error.
+     *
+     * @param name - The name of the argument.
+     * @param value - The value of the argument.
+     */
     function PocketArgument(_a) {
         var name = _a.name, value = _a.value;
         if (Checks.isEmpty(name) == true) {
@@ -78,7 +102,10 @@ var PocketArgument = /** @class */ (function () {
             value: parsed.value
         });
     };
-    // If the string is not valid JSON, try to parse it as a key-value pair
+    /**
+     * Creates a PocketArgument from a record.
+     * Expects the record to contain only one key-value pair.
+     */
     PocketArgument.fromRecord = function (record) {
         if (record === undefined) {
             throw new Error("Record is required");
@@ -96,6 +123,10 @@ var PocketArgument = /** @class */ (function () {
             value: value
         });
     };
+    /**
+     * Creates a PocketArgument from a key-value pair.
+     * Expects the key-value pair to be an array of two elements.
+     */
     PocketArgument.fromKeyValuePair = function (keyValuePair) {
         if (keyValuePair === undefined) {
             throw new Error("Key-value pair is required");
@@ -109,6 +140,15 @@ var PocketArgument = /** @class */ (function () {
             value: value
         });
     };
+    /**
+     * Creates a PocketArgument from a JSON string.
+     * - Expects the JSON string to be in the format { "name": "key", "value": "value" }.
+     *
+     * @example
+     * const json = '{"name":"arg1","value":"value1"}';
+     * const arg = PocketArgument.fromJSON(json);
+     * console.log(arg.toString()); // Output: "arg1: value1"
+     */
     PocketArgument.fromJSON = function (json) {
         var parsed;
         if (Checks.isEmpty(json) == true) {
@@ -127,6 +167,18 @@ var PocketArgument = /** @class */ (function () {
             value: value
         });
     };
+    /**
+     * Creates a PocketArgument from an object.
+     * - Expects the object to contain a name and value property.
+     *
+     * @example
+     * const obj = {
+     *    name: "arg1",
+     *    value: "value1"
+     * };
+     * const arg = PocketArgument.fromObject(obj);
+     * console.log(arg.toString()); // Output: "arg1: value1"
+     */
     PocketArgument.fromObject = function (obj) {
         if (obj === undefined) {
             throw new Error("Object is required");
@@ -142,27 +194,72 @@ var PocketArgument = /** @class */ (function () {
             value: obj.value
         });
     };
+    /**
+     * Returns a JSON string representation of the PocketArgument object.
+     * @example
+     * const arg = new PocketArgument({
+     *    name: "arg1",
+     *    value: "value1"
+     * });
+     * console.log(arg.toJSON()); // Output: '{"name":"arg1","value":"value1"}'
+     */
     PocketArgument.prototype.toJSON = function () {
         return JSON.stringify({
             name: this.name,
             value: this.value
         });
     };
+    /**
+     * Returns a string representation of the PocketArgument object.
+     * @example
+     * const arg = new PocketArgument({
+     *    name: "arg1",
+     *    value: "value1"
+     * });
+     * console.log(arg.toString()); // Output: "arg1: value1"
+     */
     PocketArgument.prototype.toString = function () {
         return "".concat(String(this.name), ": ").concat(this.value);
     };
+    /**
+     * Returns an object representation of the PocketArgument object.
+     * @example
+     * const arg = new PocketArgument({
+     *   name: "arg1",
+     *   value: "value1"
+     * });
+     * console.log(arg.toObject()); // Output: { name: "arg1", value: "value1" }
+     */
     PocketArgument.prototype.toObject = function () {
         return {
             name: this.name,
             value: this.value
         };
     };
+    /**
+     * Returns a record representation of the PocketArgument object.
+     * @example
+     * const arg = new PocketArgument({
+     *   name: "arg1",
+     *   value: "value1"
+     * });
+     * console.log(arg.toRecord()); // Output: { arg1: "value1" }
+     */
     PocketArgument.prototype.toRecord = function () {
         var _a;
         return _a = {},
             _a[this.name] = this.value,
             _a;
     };
+    /**
+     * Returns a key-value pair representation of the PocketArgument object.
+     * @example
+     * const arg = new PocketArgument({
+     *   name: "arg1",
+     *   value: "value1"
+     * });
+     * console.log(arg.toKeyValuePair()); // Output: ["arg1", "value1"]
+     */
     PocketArgument.prototype.toKeyValuePair = function () {
         return [this.name, this.value];
     };

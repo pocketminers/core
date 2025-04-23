@@ -68,7 +68,7 @@ interface BaseParameter
         Record<'description', StringOrEmpty>,
         Record<'required', boolean>,
         Record<'default', BaseValue<T> | undefined>,
-        Record<'optional', Array<BaseValue<T>>>
+        Record<'options', Array<BaseValue<T>>>
 {}
 
 /**

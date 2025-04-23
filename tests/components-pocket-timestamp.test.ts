@@ -39,6 +39,7 @@ describe("PocketTimestamp", () => {
     it("should return the correct RFC string", () => {
         const date = new Date("2023-10-01T00:00:00Z");
         const timestampItem = new PocketTimestamp(date);
+        console.log(timestampItem.toRFC());
         expect(timestampItem.toRFC()).toEqual(date.toUTCString());
     });
 

@@ -6,6 +6,15 @@ import { MultiHashUtilities } from "@utilities/multiHash";
 import { Checks } from "@utilities/checks";
 
 
+/**
+ * PocketObject is a class that represents an object in the Pocket framework.
+ * - It is a generic class that can be used with different types of data and metadata.
+ * - The class is designed to be immutable after creation.
+ * 
+ * @template D - The type of the data. It can be any type.
+ * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
+ * @template O - The type of the object. It is one of the BaseObjectType types.
+ */
 class PocketObject
 <
     D,

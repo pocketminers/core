@@ -46,10 +46,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { BaseIdentifierFormats } from "../templates/v0/base/identifier.js";
-import { Metadata } from "./metadata.js";
+import { PocketMetadata } from "./metadata.js";
 import { Freezer } from "../utilities/freezer.js";
 import { MultiHashUtilities } from "../utilities/multiHash.js";
 import { Checks } from "../utilities/checks.js";
+/**
+ * PocketObject is a class that represents an object in the Pocket framework.
+ * - It is a generic class that can be used with different types of data and metadata.
+ * - The class is designed to be immutable after creation.
+ *
+ * @template D - The type of the data. It can be any type.
+ * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
+ * @template O - The type of the object. It is one of the BaseObjectType types.
+ */
 var PocketObject = /** @class */ (function () {
     function PocketObject(_a) {
         var data = _a.data, metadata = _a.metadata;
@@ -57,8 +66,8 @@ var PocketObject = /** @class */ (function () {
         this.checkMetadata(metadata);
         this.data = data;
         this.metadata = metadata !== undefined
-            ? new Metadata(metadata)
-            : Metadata.createDefaultMetadata();
+            ? new PocketMetadata(metadata)
+            : PocketMetadata.createDefaultMetadata();
         Freezer.deepFreeze(this);
     }
     PocketObject.prototype.checkData = function (data) {
@@ -83,7 +92,7 @@ var PocketObject = /** @class */ (function () {
                     case 1:
                         hash = _c.sent();
                         if (metadata === undefined) {
-                            return [2 /*return*/, Metadata.createDefaultMetadata({
+                            return [2 /*return*/, PocketMetadata.createDefaultMetadata({
                                     id: {
                                         format: BaseIdentifierFormats.Multihash,
                                         value: hash
@@ -92,7 +101,7 @@ var PocketObject = /** @class */ (function () {
                         }
                         if (((_a = metadata.labels.id) === null || _a === void 0 ? void 0 : _a.format) === BaseIdentifierFormats.Multihash) {
                             metadataHash = (_b = metadata.labels.id) === null || _b === void 0 ? void 0 : _b.value;
-                            console.log("Metadata hash: ", metadataHash);
+                            console.log("PocketMetadata hash: ", metadataHash);
                             console.log("Data hash: ", hash);
                             if (Checks.isEmpty(metadataHash) === false
                                 && metadataHash !== hash) {
@@ -100,7 +109,7 @@ var PocketObject = /** @class */ (function () {
                             }
                         }
                         else {
-                            metadata = new Metadata(__assign(__assign({}, metadata.toJSON()), { labels: __assign(__assign({}, metadata.labels), { id: {
+                            metadata = new PocketMetadata(__assign(__assign({}, metadata.toJSON()), { labels: __assign(__assign({}, metadata.labels), { id: {
                                         format: BaseIdentifierFormats.Multihash,
                                         value: hash
                                     } }) }));
@@ -157,7 +166,7 @@ var PocketObject = /** @class */ (function () {
                     case 1:
                         meta = _b.sent();
                         if (meta.labels.id === undefined) {
-                            throw new Error("Metadata id is required");
+                            throw new Error("PocketMetadata id is required");
                         }
                         return [2 /*return*/, {
                                 format: BaseIdentifierFormats.Multihash,

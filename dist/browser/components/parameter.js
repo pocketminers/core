@@ -1,6 +1,31 @@
 import { Checks } from "../utilities/checks.js";
 import { Freezer } from "../utilities/freezer.js";
+/**
+ * PocketParameter is a class that represents a parameter object.
+ * - It is used to encapsulate parameters in the Pocket framework.
+ * - The class is generic and can be used with different types of values.
+ * - This class does not extend the PocketObject class, as it does
+ *   not include a metadata object.
+ * - This class is designed to be immutable after creation.
+ *
+ * @template T - The type of the value. It can be any type.
+ *
+ * @example
+ * const param = new PocketParameter({
+ *   name: "param1",
+ *   description: "This is a parameter",
+ *   default: "defaultOption",
+ *   required: true,
+ *   options: ["option1", "option2"]
+ * });
+ * console.log(param.nameString); // Output: "param1"
+ * console.log(param.checkValue("option1")); // Output: true
+ */
 var PocketParameter = /** @class */ (function () {
+    /**
+     * The constructor initializes the name, description, default value, required flag, and options list.
+     * - If the name is empty, it throws an error.
+     */
     function PocketParameter(_a) {
         var name = _a.name, _b = _a.description, description = _b === void 0 ? "" : _b, _c = _a.default, defaultValue = _c === void 0 ? undefined : _c, _d = _a.required, required = _d === void 0 ? false : _d, _e = _a.options, options = _e === void 0 ? [] : _e;
         if (Checks.isEmpty(name) == true) {
@@ -14,12 +39,25 @@ var PocketParameter = /** @class */ (function () {
         Freezer.deepFreeze(this);
     }
     Object.defineProperty(PocketParameter.prototype, "nameString", {
+        /**
+         * Returns the name of the parameter as a string.
+         *
+         * @returns {string} - The name of the parameter.
+         */
         get: function () {
             return String(this.name);
         },
         enumerable: false,
         configurable: true
     });
+    /**
+     * Checks if the provided value is valid according to the parameter's rules.
+     * - If the value is required and empty, it throws an error.
+     * - If the value is not in the options list and not equal to the default value, it throws an error.
+     *
+     * @param {BaseValue<T> | undefined} value - The value to check.
+     * @returns {boolean} - Returns true if the value is valid, otherwise throws an error.
+     */
     PocketParameter.prototype.checkValue = function (value) {
         if (this.required == true
             && Checks.isEmpty(value) == true) {
@@ -35,6 +73,12 @@ var PocketParameter = /** @class */ (function () {
         }
         return true;
     };
+    /**
+     * Returns the value if it is not empty, otherwise returns the default value.
+     *
+     * @param {BaseValue<T> | undefined} value - The value to check.
+     * @returns {BaseValue<T> | undefined} - The value or the default value if the value is empty.
+     */
     PocketParameter.prototype.getValueOrDefault = function (value) {
         if (Checks.isEmpty(value) == true
             && this.checkValue(value) == false
@@ -43,6 +87,12 @@ var PocketParameter = /** @class */ (function () {
         }
         return value;
     };
+    /**
+     * Returns the value if it is not empty, otherwise returns the default value or the first option.
+     *
+     * @param {BaseValue<T> | undefined} value - The value to check.
+     * @returns {BaseValue<T> | undefined} - The value, default value, or first option if the value is empty.
+     */
     PocketParameter.prototype.getValueOrDefaultOrOptions = function (value) {
         var result = value;
         result = this.getValueOrDefault(value);

@@ -1,21 +1,76 @@
-import { BaseParameterEntry, BaseValue, BaseValueKey } from "@templates/v0";
+import { BaseParameter, BaseValue, BaseValueKey } from "@templates/v0";
 import { Checks } from "@utilities/checks";
 import { Freezer } from "@utilities/freezer";
 
 
+
+/**
+ * PocketParameter is a class that represents a parameter object.
+ * - It is used to encapsulate parameters in the Pocket framework.
+ * - The class is generic and can be used with different types of values.
+ * - This class does not extend the PocketObject class, as it does
+ *   not include a metadata object.
+ * - This class is designed to be immutable after creation.
+ * 
+ * @template T - The type of the value. It can be any type.
+ * 
+ * @example
+ * const param = new PocketParameter({
+ *   name: "param1",
+ *   description: "This is a parameter",
+ *   default: "defaultOption",
+ *   required: true,
+ *   options: ["option1", "option2"]
+ * });
+ * console.log(param.nameString); // Output: "param1"
+ * console.log(param.checkValue("option1")); // Output: true
+ */
 class PocketParameter
 <
     T = any
 >
     implements
-        BaseParameterEntry<T>
+        BaseParameter<T>
 {
+    /**
+     * The name of the parameter.
+     * - It is a required field and cannot be empty.
+     * - A corresponding Argument will be created with the same name.
+     */
     public readonly name: BaseValueKey;
+
+    /**
+     * The description of the parameter.
+     * - It is an optional field and can be empty which is the default, expressed as an empty string.
+     * - It is used to provide additional information about the parameter.
+     */
     public readonly description: string;
-    public readonly default?: BaseValue<T>;
+
+    /**
+     * The default value of the parameter.
+     * - It is an optional field and can be empty which is the default, expressed as undefined.
+     * - It is used to provide a default value for the parameter if no value is provided.
+     */
+    public readonly default: BaseValue<T> | undefined;
+
+    /**
+     * The required flag of the parameter.
+     * - It is a boolean field that indicates whether the parameter is required or not.
+     * - If true, the parameter must be provided.
+     */
     public readonly required: boolean;
+
+    /**
+     * The options list of the parameter.
+     * - It is an optional field and can be empty which is the default, expressed as an empty array.
+     * - It is used to provide a list of valid options for the parameter.
+     */
     public readonly options: BaseValue<T>[];
 
+    /**
+     * The constructor initializes the name, description, default value, required flag, and options list.
+     * - If the name is empty, it throws an error.
+     */
     public constructor({
         name,
         description = "",
@@ -42,10 +97,23 @@ class PocketParameter
         Freezer.deepFreeze(this);
     }
 
+    /**
+     * Returns the name of the parameter as a string.
+     * 
+     * @returns {string} - The name of the parameter.
+     */
     public get nameString(): string {
         return String(this.name);
     }
 
+    /**
+     * Checks if the provided value is valid according to the parameter's rules.
+     * - If the value is required and empty, it throws an error.
+     * - If the value is not in the options list and not equal to the default value, it throws an error.
+     * 
+     * @param {BaseValue<T> | undefined} value - The value to check.
+     * @returns {boolean} - Returns true if the value is valid, otherwise throws an error.
+     */
     public checkValue(
         value: BaseValue<T> | undefined
     ): boolean {
@@ -70,6 +138,12 @@ class PocketParameter
         return true;
     }
 
+    /**
+     * Returns the value if it is not empty, otherwise returns the default value.
+     * 
+     * @param {BaseValue<T> | undefined} value - The value to check.
+     * @returns {BaseValue<T> | undefined} - The value or the default value if the value is empty.
+     */
     public getValueOrDefault(
         value: BaseValue<T> | undefined
     ): BaseValue<T> | undefined {
@@ -84,6 +158,12 @@ class PocketParameter
         return value;
     }
 
+    /**
+     * Returns the value if it is not empty, otherwise returns the default value or the first option.
+     * 
+     * @param {BaseValue<T> | undefined} value - The value to check.
+     * @returns {BaseValue<T> | undefined} - The value, default value, or first option if the value is empty.
+     */
     public getValueOrDefaultOrOptions(
         value: BaseValue<T> | undefined
     ): BaseValue<T> | undefined {

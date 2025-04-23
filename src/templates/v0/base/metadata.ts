@@ -1,4 +1,4 @@
-import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
+import { BaseIdentifier, BaseIdentifierFormat } from "@templates/v0/base/identifier";
 import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 import { BaseTimestamps } from "@templates/v0/base/timestamps";
 import { BaseObjectType, BaseObjects } from "./object";
@@ -6,6 +6,14 @@ import { BaseObjectType, BaseObjects } from "./object";
 
 /**
  * Annotations are key-value pairs that provide additional information about the user account.
+ * - Annotations can be used to store metadata or other information that is not part of the main data structure.
+ * - Generally, will not include identifiers - these should be placed in the labels object.
+ * - Annotations are descriptive and can be used to provide context or additional information about the data.
+ * @example
+ * const annotations: BaseMetadataAnnotations = {
+ *  description: "This is a description",
+ *  customKey: "customValue"
+ * };
  */
 interface BaseMetadataAnnotations 
     extends
@@ -16,6 +24,21 @@ interface BaseMetadataAnnotations
 
 /**
  * Labels are key-value pairs that can be used to categorize or tag the user account.
+ * - They can be used for filtering or searching purposes.
+ * - Labels can be used to group similar objects together.
+ * - 'BaseIdentifiers should be placed in the labels object.
+ * 
+ * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
+ * @template O - The type of the object. It is one of the BaseObjectType types.
+ * 
+ * @example
+ * const labels: BaseMetadataLabels<BaseIdentifierFormats.Number, BaseObjects.Configuration> = {
+ *   id: { value: 123, format: BaseIdentifierFormats.Number },
+ *   name: "My Label",
+ *   type: BaseObjects.Configuration,
+ *   tags: ["tag1", "tag2"],
+ *   customKey: "customValue"
+ * };
  */
 interface BaseMetadataLabels
 <
@@ -32,7 +55,29 @@ interface BaseMetadataLabels
 
 
 /**
- * PocketMetadata contains additional information about the user account, including annotations and labels.
+ * PocketMetadata contains identifiers, labels, annotations, and timestamps.
+ * 
+ * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
+ * @template O - The type of the object. It is one of the BaseObjectType types.
+ * 
+ * @example
+ * const metadata: BaseMetadata<BaseIdentifierFormats.Number, BaseObjects.Configuration> = {
+ *   annotations: {
+ *     description: "This is a description",
+ *     customKey: "customValue"
+ *   },
+ *  labels: {
+ *    id: { value: 123, format: BaseIdentifierFormats.Number },
+ *    name: "My Label",
+ *    type: BaseObjects.Configuration,
+ *    tags: ["tag1", "tag2"],
+ *    customKey: "customValue"
+ * },
+ *  timestamps: {
+ *    createdAt: new Date(),
+ *    updatedAt: new Date()
+ *  }
+ * };
  */
 interface BaseMetadata
 <
@@ -48,7 +93,30 @@ interface BaseMetadata
 
 /**
  * BaseMetadataEntry is a generic interface that represents an entry in the metadata.
- * It contains properties such as id, name, description, tags, timestamps, annotations, and labels.
+ * - It contains properties such as id, name, description, tags, timestamps, annotations, and labels.
+ * - Id, type, name, and tags, are stored in the labels object upon creation.
+ * - Description is stored in the annotations object upon creation.
+ * 
+ * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
+ * @template O - The type of the object. It is one of the BaseObjectType types.
+ * 
+ * @example
+ * const metadataEntry: BaseMetadataEntry<BaseIdentifierFormats.Number, BaseObjects.Configuration> = {
+ *   id: { value: 123, format: BaseIdentifierFormats.Number },
+ *   name: "My Entry",
+ *   description: "This is a description",
+ *   tags: ["tag1", "tag2"],
+ *   timestamps: {
+ *     createdAt: new Date(),
+ *     updatedAt: new Date()
+ *   },
+ *   annotations: {
+ *     customAnnotation: "customValue1"
+ *   },
+ *   labels: {
+ *     customLabels: "customValue2"
+ *   }
+ * };
  */
 interface BaseMetadataEntry
 <
