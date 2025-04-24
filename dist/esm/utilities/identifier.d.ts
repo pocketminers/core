@@ -10,7 +10,7 @@ declare class IdentifierUtilities {
      * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
      *
      * @example
-     * const identifier = IdentifierUtilities.create({
+     * const identifier = IdentifierUtilities.generateIdentifier({
      *    format: "Name",
      *    options: {
      *      prefix: "prefix-",
@@ -21,20 +21,17 @@ declare class IdentifierUtilities {
      * console.log(identifier.value); // "prefix-abcdefghij-suffix"
      *
      * @example
-     * const identifier = IdentifierUtilities.create({
+     * const identifier = IdentifierUtilities.generateIdentifier({
      *   format: "UUID"
      * });
      * console.log(identifier.value); // "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
      */
-    static create<I extends BaseIdentifierFormat = BaseIdentifierFormats.UUID>({ format, options }?: {
+    static generateIdentifier<I extends BaseIdentifierFormat = BaseIdentifierFormats.UUID>({ format, options }?: {
         format?: I;
         options?: {
             prefix?: string;
             suffix?: string;
             length?: number;
-            seriesStart?: number;
-            seriesEnd?: number;
-            seriesStep?: number;
         };
     }): {
         value: string;

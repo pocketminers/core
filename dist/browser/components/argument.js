@@ -53,6 +53,13 @@ var PocketArgument = /** @class */ (function () {
         this.value = value;
         Freezer.deepFreeze(this);
     }
+    Object.defineProperty(PocketArgument.prototype, "nameString", {
+        get: function () {
+            return String(this.name);
+        },
+        enumerable: false,
+        configurable: true
+    });
     /**
      * Creates a PocketArgument from a string.
      * Expects the string to be in the format "name=value", "name:value", or JSON.

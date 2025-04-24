@@ -16,10 +16,18 @@ class PocketIdentity {
             throw new Error("Type is required");
         }
         if (value === undefined) {
-            throw new Error("Value is required");
+            value = IdentifierUtilities.generateIdentifier({
+                format: format,
+                options: {
+                    prefix: "",
+                    suffix: ""
+                }
+            }).value;
         }
-        // check if the value is the correct format
-        IdentifierUtilities.checkIdentityFormat(format, value);
+        else {
+            // check if the value is the correct format
+            IdentifierUtilities.checkIdentityFormat(format, value);
+        }
         this.format = format;
         this.value = value;
         Freezer.deepFreeze(this);

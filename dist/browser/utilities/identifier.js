@@ -13,7 +13,7 @@ var IdentifierUtilities = /** @class */ (function () {
      * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
      *
      * @example
-     * const identifier = IdentifierUtilities.create({
+     * const identifier = IdentifierUtilities.generateIdentifier({
      *    format: "Name",
      *    options: {
      *      prefix: "prefix-",
@@ -24,15 +24,16 @@ var IdentifierUtilities = /** @class */ (function () {
      * console.log(identifier.value); // "prefix-abcdefghij-suffix"
      *
      * @example
-     * const identifier = IdentifierUtilities.create({
+     * const identifier = IdentifierUtilities.generateIdentifier({
      *   format: "UUID"
      * });
      * console.log(identifier.value); // "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
      */
-    IdentifierUtilities.create = function (_a) {
+    IdentifierUtilities.generateIdentifier = function (_a) {
         var _b = _a === void 0 ? {} : _a, _c = _b.format, format = _c === void 0 ? BaseIdentifierFormats.UUID : _c, _d = _b.options, options = _d === void 0 ? {
             prefix: "",
-            suffix: ""
+            suffix: "",
+            length: 34
         } : _d;
         var prefix = (options === null || options === void 0 ? void 0 : options.prefix) || "";
         var suffix = (options === null || options === void 0 ? void 0 : options.suffix) || "";
@@ -54,7 +55,7 @@ var IdentifierUtilities = /** @class */ (function () {
                 if (format !== undefined && !BaseIdentifierTypeList.includes(format)) {
                     throw new Error("Invalid identifier format: ".concat(format));
                 }
-                identifier += IdentifierUtilities.generateRandomString(options === null || options === void 0 ? void 0 : options.length);
+                // identifier += IdentifierUtilities.generateRandomString(options?.length);
                 break;
         }
         identifier += suffix;
@@ -112,9 +113,12 @@ var IdentifierUtilities = /** @class */ (function () {
     };
     IdentifierUtilities.generateRandomString = function (length) {
         if (length === void 0) { length = 34; }
-        var id = Math.random().toString(36).substring(2, length + 2);
-        if (!IdentifierUtilities.checkRandomStringFormat(id, length)) {
-            IdentifierUtilities.generateRandomString(length);
+        var id;
+        var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        id = '';
+        for (var i = 0; i < length; i++) {
+            id += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
         return id;
     };
@@ -133,7 +137,10 @@ var IdentifierUtilities = /** @class */ (function () {
         if (length === void 0) { length = 34; }
         var id = Math.floor(Math.random() * Math.pow(10, length));
         if (id.toString().length !== length) {
-            IdentifierUtilities.generateRandomNumber(length);
+            for (var i = id.toString().length; i < length; i++) {
+                id *= 10;
+            }
+            id += Math.floor(Math.random() * 10);
         }
         if (!IdentifierUtilities.checkRandomNumberFormat(id, length)) {
             IdentifierUtilities.generateRandomNumber(length);

@@ -14,7 +14,7 @@ class IdentifierUtilities {
      * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
      *
      * @example
-     * const identifier = IdentifierUtilities.create({
+     * const identifier = IdentifierUtilities.generateIdentifier({
      *    format: "Name",
      *    options: {
      *      prefix: "prefix-",
@@ -25,14 +25,15 @@ class IdentifierUtilities {
      * console.log(identifier.value); // "prefix-abcdefghij-suffix"
      *
      * @example
-     * const identifier = IdentifierUtilities.create({
+     * const identifier = IdentifierUtilities.generateIdentifier({
      *   format: "UUID"
      * });
      * console.log(identifier.value); // "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
      */
-    static create({ format = v0_1.BaseIdentifierFormats.UUID, options = {
+    static generateIdentifier({ format = v0_1.BaseIdentifierFormats.UUID, options = {
         prefix: "",
-        suffix: ""
+        suffix: "",
+        length: 34
     } } = {}) {
         const prefix = options?.prefix || "";
         const suffix = options?.suffix || "";
@@ -54,7 +55,7 @@ class IdentifierUtilities {
                 if (format !== undefined && !v0_1.BaseIdentifierTypeList.includes(format)) {
                     throw new Error(`Invalid identifier format: ${format}`);
                 }
-                identifier += IdentifierUtilities.generateRandomString(options?.length);
+                // identifier += IdentifierUtilities.generateRandomString(options?.length);
                 break;
         }
         identifier += suffix;
@@ -110,9 +111,12 @@ class IdentifierUtilities {
         return true;
     }
     static generateRandomString(length = 34) {
-        const id = Math.random().toString(36).substring(2, length + 2);
-        if (!IdentifierUtilities.checkRandomStringFormat(id, length)) {
-            IdentifierUtilities.generateRandomString(length);
+        let id;
+        const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        const charactersLength = characters.length;
+        id = '';
+        for (let i = 0; i < length; i++) {
+            id += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
         return id;
     }
@@ -127,9 +131,12 @@ class IdentifierUtilities {
         return true;
     }
     static generateRandomNumber(length = 34) {
-        const id = Math.floor(Math.random() * Math.pow(10, length));
+        let id = Math.floor(Math.random() * Math.pow(10, length));
         if (id.toString().length !== length) {
-            IdentifierUtilities.generateRandomNumber(length);
+            for (let i = id.toString().length; i < length; i++) {
+                id *= 10;
+            }
+            id += Math.floor(Math.random() * 10);
         }
         if (!IdentifierUtilities.checkRandomNumberFormat(id, length)) {
             IdentifierUtilities.generateRandomNumber(length);

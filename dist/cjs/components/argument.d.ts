@@ -33,6 +33,7 @@ declare class PocketArgument<T = any> implements BaseArgument<T> {
      * @param value - The value of the argument.
      */
     constructor({ name, value }: PocketArgumentEntry<T>);
+    get nameString(): string;
     /**
      * Creates a PocketArgument from a string.
      * Expects the string to be in the format "name=value", "name:value", or JSON.

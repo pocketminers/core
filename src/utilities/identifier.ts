@@ -1,4 +1,4 @@
-import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats, BaseIdentifierTypeList } from "@templates/v0";
+import { BaseIdentifierFormat, BaseIdentifierFormats, BaseIdentifierTypeList } from "@templates/v0";
 import { MultiHashUtilities } from "@utilities/multiHash";
 
 

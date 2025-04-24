@@ -122,7 +122,7 @@ interface BaseParameters
  */
 interface BaseProperty
 <
-    T
+    T = any
 >
     extends
         Record<'name', BaseValueKey>,
@@ -143,17 +143,23 @@ interface BaseProperty
  * @example
  * const configuration: BaseConfiguration<string> = {
  *   arguments: [
- *     { name: "arg1", value: "value1" },
- *     { name: "arg2", value: "value2" }
+ *     { name: "prop1", value: "value1" },
+ *     { name: "prop2", value: "value2" }
  *   ],
  *   parameters: [
  *     { 
- *       name: "param1",
+ *       name: "prop1",
  *       description: "This is a parameter",
  *       default: "default value",
  *       required: true,
  *       optional: ["optional value 1"]
- *     }
+ *     },
+ *     {
+ *       name: "prop2",
+ *       description: "This is another parameter",
+ *       default: "default value 2",
+ *       required: false,
+ *       optional: ["optional value 2"]
  *   ]
  * };
  */

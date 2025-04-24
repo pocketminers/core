@@ -12,7 +12,7 @@ declare class PocketIdentity<I extends BaseIdentifierFormat> implements BaseIden
     readonly value: string;
     constructor({ format, value }: {
         format: I;
-        value: string;
+        value?: string;
     });
 }
 export { PocketIdentity };

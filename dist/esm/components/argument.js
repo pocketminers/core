@@ -38,6 +38,9 @@ class PocketArgument {
         this.value = value;
         Freezer.deepFreeze(this);
     }
+    get nameString() {
+        return String(this.name);
+    }
     /**
      * Creates a PocketArgument from a string.
      * Expects the string to be in the format "name=value", "name:value", or JSON.

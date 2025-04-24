@@ -84,7 +84,7 @@ interface BaseParameters<T = any> extends Array<BaseParameter<T>> {
  *   required: true,
  *   optional: ["value1", "value2"]
  */
-interface BaseProperty<T> extends Record<'name', BaseValueKey>, Record<'description', StringOrEmpty>, Record<'value', BaseValue<T>>, Record<'default', BaseValue<T>>, Record<'required', boolean>, Record<'optional', Array<BaseValue<T>>> {
+interface BaseProperty<T = any> extends Record<'name', BaseValueKey>, Record<'description', StringOrEmpty>, Record<'value', BaseValue<T>>, Record<'default', BaseValue<T>>, Record<'required', boolean>, Record<'optional', Array<BaseValue<T>>> {
 }
 /**
  * BaseConfiguration is a generic type that represents a configuration object.
@@ -95,17 +95,23 @@ interface BaseProperty<T> extends Record<'name', BaseValueKey>, Record<'descript
  * @example
  * const configuration: BaseConfiguration<string> = {
  *   arguments: [
- *     { name: "arg1", value: "value1" },
- *     { name: "arg2", value: "value2" }
+ *     { name: "prop1", value: "value1" },
+ *     { name: "prop2", value: "value2" }
  *   ],
  *   parameters: [
  *     {
- *       name: "param1",
+ *       name: "prop1",
  *       description: "This is a parameter",
  *       default: "default value",
  *       required: true,
  *       optional: ["optional value 1"]
- *     }
+ *     },
+ *     {
+ *       name: "prop2",
+ *       description: "This is another parameter",
+ *       default: "default value 2",
+ *       required: false,
+ *       optional: ["optional value 2"]
  *   ]
  * };
  */
