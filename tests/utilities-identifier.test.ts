@@ -2,16 +2,16 @@ import { IdentifierUtilities } from "@utilities/identifier";
 
 
 describe('IdentifierUtilities', () => {
-    describe('create', () => {
-        it('should create an identifier with default options', () => {
-            const result = IdentifierUtilities.create();
+    describe('generateIdentifier', () => {
+        it('should generateIdentifier an identifier with default options', () => {
+            const result = IdentifierUtilities.generateIdentifier();
             console.log(result);
             expect(result).toHaveProperty('value');
             expect(result).toHaveProperty('format');
         });
 
-        it('should create an identifier with custom prefix and suffix', () => {
-            const result = IdentifierUtilities.create({
+        it('should generateIdentifier an identifier with custom prefix and suffix', () => {
+            const result = IdentifierUtilities.generateIdentifier({
                 format: 'UUID',
                 options: {
                     prefix: 'prefix_',
@@ -23,7 +23,7 @@ describe('IdentifierUtilities', () => {
 
         it('should throw an error for invalid format', () => {
             try {
-                IdentifierUtilities.create({
+                IdentifierUtilities.generateIdentifier({
                     format: 'INVALID_FORMAT' as any
                 });
             }
@@ -33,15 +33,15 @@ describe('IdentifierUtilities', () => {
             }
         });
 
-        it('should create an identifier with UUID format', () => {
-            const result = IdentifierUtilities.create({
+        it('should generateIdentifier an identifier with UUID format', () => {
+            const result = IdentifierUtilities.generateIdentifier({
                 format: 'UUID'
             });
             expect(result.value).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
         });
 
-        it('should create an identifier with Name format', () => {
-            const result = IdentifierUtilities.create({
+        it('should generateIdentifier an identifier with Name format', () => {
+            const result = IdentifierUtilities.generateIdentifier({
                 format: 'Name',
                 options: {
                     length: 10
@@ -51,8 +51,8 @@ describe('IdentifierUtilities', () => {
             expect(result.value).toHaveLength(10);
         });
 
-        it('should create an identifier with Name format and prefix', () => {
-            const result = IdentifierUtilities.create({
+        it('should generateIdentifier an identifier with Name format and prefix', () => {
+            const result = IdentifierUtilities.generateIdentifier({
                 format: 'Name',
                 options: {
                     prefix: 'prefix_',
@@ -62,8 +62,8 @@ describe('IdentifierUtilities', () => {
             expect(result.value).toMatch(/^prefix_.{10}$/);
         });
 
-        it('should create an identifier with Number format', () => {
-            const result = IdentifierUtilities.create({
+        it('should generateIdentifier an identifier with Number format', () => {
+            const result = IdentifierUtilities.generateIdentifier({
                 format: 'Number',
                 options: {
                     length: 5

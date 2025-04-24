@@ -21,9 +21,29 @@ describe('PocketIdentity', () => {
         const format = "exampleType";
 
         // @ts-ignore
-        try { new PocketIdentity({ format, value: undefined as any }).toThrow("Value is required"); }
+        try { new PocketIdentity({ format, value: undefined as any }).toThrow("Invalid identifier format: exampleType"); }
         catch (e: any) {
-            expect(e.message).toBe("Value is required");
+            expect(e.message).toBe("Invalid identifier format: exampleType");
         }
+    });
+
+    it('should throw an error if value is not in the correct format', () => {
+        const format = "exampleType";
+        const value = "invalidValue";
+
+        // @ts-ignore
+        try { new PocketIdentity({ format, value }); }
+        catch (e: any) {
+            expect(e.message).toBe("Invalid identifier format: exampleType");
+        }
+    });
+
+    it('should create a PocketIdentity with a valid format and generate a value', () => {
+        const format = "Name";
+
+        const pocketIdentity = new PocketIdentity({ format });
+
+        expect(pocketIdentity.format).toBe(format);
+        expect(pocketIdentity.value).toMatch(/^[a-zA-Z0-9]{34}$/); // Adjust the regex based on the expected format
     });
 });
