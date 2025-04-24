@@ -5,6 +5,11 @@ import { IdentifierUtilities } from "@utilities/identifier";
 
 /**
  * PocketIdentity is a generic class that represents an identity object.
+ * - Identifiers are immutable after creation.
+ * 
+ * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
+ * 
+ * @example
  */
 class PocketIdentity
 <

@@ -5,6 +5,11 @@ const freezer_1 = require("../utilities/freezer.js");
 const identifier_1 = require("../utilities/identifier.js");
 /**
  * PocketIdentity is a generic class that represents an identity object.
+ * - Identifiers are immutable after creation.
+ *
+ * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
+ *
+ * @example
  */
 class PocketIdentity {
     format;

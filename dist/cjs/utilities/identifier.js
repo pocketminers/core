@@ -7,7 +7,30 @@ const multiHash_1 = require("./multiHash.js");
  * PocketIdentity is a generic class that represents an identity object.
  */
 class IdentifierUtilities {
-    static create({ format, options = {
+    /**
+     * Creates a new identifier based on the provided format and options.
+     * - The identifier is immutable after creation.
+     *
+     * @template I - The type of the identifier. It is one of the BaseIdentifierFormat types.
+     *
+     * @example
+     * const identifier = IdentifierUtilities.create({
+     *    format: "Name",
+     *    options: {
+     *      prefix: "prefix-",
+     *      suffix: "-suffix",
+     *      length: 10
+     *    }
+     * });
+     * console.log(identifier.value); // "prefix-abcdefghij-suffix"
+     *
+     * @example
+     * const identifier = IdentifierUtilities.create({
+     *   format: "UUID"
+     * });
+     * console.log(identifier.value); // "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+     */
+    static create({ format = v0_1.BaseIdentifierFormats.UUID, options = {
         prefix: "",
         suffix: ""
     } } = {}) {
@@ -17,6 +40,14 @@ class IdentifierUtilities {
         switch (format) {
             case "UUID":
                 identifier += IdentifierUtilities.generateUUIDv4();
+                break;
+            case "Name":
+                identifier += IdentifierUtilities.generateRandomString(options?.length);
+                break;
+            case "Number":
+                identifier += IdentifierUtilities.generateRandomNumber(options?.length);
+                break;
+            case "Symbol":
                 break;
             default:
                 // check if the format is valid
@@ -49,31 +80,61 @@ class IdentifierUtilities {
                 break;
         }
     }
+    static checkUUIDv4Format(value) {
+        const uuidv4Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+        if (!uuidv4Regex.test(value)) {
+            return false;
+        }
+        return true;
+    }
     static generateUUIDv4() {
         {
             const id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
-            // check the generated id format using regex
-            const idRegex = new RegExp(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
-            if (!idRegex.test(id)) {
-                return IdentifierUtilities.generateUUIDv4();
+            if (!IdentifierUtilities.checkUUIDv4Format(id)) {
+                IdentifierUtilities.generateUUIDv4();
             }
             return id;
         }
     }
+    static checkRandomStringFormat(value, length = 34) {
+        if (value.length !== length) {
+            return false;
+        }
+        const randomStringRegex = /^[a-z0-9]+$/;
+        if (!randomStringRegex.test(value)) {
+            return false;
+        }
+        return true;
+    }
     static generateRandomString(length = 34) {
-        return Math.random().toString(36).substring(2, length + 2);
+        const id = Math.random().toString(36).substring(2, length + 2);
+        if (!IdentifierUtilities.checkRandomStringFormat(id, length)) {
+            IdentifierUtilities.generateRandomString(length);
+        }
+        return id;
     }
-    static generateISOTimestamp(timestamp = Date.now()) {
-        return new Date(timestamp).toISOString();
+    static checkRandomNumberFormat(value, length = 34) {
+        if (value.toString().length !== length) {
+            return false;
+        }
+        const randomNumberRegex = /^[0-9]+$/;
+        if (!randomNumberRegex.test(value.toString())) {
+            return false;
+        }
+        return true;
     }
-    static formatIdentifier(identifier) {
-        return identifier;
-    }
-    static checkForUUID(identifier) {
-        return identifier.match(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/) !== null;
+    static generateRandomNumber(length = 34) {
+        const id = Math.floor(Math.random() * Math.pow(10, length));
+        if (id.toString().length !== length) {
+            IdentifierUtilities.generateRandomNumber(length);
+        }
+        if (!IdentifierUtilities.checkRandomNumberFormat(id, length)) {
+            IdentifierUtilities.generateRandomNumber(length);
+        }
+        return id;
     }
 }
 exports.IdentifierUtilities = IdentifierUtilities;
