@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SecretManager = void 0;
+const process_1 = __importDefault(require("process"));
 class SecretManager {
     static isReactApp() {
         try {
@@ -14,10 +18,10 @@ class SecretManager {
     static getEnvironment() {
         try {
             // Check if we are in a Node.js environment
-            if (typeof process !== 'undefined' && process.versions && process.versions.node) {
-                console.log('Node.js environment detected');
-                return 'node';
-            }
+            // if (typeof process !== 'undefined' && process.versions && process.versions.node) {
+            //     console.log('Node.js environment detected');
+            //     return 'node';
+            // }
             // if (typeof window === 'undefined'
             // ) {
             //     return 'node';
@@ -37,9 +41,9 @@ class SecretManager {
             }
         }
         catch (error) {
-            return 'production';
+            return 'node';
         }
-        return 'production';
+        return 'node';
     }
     static getSecret(key, options = {}) {
         const environment = this.getEnvironment();
@@ -48,9 +52,9 @@ class SecretManager {
             || environment === 'react') {
             key = 'REACT_APP_' + key;
         }
-        let secret = process.env[key];
+        let secret = process_1.default.env[key];
         if (secret === undefined) {
-            secret = process.env['REACT_APP_' + key];
+            secret = process_1.default.env['REACT_APP_' + key];
         }
         return secret;
     }

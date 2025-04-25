@@ -1,3 +1,4 @@
+import process from 'process';
 var SecretManager = /** @class */ (function () {
     function SecretManager() {
     }
@@ -13,10 +14,10 @@ var SecretManager = /** @class */ (function () {
     SecretManager.getEnvironment = function () {
         try {
             // Check if we are in a Node.js environment
-            if (typeof process !== 'undefined' && process.versions && process.versions.node) {
-                console.log('Node.js environment detected');
-                return 'node';
-            }
+            // if (typeof process !== 'undefined' && process.versions && process.versions.node) {
+            //     console.log('Node.js environment detected');
+            //     return 'node';
+            // }
             // if (typeof window === 'undefined'
             // ) {
             //     return 'node';
@@ -36,9 +37,9 @@ var SecretManager = /** @class */ (function () {
             }
         }
         catch (error) {
-            return 'production';
+            return 'node';
         }
-        return 'production';
+        return 'node';
     };
     SecretManager.getSecret = function (key, options) {
         if (options === void 0) { options = {}; }

@@ -1,3 +1,5 @@
+import process from 'process';
+
 class SecretManager {
 
     public static isReactApp(): boolean {
@@ -12,10 +14,10 @@ class SecretManager {
     public static getEnvironment(): string {
         try {
             // Check if we are in a Node.js environment
-            if (typeof process !== 'undefined' && process.versions && process.versions.node) {
-                console.log('Node.js environment detected');
-                return 'node';
-            }
+            // if (typeof process !== 'undefined' && process.versions && process.versions.node) {
+            //     console.log('Node.js environment detected');
+            //     return 'node';
+            // }
 
             // if (typeof window === 'undefined'
             // ) {
@@ -38,10 +40,10 @@ class SecretManager {
             }
         }
         catch (error: any) {
-            return 'production';
+            return 'node';
         }
 
-        return 'production';
+        return 'node';
     }
 
     public static getSecret(key: string, options: { inReact?: boolean } = {}): string | undefined {
