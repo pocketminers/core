@@ -47,8 +47,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { Checks } from "../checks.js";
 import { Freezer } from "../freezer.js";
-import { IdentifierUtilities } from "../identifier.js";
-import { SecretManager } from "../secret.js";
 var BaseApiClient = /** @class */ (function () {
     function BaseApiClient(options) {
         this.baseUrl = BaseApiClient.checkUrl(options.baseUrl);
@@ -127,33 +125,6 @@ var BaseApiClient = /** @class */ (function () {
         }
         return url;
     };
-    BaseApiClient.prototype.checkPocketApiHeaders = function (headers) {
-        var checkedHeaders = __assign(__assign({}, this.headers), headers);
-        if (this.headers === undefined
-            || this.headers === null
-            || Object.keys(this.headers).length === 0) {
-            this.headers = {};
-        }
-        if (this.headers['x-pocket-public-api-key'] === undefined) {
-            checkedHeaders['x-pocket-public-api-key'] = "txt:".concat(SecretManager.getSecret('POCKET_PUBLIC_API_KEY', { inReact: true }));
-        }
-        if (!this.headers['x-pocket-request-id']) {
-            checkedHeaders['x-pocket-request-id'] = "txt:".concat(IdentifierUtilities.generateUUIDv4());
-        }
-        if (!this.headers['Content-Type']) {
-            checkedHeaders['Content-Type'] = 'application/json';
-        }
-        if (!this.headers['Accept']) {
-            checkedHeaders['Accept'] = 'application/json';
-        }
-        if (!this.headers['Accept-Encoding']) {
-            checkedHeaders['Accept-Encoding'] = 'gzip, deflate, br';
-        }
-        if (!this.headers['User-Agent']) {
-            checkedHeaders['User-Agent'] = 'PocketClient/1.0';
-        }
-        return checkedHeaders;
-    };
     BaseApiClient.prototype.request = function (endpoint, method, body, additionalHeaders) {
         return __awaiter(this, void 0, void 0, function () {
             var url, headers, response, error;
@@ -162,9 +133,6 @@ var BaseApiClient = /** @class */ (function () {
                     case 0:
                         url = BaseApiClient.checkUrl("".concat(this.baseUrl).concat(endpoint));
                         headers = __assign(__assign({}, this.headers), additionalHeaders);
-                        if (url.includes('pocketminers.xyz')) {
-                            headers = this.checkPocketApiHeaders(headers);
-                        }
                         return [4 /*yield*/, this.fetchWithTimeout({
                                 url: url,
                                 options: {

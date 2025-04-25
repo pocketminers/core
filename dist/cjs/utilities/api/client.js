@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseApiClient = void 0;
 const checks_1 = require("../checks.js");
 const freezer_1 = require("../freezer.js");
-const identifier_1 = require("../identifier.js");
-const secret_1 = require("../secret.js");
 class BaseApiClient {
     baseUrl;
     headers;
@@ -53,39 +51,9 @@ class BaseApiClient {
         }
         return url;
     }
-    checkPocketApiHeaders(headers) {
-        let checkedHeaders = { ...this.headers, ...headers };
-        if (this.headers === undefined
-            || this.headers === null
-            || Object.keys(this.headers).length === 0) {
-            this.headers = {};
-        }
-        if (this.headers['x-pocket-public-api-key'] === undefined) {
-            checkedHeaders['x-pocket-public-api-key'] = `txt:${secret_1.SecretManager.getSecret('POCKET_PUBLIC_API_KEY', { inReact: true })}`;
-        }
-        if (!this.headers['x-pocket-request-id']) {
-            checkedHeaders['x-pocket-request-id'] = `txt:${identifier_1.IdentifierUtilities.generateUUIDv4()}`;
-        }
-        if (!this.headers['Content-Type']) {
-            checkedHeaders['Content-Type'] = 'application/json';
-        }
-        if (!this.headers['Accept']) {
-            checkedHeaders['Accept'] = 'application/json';
-        }
-        if (!this.headers['Accept-Encoding']) {
-            checkedHeaders['Accept-Encoding'] = 'gzip, deflate, br';
-        }
-        if (!this.headers['User-Agent']) {
-            checkedHeaders['User-Agent'] = 'PocketClient/1.0';
-        }
-        return checkedHeaders;
-    }
     async request(endpoint, method, body, additionalHeaders) {
         const url = BaseApiClient.checkUrl(`${this.baseUrl}${endpoint}`);
         let headers = { ...this.headers, ...additionalHeaders };
-        if (url.includes('pocketminers.xyz')) {
-            headers = this.checkPocketApiHeaders(headers);
-        }
         const response = await this.fetchWithTimeout({
             url,
             options: {

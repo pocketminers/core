@@ -9,7 +9,6 @@ declare class BaseApiClient {
     constructor(options: ApiClientOptions);
     private fetchWithTimeout;
     static checkUrl(url: string): string;
-    private checkPocketApiHeaders;
     private request;
     get<T>(endpoint: string, headers?: Record<string, string>): Promise<T>;
     post<B = any, T = unknown>(endpoint: string, body: B, headers?: Record<string, string>): Promise<T>;

@@ -2,11 +2,10 @@
     "compilerOptions": {
         "paths": {
             "@/*": [ "./" ],
-            "@utilities/*": [ "./utilities/*" ],
-            "@templates/*": [ "./templates/*" ],
             "@components/*": [ "./components/*" ],
-            "@p2p/*": [ "./p2p/*" ],
-            "@services/*": [ "./services/*" ]
+            "@services/*": [ "./services/*" ],
+            "@templates/*": [ "./templates/*" ],
+            "@utilities/*": [ "./utilities/*" ]
         }
     }
 }

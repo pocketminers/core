@@ -1,7 +1,7 @@
 {
     "name": "@pocketminers/core",
     "description": "Core package for PocketMiners",
-    "version": "0.0.1-pre12",
+    "version": "0.0.1-preAlpha",
     "author": "Pocket Labs LLC",
     "license": "MIT",
     "main": "./dist/esm/index.js",

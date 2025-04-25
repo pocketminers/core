@@ -13,8 +13,20 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 import { SecretManager } from "../secret.js";
 import { BaseApiClient } from "./client.js";
+import { IdentifierUtilities } from "../identifier.js";
 var PocketV0Client = /** @class */ (function (_super) {
     __extends(PocketV0Client, _super);
     function PocketV0Client() {
@@ -31,6 +43,10 @@ var PocketV0Client = /** @class */ (function (_super) {
             }
         }) || this;
     }
+    PocketV0Client.prototype.createPocketRequestHeaders = function () {
+        var requestId = "txt:".concat(IdentifierUtilities.generateUUIDv4());
+        return __assign(__assign({}, this.headers), { 'x-pocket-request-id': requestId });
+    };
     return PocketV0Client;
 }(BaseApiClient));
 export { PocketV0Client };

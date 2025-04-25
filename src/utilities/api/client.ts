@@ -77,44 +77,6 @@ class BaseApiClient {
         return url;
     }
 
-    private checkPocketApiHeaders(headers?: Record<string, string>): Record<string, string> {
-        let checkedHeaders = { ...this.headers, ...headers };
-
-        if (
-            this.headers === undefined
-            || this.headers === null
-            || Object.keys(this.headers).length === 0
-        ) {
-            this.headers = {};
-        }
-
-        if (this.headers['x-pocket-public-api-key'] === undefined) {
-            checkedHeaders['x-pocket-public-api-key'] = `txt:${SecretManager.getSecret('POCKET_PUBLIC_API_KEY', { inReact: true })}`;
-        }
-
-        if (!this.headers['x-pocket-request-id']) {
-            checkedHeaders['x-pocket-request-id'] = `txt:${IdentifierUtilities.generateUUIDv4()}`;
-        }
-
-        if (!this.headers['Content-Type']) {
-            checkedHeaders['Content-Type'] = 'application/json';
-        }
-
-        if (!this.headers['Accept']) {
-            checkedHeaders['Accept'] = 'application/json';
-        }
-
-        if (!this.headers['Accept-Encoding']) {
-            checkedHeaders['Accept-Encoding'] = 'gzip, deflate, br';
-        }
-
-        if (!this.headers['User-Agent']) {
-            checkedHeaders['User-Agent'] = 'PocketClient/1.0';
-        }
-
-        return checkedHeaders;
-    }
-
     private async request
     <
         B = undefined,
@@ -127,10 +89,6 @@ class BaseApiClient {
     ): Promise<T> {
         const url = BaseApiClient.checkUrl(`${this.baseUrl}${endpoint}`);
         let headers = { ...this.headers, ...additionalHeaders };
-
-        if (url.includes('pocketminers.xyz')) {
-            headers = this.checkPocketApiHeaders(headers);
-        }
 
         const response = await this.fetchWithTimeout({
             url,
