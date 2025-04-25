@@ -11,6 +11,7 @@ export default {
     coverageProvider: "v8",
     maxWorkers: 5,
     testEnvironment: "node",
+    setupFiles: ["<rootDir>/tests/load-test-env.ts"],
     testPathIgnorePatterns: ["/node_modules/", "/dist/", "/docs/"],
     roots: [
         "<rootDir>/src",

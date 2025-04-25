@@ -184,3 +184,7 @@ class PocketConfiguration
         return argRecords;
     }
 }
+
+export {
+    PocketConfiguration
+}
