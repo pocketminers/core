@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.PocketConfiguration = void 0;
 const argument_1 = require("./argument.js");
 /**
  * PocketConfiguration is a generic type that represents a configuration object.
@@ -116,4 +117,5 @@ class PocketConfiguration {
         return argRecords;
     }
 }
+exports.PocketConfiguration = PocketConfiguration;
 //# sourceMappingURL=configuration.js.map

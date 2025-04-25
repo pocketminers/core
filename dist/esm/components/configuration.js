@@ -114,4 +114,5 @@ class PocketConfiguration {
         return argRecords;
     }
 }
+export { PocketConfiguration };
 //# sourceMappingURL=configuration.js.map

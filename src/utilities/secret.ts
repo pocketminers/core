@@ -1,16 +1,44 @@
 class SecretManager {
 
+    public static isReactApp(): boolean {
+        try {
+            const React = require('react');
+            return !!React;
+        } catch {
+            return false;
+        }
+    }
+
     public static getEnvironment(): string {
-        if (typeof window === 'undefined') {
-            return 'node';
-        }
+        try {
+            // Check if we are in a Node.js environment
+            if (typeof process !== 'undefined' && process.versions && process.versions.node) {
+                console.log('Node.js environment detected');
+                return 'node';
+            }
 
-        if (window.location.href.includes('localhost')) {
-            return 'development';
-        }
+            // if (typeof window === 'undefined'
+            // ) {
+            //     return 'node';
+            // }
 
-        if (window.location.href.includes('dev')) {
-            return 'react-dev';
+            // if (
+            //     typeof window !== 'undefined'
+            //     && window.location !== undefined
+            //     && window.location.href !== undefined
+            //     && window.location.href.includes('localhost')
+            // ) {
+            //     return 'development';
+            // }
+
+            // Check for a react environment
+            if (this.isReactApp()) {
+                console.log('React environment detected');
+                return 'react';
+            }
+        }
+        catch (error: any) {
+            return 'production';
         }
 
         return 'production';
@@ -19,14 +47,18 @@ class SecretManager {
     public static getSecret(key: string, options: { inReact?: boolean } = {}): string | undefined {
         const environment = this.getEnvironment();
 
-        if (options.inReact || environment === 'react-dev') {
+        if (
+            options.inReact !== undefined
+            && options.inReact === true
+            || environment === 'react'
+        ) {
             key = 'REACT_APP_' + key;
         }
 
-        const secret = process.env[key];
+        let secret = process.env[key];
 
-        if (!secret) {
-            throw new Error(`Secret ${key} not found.`);
+        if (secret === undefined) {
+            secret = process.env['REACT_APP_' + key];
         }
 
         return secret;

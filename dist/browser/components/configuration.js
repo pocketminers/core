@@ -185,4 +185,5 @@ var PocketConfiguration = /** @class */ (function () {
     };
     return PocketConfiguration;
 }());
+export { PocketConfiguration };
 //# sourceMappingURL=configuration.js.map
