@@ -149,11 +149,12 @@ interface BaseProperty
  * const configuration: BaseConfiguration<string> = {
  *   arguments: [
  *     { name: "prop1", value: "value1" },
- *     { name: "prop2", value: "value2" }
+ *     { name: "prop2key", value: "value2" }
  *   ],
  *   parameters: [
  *     { 
  *       name: "prop1",
+ *       key: "prop1",
  *       description: "This is a parameter",
  *       default: "default value",
  *       required: true,
@@ -161,6 +162,7 @@ interface BaseProperty
  *     },
  *     {
  *       name: "prop2",
+ *       key: "prop2key",
  *       description: "This is another parameter",
  *       default: "default value 2",
  *       required: false,

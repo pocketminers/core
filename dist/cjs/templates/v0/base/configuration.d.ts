@@ -105,6 +105,7 @@ interface BaseProperty<T = any> extends Record<'name', BaseValueKey>, Record<'de
  *   parameters: [
  *     {
  *       name: "prop1",
+ *       key: "prop1",
  *       description: "This is a parameter",
  *       default: "default value",
  *       required: true,
@@ -112,6 +113,7 @@ interface BaseProperty<T = any> extends Record<'name', BaseValueKey>, Record<'de
  *     },
  *     {
  *       name: "prop2",
+ *       key: "prop2key",
  *       description: "This is another parameter",
  *       default: "default value 2",
  *       required: false,
