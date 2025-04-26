@@ -285,6 +285,36 @@ var PocketConfiguration = /** @class */ (function () {
         }
         return argRecords;
     };
+    PocketConfiguration.prototype.getPreparedArgByName = function (name) {
+        var e_8, _a;
+        var preparedArgs = this.preparedArgs({ allowNonRequired: true });
+        try {
+            for (var preparedArgs_1 = __values(preparedArgs), preparedArgs_1_1 = preparedArgs_1.next(); !preparedArgs_1_1.done; preparedArgs_1_1 = preparedArgs_1.next()) {
+                var arg = preparedArgs_1_1.value;
+                if (arg[name] !== undefined) {
+                    return new PocketArgument({
+                        name: name,
+                        value: arg[name]
+                    });
+                }
+                // console.log(`arg: ${JSON.stringify(arg)}`);
+            }
+        }
+        catch (e_8_1) { e_8 = { error: e_8_1 }; }
+        finally {
+            try {
+                if (preparedArgs_1_1 && !preparedArgs_1_1.done && (_a = preparedArgs_1.return)) _a.call(preparedArgs_1);
+            }
+            finally { if (e_8) throw e_8.error; }
+        }
+        // if (arg) {
+        //     return new PocketArgument<T>({
+        //         name: name,
+        //         value: arg.
+        //     });
+        // }
+        return undefined;
+    };
     return PocketConfiguration;
 }());
 export { PocketConfiguration };

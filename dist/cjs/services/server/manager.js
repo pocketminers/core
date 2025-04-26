@@ -9,16 +9,51 @@ const cors_1 = __importDefault(require("cors"));
 const security_middleware_1 = require("../server/middleware/security.middleware.js");
 const helmet_1 = __importDefault(require("helmet"));
 const identifier_1 = require("../../utilities/identifier.js");
+const parameters_1 = require("./parameters.js");
+const checks_1 = require("../../utilities/checks.js");
+const configuration_1 = require("../../components/configuration.js");
+const routes_1 = require("./health/routes.js");
 class PocketServerManager {
     id;
+    name;
+    description;
+    version;
+    type;
     app;
-    port;
-    constructor(port) {
-        this.id = identifier_1.IdentifierUtilities.generateUUIDv4();
+    config;
+    constructor({ arguments_ = [], parameters_ = [], } = {}) {
+        const serverParameters = checks_1.Checks.isEmpty(parameters_) ? (0, parameters_1.getPocketServerParameters)() : parameters_;
+        const serverArguments = checks_1.Checks.isEmpty(arguments_) ? new Array() : arguments_;
+        const config = new configuration_1.PocketConfiguration({
+            args: serverArguments,
+            params: serverParameters
+        });
+        console.log('Server Parameters:', serverParameters);
+        console.log('Server Arguments:', serverArguments);
+        console.log('Server Configuration:', config);
+        console.log('Server Configuration:', config.preparedArgs());
+        this.config = config;
+        let id = config.getPreparedArgByName('nodeId')?.value;
+        if (id !== undefined
+            && checks_1.Checks.isEmpty(id) == true) {
+            id = identifier_1.IdentifierUtilities.generateUUIDv4();
+        }
+        let name = config.getPreparedArgByName('name')?.value;
+        if (name !== undefined
+            && checks_1.Checks.isEmpty(name) == true) {
+            name = identifier_1.IdentifierUtilities.generateRandomString(10);
+        }
+        this.id = id;
+        this.name = name;
+        this.type = config.getPreparedArgByName('type')?.value;
+        this.version = config.getPreparedArgByName('version')?.value;
+        this.description = config.getPreparedArgByName('description')?.value;
         this.app = (0, express_1.default)();
-        this.port = port;
         this.configureMiddleware();
         this.configureRoutes();
+        // Freezer.deepFreeze(this.app);
+        // Freezer.deepFreeze(this.config);
+        // Freezer.deepFreeze(this.id);
     }
     configureMiddleware() {
         const corsOptions = {
@@ -59,10 +94,15 @@ class PocketServerManager {
         }));
     }
     configureRoutes() {
+        this.app.get(`${this.type}/${this.version}/${this.name}`, routes_1.healthRouter);
     }
     async start() {
-        this.app.listen(this.port, async () => {
-            console.log(`Server is running on port: ${this.port}`);
+        let port = this.config.getPreparedArgByName('port')?.value;
+        if (checks_1.Checks.isEmpty(port)) {
+            port = 3000;
+        }
+        this.app.listen(port, async () => {
+            console.log(`Server is running on port: ${port}`);
         });
     }
     async close() {

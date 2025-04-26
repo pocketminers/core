@@ -39,13 +39,46 @@ import cors from 'cors';
 import { limiter, checkPublicApiKey } from '../server/middleware/security.middleware.js';
 import helmet from 'helmet';
 import { IdentifierUtilities } from '../../utilities/identifier.js';
+import { getPocketServerParameters } from './parameters.js';
+import { Checks } from '../../utilities/checks.js';
+import { PocketConfiguration } from '../../components/configuration.js';
+import { healthRouter } from './health/routes.js';
 var PocketServerManager = /** @class */ (function () {
-    function PocketServerManager(port) {
-        this.id = IdentifierUtilities.generateUUIDv4();
+    function PocketServerManager(_a) {
+        var _b = _a === void 0 ? {} : _a, _c = _b.arguments_, arguments_ = _c === void 0 ? [] : _c, _d = _b.parameters_, parameters_ = _d === void 0 ? [] : _d;
+        var _e, _f, _g, _h, _j;
+        var serverParameters = Checks.isEmpty(parameters_) ? getPocketServerParameters() : parameters_;
+        var serverArguments = Checks.isEmpty(arguments_) ? new Array() : arguments_;
+        var config = new PocketConfiguration({
+            args: serverArguments,
+            params: serverParameters
+        });
+        console.log('Server Parameters:', serverParameters);
+        console.log('Server Arguments:', serverArguments);
+        console.log('Server Configuration:', config);
+        console.log('Server Configuration:', config.preparedArgs());
+        this.config = config;
+        var id = (_e = config.getPreparedArgByName('nodeId')) === null || _e === void 0 ? void 0 : _e.value;
+        if (id !== undefined
+            && Checks.isEmpty(id) == true) {
+            id = IdentifierUtilities.generateUUIDv4();
+        }
+        var name = (_f = config.getPreparedArgByName('name')) === null || _f === void 0 ? void 0 : _f.value;
+        if (name !== undefined
+            && Checks.isEmpty(name) == true) {
+            name = IdentifierUtilities.generateRandomString(10);
+        }
+        this.id = id;
+        this.name = name;
+        this.type = (_g = config.getPreparedArgByName('type')) === null || _g === void 0 ? void 0 : _g.value;
+        this.version = (_h = config.getPreparedArgByName('version')) === null || _h === void 0 ? void 0 : _h.value;
+        this.description = (_j = config.getPreparedArgByName('description')) === null || _j === void 0 ? void 0 : _j.value;
         this.app = express();
-        this.port = port;
         this.configureMiddleware();
         this.configureRoutes();
+        // Freezer.deepFreeze(this.app);
+        // Freezer.deepFreeze(this.config);
+        // Freezer.deepFreeze(this.id);
     }
     PocketServerManager.prototype.configureMiddleware = function () {
         var corsOptions = {
@@ -86,14 +119,21 @@ var PocketServerManager = /** @class */ (function () {
         }));
     };
     PocketServerManager.prototype.configureRoutes = function () {
+        this.app.get("".concat(this.type, "/").concat(this.version, "/").concat(this.name), healthRouter);
     };
     PocketServerManager.prototype.start = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var port;
             var _this = this;
-            return __generator(this, function (_a) {
-                this.app.listen(this.port, function () { return __awaiter(_this, void 0, void 0, function () {
+            var _a;
+            return __generator(this, function (_b) {
+                port = (_a = this.config.getPreparedArgByName('port')) === null || _a === void 0 ? void 0 : _a.value;
+                if (Checks.isEmpty(port)) {
+                    port = 3000;
+                }
+                this.app.listen(port, function () { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
-                        console.log("Server is running on port: ".concat(this.port));
+                        console.log("Server is running on port: ".concat(port));
                         return [2 /*return*/];
                     });
                 }); });

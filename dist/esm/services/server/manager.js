@@ -3,16 +3,51 @@ import cors from 'cors';
 import { limiter, checkPublicApiKey } from '../server/middleware/security.middleware.js';
 import helmet from 'helmet';
 import { IdentifierUtilities } from '../../utilities/identifier.js';
+import { getPocketServerParameters } from './parameters.js';
+import { Checks } from '../../utilities/checks.js';
+import { PocketConfiguration } from '../../components/configuration.js';
+import { healthRouter } from './health/routes.js';
 class PocketServerManager {
     id;
+    name;
+    description;
+    version;
+    type;
     app;
-    port;
-    constructor(port) {
-        this.id = IdentifierUtilities.generateUUIDv4();
+    config;
+    constructor({ arguments_ = [], parameters_ = [], } = {}) {
+        const serverParameters = Checks.isEmpty(parameters_) ? getPocketServerParameters() : parameters_;
+        const serverArguments = Checks.isEmpty(arguments_) ? new Array() : arguments_;
+        const config = new PocketConfiguration({
+            args: serverArguments,
+            params: serverParameters
+        });
+        console.log('Server Parameters:', serverParameters);
+        console.log('Server Arguments:', serverArguments);
+        console.log('Server Configuration:', config);
+        console.log('Server Configuration:', config.preparedArgs());
+        this.config = config;
+        let id = config.getPreparedArgByName('nodeId')?.value;
+        if (id !== undefined
+            && Checks.isEmpty(id) == true) {
+            id = IdentifierUtilities.generateUUIDv4();
+        }
+        let name = config.getPreparedArgByName('name')?.value;
+        if (name !== undefined
+            && Checks.isEmpty(name) == true) {
+            name = IdentifierUtilities.generateRandomString(10);
+        }
+        this.id = id;
+        this.name = name;
+        this.type = config.getPreparedArgByName('type')?.value;
+        this.version = config.getPreparedArgByName('version')?.value;
+        this.description = config.getPreparedArgByName('description')?.value;
         this.app = express();
-        this.port = port;
         this.configureMiddleware();
         this.configureRoutes();
+        // Freezer.deepFreeze(this.app);
+        // Freezer.deepFreeze(this.config);
+        // Freezer.deepFreeze(this.id);
     }
     configureMiddleware() {
         const corsOptions = {
@@ -53,10 +88,15 @@ class PocketServerManager {
         }));
     }
     configureRoutes() {
+        this.app.get(`${this.type}/${this.version}/${this.name}`, healthRouter);
     }
     async start() {
-        this.app.listen(this.port, async () => {
-            console.log(`Server is running on port: ${this.port}`);
+        let port = this.config.getPreparedArgByName('port')?.value;
+        if (Checks.isEmpty(port)) {
+            port = 3000;
+        }
+        this.app.listen(port, async () => {
+            console.log(`Server is running on port: ${port}`);
         });
     }
     async close() {

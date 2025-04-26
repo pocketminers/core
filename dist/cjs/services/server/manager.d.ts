@@ -1,9 +1,19 @@
 import express from 'express';
+import { BaseArguments } from '../../templates/v0/index.js';
+import { PocketConfiguration } from '../../components/configuration.js';
+import { PocketParameter } from '../../components/parameter.js';
 declare class PocketServerManager {
     id: string;
+    name: string;
+    description: string;
+    version: string;
+    type: string;
     app: express.Application;
-    private port;
-    constructor(port: number);
+    config: PocketConfiguration;
+    constructor({ arguments_, parameters_, }?: {
+        arguments_?: BaseArguments;
+        parameters_?: PocketParameter[];
+    });
     private configureMiddleware;
     private configureRoutes;
     start(): Promise<void>;

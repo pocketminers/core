@@ -100,7 +100,7 @@ interface BaseProperty<T = any> extends Record<'name', BaseValueKey>, Record<'de
  * const configuration: BaseConfiguration<string> = {
  *   arguments: [
  *     { name: "prop1", value: "value1" },
- *     { name: "prop2", value: "value2" }
+ *     { name: "prop2key", value: "value2" }
  *   ],
  *   parameters: [
  *     {

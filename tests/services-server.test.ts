@@ -1,0 +1,56 @@
+import { PocketServerManager } from "@services/server";
+import { getPocketServerParameters } from "@services/server/parameters";
+
+describe("PocketServerManager", () => {
+    let serverManager: PocketServerManager;
+
+    beforeEach(() => {
+        serverManager = new PocketServerManager({
+            arguments_: [{
+                name: "nodeId",
+                value: "test-node-id",
+            },
+            {
+                name: "name",
+                value: "test-name",
+            },
+            {
+                name: "description",
+                value: "test-description",
+            }]
+        });
+    });
+
+    it("should create a PocketServerManager instance", () => {
+        expect(serverManager).toBeInstanceOf(PocketServerManager);
+    });
+
+    it("should have an id", () => {
+        expect(serverManager.id).toBeDefined();
+    });
+
+    it("should have an app", () => {
+        expect(serverManager.app).toBeDefined();
+    });
+
+    it("should have a name", () => {
+        expect(serverManager.name).toBeDefined();
+    });
+
+    it("should have a description", () => {
+        expect(serverManager.description).toBeDefined();
+    });
+
+    it("should have a version", () => {
+        expect(serverManager.version).toBeDefined();
+    });
+
+    it("should have a type", () => {
+        expect(serverManager.type).toBeDefined();
+    });
+
+    it("should have a config", () => {
+        expect(serverManager.config).toBeDefined();
+    });
+
+});

@@ -1,3 +1,4 @@
+export * from './health'
 export * from './manager'
 export * from './middleware'
 export * from './parameters'

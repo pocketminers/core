@@ -185,6 +185,25 @@ class PocketConfiguration {
         }
         return argRecords;
     }
+    getPreparedArgByName(name) {
+        const preparedArgs = this.preparedArgs({ allowNonRequired: true });
+        for (const arg of preparedArgs) {
+            if (arg[name] !== undefined) {
+                return new PocketArgument({
+                    name: name,
+                    value: arg[name]
+                });
+            }
+            // console.log(`arg: ${JSON.stringify(arg)}`);
+        }
+        // if (arg) {
+        //     return new PocketArgument<T>({
+        //         name: name,
+        //         value: arg.
+        //     });
+        // }
+        return undefined;
+    }
 }
 export { PocketConfiguration };
 //# sourceMappingURL=configuration.js.map

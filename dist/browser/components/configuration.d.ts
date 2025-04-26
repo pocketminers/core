@@ -50,6 +50,7 @@ declare class PocketConfiguration<T = any> implements BaseConfiguration<T> {
         allowAdditionalArgs?: boolean;
         allowNonRequired?: boolean;
     }): Array<Record<BaseValueKey, BaseValue>>;
+    getPreparedArgByName<T extends BaseValue = any>(name: BaseValueKey): PocketArgument<T> | undefined;
 }
 export { PocketConfiguration };
 //# sourceMappingURL=configuration.d.ts.map
