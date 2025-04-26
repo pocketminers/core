@@ -2,6 +2,8 @@ import { PocketArgument } from "./argument";
 import { PocketParameter } from "./parameter";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
 import { BaseConfiguration } from "@templates/v0";
+import { Freezer } from "@utilities/freezer";
+import { Checks } from "@utilities/checks";
 
 
 /**
@@ -17,12 +19,12 @@ class PocketConfiguration
     /**
      * The arguments for the configuration.
      */
-    arguments: Array<PocketArgument<T>>;
+    public arguments: Array<PocketArgument<T>>;
 
     /**
      * The parameters for the configuration.
      */
-    parameters: Array<PocketParameter<T>>;
+    public parameters: Array<PocketParameter<T>>;
 
 
     /**
@@ -40,6 +42,24 @@ class PocketConfiguration
     } = {}) {
         this.arguments = args;
         this.parameters = params;
+
+        // Freeze the object to make it immutable
+        Freezer.deepFreeze(this);
+    }
+
+    public preparedArgs({
+        allowAdditionalArgs = true,
+        allowNonRequired = false
+    }: {
+        allowAdditionalArgs?: boolean;
+        allowNonRequired?: boolean;
+    } = {}): Array<Record<BaseValueKey, BaseValue>> {
+        return PocketConfiguration.getArgRecords({
+            args: this.arguments,
+            params: this.parameters,
+            allowAdditionalArgs,
+            allowNonRequired
+        });
     }
 
     public static getNameOrKey({
@@ -50,11 +70,14 @@ class PocketConfiguration
         if (param.key) {
             return param.key;
         }
-        else if (param.name) {
+        else if (
+            param.nameString !== undefined
+            && Checks.isEmpty(param.nameString) === false
+        ) {
             return param.name;
         }
         else {
-            throw new Error(`Parameter ${param.name} does not have a key or name.`);
+            throw new Error(`Parameter ${param.nameString} does not have a key or name.`);
         }
     }
 
@@ -165,39 +188,101 @@ class PocketConfiguration
     public static getArgRecords({
         args,
         params,
-        allowAdditionalArgs = true
+        allowAdditionalArgs = true,
+        allowNonRequired = false
     }: {
-        args: Array<PocketArgument>;
+        args?: Array<PocketArgument>;
         params: Array<PocketParameter>;
         allowAdditionalArgs?: boolean;
+        allowNonRequired?: boolean;
     }): Array<Record<BaseValueKey, BaseValue>> {
         const argRecords = new Array<Record<BaseValueKey, BaseValue>>();
-        
-        for (const arg of args) {
-            // Check if the argument has a corresponding parameter
-            const param = params.find((param) => PocketConfiguration.getNameOrKey({param}) === arg.name);
-            if (
-                param === undefined
-                && allowAdditionalArgs === false
-            ) {
-                throw new Error(`Argument ${arg.nameString} does not have a corresponding parameter and additional arguments are not allowed.`);
-            }
 
-            // Check if the argument value is valid
+        if (args === undefined) {
+            args = new Array<PocketArgument>();
+        }
+       
+        for (const param of params) {
+            const arg = args.find((arg) => arg.name === PocketConfiguration.getNameOrKey({ param }));
+
+            // Check if an argument is required and defined either in the argument or parameter
             if (
-                param !== undefined
+                arg !== undefined
                 && param.required === true
                 && param.default === undefined
                 && arg.value === undefined
             ) {
                 throw new Error(`Argument ${arg.nameString} is required but has no value.`);
             }
+        
+            else if (
+                arg !== undefined
+                && param.required === true
+                && param.default === undefined
+                && arg.value !== undefined
+                && Checks.isEmpty(arg.value) === false
+            ) {
+                argRecords.push({
+                    [PocketConfiguration.getNameOrKey({ param })]: arg.value
+                }); 
+            }
+            else if (
+                param.required === true
+                && param.default !== undefined
+            ) {
+                argRecords.push({
+                    [PocketConfiguration.getNameOrKey({ param })]: param.default
+                });
+            }
+            else if (
+                param.required === false
+                && param.default !== undefined
+                && allowNonRequired === true
+            ) {
+                argRecords.push({
+                    [PocketConfiguration.getNameOrKey({ param })]: param.default
+                });
+            }
+            else if (
+                param.required === false
+                && arg !== undefined
+                && arg.value !== undefined
+                && Checks.isEmpty(arg.value) === false
+                && allowNonRequired === true
+            ) {
+                argRecords.push({
+                    [PocketConfiguration.getNameOrKey({ param })]: arg.value
+                });
+            }
+        }
 
-            // append the argument record
-            argRecords.push({
-                [arg.name]: arg.value
-            });
+        if (allowAdditionalArgs === true) {
+            for (const arg of args) {
+                // Check if the argument has a corresponding parameter
+                const param = params.find((param) => PocketConfiguration.getNameOrKey({param}) === arg.name);
+                if (
+                    param === undefined
+                    && allowAdditionalArgs === true
+                ) {
+                    argRecords.push({
+                        [arg.name]: arg.value
+                    });
+                }
+            }
+        }
 
+        const requiredParams = PocketConfiguration.getRequiredParameters({ params });
+
+        const missingRequiredParams = new Array<PocketParameter>();
+        for (const param of requiredParams) {
+            const arg = argRecords.find((argRecord) => argRecord[PocketConfiguration.getNameOrKey({ param })] !== undefined);
+            if (arg === undefined) {
+                missingRequiredParams.push(param);
+            }
+        }
+
+        if (missingRequiredParams.length > 0) {
+            throw new Error(`Missing required parameters: ${missingRequiredParams.map((param) => param.name).join(", ")}`);
         }
 
         return argRecords;

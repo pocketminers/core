@@ -5,6 +5,7 @@ import { BaseIdentifierFormat, BaseIdentifierFormats } from "./identifier";
 
 /**
  * BaseArgument is a generic type that represents an argument object.
+ * - The name is equivalent to the name of the parameter.  If a key is specified, it will be used as the name of the argument.
  * 
  * @template T - The type of the value.
  * 
@@ -53,6 +54,7 @@ interface BaseArguments
  * @example
  * const parameter: BaseParameter<string> = {
  *   name: "param1",
+ *   key: "param1",
  *   description: "This is a parameter",
  *   default: "default value",
  *   required: true,
@@ -82,6 +84,7 @@ interface BaseParameter
  * const parameters: BaseParameters<string> = [
  *  {
  *    name: "param1",
+ *    key: "param1",
  *    description: "This is a parameter",
  *    default: "default value",
  *    required: true,
@@ -89,7 +92,8 @@ interface BaseParameter
  *  },
  *  {
  *    name: "param2",
- *    description: "This is another parameter",
+ *    key: "param2key",
+ *    description: "This is another parameter, note the key is different from the name, it will be expecting an arg with the name param2key",
  *    default: "default value 2",
  *    required: false,
  *    optional: ["optional value 3"]

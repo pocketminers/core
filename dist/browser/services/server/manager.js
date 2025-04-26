@@ -36,9 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import express from 'express';
 import cors from 'cors';
-import { limiter, checkPublicApiKey } from '@services/server/middleware/security.middleware';
+import { limiter, checkPublicApiKey } from '../server/middleware/security.middleware.js';
 import helmet from 'helmet';
-import { IdentifierUtilities } from '@utilities/identifier';
+import { IdentifierUtilities } from '../../utilities/identifier.js';
 var PocketServerManager = /** @class */ (function () {
     function PocketServerManager(port) {
         this.id = IdentifierUtilities.generateUUIDv4();

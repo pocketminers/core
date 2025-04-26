@@ -1,5 +1,5 @@
-import { Checks } from "@utilities/checks";
-import { Freezer } from "@utilities/freezer";
+import { Checks } from "../utilities/checks.js";
+import { Freezer } from "../utilities/freezer.js";
 /**
  * PocketParameter is a class that represents a parameter object.
  * - It is used to encapsulate parameters in the Pocket framework.

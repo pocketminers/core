@@ -1,6 +1,6 @@
-import { Checks } from "@utilities/checks";
-import { DateUtilities } from "@utilities/date";
-import { Freezer } from "@utilities/freezer";
+import { Checks } from "../utilities/checks.js";
+import { DateUtilities } from "../utilities/date.js";
+import { Freezer } from "../utilities/freezer.js";
 /**
  * PocketTimestamp represents a timestamp, defaulting to the current date and time.
  * - It can also be an empty string or a number representing a timestamp.

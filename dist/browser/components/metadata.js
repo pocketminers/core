@@ -9,9 +9,9 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import { BaseIdentifierFormats } from "@templates/v0/base/identifier";
-import { BaseObjects } from "@templates/v0/base/object";
-import { Freezer } from "@utilities/freezer";
+import { BaseIdentifierFormats } from "../templates/v0/base/identifier.js";
+import { BaseObjects } from "../templates/v0/base/object.js";
+import { Freezer } from "../utilities/freezer.js";
 var PocketMetadata = /** @class */ (function () {
     function PocketMetadata(_a) {
         var _b = _a === void 0 ? {} : _a, id = _b.id, name = _b.name, type = _b.type, description = _b.description, tags = _b.tags, _c = _b.timestamps, timestamps = _c === void 0 ? {

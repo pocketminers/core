@@ -49,7 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { PocketV0Client } from "./pocketV0.client";
+import { PocketV0Client } from "./pocketV0.client.js";
 var PocketV0DidClient = /** @class */ (function (_super) {
     __extends(PocketV0DidClient, _super);
     function PocketV0DidClient() {

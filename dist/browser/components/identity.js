@@ -1,5 +1,5 @@
-import { Freezer } from "@utilities/freezer";
-import { IdentifierUtilities } from "@utilities/identifier";
+import { Freezer } from "../utilities/freezer.js";
+import { IdentifierUtilities } from "../utilities/identifier.js";
 /**
  * PocketIdentity is a generic class that represents an identity object.
  * - Identifiers are immutable after creation.

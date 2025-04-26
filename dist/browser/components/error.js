@@ -13,8 +13,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { PocketMessage } from '@components/message';
-import { BaseMessageLevels } from '@templates/v0/base/message';
+import { PocketMessage } from './message.js';
+import { BaseMessageLevels } from '../templates/v0/base/message.js';
 var PocketErrorMessage = /** @class */ (function (_super) {
     __extends(PocketErrorMessage, _super);
     function PocketErrorMessage(_a) {

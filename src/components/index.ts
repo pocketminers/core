@@ -1,4 +1,6 @@
 export * from './argument';
+// export * from './command';
+export * from './configuration';
 export * from './error';
 export * from './identity';
 export * from './message';
