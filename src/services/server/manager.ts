@@ -114,7 +114,7 @@ class PocketServerManager {
     }
 
     private configureRoutes() {
-        this.app.get(`${this.type}/${this.version}/${this.name}`, healthRouter);
+        this.app.use(`/${this.type}/${this.version}/${this.name}`, healthRouter);
     }
 
     public async start () {
@@ -125,7 +125,7 @@ class PocketServerManager {
         }
 
         this.app.listen(port, async () => {
-            console.log(`Server is running on port: ${port}`);
+            console.log(`Server is running on port: ${port}`)
         });
     }
 

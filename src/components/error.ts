@@ -4,7 +4,7 @@ import { BaseClientErrorCodes, BaseMessageLevels, BaseServerErrorCodes, BaseWarn
 
 class PocketErrorMessage
 <
-    C extends BaseClientErrorCodes | BaseWarningCodes | BaseServerErrorCodes = BaseClientErrorCodes.BAD_REQUEST,
+    C extends BaseClientErrorCodes | BaseWarningCodes | BaseServerErrorCodes,
     L extends Extract<BaseMessageLevels, 'ERROR' | 'CRITICAL' | 'WARNING' | 'TRACE'> = BaseMessageLevels.ERROR,
     E extends Error = any,
     D = any

@@ -13,10 +13,7 @@ const getPocketServerParameters = (): PocketParameter[] => {
             description: "The port the server will listen on.",
             default: 3000,
             required: true
-        })
-    );
-
-    PocketServerParameters.push(
+        }),
         new PocketParameter<string>({
             name: "Service Type",
             key: "type",
@@ -28,10 +25,7 @@ const getPocketServerParameters = (): PocketParameter[] => {
                 "rpc",
                 "websocket"
             ]
-        })
-    );
-
-    PocketServerParameters.push(
+        }),
         new PocketParameter<string>({
             name: "Service Version",
             key: "version",
@@ -41,28 +35,19 @@ const getPocketServerParameters = (): PocketParameter[] => {
             options: [
                 "v0"
             ]
-        })
-    );
-
-    PocketServerParameters.push(
+        }),
         new PocketParameter<string>({
             name: "Service Name",
             key: "name",
             description: "The name of the service to run.",
             required: true
-        })
-    );
-
-    PocketServerParameters.push(
+        }),
         new PocketParameter<string>({
             name: "Service Description",
             key: "description",
             description: "The description of the service to run.",
             required: false
-        })
-    );
-
-    PocketServerParameters.push(
+        }),
         new PocketParameter<string>({
             name: "Node ID",
             key: "nodeId",
