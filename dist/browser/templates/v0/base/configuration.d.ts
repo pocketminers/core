@@ -1,4 +1,4 @@
-import { BaseValue, BaseValueKey, StringOrEmpty } from "../../v0/base/value.js";
+import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 /**
  * BaseArgument is a generic type that represents an argument object.
  *
@@ -40,7 +40,7 @@ interface BaseArguments<T = any> extends Array<BaseArgument<T>> {
  *   optional: ["optional value 1", "optional value 2"]
  * };
  */
-interface BaseParameter<T = any> extends Record<'name', BaseValueKey>, Record<'description', StringOrEmpty>, Record<'required', boolean>, Record<'default', BaseValue<T> | undefined>, Record<'options', Array<BaseValue<T>>> {
+interface BaseParameter<T = any> extends Record<'name', BaseValueKey>, Record<'key', BaseValueKey | undefined>, Record<'description', StringOrEmpty>, Record<'required', boolean>, Record<'default', BaseValue<T> | undefined>, Record<'options', Array<BaseValue<T>>> {
 }
 /**
  * BaseParameters is a generic type that represents a collection of parameters.

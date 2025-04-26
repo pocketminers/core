@@ -1,2 +1,2 @@
-export * from './base/index.js';
+export * from './base';
 //# sourceMappingURL=index.d.ts.map

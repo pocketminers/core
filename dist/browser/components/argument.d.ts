@@ -1,4 +1,4 @@
-import { BaseArgument, BaseValue, BaseValueKey } from "../templates/v0/index.js";
+import { BaseArgument, BaseValue, BaseValueKey } from "@templates/v0";
 /**
  * PocketARgumentEntry is an interface that represents a key-value pair.
  * - It is used to encapsulate arguments in the Pocket framework.

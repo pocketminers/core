@@ -1,4 +1,4 @@
-import { BaseTimestamp, BaseTimestampEntry, DateEntry } from "../templates/v0/base/timestamps.js";
+import { BaseTimestamp, BaseTimestampEntry, DateEntry } from "@templates/v0/base/timestamps";
 /**
  * PocketTimestamp represents a timestamp, defaulting to the current date and time.
  * - It can also be an empty string or a number representing a timestamp.

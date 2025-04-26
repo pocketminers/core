@@ -1,1 +1,0 @@
-{"version":3,"file":"networks.d.ts","sourceRoot":"","sources":["../../../../../src/utilities/blockchain/antelope/networks.ts"],"names":[],"mappings":"AAAA,cAAM,gBAAgB;IACpB,gBAAuB,OAAO,aAAa;IAC3C,gBAAuB,OAAO,aAAa;IAC3C,gBAAuB,QAAQ,cAAc;CAC9C;AAED,cAAM,iBAAiB;IACnB,gBAAuB,OAAO,WAI5B;IAEF,gBAAuB,OAAO,WAI5B;IAEF,gBAAuB,QAAQ,WAE7B;CACL;AAED,OAAO,EACH,gBAAgB,EAChB,iBAAiB,GACpB,CAAA"}

@@ -24,9 +24,9 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import { SecretManager } from "../secret.js";
-import { BaseApiClient } from "./client.js";
-import { IdentifierUtilities } from "../identifier.js";
+import { SecretManager } from "@utilities/secret";
+import { BaseApiClient } from "./client";
+import { IdentifierUtilities } from "@utilities/identifier";
 var PocketV0Client = /** @class */ (function (_super) {
     __extends(PocketV0Client, _super);
     function PocketV0Client() {

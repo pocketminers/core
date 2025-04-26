@@ -14,8 +14,8 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-import { Checks } from "../utilities/checks.js";
-import { Freezer } from "../utilities/freezer.js";
+import { Checks } from "@utilities/checks";
+import { Freezer } from "@utilities/freezer";
 /**
  * PocketArgument is a class that represents a key-value pair.
  * - It is used to encapsulate arguments in the Pocket framework.

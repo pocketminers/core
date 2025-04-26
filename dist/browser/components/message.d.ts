@@ -1,4 +1,4 @@
-import { BaseMessageCodes, BaseMessageLevels, BaseSuccessCodes } from "../templates/v0/base/message.js";
+import { BaseMessageCodes, BaseMessageLevels, BaseSuccessCodes } from "@templates/v0/base/message";
 interface PocketMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevels = BaseMessageLevels.SUCCESS, B = any, D = any> extends Partial<Record<'code', C>>, Partial<Record<'level', L>>, Partial<Record<'body', B>>, Partial<Record<'timestamp', Date>>, Partial<Record<'data', D>>, Partial<Record<'printToConsole', boolean>>, Partial<Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>>, Partial<Record<'delayCallback', number>> {
 }
 /**

@@ -3,8 +3,8 @@
 //  * description: This file defines the structure of a user account in the Pocket Network.
 //  * It includes properties such as account ID, name, contacts, timestamps, storage, and metadata.
 //  */
-// import { BaseMetadata } from "../../v0/base/metadata.js";
-// import { BaseValue, StringOrEmpty } from "../../v0/base/value.js";
+// import { BaseMetadata } from "@templates/v0/base/metadata";
+// import { BaseValue, StringOrEmpty } from "@templates/v0/base/value";
 // /**
 //  * PocketUserAccountTimestamps represents the timestamps associated with a user account.
 //  * It includes the creation date, last login date, and other relevant timestamps.

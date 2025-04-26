@@ -45,11 +45,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { BaseIdentifierFormats } from "../templates/v0/base/identifier.js";
-import { PocketMetadata } from "./metadata.js";
-import { Freezer } from "../utilities/freezer.js";
-import { MultiHashUtilities } from "../utilities/multiHash.js";
-import { Checks } from "../utilities/checks.js";
+import { BaseIdentifierFormats } from "@templates/v0/base/identifier";
+import { PocketMetadata } from "./metadata";
+import { Freezer } from "@utilities/freezer";
+import { MultiHashUtilities } from "@utilities/multiHash";
+import { Checks } from "@utilities/checks";
 /**
  * PocketObject is a class that represents an object in the Pocket framework.
  * - It is a generic class that can be used with different types of data and metadata.

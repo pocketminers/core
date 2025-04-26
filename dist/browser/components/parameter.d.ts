@@ -1,4 +1,4 @@
-import { BaseParameter, BaseValue, BaseValueKey } from "../templates/v0/index.js";
+import { BaseParameter, BaseValue, BaseValueKey } from "@templates/v0";
 /**
  * PocketParameter is a class that represents a parameter object.
  * - It is used to encapsulate parameters in the Pocket framework.
@@ -28,6 +28,12 @@ declare class PocketParameter<T = any> implements BaseParameter<T> {
      */
     readonly name: BaseValueKey;
     /**
+     * The key of the parameter, if different from the name.
+     * - It is an optional field and can be empty which is the default, expressed as an empty string.
+     * - It is used to provide a different key for the parameter.
+     */
+    readonly key: BaseValueKey;
+    /**
      * The description of the parameter.
      * - It is an optional field and can be empty which is the default, expressed as an empty string.
      * - It is used to provide additional information about the parameter.
@@ -55,8 +61,9 @@ declare class PocketParameter<T = any> implements BaseParameter<T> {
      * The constructor initializes the name, description, default value, required flag, and options list.
      * - If the name is empty, it throws an error.
      */
-    constructor({ name, description, default: defaultValue, required, options }: {
+    constructor({ name, key, description, default: defaultValue, required, options }: {
         name: BaseValueKey;
+        key?: BaseValueKey;
         description?: string;
         default?: BaseValue<T>;
         required?: boolean;
@@ -68,6 +75,12 @@ declare class PocketParameter<T = any> implements BaseParameter<T> {
      * @returns {string} - The name of the parameter.
      */
     get nameString(): string;
+    /**
+     * Returns the key of the parameter as a string.
+     *
+     * @returns {string} - The key of the parameter.
+     */
+    get keyString(): string;
     /**
      * Checks if the provided value is valid according to the parameter's rules.
      * - If the value is required and empty, it throws an error.

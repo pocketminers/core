@@ -1,8 +1,8 @@
-export * from './configuration.js';
-export * from './identifier.js';
-export * from './message.js';
-export * from './metadata.js';
-export * from './object.js';
-export * from './timestamps.js';
-export * from './value.js';
+export * from './configuration';
+export * from './identifier';
+export * from './message';
+export * from './metadata';
+export * from './object';
+export * from './timestamps';
+export * from './value';
 //# sourceMappingURL=index.js.map

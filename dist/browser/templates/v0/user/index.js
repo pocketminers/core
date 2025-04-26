@@ -1,2 +1,2 @@
-// export * from './account.js';
+// export * from './account';
 //# sourceMappingURL=index.js.map

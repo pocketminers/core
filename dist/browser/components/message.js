@@ -34,8 +34,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { BaseClientErrorCodes, BaseInfoCodes, BaseMessageLevels, BaseServerErrorCodes, BaseSuccessCodes, BaseWarningCodes } from "../templates/v0/base/message.js";
-import { Freezer } from "../utilities/freezer.js";
+import { BaseClientErrorCodes, BaseInfoCodes, BaseMessageLevels, BaseServerErrorCodes, BaseSuccessCodes, BaseWarningCodes } from "@templates/v0/base/message";
+import { Freezer } from "@utilities/freezer";
 /**
  * PocketMessage is a class that represents a message with a code, level, body, timestamp, and optional data.
  * - It is used to encapsulate messages in the Pocket framework.

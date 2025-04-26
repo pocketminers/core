@@ -1,9 +1,9 @@
-export * from './argument.js';
-export * from './error.js';
-export * from './identity.js';
-export * from './message.js';
-export * from './metadata.js';
-export * from './object.js';
-export * from './parameter.js';
-export * from './timestamp.js';
+export * from './argument';
+export * from './error';
+export * from './identity';
+export * from './message';
+export * from './metadata';
+export * from './object';
+export * from './parameter';
+export * from './timestamp';
 //# sourceMappingURL=index.js.map

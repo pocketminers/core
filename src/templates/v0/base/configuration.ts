@@ -65,6 +65,7 @@ interface BaseParameter
 >
     extends
         Record<'name', BaseValueKey>,
+        Record<'key', BaseValueKey | undefined>,
         Record<'description', StringOrEmpty>,
         Record<'required', boolean>,
         Record<'default', BaseValue<T> | undefined>,

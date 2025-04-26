@@ -1,7 +1,7 @@
-import { NumberOrEmpty } from "../../v0/base/value.js";
-import { BaseIdentifier } from "./identifier.js";
-import { BaseObjectType } from "./object.js";
-import { BaseComponents } from "./component.js";
+import { NumberOrEmpty } from "@templates/v0/base/value";
+import { BaseIdentifier } from "./identifier";
+import { BaseObjectType } from "./object";
+import { BaseComponents } from "./component";
 /**
  * BaseStorageTypes is an enumeration of the different types of storage
  * that a user account can have. It includes types such as FILE, DIRECTORY, DATABASE, etc.

@@ -1,6 +1,6 @@
-import { BaseParameters } from "./configuration.js";
-import { BaseInstance } from "./process.js";
-import { BaseValue, BaseValueKey } from "./value.js";
+import { BaseParameters } from "./configuration";
+import { BaseInstance } from "./process";
+import { BaseValue, BaseValueKey } from "./value";
 /**
  * BaseCommandRunner is a generic type that represents a command runner function.
  * - It takes arguments and an instance as parameters and returns a promise of type R.

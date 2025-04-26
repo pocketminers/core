@@ -1,6 +1,6 @@
-import { BaseCommands } from "./command.js";
-import { BaseConfiguration } from "./configuration.js";
-import { BaseValue, BaseValueKey } from "./value.js";
+import { BaseCommands } from "./command";
+import { BaseConfiguration } from "./configuration";
+import { BaseValue, BaseValueKey } from "./value";
 /**
  * BaseInstance is a generic type that represents an instance of a process.
  * - It takes arguments and returns a promise of type R.

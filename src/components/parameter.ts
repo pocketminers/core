@@ -40,6 +40,13 @@ class PocketParameter
     public readonly name: BaseValueKey;
 
     /**
+     * The key of the parameter, if different from the name.
+     * - It is an optional field and can be empty which is the default, expressed as an empty string.
+     * - It is used to provide a different key for the parameter.
+     */
+    public readonly key: BaseValueKey;
+
+    /**
      * The description of the parameter.
      * - It is an optional field and can be empty which is the default, expressed as an empty string.
      * - It is used to provide additional information about the parameter.
@@ -73,12 +80,14 @@ class PocketParameter
      */
     public constructor({
         name,
+        key = "",
         description = "",
         default: defaultValue = undefined,
         required = false,
         options = []
     }: {
         name: BaseValueKey;
+        key?: BaseValueKey;
         description?: string;
         default?: BaseValue<T>;
         required?: boolean;
@@ -88,7 +97,12 @@ class PocketParameter
             throw new Error("Name is required");
         }
 
+        if (Checks.isEmpty(key) == true) {
+            key = name;
+        }
+
         this.name = name;
+        this.key = key;
         this.description = description;
         this.default = defaultValue;
         this.required = required;
@@ -104,6 +118,15 @@ class PocketParameter
      */
     public get nameString(): string {
         return String(this.name);
+    }
+
+    /**
+     * Returns the key of the parameter as a string.
+     * 
+     * @returns {string} - The key of the parameter.
+     */
+    public get keyString(): string {
+        return String(this.key);
     }
 
     /**

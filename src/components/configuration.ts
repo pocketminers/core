@@ -31,12 +31,31 @@ class PocketConfiguration
      * @param arguments_ - The arguments for the configuration.
      * @param parameters_ - The parameters for the configuration.
      */
-    public constructor(
-        args: Array<PocketArgument<T>>,
-        params: Array<PocketParameter<T>>
-    ) {
+    public constructor({
+        args = [],
+        params = []
+    }: { 
+        args?: Array<PocketArgument<T>>;
+        params?: Array<PocketParameter<T>>;
+    } = {}) {
         this.arguments = args;
         this.parameters = params;
+    }
+
+    public static getNameOrKey({
+        param
+    }: {
+        param: PocketParameter;
+    }): BaseValueKey {
+        if (param.key) {
+            return param.key;
+        }
+        else if (param.name) {
+            return param.name;
+        }
+        else {
+            throw new Error(`Parameter ${param.name} does not have a key or name.`);
+        }
     }
 
 
@@ -89,13 +108,13 @@ class PocketConfiguration
             const defaultValue = param.default;
            if (defaultValue) {
                 defaultRequiredParamValues.push(new PocketArgument({
-                    name: param.name,
+                    name: PocketConfiguration.getNameOrKey({ param }),
                     value: defaultValue
                 }));
             }
             else {
                 defaultRequiredParamValues.push(new PocketArgument({
-                    name: param.name,
+                    name: PocketConfiguration.getNameOrKey({ param }),
                     value: undefined
                 }));
             }
@@ -121,13 +140,13 @@ class PocketConfiguration
         const arguments_ = new Array<PocketArgument>();
 
         for (const param of requiredParams) {
-            const arg = args.find((arg) => arg.name === param.name);
+            const arg = args.find((arg) => arg.name === PocketConfiguration.getNameOrKey({ param }));
             if (arg) {
                 arguments_.push(arg);
             }
             else if (param.default !== undefined) {
                 arguments_.push(new PocketArgument({
-                    name: param.name,
+                    name: PocketConfiguration.getNameOrKey({ param }),
                     value: param.default
                 }));
             }
@@ -156,7 +175,7 @@ class PocketConfiguration
         
         for (const arg of args) {
             // Check if the argument has a corresponding parameter
-            const param = params.find((param) => param.name === arg.name);
+            const param = params.find((param) => PocketConfiguration.getNameOrKey({param}) === arg.name);
             if (
                 param === undefined
                 && allowAdditionalArgs === false

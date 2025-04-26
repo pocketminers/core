@@ -1,7 +1,7 @@
-import { BaseIdentifier, BaseIdentifierFormat } from "../../v0/base/identifier.js";
-import { BaseValue, BaseValueKey, StringOrEmpty } from "../../v0/base/value.js";
-import { BaseTimestamps } from "../../v0/base/timestamps.js";
-import { BaseObjectType } from "./object.js";
+import { BaseIdentifier, BaseIdentifierFormat } from "@templates/v0/base/identifier";
+import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
+import { BaseTimestamps } from "@templates/v0/base/timestamps";
+import { BaseObjectType } from "./object";
 /**
  * Annotations are key-value pairs that provide additional information about the user account.
  * - Annotations can be used to store metadata or other information that is not part of the main data structure.

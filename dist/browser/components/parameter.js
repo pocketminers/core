@@ -1,5 +1,5 @@
-import { Checks } from "../utilities/checks.js";
-import { Freezer } from "../utilities/freezer.js";
+import { Checks } from "@utilities/checks";
+import { Freezer } from "@utilities/freezer";
 /**
  * PocketParameter is a class that represents a parameter object.
  * - It is used to encapsulate parameters in the Pocket framework.
@@ -27,11 +27,15 @@ var PocketParameter = /** @class */ (function () {
      * - If the name is empty, it throws an error.
      */
     function PocketParameter(_a) {
-        var name = _a.name, _b = _a.description, description = _b === void 0 ? "" : _b, _c = _a.default, defaultValue = _c === void 0 ? undefined : _c, _d = _a.required, required = _d === void 0 ? false : _d, _e = _a.options, options = _e === void 0 ? [] : _e;
+        var name = _a.name, _b = _a.key, key = _b === void 0 ? "" : _b, _c = _a.description, description = _c === void 0 ? "" : _c, _d = _a.default, defaultValue = _d === void 0 ? undefined : _d, _e = _a.required, required = _e === void 0 ? false : _e, _f = _a.options, options = _f === void 0 ? [] : _f;
         if (Checks.isEmpty(name) == true) {
             throw new Error("Name is required");
         }
+        if (Checks.isEmpty(key) == true) {
+            key = name;
+        }
         this.name = name;
+        this.key = key;
         this.description = description;
         this.default = defaultValue;
         this.required = required;
@@ -46,6 +50,18 @@ var PocketParameter = /** @class */ (function () {
          */
         get: function () {
             return String(this.name);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(PocketParameter.prototype, "keyString", {
+        /**
+         * Returns the key of the parameter as a string.
+         *
+         * @returns {string} - The key of the parameter.
+         */
+        get: function () {
+            return String(this.key);
         },
         enumerable: false,
         configurable: true

@@ -9,7 +9,7 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-import { PocketArgument } from "./argument.js";
+import { PocketArgument } from "./argument";
 /**
  * PocketConfiguration is a generic type that represents a configuration object.
  */
@@ -20,10 +20,23 @@ var PocketConfiguration = /** @class */ (function () {
      * @param arguments_ - The arguments for the configuration.
      * @param parameters_ - The parameters for the configuration.
      */
-    function PocketConfiguration(args, params) {
+    function PocketConfiguration(_a) {
+        var _b = _a === void 0 ? {} : _a, _c = _b.args, args = _c === void 0 ? [] : _c, _d = _b.params, params = _d === void 0 ? [] : _d;
         this.arguments = args;
         this.parameters = params;
     }
+    PocketConfiguration.getNameOrKey = function (_a) {
+        var param = _a.param;
+        if (param.key) {
+            return param.key;
+        }
+        else if (param.name) {
+            return param.name;
+        }
+        else {
+            throw new Error("Parameter ".concat(param.name, " does not have a key or name."));
+        }
+    };
     PocketConfiguration.getRequiredParameters = function (_a) {
         var e_1, _b;
         var params = _a.params;
@@ -81,13 +94,13 @@ var PocketConfiguration = /** @class */ (function () {
                 var defaultValue = param.default;
                 if (defaultValue) {
                     defaultRequiredParamValues.push(new PocketArgument({
-                        name: param.name,
+                        name: PocketConfiguration.getNameOrKey({ param: param }),
                         value: defaultValue
                     }));
                 }
                 else {
                     defaultRequiredParamValues.push(new PocketArgument({
-                        name: param.name,
+                        name: PocketConfiguration.getNameOrKey({ param: param }),
                         value: undefined
                     }));
                 }
@@ -112,13 +125,13 @@ var PocketConfiguration = /** @class */ (function () {
         var missingRequiredParams = new Array();
         var arguments_ = new Array();
         var _loop_1 = function (param) {
-            var arg = args.find(function (arg) { return arg.name === param.name; });
+            var arg = args.find(function (arg) { return arg.name === PocketConfiguration.getNameOrKey({ param: param }); });
             if (arg) {
                 arguments_.push(arg);
             }
             else if (param.default !== undefined) {
                 arguments_.push(new PocketArgument({
-                    name: param.name,
+                    name: PocketConfiguration.getNameOrKey({ param: param }),
                     value: param.default
                 }));
             }
@@ -151,7 +164,7 @@ var PocketConfiguration = /** @class */ (function () {
         var _loop_2 = function (arg) {
             var _d;
             // Check if the argument has a corresponding parameter
-            var param = params.find(function (param) { return param.name === arg.name; });
+            var param = params.find(function (param) { return PocketConfiguration.getNameOrKey({ param: param }) === arg.name; });
             if (param === undefined
                 && allowAdditionalArgs === false) {
                 throw new Error("Argument ".concat(arg.nameString, " does not have a corresponding parameter and additional arguments are not allowed."));

@@ -1,7 +1,7 @@
-import { PocketArgument } from "./argument.js";
-import { PocketParameter } from "./parameter.js";
-import { BaseValue, BaseValueKey } from "../templates/v0/base/value.js";
-import { BaseConfiguration } from "../templates/v0/index.js";
+import { PocketArgument } from "./argument";
+import { PocketParameter } from "./parameter";
+import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
+import { BaseConfiguration } from "@templates/v0";
 /**
  * PocketConfiguration is a generic type that represents a configuration object.
  */
@@ -20,7 +20,13 @@ declare class PocketConfiguration<T = any> implements BaseConfiguration<T> {
      * @param arguments_ - The arguments for the configuration.
      * @param parameters_ - The parameters for the configuration.
      */
-    constructor(args: Array<PocketArgument<T>>, params: Array<PocketParameter<T>>);
+    constructor({ args, params }?: {
+        args?: Array<PocketArgument<T>>;
+        params?: Array<PocketParameter<T>>;
+    });
+    static getNameOrKey({ param }: {
+        param: PocketParameter;
+    }): BaseValueKey;
     static getRequiredParameters({ params }: {
         params: Array<PocketParameter>;
     }): Array<PocketParameter>;

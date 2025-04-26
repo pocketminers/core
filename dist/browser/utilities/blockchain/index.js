@@ -1,2 +1,2 @@
-export * from './antelope/index.js';
+export * from './antelope';
 //# sourceMappingURL=index.js.map

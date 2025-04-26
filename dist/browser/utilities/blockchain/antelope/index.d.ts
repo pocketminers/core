@@ -1,4 +1,4 @@
-export * from './eos.js';
-export * from './eos.types.js';
-export * from './networks.js';
+export * from './eos';
+export * from './eos.types';
+export * from './networks';
 //# sourceMappingURL=index.d.ts.map
