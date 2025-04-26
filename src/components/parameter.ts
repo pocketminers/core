@@ -17,6 +17,7 @@ import { Freezer } from "@utilities/freezer";
  * @example
  * const param = new PocketParameter({
  *   name: "param1",
+ *   key: "param1",
  *   description: "This is a parameter",
  *   default: "defaultOption",
  *   required: true,

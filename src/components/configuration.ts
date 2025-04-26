@@ -47,21 +47,6 @@ class PocketConfiguration
         Freezer.deepFreeze(this);
     }
 
-    public preparedArgs({
-        allowAdditionalArgs = true,
-        allowNonRequired = false
-    }: {
-        allowAdditionalArgs?: boolean;
-        allowNonRequired?: boolean;
-    } = {}): Array<Record<BaseValueKey, BaseValue>> {
-        return PocketConfiguration.getArgRecords({
-            args: this.arguments,
-            params: this.parameters,
-            allowAdditionalArgs,
-            allowNonRequired
-        });
-    }
-
     public static getNameOrKey({
         param
     }: {
@@ -287,6 +272,22 @@ class PocketConfiguration
 
         return argRecords;
     }
+
+    public preparedArgs({
+        allowAdditionalArgs = true,
+        allowNonRequired = false
+    }: {
+        allowAdditionalArgs?: boolean;
+        allowNonRequired?: boolean;
+    } = {}): Array<Record<BaseValueKey, BaseValue>> {
+        return PocketConfiguration.getArgRecords({
+            args: this.arguments,
+            params: this.parameters,
+            allowAdditionalArgs,
+            allowNonRequired
+        });
+    }
+    
 
     public getPreparedArgByName<
         T extends BaseValue = any

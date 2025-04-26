@@ -27,6 +27,7 @@ describe("PocketServerManager", () => {
 
     it("should have an id", () => {
         expect(serverManager.id).toBeDefined();
+        expect(serverManager.id).toBe("test-node-id");
     });
 
     it("should have an app", () => {
@@ -35,18 +36,22 @@ describe("PocketServerManager", () => {
 
     it("should have a name", () => {
         expect(serverManager.name).toBeDefined();
+        expect(serverManager.name).toBe("test-name");
     });
 
     it("should have a description", () => {
         expect(serverManager.description).toBeDefined();
+        expect(serverManager.description).toBe("test-description");
     });
 
     it("should have a version", () => {
         expect(serverManager.version).toBeDefined();
+        expect(serverManager.version).toBe("v0");
     });
 
     it("should have a type", () => {
         expect(serverManager.type).toBeDefined();
+        expect(serverManager.type).toBe("api");
     });
 
     it("should have a config", () => {

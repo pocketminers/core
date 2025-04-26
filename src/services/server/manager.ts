@@ -35,10 +35,10 @@ class PocketServerManager {
             params: serverParameters
         });
 
-        console.log('Server Parameters:', serverParameters);
-        console.log('Server Arguments:', serverArguments);
-        console.log('Server Configuration:', config);
-        console.log('Server Configuration:', config.preparedArgs());
+        // console.log('Server Parameters:', serverParameters);
+        // console.log('Server Arguments:', serverArguments);
+        // console.log('Server Configuration:', config);
+        // console.log('Server Configuration:', config.preparedArgs());
 
         this.config = config;
 
