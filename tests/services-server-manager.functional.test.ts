@@ -10,10 +10,6 @@ describe('PocketServerManager', () => {
     let app: Express.Application;
 
     beforeEach(async () => {
-        
-    });
-
-    it('should create a PocketServerManager instance', async () => {
         app = await runServer({
             args: [
                 {
@@ -42,40 +38,70 @@ describe('PocketServerManager', () => {
                 }
             ]
         });
+    });
 
+    it('should be frozen', () => {
+        const serverManager = new PocketServerManager({
+            arguments_: [
+                {
+                    name: 'nodeId',
+                    value: 'test-node-id',
+                },
+                {
+                    name: 'name',
+                    value: 'test-name',
+                },
+                {
+                    name: 'description',
+                    value: 'test-description',
+                },
+                {
+                    name: 'version',
+                    value: 'v0',
+                },
+                {
+                    name: 'type',
+                    value: 'api',
+                },
+                {
+                    name: 'port',
+                    value: '3000',
+                }
+            ]
+        });
+
+        const frozenApp = serverManager.app;
+        const frozenConfig = serverManager.config;
+        const frozenId = serverManager.id;
+        const frozenName = serverManager.name;
+        const frozenDescription = serverManager.description;
+
+        expect(frozenApp).toBeDefined();
+        expect(frozenConfig).toBeDefined();
+        expect(frozenId).toBeDefined();
+        expect(frozenName).toBeDefined();
+        expect(frozenDescription).toBeDefined();
+        expect(Object.isFrozen(frozenApp)).toBe(true);
+        expect(Object.isFrozen(frozenConfig)).toBe(true);
+        expect(Object.isFrozen(frozenId)).toBe(true);
+        expect(Object.isFrozen(frozenName)).toBe(true);
+        expect(Object.isFrozen(frozenDescription)).toBe(true);
+
+        try {
+            serverManager.app = {} as any;
+        }
+        catch (error) {
+            expect(error).toBeDefined();
+        }
+    });
+
+
+
+    it('should create a PocketServerManager instance', async () => {
         expect(app).toBeDefined();
     });
 
     it('should respond to GET /', async () => {
-        app = await runServer({
-            args: [
-                {
-                    name: 'nodeId',
-                    value: 'test-node-id',
-                },
-                {
-                    name: 'name',
-                    value: 'test-name',
-                },
-                {
-                    name: 'description',
-                    value: 'test-description',
-                },
-                {
-                    name: 'version',
-                    value: 'v0',
-                },
-                {
-                    name: 'type',
-                    value: 'api',
-                },
-                {
-                    name: 'port',
-                    value: '3000',
-                }
-            ]
-        });
-
         const response = await request(app as Application).get('/api/v0/test-name/ping')
         expect(response.status).toBe(403);
         expect(response.body).toEqual({
@@ -84,34 +110,6 @@ describe('PocketServerManager', () => {
     });
 
     it('should respond to GET /api/v0/test-name/ping', async () => {
-        app = await runServer({
-            args: [
-                {
-                    name: 'nodeId',
-                    value: 'test-node-id',
-                },
-                {
-                    name: 'name',
-                    value: 'test-name',
-                },
-                {
-                    name: 'description',
-                    value: 'test-description',
-                },
-                {
-                    name: 'version',
-                    value: 'v0',
-                },
-                {
-                    name: 'type',
-                    value: 'api',
-                },
-                {
-                    name: 'port',
-                    value: '3000',
-                }
-            ]
-        });
 
         const response = await request(app as Application)
             .get('/api/v0/test-name/ping')
@@ -124,34 +122,6 @@ describe('PocketServerManager', () => {
     });
 
     it('should respond to POST /api/v0/test-name/shutdown', async () => {
-        app = await runServer({
-            args: [
-                {
-                    name: 'nodeId',
-                    value: 'test-node-id',
-                },
-                {
-                    name: 'name',
-                    value: 'test-name',
-                },
-                {
-                    name: 'description',
-                    value: 'test-description',
-                },
-                {
-                    name: 'version',
-                    value: 'v0',
-                },
-                {
-                    name: 'type',
-                    value: 'api',
-                },
-                {
-                    name: 'port',
-                    value: '3000',
-                }
-            ]
-        });
 
         const response = await request(app as Application)
             .post('/api/v0/test-name/admin/shutdown')

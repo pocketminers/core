@@ -1,8 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
-import http from 'http';
 
 import cors from 'cors';
-import { encodeConnection, checkLists, limiter, checkPublicApiKey, checkForKubeProbe, checkForAdminRequestHeader } from '@services/server/middleware/security.middleware';
+import { encodeConnection, checkLists, limiter, checkPublicApiKey, checkForKubeProbe, checkForAdminRequestHeader, checkForShutdownCode } from '@services/server/middleware/security.middleware';
 import helmet from 'helmet';
 import { IdentifierUtilities } from '@utilities/identifier';
 import { BaseArguments, BaseParameter, BaseParameters } from '@templates/v0';
@@ -37,11 +36,6 @@ class PocketServerManager {
             params: serverParameters
         });
 
-        // console.log('Server Parameters:', serverParameters);
-        // console.log('Server Arguments:', serverArguments);
-        // console.log('Server Configuration:', config);
-        // console.log('Server Configuration:', config.preparedArgs());
-
         this.config = config;
 
         let id = config.getPreparedArgByName<string>('nodeId')?.value;
@@ -74,6 +68,15 @@ class PocketServerManager {
         // Listen for termination signals
         process.on('SIGTERM', this.handleShutdown.bind(this));
         process.on('SIGINT', this.handleShutdown.bind(this));
+
+        // Freeze the app details
+        Freezer.deepFreeze(this.id);
+        Freezer.deepFreeze(this.name);
+        Freezer.deepFreeze(this.description);
+        Freezer.deepFreeze(this.version);
+        Freezer.deepFreeze(this.type);
+        Freezer.deepFreeze(this.app);
+        Freezer.deepFreeze(this.config);
     }
 
     private async handleShutdown() {
@@ -130,7 +133,7 @@ class PocketServerManager {
 
     private configureRoutes() {
         this.app.use(`/${this.type}/${this.version}/${this.name}`, checkPublicApiKey, healthRouter);
-        this.app.use(`/${this.type}/${this.version}/${this.name}/admin`, checkForAdminRequestHeader, adminRouter);
+        this.app.use(`/${this.type}/${this.version}/${this.name}/admin`, checkForAdminRequestHeader, checkForShutdownCode, adminRouter);
     }
 
     public async start () {

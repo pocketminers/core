@@ -134,7 +134,7 @@ function checkForAdminRequestHeader(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var adminRequestId, requestId;
         return __generator(this, function (_a) {
-            adminRequestId = SecretManager.getSecret('POCKET_ADMIN_SERVICE_REQUEST_ID', { inReact: false });
+            adminRequestId = SecretManager.getSecret('POCKET_SERVICE_ADMIN_REQUEST_ID', { inReact: false });
             requestId = req.header('x-pocket-request-id');
             console.log('adminRequestId: ', adminRequestId);
             console.log('requestId: ', requestId);
@@ -157,7 +157,7 @@ function checkForShutdownCode(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var adminShutdownCode, shutdownCode;
         return __generator(this, function (_a) {
-            adminShutdownCode = SecretManager.getSecret('POCKET_ADMIN_SERVICE_SHUTDOWN_CODE');
+            adminShutdownCode = SecretManager.getSecret('POCKET_SERVICE_ADMIN_SHUTDOWN_CODE');
             console.log('adminShutdownCode: ', adminShutdownCode);
             console.log('req.body: ', req.body);
             shutdownCode = req.body['x-pocket-service-shutdown-code'];

@@ -13,6 +13,7 @@ const parameters_1 = require("./parameters.js");
 const checks_1 = require("../../utilities/checks.js");
 const configuration_1 = require("../../components/configuration.js");
 const routes_1 = require("./health/routes.js");
+const freezer_1 = require("../../utilities/freezer.js");
 const admin_1 = require("./admin/index.js");
 class PocketServerManager {
     id;
@@ -29,10 +30,6 @@ class PocketServerManager {
             args: serverArguments,
             params: serverParameters
         });
-        // console.log('Server Parameters:', serverParameters);
-        // console.log('Server Arguments:', serverArguments);
-        // console.log('Server Configuration:', config);
-        // console.log('Server Configuration:', config.preparedArgs());
         this.config = config;
         let id = config.getPreparedArgByName('nodeId')?.value;
         if (id !== undefined
@@ -55,6 +52,14 @@ class PocketServerManager {
         // Listen for termination signals
         process.on('SIGTERM', this.handleShutdown.bind(this));
         process.on('SIGINT', this.handleShutdown.bind(this));
+        // Freeze the app details
+        freezer_1.Freezer.deepFreeze(this.id);
+        freezer_1.Freezer.deepFreeze(this.name);
+        freezer_1.Freezer.deepFreeze(this.description);
+        freezer_1.Freezer.deepFreeze(this.version);
+        freezer_1.Freezer.deepFreeze(this.type);
+        freezer_1.Freezer.deepFreeze(this.app);
+        freezer_1.Freezer.deepFreeze(this.config);
     }
     async handleShutdown() {
         console.log('Shutdown signal received. Closing server...');
@@ -105,7 +110,7 @@ class PocketServerManager {
     }
     configureRoutes() {
         this.app.use(`/${this.type}/${this.version}/${this.name}`, security_middleware_1.checkPublicApiKey, routes_1.healthRouter);
-        this.app.use(`/${this.type}/${this.version}/${this.name}/admin`, security_middleware_1.checkForAdminRequestHeader, admin_1.adminRouter);
+        this.app.use(`/${this.type}/${this.version}/${this.name}/admin`, security_middleware_1.checkForAdminRequestHeader, security_middleware_1.checkForShutdownCode, admin_1.adminRouter);
     }
     async start() {
         let port = this.config.getPreparedArgByName('port')?.value;

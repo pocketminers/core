@@ -1,12 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import { limiter, checkPublicApiKey, checkForAdminRequestHeader } from '../server/middleware/security.middleware.js';
+import { limiter, checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '../server/middleware/security.middleware.js';
 import helmet from 'helmet';
 import { IdentifierUtilities } from '../../utilities/identifier.js';
 import { getPocketServerParameters } from './parameters.js';
 import { Checks } from '../../utilities/checks.js';
 import { PocketConfiguration } from '../../components/configuration.js';
 import { healthRouter } from './health/routes.js';
+import { Freezer } from '../../utilities/freezer.js';
 import { adminRouter } from './admin/index.js';
 class PocketServerManager {
     id;
@@ -23,10 +24,6 @@ class PocketServerManager {
             args: serverArguments,
             params: serverParameters
         });
-        // console.log('Server Parameters:', serverParameters);
-        // console.log('Server Arguments:', serverArguments);
-        // console.log('Server Configuration:', config);
-        // console.log('Server Configuration:', config.preparedArgs());
         this.config = config;
         let id = config.getPreparedArgByName('nodeId')?.value;
         if (id !== undefined
@@ -49,6 +46,14 @@ class PocketServerManager {
         // Listen for termination signals
         process.on('SIGTERM', this.handleShutdown.bind(this));
         process.on('SIGINT', this.handleShutdown.bind(this));
+        // Freeze the app details
+        Freezer.deepFreeze(this.id);
+        Freezer.deepFreeze(this.name);
+        Freezer.deepFreeze(this.description);
+        Freezer.deepFreeze(this.version);
+        Freezer.deepFreeze(this.type);
+        Freezer.deepFreeze(this.app);
+        Freezer.deepFreeze(this.config);
     }
     async handleShutdown() {
         console.log('Shutdown signal received. Closing server...');
@@ -99,7 +104,7 @@ class PocketServerManager {
     }
     configureRoutes() {
         this.app.use(`/${this.type}/${this.version}/${this.name}`, checkPublicApiKey, healthRouter);
-        this.app.use(`/${this.type}/${this.version}/${this.name}/admin`, checkForAdminRequestHeader, adminRouter);
+        this.app.use(`/${this.type}/${this.version}/${this.name}/admin`, checkForAdminRequestHeader, checkForShutdownCode, adminRouter);
     }
     async start() {
         let port = this.config.getPreparedArgByName('port')?.value;
