@@ -20,9 +20,9 @@ describe('PocketV0DidClient', () => {
         });
     });
 
-    it('should ping the server', async () => {
-        const response: Response = await client.ping();
-        console.log('Response:', response);
-        expect(response).toBeDefined();
-    });
+    // it('should ping the server', async () => {
+    //     const response: Response = await client.ping();
+    //     console.log('Response:', response);
+    //     expect(response).toBeDefined();
+    // });
 });

@@ -1,1 +1,1 @@
-{"version":3,"file":"routes.d.ts","sourceRoot":"","sources":["../../../../../src/services/server/health/routes.ts"],"names":[],"mappings":"AAEA,QAAA,MAAM,YAAY,4CAAW,CAAC;AAY9B,OAAO,EACH,YAAY,EACf,CAAA"}
+{"version":3,"file":"routes.d.ts","sourceRoot":"","sources":["../../../../../src/services/server/health/routes.ts"],"names":[],"mappings":"AAGA,QAAA,MAAM,MAAM,4CAAW,CAAC;AAaxB,OAAO,EACH,MAAM,IAAI,YAAY,EACzB,CAAA"}

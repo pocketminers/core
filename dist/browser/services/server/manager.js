@@ -36,13 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import express from 'express';
 import cors from 'cors';
-import { limiter, checkPublicApiKey } from '../server/middleware/security.middleware.js';
+import { limiter, checkPublicApiKey, checkForAdminRequestHeader } from '../server/middleware/security.middleware.js';
 import helmet from 'helmet';
 import { IdentifierUtilities } from '../../utilities/identifier.js';
 import { getPocketServerParameters } from './parameters.js';
 import { Checks } from '../../utilities/checks.js';
 import { PocketConfiguration } from '../../components/configuration.js';
 import { healthRouter } from './health/routes.js';
+import { adminRouter } from './admin/index.js';
 var PocketServerManager = /** @class */ (function () {
     function PocketServerManager(_a) {
         var _b = _a === void 0 ? {} : _a, _c = _b.arguments_, arguments_ = _c === void 0 ? [] : _c, _d = _b.parameters_, parameters_ = _d === void 0 ? [] : _d;
@@ -53,10 +54,10 @@ var PocketServerManager = /** @class */ (function () {
             args: serverArguments,
             params: serverParameters
         });
-        console.log('Server Parameters:', serverParameters);
-        console.log('Server Arguments:', serverArguments);
-        console.log('Server Configuration:', config);
-        console.log('Server Configuration:', config.preparedArgs());
+        // console.log('Server Parameters:', serverParameters);
+        // console.log('Server Arguments:', serverArguments);
+        // console.log('Server Configuration:', config);
+        // console.log('Server Configuration:', config.preparedArgs());
         this.config = config;
         var id = (_e = config.getPreparedArgByName('nodeId')) === null || _e === void 0 ? void 0 : _e.value;
         if (id !== undefined
@@ -76,10 +77,29 @@ var PocketServerManager = /** @class */ (function () {
         this.app = express();
         this.configureMiddleware();
         this.configureRoutes();
-        // Freezer.deepFreeze(this.app);
-        // Freezer.deepFreeze(this.config);
-        // Freezer.deepFreeze(this.id);
+        // Listen for termination signals
+        process.on('SIGTERM', this.handleShutdown.bind(this));
+        process.on('SIGINT', this.handleShutdown.bind(this));
     }
+    PocketServerManager.prototype.handleShutdown = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log('Shutdown signal received. Closing server...');
+                        if (!(this.app !== undefined
+                            && this.app !== null
+                            && this.app instanceof express.application)) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.close()];
+                    case 1:
+                        _a.sent();
+                        console.log('Server closed successfully.');
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
+                }
+            });
+        });
+    };
     PocketServerManager.prototype.configureMiddleware = function () {
         var corsOptions = {
             origin: '*',
@@ -103,7 +123,7 @@ var PocketServerManager = /** @class */ (function () {
         this.app.use(express.json());
         // this.app.use(encodeConnection);
         // this.app.use(checkLists);
-        this.app.use(checkPublicApiKey);
+        // this.app.use(checkPublicApiKey);
         this.app.use(limiter);
         this.app.use(helmet.contentSecurityPolicy({
             directives: {
@@ -119,7 +139,8 @@ var PocketServerManager = /** @class */ (function () {
         }));
     };
     PocketServerManager.prototype.configureRoutes = function () {
-        this.app.get("".concat(this.type, "/").concat(this.version, "/").concat(this.name), healthRouter);
+        this.app.use("/".concat(this.type, "/").concat(this.version, "/").concat(this.name), checkPublicApiKey, healthRouter);
+        this.app.use("/".concat(this.type, "/").concat(this.version, "/").concat(this.name, "/admin"), checkForAdminRequestHeader, adminRouter);
     };
     PocketServerManager.prototype.start = function () {
         return __awaiter(this, void 0, void 0, function () {

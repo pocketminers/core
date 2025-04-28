@@ -4,7 +4,7 @@ class PocketV0DidClient extends PocketV0Client {
         super();
     }
     async ping() {
-        const endpoint = '/did/ping';
+        const endpoint = '/ping';
         return await this.get(endpoint);
     }
 }

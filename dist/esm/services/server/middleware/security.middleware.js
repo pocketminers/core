@@ -1,5 +1,7 @@
 import rateLimit from 'express-rate-limit';
 import crypto from 'crypto';
+import { SecretManager } from '../../../utilities/secret.js';
+import { Checks } from '../../../utilities/checks.js';
 // Configuration
 const SHARED_KEY = process.env.POCKET_SHARED_SECRET || "pocketminers-defualt-shared-key-development-purposes-only";
 const WHITELIST = ['127.0.0.1'];
@@ -78,5 +80,39 @@ async function checkPublicApiKey(req, res, next) {
     }
     next();
 }
-export { encodeConnection, checkLists, limiter, checkPublicApiKey, checkForKubeProbe };
+async function checkForAdminRequestHeader(req, res, next) {
+    const adminRequestId = SecretManager.getSecret('POCKET_ADMIN_SERVICE_REQUEST_ID', { inReact: false });
+    const requestId = req.header('x-pocket-request-id');
+    console.log('adminRequestId: ', adminRequestId);
+    console.log('requestId: ', requestId);
+    if (Checks.isEmpty(requestId) === false
+        && requestId !== adminRequestId) {
+        return res.status(403).json({
+            message: 'Admin Request Header Invalid - Forbidden',
+            request_id: requestId,
+        });
+    }
+    if (Checks.isEmpty(requestId) === false
+        && requestId === adminRequestId) {
+        return next();
+    }
+}
+async function checkForShutdownCode(req, res, next) {
+    const adminShutdownCode = SecretManager.getSecret('POCKET_ADMIN_SERVICE_SHUTDOWN_CODE');
+    console.log('adminShutdownCode: ', adminShutdownCode);
+    console.log('req.body: ', req.body);
+    const shutdownCode = req.body['x-pocket-service-shutdown-code'];
+    if (Checks.isEmpty(shutdownCode) === false
+        && shutdownCode !== adminShutdownCode) {
+        return res.status(403).json({
+            message: 'Invalid Shutdown Code - Forbidden',
+            request_id: req.header('x-pocket-request-id'),
+        });
+    }
+    if (Checks.isEmpty(shutdownCode) === false
+        && shutdownCode === adminShutdownCode) {
+        return next();
+    }
+}
+export { encodeConnection, checkLists, limiter, checkPublicApiKey, checkForKubeProbe, checkForAdminRequestHeader, checkForShutdownCode };
 //# sourceMappingURL=security.middleware.js.map

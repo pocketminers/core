@@ -61,7 +61,7 @@ var PocketV0DidClient = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        endpoint = '/did/ping';
+                        endpoint = '/ping';
                         return [4 /*yield*/, this.get(endpoint)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }

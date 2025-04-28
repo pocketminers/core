@@ -122,4 +122,48 @@ describe('PocketServerManager', () => {
         expect(response.status).toBe(200);
         expect(response.body.message).toEqual("Healthy");
     });
+
+    it('should respond to POST /api/v0/test-name/shutdown', async () => {
+        app = await runServer({
+            args: [
+                {
+                    name: 'nodeId',
+                    value: 'test-node-id',
+                },
+                {
+                    name: 'name',
+                    value: 'test-name',
+                },
+                {
+                    name: 'description',
+                    value: 'test-description',
+                },
+                {
+                    name: 'version',
+                    value: 'v0',
+                },
+                {
+                    name: 'type',
+                    value: 'api',
+                },
+                {
+                    name: 'port',
+                    value: '3000',
+                }
+            ]
+        });
+
+        const response = await request(app as Application)
+            .post('/api/v0/test-name/admin/shutdown')
+            .set('Accept', 'application/json')
+            .set('x-pocket-public-api-key', 'txt:' + SecretManager.getSecret('POCKET_PUBLIC_API_KEY', { inReact: true }))
+            .set('x-pocket-request-id', SecretManager.getSecret('POCKET_ADMIN_SERVICE_REQUEST_ID', { inReact: false }) || 'default-request-id')
+            .set('Content-Type', 'application/json')
+            .send({
+                'x-pocket-service-shutdown-code': SecretManager.getSecret('POCKET_ADMIN_SERVICE_SHUTDOWN_CODE', { inReact: false }) || 'default-shutdown-code'
+            });
+        console.log('response: ', response.body);
+        expect(response.status).toBe(200);
+        expect(response.body.message).toEqual("Server is shutting down...");
+    });
 });

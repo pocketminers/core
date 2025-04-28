@@ -29,15 +29,6 @@ var PocketConfiguration = /** @class */ (function () {
         // Freeze the object to make it immutable
         Freezer.deepFreeze(this);
     }
-    PocketConfiguration.prototype.preparedArgs = function (_a) {
-        var _b = _a === void 0 ? {} : _a, _c = _b.allowAdditionalArgs, allowAdditionalArgs = _c === void 0 ? true : _c, _d = _b.allowNonRequired, allowNonRequired = _d === void 0 ? false : _d;
-        return PocketConfiguration.getArgRecords({
-            args: this.arguments,
-            params: this.parameters,
-            allowAdditionalArgs: allowAdditionalArgs,
-            allowNonRequired: allowNonRequired
-        });
-    };
     PocketConfiguration.getNameOrKey = function (_a) {
         var param = _a.param;
         if (param.key) {
@@ -284,6 +275,15 @@ var PocketConfiguration = /** @class */ (function () {
             throw new Error("Missing required parameters: ".concat(missingRequiredParams.map(function (param) { return param.name; }).join(", ")));
         }
         return argRecords;
+    };
+    PocketConfiguration.prototype.preparedArgs = function (_a) {
+        var _b = _a === void 0 ? {} : _a, _c = _b.allowAdditionalArgs, allowAdditionalArgs = _c === void 0 ? true : _c, _d = _b.allowNonRequired, allowNonRequired = _d === void 0 ? false : _d;
+        return PocketConfiguration.getArgRecords({
+            args: this.arguments,
+            params: this.parameters,
+            allowAdditionalArgs: allowAdditionalArgs,
+            allowNonRequired: allowNonRequired
+        });
     };
     PocketConfiguration.prototype.getPreparedArgByName = function (name) {
         var e_8, _a;

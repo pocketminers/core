@@ -27,7 +27,7 @@ export default {
     moduleNameMapper: pathsToModuleNameMapper(tsconfig.compilerOptions.paths, { prefix: "<rootDir>/src/" }),
     transform: {
         "^.+\\.(ts)$": [ "ts-jest", {
-            tsconfig: "<rootDir>/tsconfig.json",
+            tsconfig: "<rootDir>/tsconfig.prod.json",
             useESM: true,
         }],
     },

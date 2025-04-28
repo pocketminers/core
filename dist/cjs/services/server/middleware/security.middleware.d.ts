@@ -4,5 +4,7 @@ declare const checkLists: (req: Request, res: Response, next: NextFunction) => v
 declare function checkForKubeProbe(req: Request, res: Response, next: NextFunction): Promise<any>;
 declare const encodeConnection: (req: Request, res: Response, next: NextFunction) => void;
 declare function checkPublicApiKey(req: Request, res: Response, next: NextFunction): Promise<any>;
-export { encodeConnection, checkLists, limiter, checkPublicApiKey, checkForKubeProbe };
+declare function checkForAdminRequestHeader(req: Request, res: Response, next: NextFunction): Promise<any>;
+declare function checkForShutdownCode(req: Request, res: Response, next: NextFunction): Promise<any>;
+export { encodeConnection, checkLists, limiter, checkPublicApiKey, checkForKubeProbe, checkForAdminRequestHeader, checkForShutdownCode };
 //# sourceMappingURL=security.middleware.d.ts.map

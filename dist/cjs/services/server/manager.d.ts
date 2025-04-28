@@ -14,6 +14,7 @@ declare class PocketServerManager {
         arguments_?: BaseArguments;
         parameters_?: PocketParameter[];
     });
+    private handleShutdown;
     private configureMiddleware;
     private configureRoutes;
     start(): Promise<void>;

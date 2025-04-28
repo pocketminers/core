@@ -28,14 +28,6 @@ class PocketConfiguration {
         // Freeze the object to make it immutable
         freezer_1.Freezer.deepFreeze(this);
     }
-    preparedArgs({ allowAdditionalArgs = true, allowNonRequired = false } = {}) {
-        return PocketConfiguration.getArgRecords({
-            args: this.arguments,
-            params: this.parameters,
-            allowAdditionalArgs,
-            allowNonRequired
-        });
-    }
     static getNameOrKey({ param }) {
         if (param.key) {
             return param.key;
@@ -187,6 +179,14 @@ class PocketConfiguration {
             throw new Error(`Missing required parameters: ${missingRequiredParams.map((param) => param.name).join(", ")}`);
         }
         return argRecords;
+    }
+    preparedArgs({ allowAdditionalArgs = true, allowNonRequired = false } = {}) {
+        return PocketConfiguration.getArgRecords({
+            args: this.arguments,
+            params: this.parameters,
+            allowAdditionalArgs,
+            allowNonRequired
+        });
     }
     getPreparedArgByName(name) {
         const preparedArgs = this.preparedArgs({ allowNonRequired: true });

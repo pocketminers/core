@@ -1,6 +1,6 @@
 import { Router } from 'express';
-const healthRouter = Router();
-healthRouter.get('/ping', (req, res) => {
+const router = Router();
+router.get('/ping', (req, res) => {
     const requestId = req.header('x-pocket-request-id');
     res.status(200).json({
         message: 'Healthy',
@@ -9,5 +9,5 @@ healthRouter.get('/ping', (req, res) => {
         // node_id: this.id
     });
 });
-export { healthRouter };
+export { router as healthRouter };
 //# sourceMappingURL=routes.js.map

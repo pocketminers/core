@@ -1,12 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import { limiter, checkPublicApiKey } from '../server/middleware/security.middleware.js';
+import { limiter, checkPublicApiKey, checkForAdminRequestHeader } from '../server/middleware/security.middleware.js';
 import helmet from 'helmet';
 import { IdentifierUtilities } from '../../utilities/identifier.js';
 import { getPocketServerParameters } from './parameters.js';
 import { Checks } from '../../utilities/checks.js';
 import { PocketConfiguration } from '../../components/configuration.js';
 import { healthRouter } from './health/routes.js';
+import { adminRouter } from './admin/index.js';
 class PocketServerManager {
     id;
     name;
@@ -22,10 +23,10 @@ class PocketServerManager {
             args: serverArguments,
             params: serverParameters
         });
-        console.log('Server Parameters:', serverParameters);
-        console.log('Server Arguments:', serverArguments);
-        console.log('Server Configuration:', config);
-        console.log('Server Configuration:', config.preparedArgs());
+        // console.log('Server Parameters:', serverParameters);
+        // console.log('Server Arguments:', serverArguments);
+        // console.log('Server Configuration:', config);
+        // console.log('Server Configuration:', config.preparedArgs());
         this.config = config;
         let id = config.getPreparedArgByName('nodeId')?.value;
         if (id !== undefined
@@ -45,9 +46,18 @@ class PocketServerManager {
         this.app = express();
         this.configureMiddleware();
         this.configureRoutes();
-        // Freezer.deepFreeze(this.app);
-        // Freezer.deepFreeze(this.config);
-        // Freezer.deepFreeze(this.id);
+        // Listen for termination signals
+        process.on('SIGTERM', this.handleShutdown.bind(this));
+        process.on('SIGINT', this.handleShutdown.bind(this));
+    }
+    async handleShutdown() {
+        console.log('Shutdown signal received. Closing server...');
+        if (this.app !== undefined
+            && this.app !== null
+            && this.app instanceof express.application) {
+            await this.close();
+            console.log('Server closed successfully.');
+        }
     }
     configureMiddleware() {
         const corsOptions = {
@@ -72,7 +82,7 @@ class PocketServerManager {
         this.app.use(express.json());
         // this.app.use(encodeConnection);
         // this.app.use(checkLists);
-        this.app.use(checkPublicApiKey);
+        // this.app.use(checkPublicApiKey);
         this.app.use(limiter);
         this.app.use(helmet.contentSecurityPolicy({
             directives: {
@@ -88,7 +98,8 @@ class PocketServerManager {
         }));
     }
     configureRoutes() {
-        this.app.get(`${this.type}/${this.version}/${this.name}`, healthRouter);
+        this.app.use(`/${this.type}/${this.version}/${this.name}`, checkPublicApiKey, healthRouter);
+        this.app.use(`/${this.type}/${this.version}/${this.name}/admin`, checkForAdminRequestHeader, adminRouter);
     }
     async start() {
         let port = this.config.getPreparedArgByName('port')?.value;

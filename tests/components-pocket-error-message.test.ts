@@ -170,7 +170,7 @@ describe("PocketErrorMessage", () => {
         const error = new Error("Test error");
         const callback = jest.fn();
         const message = new PocketErrorMessage({
-            code: BaseClientErrorCodes.BAD_REQUEST,
+            code: BaseClientErrorCodes.CONFLICT,
             level: BaseMessageLevels.ERROR,
             error: error,
             callback,

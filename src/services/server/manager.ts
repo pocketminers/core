@@ -1,7 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
+import http from 'http';
 
 import cors from 'cors';
-import { encodeConnection, checkLists, limiter, checkPublicApiKey, checkForKubeProbe } from '@services/server/middleware/security.middleware';
+import { encodeConnection, checkLists, limiter, checkPublicApiKey, checkForKubeProbe, checkForAdminRequestHeader } from '@services/server/middleware/security.middleware';
 import helmet from 'helmet';
 import { IdentifierUtilities } from '@utilities/identifier';
 import { BaseArguments, BaseParameter, BaseParameters } from '@templates/v0';
@@ -11,6 +12,7 @@ import { PocketConfiguration } from '@components/configuration';
 import { PocketParameter } from '@components/parameter';
 import { healthRouter } from './health/routes';
 import { Freezer } from '@utilities/freezer';
+import { adminRouter } from './admin';
 
 class PocketServerManager {
     public id: string;
@@ -69,9 +71,22 @@ class PocketServerManager {
         this.configureMiddleware();
         this.configureRoutes();
 
-        // Freezer.deepFreeze(this.app);
-        // Freezer.deepFreeze(this.config);
-        // Freezer.deepFreeze(this.id);
+        // Listen for termination signals
+        process.on('SIGTERM', this.handleShutdown.bind(this));
+        process.on('SIGINT', this.handleShutdown.bind(this));
+    }
+
+    private async handleShutdown() {
+        console.log('Shutdown signal received. Closing server...');
+
+        if (
+            this.app !== undefined
+            && this.app !== null
+            && this.app instanceof express.application
+        ) {
+            await this.close();
+            console.log('Server closed successfully.');
+        }
     }
 
     private configureMiddleware() {
@@ -97,7 +112,7 @@ class PocketServerManager {
         this.app.use(express.json());
         // this.app.use(encodeConnection);
         // this.app.use(checkLists);
-        this.app.use(checkPublicApiKey);
+        // this.app.use(checkPublicApiKey);
         this.app.use(limiter);
         this.app.use(helmet.contentSecurityPolicy({
             directives: {
@@ -114,7 +129,8 @@ class PocketServerManager {
     }
 
     private configureRoutes() {
-        this.app.use(`/${this.type}/${this.version}/${this.name}`, healthRouter);
+        this.app.use(`/${this.type}/${this.version}/${this.name}`, checkPublicApiKey, healthRouter);
+        this.app.use(`/${this.type}/${this.version}/${this.name}/admin`, checkForAdminRequestHeader, adminRouter);
     }
 
     public async start () {

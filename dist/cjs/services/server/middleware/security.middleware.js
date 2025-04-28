@@ -6,8 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.limiter = exports.checkLists = exports.encodeConnection = void 0;
 exports.checkPublicApiKey = checkPublicApiKey;
 exports.checkForKubeProbe = checkForKubeProbe;
+exports.checkForAdminRequestHeader = checkForAdminRequestHeader;
+exports.checkForShutdownCode = checkForShutdownCode;
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const crypto_1 = __importDefault(require("crypto"));
+const secret_1 = require("../../../utilities/secret.js");
+const checks_1 = require("../../../utilities/checks.js");
 // Configuration
 const SHARED_KEY = process.env.POCKET_SHARED_SECRET || "pocketminers-defualt-shared-key-development-purposes-only";
 const WHITELIST = ['127.0.0.1'];
@@ -88,5 +92,39 @@ async function checkPublicApiKey(req, res, next) {
         return res.status(500).json({ message: 'Internal Server Error' });
     }
     next();
+}
+async function checkForAdminRequestHeader(req, res, next) {
+    const adminRequestId = secret_1.SecretManager.getSecret('POCKET_ADMIN_SERVICE_REQUEST_ID', { inReact: false });
+    const requestId = req.header('x-pocket-request-id');
+    console.log('adminRequestId: ', adminRequestId);
+    console.log('requestId: ', requestId);
+    if (checks_1.Checks.isEmpty(requestId) === false
+        && requestId !== adminRequestId) {
+        return res.status(403).json({
+            message: 'Admin Request Header Invalid - Forbidden',
+            request_id: requestId,
+        });
+    }
+    if (checks_1.Checks.isEmpty(requestId) === false
+        && requestId === adminRequestId) {
+        return next();
+    }
+}
+async function checkForShutdownCode(req, res, next) {
+    const adminShutdownCode = secret_1.SecretManager.getSecret('POCKET_ADMIN_SERVICE_SHUTDOWN_CODE');
+    console.log('adminShutdownCode: ', adminShutdownCode);
+    console.log('req.body: ', req.body);
+    const shutdownCode = req.body['x-pocket-service-shutdown-code'];
+    if (checks_1.Checks.isEmpty(shutdownCode) === false
+        && shutdownCode !== adminShutdownCode) {
+        return res.status(403).json({
+            message: 'Invalid Shutdown Code - Forbidden',
+            request_id: req.header('x-pocket-request-id'),
+        });
+    }
+    if (checks_1.Checks.isEmpty(shutdownCode) === false
+        && shutdownCode === adminShutdownCode) {
+        return next();
+    }
 }
 //# sourceMappingURL=security.middleware.js.map

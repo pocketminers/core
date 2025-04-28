@@ -24,10 +24,6 @@ declare class PocketConfiguration<T = any> implements BaseConfiguration<T> {
         args?: Array<PocketArgument<T>>;
         params?: Array<PocketParameter<T>>;
     });
-    preparedArgs({ allowAdditionalArgs, allowNonRequired }?: {
-        allowAdditionalArgs?: boolean;
-        allowNonRequired?: boolean;
-    }): Array<Record<BaseValueKey, BaseValue>>;
     static getNameOrKey({ param }: {
         param: PocketParameter;
     }): BaseValueKey;
@@ -47,6 +43,10 @@ declare class PocketConfiguration<T = any> implements BaseConfiguration<T> {
     static getArgRecords({ args, params, allowAdditionalArgs, allowNonRequired }: {
         args?: Array<PocketArgument>;
         params: Array<PocketParameter>;
+        allowAdditionalArgs?: boolean;
+        allowNonRequired?: boolean;
+    }): Array<Record<BaseValueKey, BaseValue>>;
+    preparedArgs({ allowAdditionalArgs, allowNonRequired }?: {
         allowAdditionalArgs?: boolean;
         allowNonRequired?: boolean;
     }): Array<Record<BaseValueKey, BaseValue>>;

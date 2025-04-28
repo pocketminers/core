@@ -34,8 +34,69 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var runServer = function () { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-    return [2 /*return*/];
-}); }); };
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
+import { BaseMessageLevels, BaseServerErrorCodes } from "../../templates/v0/index.js";
+import { PocketServerManager } from "./manager.js";
+import { PocketErrorMessage } from "../../components/error.js";
+var runServer = function () {
+    var args_1 = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args_1[_i] = arguments[_i];
+    }
+    return __awaiter(void 0, __spreadArray([], __read(args_1), false), void 0, function (_a) {
+        var server;
+        var _b = _a === void 0 ? {} : _a, _c = _b.manager, manager = _c === void 0 ? undefined : _c, _d = _b.args, args = _d === void 0 ? [] : _d;
+        return __generator(this, function (_e) {
+            switch (_e.label) {
+                case 0:
+                    server = new PocketServerManager({
+                        arguments_: args
+                    });
+                    if (server === undefined) {
+                        throw new PocketErrorMessage({
+                            error: new Error('Server is undefined'),
+                            code: BaseServerErrorCodes.SERVICE_UNAVAILABLE,
+                            level: BaseMessageLevels.ERROR,
+                            callback: function (message) { return __awaiter(void 0, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    console.error('Server is undefined', message);
+                                    return [2 /*return*/];
+                                });
+                            }); },
+                            throwError: true
+                        });
+                    }
+                    return [4 /*yield*/, server.start()];
+                case 1:
+                    _e.sent();
+                    return [2 /*return*/, server.app];
+            }
+        });
+    });
+};
 export { runServer };
 //# sourceMappingURL=run.js.map
