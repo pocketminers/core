@@ -127,10 +127,10 @@ describe('PocketServerManager', () => {
             .post('/api/v0/test-name/admin/shutdown')
             .set('Accept', 'application/json')
             .set('x-pocket-public-api-key', 'txt:' + SecretManager.getSecret('POCKET_PUBLIC_API_KEY', { inReact: true }))
-            .set('x-pocket-request-id', SecretManager.getSecret('POCKET_ADMIN_SERVICE_REQUEST_ID', { inReact: false }) || 'default-request-id')
+            .set('x-pocket-request-id', SecretManager.getSecret('POCKET_SERVICE_ADMIN_REQUEST_ID', { inReact: false }) || 'default-request-id')
             .set('Content-Type', 'application/json')
             .send({
-                'x-pocket-service-shutdown-code': SecretManager.getSecret('POCKET_ADMIN_SERVICE_SHUTDOWN_CODE', { inReact: false }) || 'default-shutdown-code'
+                'x-pocket-service-shutdown-code': SecretManager.getSecret('POCKET_SERVICE_ADMIN_SHUTDOWN_CODE', { inReact: false }) || 'default-shutdown-code'
             });
         console.log('response: ', response.body);
         expect(response.status).toBe(200);

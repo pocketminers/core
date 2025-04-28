@@ -1,5 +1,4 @@
 import express, { Request, Response, NextFunction } from 'express';
-import rateLimit from 'express-rate-limit';
 import crypto from 'crypto';
 import { SecretManager } from '@utilities/secret';
 import { Checks } from '@utilities/checks';
@@ -9,14 +8,7 @@ const SHARED_KEY = process.env.POCKET_SHARED_SECRET || "pocketminers-defualt-sha
 const WHITELIST = ['127.0.0.1'];
 const BLACKLIST = ['192.168.1.1'];
 
-// Rate Limiting Middleware
-const limiter = rateLimit({
-    windowMs: 5 * 60 * 1000, // 5 minutes
-    max: 500, 
-    handler: (req: Request, res: Response) => {
-        res.status(429).json({ message: 'Too many requests, please try again later.' });
-    }
-});
+
 
 // Middleware to check blacklist and whitelist
 const checkLists = (req: Request, res: Response, next: NextFunction) => {
@@ -164,7 +156,6 @@ async function checkForShutdownCode(req: Request, res: Response, next: NextFunct
 export {
     encodeConnection,
     checkLists,
-    limiter,
     checkPublicApiKey,
     checkForKubeProbe,
     checkForAdminRequestHeader,

@@ -1,10 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 
-import cors from 'cors';
-import { encodeConnection, checkLists, limiter, checkPublicApiKey, checkForKubeProbe, checkForAdminRequestHeader, checkForShutdownCode } from '@services/server/middleware/security.middleware';
-import helmet from 'helmet';
+
+import { checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '@services/server/middleware/security.middleware';
 import { IdentifierUtilities } from '@utilities/identifier';
-import { BaseArguments, BaseParameter, BaseParameters } from '@templates/v0';
+import { BaseArguments } from '@templates/v0';
 import { getPocketServerParameters } from './parameters';
 import { Checks } from '@utilities/checks';
 import { PocketConfiguration } from '@components/configuration';
@@ -12,6 +11,7 @@ import { PocketParameter } from '@components/parameter';
 import { healthRouter } from './health/routes';
 import { Freezer } from '@utilities/freezer';
 import { adminRouter } from './admin';
+import { configureMiddleware } from './middleware/configureMiddleware';
 
 class PocketServerManager {
     public id: string;
@@ -62,7 +62,7 @@ class PocketServerManager {
         this.description = config.getPreparedArgByName<string>('description')?.value as string;
 
         this.app = express();
-        this.configureMiddleware();
+        this.app = configureMiddleware(this.app);
         this.configureRoutes();
 
         // Listen for termination signals
@@ -92,44 +92,7 @@ class PocketServerManager {
         }
     }
 
-    private configureMiddleware() {
-        const corsOptions = {
-            origin: '*',
-            allowedHeaders: [
-                'Content-Type',
-                'accept',
-                'content-type',
-                'referer',
-                'sec-ch-ua',
-                'sec-ch-ua-mobile',
-                'sec-ch-ua-platform',
-                'user-agent',
-                'x-pocket-public-api-key',
-                'x-pocket-request-id'
-            ],
-            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-            optionsSuccessStatus: 200
-        };
-        this.app.use(cors(corsOptions));
-        this.app.use(express.urlencoded({ extended: true }));
-        this.app.use(express.json());
-        // this.app.use(encodeConnection);
-        // this.app.use(checkLists);
-        // this.app.use(checkPublicApiKey);
-        this.app.use(limiter);
-        this.app.use(helmet.contentSecurityPolicy({
-            directives: {
-                defaultSrc: ["'self'"],
-                scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-                styleSrc: ["'self'", "'unsafe-inline'"],
-                imgSrc: ["'self'", "data:"],
-                connectSrc: ["'self'", "dev.pocketminers.xyz/api/v0"],
-                fontSrc: ["'self'"],
-                objectSrc: ["'none'"],
-                upgradeInsecureRequests: [],
-            },
-        }));
-    }
+
 
     private configureRoutes() {
         this.app.use(`/${this.type}/${this.version}/${this.name}`, checkPublicApiKey, healthRouter);
