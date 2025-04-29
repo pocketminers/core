@@ -5,9 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PocketServerManager = void 0;
 const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
 const security_middleware_1 = require("../server/middleware/security.middleware.js");
-const helmet_1 = __importDefault(require("helmet"));
 const identifier_1 = require("../../utilities/identifier.js");
 const parameters_1 = require("./parameters.js");
 const checks_1 = require("../../utilities/checks.js");
@@ -15,6 +13,7 @@ const configuration_1 = require("../../components/configuration.js");
 const routes_1 = require("./health/routes.js");
 const freezer_1 = require("../../utilities/freezer.js");
 const admin_1 = require("./admin/index.js");
+const configureMiddleware_1 = require("./middleware/configureMiddleware.js");
 class PocketServerManager {
     id;
     name;
@@ -22,8 +21,10 @@ class PocketServerManager {
     version;
     type;
     app;
+    status = 'OFFLINE';
     config;
     constructor({ arguments_ = [], parameters_ = [], } = {}) {
+        this.status = 'INITIALIZING';
         const serverParameters = checks_1.Checks.isEmpty(parameters_) ? (0, parameters_1.getPocketServerParameters)() : parameters_;
         const serverArguments = checks_1.Checks.isEmpty(arguments_) ? new Array() : arguments_;
         const config = new configuration_1.PocketConfiguration({
@@ -47,7 +48,7 @@ class PocketServerManager {
         this.version = config.getPreparedArgByName('version')?.value;
         this.description = config.getPreparedArgByName('description')?.value;
         this.app = (0, express_1.default)();
-        this.configureMiddleware();
+        this.app = (0, configureMiddleware_1.configureMiddleware)(this.app);
         this.configureRoutes();
         // Listen for termination signals
         process.on('SIGTERM', this.handleShutdown.bind(this));
@@ -58,55 +59,29 @@ class PocketServerManager {
         freezer_1.Freezer.deepFreeze(this.description);
         freezer_1.Freezer.deepFreeze(this.version);
         freezer_1.Freezer.deepFreeze(this.type);
-        freezer_1.Freezer.deepFreeze(this.app);
+        // Freezer.deepFreeze(this.app);
         freezer_1.Freezer.deepFreeze(this.config);
+        this.status = 'READY';
     }
     async handleShutdown() {
-        console.log('Shutdown signal received. Closing server...');
-        if (this.app !== undefined
-            && this.app !== null
-            && this.app instanceof express_1.default.application) {
+        if (this.status === 'STOPPING') {
+            console.log('Server is already stopping. Ignoring shutdown signal.');
+            return;
+        }
+        if (this.status === 'OFFLINE') {
+            console.log('Server is already offline. Ignoring shutdown signal.');
+            return;
+        }
+        if (this.status === 'ONLINE') {
+            console.log('Server is online. Preparing to close...');
+            this.status = 'STOPPING';
             await this.close();
             console.log('Server closed successfully.');
         }
-    }
-    configureMiddleware() {
-        const corsOptions = {
-            origin: '*',
-            allowedHeaders: [
-                'Content-Type',
-                'accept',
-                'content-type',
-                'referer',
-                'sec-ch-ua',
-                'sec-ch-ua-mobile',
-                'sec-ch-ua-platform',
-                'user-agent',
-                'x-pocket-public-api-key',
-                'x-pocket-request-id'
-            ],
-            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-            optionsSuccessStatus: 200
-        };
-        this.app.use((0, cors_1.default)(corsOptions));
-        this.app.use(express_1.default.urlencoded({ extended: true }));
-        this.app.use(express_1.default.json());
-        // this.app.use(encodeConnection);
-        // this.app.use(checkLists);
-        // this.app.use(checkPublicApiKey);
-        this.app.use(security_middleware_1.limiter);
-        this.app.use(helmet_1.default.contentSecurityPolicy({
-            directives: {
-                defaultSrc: ["'self'"],
-                scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-                styleSrc: ["'self'", "'unsafe-inline'"],
-                imgSrc: ["'self'", "data:"],
-                connectSrc: ["'self'", "dev.pocketminers.xyz/api/v0"],
-                fontSrc: ["'self'"],
-                objectSrc: ["'none'"],
-                upgradeInsecureRequests: [],
-            },
-        }));
+        else {
+            console.log(`Server is ${this.status}. Preparing to close...`);
+        }
+        this.status = 'OFFLINE';
     }
     configureRoutes() {
         this.app.use(`/${this.type}/${this.version}/${this.name}`, security_middleware_1.checkPublicApiKey, routes_1.healthRouter);
@@ -117,9 +92,10 @@ class PocketServerManager {
         if (checks_1.Checks.isEmpty(port)) {
             port = 3000;
         }
-        this.app.listen(port, async () => {
-            console.log(`Server is running on port: ${port}`);
+        await this.app.listen(port, async () => {
+            console.log(`Server ${this.id} is running a/n ${this.type} service named ${this.name} on port: ${port}`);
         });
+        this.status = 'ONLINE';
     }
     async close() {
         this.app.disable('x-powered-by');
@@ -128,6 +104,7 @@ class PocketServerManager {
             next();
         });
         console.log(`Server with ID: ${this.id} is closing.`);
+        this.status = 'OFFLINE';
     }
 }
 exports.PocketServerManager = PocketServerManager;

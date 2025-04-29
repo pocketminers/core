@@ -34,7 +34,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import rateLimit from 'express-rate-limit';
 import crypto from 'crypto';
 import { SecretManager } from '../../../utilities/secret.js';
 import { Checks } from '../../../utilities/checks.js';
@@ -42,14 +41,6 @@ import { Checks } from '../../../utilities/checks.js';
 var SHARED_KEY = process.env.POCKET_SHARED_SECRET || "pocketminers-defualt-shared-key-development-purposes-only";
 var WHITELIST = ['127.0.0.1'];
 var BLACKLIST = ['192.168.1.1'];
-// Rate Limiting Middleware
-var limiter = rateLimit({
-    windowMs: 5 * 60 * 1000, // 5 minutes
-    max: 500,
-    handler: function (req, res) {
-        res.status(429).json({ message: 'Too many requests, please try again later.' });
-    }
-});
 // Middleware to check blacklist and whitelist
 var checkLists = function (req, res, next) {
     var clientIp = req.ip;
@@ -136,8 +127,6 @@ function checkForAdminRequestHeader(req, res, next) {
         return __generator(this, function (_a) {
             adminRequestId = SecretManager.getSecret('POCKET_SERVICE_ADMIN_REQUEST_ID', { inReact: false });
             requestId = req.header('x-pocket-request-id');
-            console.log('adminRequestId: ', adminRequestId);
-            console.log('requestId: ', requestId);
             if (Checks.isEmpty(requestId) === false
                 && requestId !== adminRequestId) {
                 return [2 /*return*/, res.status(403).json({
@@ -158,8 +147,6 @@ function checkForShutdownCode(req, res, next) {
         var adminShutdownCode, shutdownCode;
         return __generator(this, function (_a) {
             adminShutdownCode = SecretManager.getSecret('POCKET_SERVICE_ADMIN_SHUTDOWN_CODE');
-            console.log('adminShutdownCode: ', adminShutdownCode);
-            console.log('req.body: ', req.body);
             shutdownCode = req.body['x-pocket-service-shutdown-code'];
             if (Checks.isEmpty(shutdownCode) === false
                 && shutdownCode !== adminShutdownCode) {
@@ -176,5 +163,5 @@ function checkForShutdownCode(req, res, next) {
         });
     });
 }
-export { encodeConnection, checkLists, limiter, checkPublicApiKey, checkForKubeProbe, checkForAdminRequestHeader, checkForShutdownCode };
+export { encodeConnection, checkLists, checkPublicApiKey, checkForKubeProbe, checkForAdminRequestHeader, checkForShutdownCode };
 //# sourceMappingURL=security.middleware.js.map

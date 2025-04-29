@@ -12,6 +12,7 @@ import { healthRouter } from './health/routes';
 import { Freezer } from '@utilities/freezer';
 import { adminRouter } from './admin';
 import { configureMiddleware } from './middleware/configureMiddleware';
+import { PocketServerStatus } from './statuses';
 
 class PocketServerManager {
     public id: string;
@@ -20,6 +21,7 @@ class PocketServerManager {
     public version: string;
     public type: string;
     public app: express.Application;
+    public status: PocketServerStatus = 'OFFLINE';
     public config: PocketConfiguration;
 
     constructor({
@@ -29,6 +31,8 @@ class PocketServerManager {
         arguments_?: BaseArguments;
         parameters_?: PocketParameter[];
     } = {}) {
+        this.status = 'INITIALIZING';
+
         const serverParameters = Checks.isEmpty(parameters_) ? getPocketServerParameters() : parameters_;
         const serverArguments = Checks.isEmpty(arguments_) ? new Array() : arguments_;
         const config = new PocketConfiguration({
@@ -75,21 +79,35 @@ class PocketServerManager {
         Freezer.deepFreeze(this.description);
         Freezer.deepFreeze(this.version);
         Freezer.deepFreeze(this.type);
-        Freezer.deepFreeze(this.app);
+        // Freezer.deepFreeze(this.app);
         Freezer.deepFreeze(this.config);
+
+        this.status = 'READY';
     }
 
     private async handleShutdown() {
-        console.log('Shutdown signal received. Closing server...');
+        if (this.status === 'STOPPING') {
+            console.log('Server is already stopping. Ignoring shutdown signal.');
+            return;
+        }
 
-        if (
-            this.app !== undefined
-            && this.app !== null
-            && this.app instanceof express.application
-        ) {
+        if (this.status === 'OFFLINE') {
+            console.log('Server is already offline. Ignoring shutdown signal.');
+            return;
+        }
+
+        if (this.status === 'ONLINE') {
+            console.log('Server is online. Preparing to close...');
+
+            this.status = 'STOPPING';
             await this.close();
             console.log('Server closed successfully.');
+
+        } else {
+            console.log(`Server is ${this.status}. Preparing to close...`);
         }
+
+        this.status = 'OFFLINE';
     }
 
 
@@ -106,9 +124,11 @@ class PocketServerManager {
             port = 3000;
         }
 
-        this.app.listen(port, async () => {
-            console.log(`Server is running on port: ${port}`)
+        await this.app.listen(port, async () => {
+            console.log(`Server ${this.id} is running a/n ${this.type} service named ${this.name} on port: ${port}`)
         });
+
+        this.status = 'ONLINE';
     }
 
     public async close () {
@@ -118,10 +138,10 @@ class PocketServerManager {
             next();
         });
         console.log(`Server with ID: ${this.id} is closing.`);
+        this.status = 'OFFLINE';
     }
 }
 
-// Create an instance o
 
 export { 
     PocketServerManager

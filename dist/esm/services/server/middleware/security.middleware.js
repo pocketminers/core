@@ -1,4 +1,3 @@
-import rateLimit from 'express-rate-limit';
 import crypto from 'crypto';
 import { SecretManager } from '../../../utilities/secret.js';
 import { Checks } from '../../../utilities/checks.js';
@@ -6,14 +5,6 @@ import { Checks } from '../../../utilities/checks.js';
 const SHARED_KEY = process.env.POCKET_SHARED_SECRET || "pocketminers-defualt-shared-key-development-purposes-only";
 const WHITELIST = ['127.0.0.1'];
 const BLACKLIST = ['192.168.1.1'];
-// Rate Limiting Middleware
-const limiter = rateLimit({
-    windowMs: 5 * 60 * 1000, // 5 minutes
-    max: 500,
-    handler: (req, res) => {
-        res.status(429).json({ message: 'Too many requests, please try again later.' });
-    }
-});
 // Middleware to check blacklist and whitelist
 const checkLists = (req, res, next) => {
     const clientIp = req.ip;
@@ -83,8 +74,6 @@ async function checkPublicApiKey(req, res, next) {
 async function checkForAdminRequestHeader(req, res, next) {
     const adminRequestId = SecretManager.getSecret('POCKET_SERVICE_ADMIN_REQUEST_ID', { inReact: false });
     const requestId = req.header('x-pocket-request-id');
-    console.log('adminRequestId: ', adminRequestId);
-    console.log('requestId: ', requestId);
     if (Checks.isEmpty(requestId) === false
         && requestId !== adminRequestId) {
         return res.status(403).json({
@@ -99,8 +88,6 @@ async function checkForAdminRequestHeader(req, res, next) {
 }
 async function checkForShutdownCode(req, res, next) {
     const adminShutdownCode = SecretManager.getSecret('POCKET_SERVICE_ADMIN_SHUTDOWN_CODE');
-    console.log('adminShutdownCode: ', adminShutdownCode);
-    console.log('req.body: ', req.body);
     const shutdownCode = req.body['x-pocket-service-shutdown-code'];
     if (Checks.isEmpty(shutdownCode) === false
         && shutdownCode !== adminShutdownCode) {
@@ -114,5 +101,5 @@ async function checkForShutdownCode(req, res, next) {
         return next();
     }
 }
-export { encodeConnection, checkLists, limiter, checkPublicApiKey, checkForKubeProbe, checkForAdminRequestHeader, checkForShutdownCode };
+export { encodeConnection, checkLists, checkPublicApiKey, checkForKubeProbe, checkForAdminRequestHeader, checkForShutdownCode };
 //# sourceMappingURL=security.middleware.js.map

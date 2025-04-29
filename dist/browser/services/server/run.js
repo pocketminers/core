@@ -93,7 +93,7 @@ var runServer = function () {
                     return [4 /*yield*/, server.start()];
                 case 1:
                     _e.sent();
-                    return [2 /*return*/, server.app];
+                    return [2 /*return*/, server];
             }
         });
     });

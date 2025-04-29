@@ -48,6 +48,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.23.0",
+        "@types/compression": "^1.7.5",
         "@types/cors": "^2.8.17",
         "@types/express": "^5.0.1",
         "@types/jest": "^29.5.14",
@@ -72,6 +73,7 @@
         "@wharfkit/antelope": "^1.0.13",
         "@wharfkit/session": "^1.5.1",
         "cid": "multiformats/cid",
+        "compression": "^1.8.0",
         "cors": "^2.8.5",
         "did-jwt": "^8.0.14",
         "did-resolver": "^4.1.0",

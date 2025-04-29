@@ -8,7 +8,7 @@ const runServer = async ({
 }: {
     manager?: PocketServerManager,
     args?: BaseArgument[]
-} = {}): Promise<Express.Application> => {
+} = {}): Promise<PocketServerManager> => {
     const server = new PocketServerManager({
         arguments_: args
     });
@@ -27,7 +27,7 @@ const runServer = async ({
 
     await server.start();
 
-    return server.app
+    return server
 }
 
 export {

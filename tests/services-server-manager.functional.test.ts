@@ -10,7 +10,7 @@ describe('PocketServerManager', () => {
     let app: Express.Application;
 
     beforeEach(async () => {
-        app = await runServer({
+        serverManager = await runServer({
             args: [
                 {
                     name: 'nodeId',
@@ -38,6 +38,12 @@ describe('PocketServerManager', () => {
                 }
             ]
         });
+
+        app = serverManager.app;
+    });
+
+    afterEach( async () => {
+        await serverManager.close();
     });
 
     it('should be frozen', () => {
@@ -81,7 +87,7 @@ describe('PocketServerManager', () => {
         expect(frozenId).toBeDefined();
         expect(frozenName).toBeDefined();
         expect(frozenDescription).toBeDefined();
-        expect(Object.isFrozen(frozenApp)).toBe(true);
+        expect(Object.isFrozen(frozenApp)).toBe(false);   // app is not frozen
         expect(Object.isFrozen(frozenConfig)).toBe(true);
         expect(Object.isFrozen(frozenId)).toBe(true);
         expect(Object.isFrozen(frozenName)).toBe(true);
@@ -132,8 +138,36 @@ describe('PocketServerManager', () => {
             .send({
                 'x-pocket-service-shutdown-code': SecretManager.getSecret('POCKET_SERVICE_ADMIN_SHUTDOWN_CODE', { inReact: false }) || 'default-shutdown-code'
             });
-        console.log('response: ', response.body);
+
         expect(response.status).toBe(200);
         expect(response.body.message).toEqual("Server is shutting down...");
     });
+
+    it('should respond to POST /api/v0/test-name/shutdown with invalid shutdown code', async () => {
+
+        const response = await request(app as Application)
+            .post('/api/v0/test-name/admin/shutdown')
+            .set('Accept', 'application/json')
+            .set('x-pocket-public-api-key', 'txt:' + SecretManager.getSecret('POCKET_PUBLIC_API_KEY', { inReact: true }))
+            .set('x-pocket-request-id', SecretManager.getSecret('POCKET_SERVICE_ADMIN_REQUEST_ID', { inReact: false }) || 'default-request-id')
+            .set('Content-Type', 'application/json')
+            .send({
+                'x-pocket-service-shutdown-code': 'invalid-shutdown-code'
+            });
+
+        expect(response.status).toBe(403);
+        expect(response.body.message).toEqual("Invalid Shutdown Code - Forbidden");
+    });
+
+    it('should have a status of ONLINE after starting', async () => {
+        expect(serverManager.status).toBe('ONLINE');
+    });
+
+    it('should have a status of OFFLINE after closing', async () => {
+        await serverManager.close();
+        expect(serverManager.status).toBe('OFFLINE');
+    });
+
+
+
 });

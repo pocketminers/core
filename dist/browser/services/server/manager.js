@@ -35,9 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import express from 'express';
-import cors from 'cors';
-import { limiter, checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '../server/middleware/security.middleware.js';
-import helmet from 'helmet';
+import { checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '../server/middleware/security.middleware.js';
 import { IdentifierUtilities } from '../../utilities/identifier.js';
 import { getPocketServerParameters } from './parameters.js';
 import { Checks } from '../../utilities/checks.js';
@@ -45,10 +43,13 @@ import { PocketConfiguration } from '../../components/configuration.js';
 import { healthRouter } from './health/routes.js';
 import { Freezer } from '../../utilities/freezer.js';
 import { adminRouter } from './admin/index.js';
+import { configureMiddleware } from './middleware/configureMiddleware.js';
 var PocketServerManager = /** @class */ (function () {
     function PocketServerManager(_a) {
         var _b = _a === void 0 ? {} : _a, _c = _b.arguments_, arguments_ = _c === void 0 ? [] : _c, _d = _b.parameters_, parameters_ = _d === void 0 ? [] : _d;
         var _e, _f, _g, _h, _j;
+        this.status = 'OFFLINE';
+        this.status = 'INITIALIZING';
         var serverParameters = Checks.isEmpty(parameters_) ? getPocketServerParameters() : parameters_;
         var serverArguments = Checks.isEmpty(arguments_) ? new Array() : arguments_;
         var config = new PocketConfiguration({
@@ -72,7 +73,7 @@ var PocketServerManager = /** @class */ (function () {
         this.version = (_h = config.getPreparedArgByName('version')) === null || _h === void 0 ? void 0 : _h.value;
         this.description = (_j = config.getPreparedArgByName('description')) === null || _j === void 0 ? void 0 : _j.value;
         this.app = express();
-        this.configureMiddleware();
+        this.app = configureMiddleware(this.app);
         this.configureRoutes();
         // Listen for termination signals
         process.on('SIGTERM', this.handleShutdown.bind(this));
@@ -83,65 +84,40 @@ var PocketServerManager = /** @class */ (function () {
         Freezer.deepFreeze(this.description);
         Freezer.deepFreeze(this.version);
         Freezer.deepFreeze(this.type);
-        Freezer.deepFreeze(this.app);
+        // Freezer.deepFreeze(this.app);
         Freezer.deepFreeze(this.config);
+        this.status = 'READY';
     }
     PocketServerManager.prototype.handleShutdown = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log('Shutdown signal received. Closing server...');
-                        if (!(this.app !== undefined
-                            && this.app !== null
-                            && this.app instanceof express.application)) return [3 /*break*/, 2];
+                        if (this.status === 'STOPPING') {
+                            console.log('Server is already stopping. Ignoring shutdown signal.');
+                            return [2 /*return*/];
+                        }
+                        if (this.status === 'OFFLINE') {
+                            console.log('Server is already offline. Ignoring shutdown signal.');
+                            return [2 /*return*/];
+                        }
+                        if (!(this.status === 'ONLINE')) return [3 /*break*/, 2];
+                        console.log('Server is online. Preparing to close...');
+                        this.status = 'STOPPING';
                         return [4 /*yield*/, this.close()];
                     case 1:
                         _a.sent();
                         console.log('Server closed successfully.');
-                        _a.label = 2;
-                    case 2: return [2 /*return*/];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        console.log("Server is ".concat(this.status, ". Preparing to close..."));
+                        _a.label = 3;
+                    case 3:
+                        this.status = 'OFFLINE';
+                        return [2 /*return*/];
                 }
             });
         });
-    };
-    PocketServerManager.prototype.configureMiddleware = function () {
-        var corsOptions = {
-            origin: '*',
-            allowedHeaders: [
-                'Content-Type',
-                'accept',
-                'content-type',
-                'referer',
-                'sec-ch-ua',
-                'sec-ch-ua-mobile',
-                'sec-ch-ua-platform',
-                'user-agent',
-                'x-pocket-public-api-key',
-                'x-pocket-request-id'
-            ],
-            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-            optionsSuccessStatus: 200
-        };
-        this.app.use(cors(corsOptions));
-        this.app.use(express.urlencoded({ extended: true }));
-        this.app.use(express.json());
-        // this.app.use(encodeConnection);
-        // this.app.use(checkLists);
-        // this.app.use(checkPublicApiKey);
-        this.app.use(limiter);
-        this.app.use(helmet.contentSecurityPolicy({
-            directives: {
-                defaultSrc: ["'self'"],
-                scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-                styleSrc: ["'self'", "'unsafe-inline'"],
-                imgSrc: ["'self'", "data:"],
-                connectSrc: ["'self'", "dev.pocketminers.xyz/api/v0"],
-                fontSrc: ["'self'"],
-                objectSrc: ["'none'"],
-                upgradeInsecureRequests: [],
-            },
-        }));
     };
     PocketServerManager.prototype.configureRoutes = function () {
         this.app.use("/".concat(this.type, "/").concat(this.version, "/").concat(this.name), checkPublicApiKey, healthRouter);
@@ -153,17 +129,23 @@ var PocketServerManager = /** @class */ (function () {
             var _this = this;
             var _a;
             return __generator(this, function (_b) {
-                port = (_a = this.config.getPreparedArgByName('port')) === null || _a === void 0 ? void 0 : _a.value;
-                if (Checks.isEmpty(port)) {
-                    port = 3000;
-                }
-                this.app.listen(port, function () { return __awaiter(_this, void 0, void 0, function () {
-                    return __generator(this, function (_a) {
-                        console.log("Server is running on port: ".concat(port));
+                switch (_b.label) {
+                    case 0:
+                        port = (_a = this.config.getPreparedArgByName('port')) === null || _a === void 0 ? void 0 : _a.value;
+                        if (Checks.isEmpty(port)) {
+                            port = 3000;
+                        }
+                        return [4 /*yield*/, this.app.listen(port, function () { return __awaiter(_this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    console.log("Server ".concat(this.id, " is running a/n ").concat(this.type, " service named ").concat(this.name, " on port: ").concat(port));
+                                    return [2 /*return*/];
+                                });
+                            }); })];
+                    case 1:
+                        _b.sent();
+                        this.status = 'ONLINE';
                         return [2 /*return*/];
-                    });
-                }); });
-                return [2 /*return*/];
+                }
             });
         });
     };
@@ -176,12 +158,12 @@ var PocketServerManager = /** @class */ (function () {
                     next();
                 });
                 console.log("Server with ID: ".concat(this.id, " is closing."));
+                this.status = 'OFFLINE';
                 return [2 /*return*/];
             });
         });
     };
     return PocketServerManager;
 }());
-// Create an instance o
 export { PocketServerManager };
 //# sourceMappingURL=manager.js.map

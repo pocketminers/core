@@ -3,6 +3,6 @@ import { PocketServerManager } from "./manager.js";
 declare const runServer: ({ manager, args }?: {
     manager?: PocketServerManager;
     args?: BaseArgument[];
-}) => Promise<Express.Application>;
+}) => Promise<PocketServerManager>;
 export { runServer };
 //# sourceMappingURL=run.d.ts.map

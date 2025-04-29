@@ -20,7 +20,7 @@ const runServer = async ({ manager = undefined, args = [] } = {}) => {
         });
     }
     await server.start();
-    return server.app;
+    return server;
 };
 exports.runServer = runServer;
 //# sourceMappingURL=run.js.map

@@ -106,8 +106,6 @@ async function checkPublicApiKey(req: Request, res: Response, next: NextFunction
 async function checkForAdminRequestHeader(req: Request, res: Response, next: NextFunction): Promise<any> {
     const adminRequestId = SecretManager.getSecret('POCKET_SERVICE_ADMIN_REQUEST_ID', { inReact: false });
     const requestId = req.header('x-pocket-request-id');
-    console.log('adminRequestId: ', adminRequestId);
-    console.log('requestId: ', requestId);
 
     if (
         Checks.isEmpty(requestId) === false
@@ -130,8 +128,6 @@ async function checkForAdminRequestHeader(req: Request, res: Response, next: Nex
 async function checkForShutdownCode(req: Request, res: Response, next: NextFunction): Promise<any> {
 
     const adminShutdownCode = SecretManager.getSecret('POCKET_SERVICE_ADMIN_SHUTDOWN_CODE');
-    console.log('adminShutdownCode: ', adminShutdownCode);
-    console.log('req.body: ', req.body);
     const shutdownCode = req.body['x-pocket-service-shutdown-code'];
 
     if (
