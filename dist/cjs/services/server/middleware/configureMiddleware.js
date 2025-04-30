@@ -8,10 +8,29 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const compression_1 = __importDefault(require("compression"));
-const limiter_middleware_1 = require("./limiter.middleware.js");
-const configureMiddleware = (app) => {
+const limiter_1 = require("../../server/middleware/limiter.js");
+const attachments_1 = require("../../server/middleware/attachments.js");
+const configureMiddleware = ({ app, serverId }) => {
+    /**
+     * Attach serverId to request
+     * This middleware attaches the serverId to the request object
+     * so that it can be accessed in the request handlers.
+     * This is useful for logging and debugging purposes.
+     */
+    app.use((0, attachments_1.attachServerId)(serverId));
     /**
      * CORS - Cross-Origin Resource Sharing
+     * This middleware enables CORS for all routes and origins.
+     * It allows the server to accept requests from different origins.
+     * This is useful for APIs that are accessed from different domains.
+     * The `origin` option specifies the allowed origins.
+     * The `credentials` option allows the server to accept cookies and authorization headers.
+     * The `exposedHeaders` option specifies the headers that are exposed to the client.
+     * The `preflightContinue` option specifies whether to pass the preflight request to the next middleware.
+     * The `allowedHeaders` option specifies the allowed headers.
+     * The `methods` option specifies the allowed HTTP methods.
+     * The `optionsSuccessStatus` option specifies the status code for successful OPTIONS requests.
+     * The `maxAge` option specifies the maximum age of the preflight request in seconds.
      */
     const corsOptions = {
         origin: [
@@ -38,11 +57,16 @@ const configureMiddleware = (app) => {
             'x-pocket-request-id'
         ],
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-        optionsSuccessStatus: 200
+        optionsSuccessStatus: 200,
+        maxAge: 86400 // 24 hours
     };
     app.use((0, cors_1.default)(corsOptions));
     /**
-     * Middleware
+     * Body Parser
+     * Parse incoming request bodies in a middleware before your handlers,
+     * available under the req.body property.
+     * The `extended` option allows to choose between parsing the URL-encoded data
+     * with the querystring library (when `false`) or the qs library (when `true`).
      */
     app.use(express_1.default.urlencoded({ extended: true }));
     app.use(express_1.default.json());
@@ -52,7 +76,7 @@ const configureMiddleware = (app) => {
     /**
      * Rate Limiting
      */
-    app.use(limiter_middleware_1.limiter);
+    app.use(limiter_1.limiter);
     /**
      * Security Headers
      */

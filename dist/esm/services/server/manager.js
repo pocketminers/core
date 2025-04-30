@@ -1,5 +1,5 @@
 import express from 'express';
-import { checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '../server/middleware/security.middleware.js';
+import { checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '../server/middleware/security.js';
 import { IdentifierUtilities } from '../../utilities/identifier.js';
 import { getPocketServerParameters } from './parameters.js';
 import { Checks } from '../../utilities/checks.js';
@@ -42,7 +42,7 @@ class PocketServerManager {
         this.version = config.getPreparedArgByName('version')?.value;
         this.description = config.getPreparedArgByName('description')?.value;
         this.app = express();
-        this.app = configureMiddleware(this.app);
+        this.app = configureMiddleware({ app: this.app, serverId: this.id });
         this.configureRoutes();
         // Listen for termination signals
         process.on('SIGTERM', this.handleShutdown.bind(this));

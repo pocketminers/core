@@ -10,6 +10,7 @@
  */
 var BaseObjects;
 (function (BaseObjects) {
+    BaseObjects["Identifier"] = "Identifier";
     BaseObjects["Configuration"] = "Configuration";
     BaseObjects["Process"] = "Process";
     BaseObjects["Command"] = "Command";

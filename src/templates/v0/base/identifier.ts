@@ -1,8 +1,11 @@
-/**
+ /**
  * file: identifier.ts
  * description: This file contains the definition of the BaseIdentifier type and its associated types.
  * It is used to represent various types of identifiers that can be used in the Pocket Network.
  */
+
+import { BaseParameters } from "./configuration";
+import { BaseObject, BaseObjects, BaseObjectType } from "./object";
 
 
 /**
@@ -126,7 +129,7 @@ enum BaseIdentifierFormats {
 
 /**
  * BaseIdentifierTypeKey is a type that represents the keys of the BaseIdentifierFormat enum.
- * It is used to ensure that only valid keys from the enum can be used in certain contexts.
+ * It is ued to ensure that only valid keys from the enum can be used in certain contexts.
  */
 type BaseIdentifierFormat = keyof typeof BaseIdentifierFormats
 
@@ -147,7 +150,10 @@ const BaseIdentifierTypeList = Object.values(BaseIdentifierFormats) as Array<Bas
  * @property {string | number | symbol} id - The unique identifier.
  * @property {I} format - The type of the identifier, which is a specific identifier type.
  */
-interface BaseIdentifier<I extends BaseIdentifierFormat>
+interface BaseIdentifier
+<
+    I extends BaseIdentifierFormat
+>
     extends
         Record<'value', string | number | symbol>,
         Record<'format', I>
@@ -170,12 +176,42 @@ interface BaseIdentifierOptions
 
 
 
+/**
+ * BaseIdentifiableObject is a generic type that represents an object with a unique identifier.
+ * It includes the identifier and options for creating the identifier.
+ *
+ * @template I - The type of the identifier, which extends BaseIdentifierFormat.
+ * @template O - The type of the object, which extends BaseObjectType.
+ */
+interface BaseIdentifiableObject
+<
+    I extends BaseIdentifierFormat = BaseIdentifierFormat,
+    O extends BaseObjectType = BaseObjects.Unknown,
+    P extends BaseParameters = []
+>
+    extends
+        BaseObject
+        <
+            {
+                id: BaseIdentifier<I>;
+                name?: BaseIdentifier<BaseIdentifierFormats.Name>;
+                description?: string;
+                parameters?: BaseParameters<P>;
+                createdAt: Date;
+            },
+            I,
+            O
+        >
+{}
+
+
 export {
     type BaseIdentifier,
     type BaseIdentifierFormat,
     type BaseIdentifierOptions,
     BaseIdentifierFormats,
-    BaseIdentifierTypeList
+    BaseIdentifierTypeList,
+    type BaseIdentifiableObject
 }
 
 

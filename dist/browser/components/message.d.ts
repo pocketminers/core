@@ -1,4 +1,5 @@
-import { BaseMessageCodes, BaseMessageLevels, BaseSuccessCodes } from "../templates/v0/base/message.js";
+import { BaseSuccessCodes } from "../templates/v0/base/statuses.js";
+import { BaseMessageCodes, BaseMessageLevels } from "../templates/v0/base/message.js";
 interface PocketMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevels = BaseMessageLevels.SUCCESS, B = any, D = any> extends Partial<Record<'code', C>>, Partial<Record<'level', L>>, Partial<Record<'body', B>>, Partial<Record<'timestamp', Date>>, Partial<Record<'data', D>>, Partial<Record<'printToConsole', boolean>>, Partial<Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>>, Partial<Record<'delayCallback', number>> {
 }
 /**
@@ -8,8 +9,8 @@ interface PocketMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L
  * - This class also ensures that the message object is immutable after creation.
  * - This class does not extend the PocketObject class, as it does not include a metadata object.
  *
- * @template C - The type of the message code. Defaults to BaseSuccessCodes.OK.
- * @template L - The type of the message level. Defaults to BaseMessageLevels.SUCCESS.
+ * @template C - The message code. Defaults to BaseSuccessCodes.OK.
+ * @template L - The message level. Defaults to BaseMessageLevels.SUCCESS.
  * @template B - The type of the message body. Defaults to any.
  * @template D - The type of the message data. Defaults to any.
  *

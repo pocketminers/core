@@ -1,8 +1,8 @@
 /**
- * file: identifier.ts
- * description: This file contains the definition of the BaseIdentifier type and its associated types.
- * It is used to represent various types of identifiers that can be used in the Pocket Network.
- */
+* file: identifier.ts
+* description: This file contains the definition of the BaseIdentifier type and its associated types.
+* It is used to represent various types of identifiers that can be used in the Pocket Network.
+*/
 /**
  * IdentifierType is an enumeration of various types of identifiers
  * that can be used in the Pocket Network. These identifiers include

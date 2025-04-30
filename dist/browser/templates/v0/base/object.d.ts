@@ -11,6 +11,7 @@ import { BaseMetadata } from "./metadata.js";
  * Each type is represented as a string.
  */
 declare enum BaseObjects {
+    Identifier = "Identifier",
     Configuration = "Configuration",
     Process = "Process",
     Command = "Command",

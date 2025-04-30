@@ -1,5 +1,9 @@
 import { PocketMessage } from './message.js';
 import { BaseMessageLevels } from '../templates/v0/base/message.js';
+/**
+ * PocketErrorMessage is a class that represents an error message in the Pocket framework.
+ * It extends the PocketMessage class and provides additional functionality for handling errors.
+ */
 class PocketErrorMessage extends PocketMessage {
     constructor({ code, level, error, timestamp, data, throwError, callback, delayCallback = 0 }) {
         super({

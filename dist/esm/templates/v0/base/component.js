@@ -7,6 +7,11 @@ var BaseComponents;
     BaseComponents["Argument"] = "Argument";
     BaseComponents["Parameter"] = "Parameter";
     BaseComponents["Identity"] = "Identity";
+    BaseComponents["Instance"] = "Instance";
+    BaseComponents["Process"] = "Process";
+    BaseComponents["Command"] = "Command";
+    BaseComponents["Configuration"] = "Configuration";
+    BaseComponents["Job"] = "Job";
 })(BaseComponents || (BaseComponents = {}));
 export { BaseComponents };
 //# sourceMappingURL=component.js.map

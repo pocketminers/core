@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PocketMessage = void 0;
+const statuses_1 = require("../templates/v0/base/statuses.js");
 const message_1 = require("../templates/v0/base/message.js");
 const freezer_1 = require("../utilities/freezer.js");
 /**
@@ -10,8 +11,8 @@ const freezer_1 = require("../utilities/freezer.js");
  * - This class also ensures that the message object is immutable after creation.
  * - This class does not extend the PocketObject class, as it does not include a metadata object.
  *
- * @template C - The type of the message code. Defaults to BaseSuccessCodes.OK.
- * @template L - The type of the message level. Defaults to BaseMessageLevels.SUCCESS.
+ * @template C - The message code. Defaults to BaseSuccessCodes.OK.
+ * @template L - The message level. Defaults to BaseMessageLevels.SUCCESS.
  * @template B - The type of the message body. Defaults to any.
  * @template D - The type of the message data. Defaults to any.
  *
@@ -37,7 +38,7 @@ class PocketMessage {
     data;
     callback;
     constructor({ code, level, body, timestamp, data, printToConsole = false, callback, delayCallback = 0 }) {
-        this.code = code !== undefined ? code : message_1.BaseSuccessCodes.OK;
+        this.code = code !== undefined ? code : statuses_1.BaseSuccessCodes.OK;
         const expectedLevel = this.getLevelFromCode(this.code);
         this.level = level !== undefined ? level : expectedLevel;
         this.checkCodeAndLevel(this.code, this.level);
@@ -96,26 +97,26 @@ class PocketMessage {
         switch (level) {
             case message_1.BaseMessageLevels.INFO:
                 // check that the code is in the BaseInfoCodes enum
-                if (!Object.values(message_1.BaseInfoCodes).includes(code)) {
+                if (!Object.values(statuses_1.BaseInfoCodes).includes(code)) {
                     throw new Error(`Invalid code for INFO level: ${code}`);
                 }
                 break;
             case message_1.BaseMessageLevels.SUCCESS:
                 // check that the code is in the BaseSuccessCodes enum
-                if (!Object.values(message_1.BaseSuccessCodes).includes(code)) {
+                if (!Object.values(statuses_1.BaseSuccessCodes).includes(code)) {
                     throw new Error(`Invalid code for SUCCESS level: ${code}`);
                 }
                 break;
             case message_1.BaseMessageLevels.WARNING:
                 // check that the code is in the BaseWarningCodes enum
-                if (!Object.values(message_1.BaseWarningCodes).includes(code)) {
+                if (!Object.values(statuses_1.BaseWarningCodes).includes(code)) {
                     throw new Error(`Invalid code for WARNING level: ${code}`);
                 }
                 break;
             case message_1.BaseMessageLevels.ERROR:
                 // check that the code is in the BaseClientErrorCodes and BaseServerErrorCodes enum
-                if (!Object.values(message_1.BaseClientErrorCodes).includes(code) &&
-                    !Object.values(message_1.BaseServerErrorCodes).includes(code)) {
+                if (!Object.values(statuses_1.BaseClientErrorCodes).includes(code) &&
+                    !Object.values(statuses_1.BaseServerErrorCodes).includes(code)) {
                     throw new Error(`Invalid code for ERROR level: ${code}`);
                 }
                 break;

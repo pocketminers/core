@@ -15,6 +15,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import { PocketMessage } from './message.js';
 import { BaseMessageLevels } from '../templates/v0/base/message.js';
+/**
+ * PocketErrorMessage is a class that represents an error message in the Pocket framework.
+ * It extends the PocketMessage class and provides additional functionality for handling errors.
+ */
 var PocketErrorMessage = /** @class */ (function (_super) {
     __extends(PocketErrorMessage, _super);
     function PocketErrorMessage(_a) {

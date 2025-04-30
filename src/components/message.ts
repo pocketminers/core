@@ -1,4 +1,5 @@
-import { BaseClientErrorCodes, BaseInfoCodes, BaseMessageCodes, BaseMessageLevels, BaseServerErrorCodes, BaseSuccessCodes, BaseWarningCodes } from "@templates/v0/base/message";
+import { BaseClientErrorCodes, BaseInfoCodes, BaseServerErrorCodes, BaseSuccessCodes, BaseWarningCodes } from "@templates/v0/base/statuses";
+import { BaseMessageCodes, BaseMessageLevels } from "@templates/v0/base/message";
 import { Freezer } from "@utilities/freezer";
 
 
@@ -27,8 +28,8 @@ interface PocketMessageEntry
  * - This class also ensures that the message object is immutable after creation.
  * - This class does not extend the PocketObject class, as it does not include a metadata object.
  * 
- * @template C - The type of the message code. Defaults to BaseSuccessCodes.OK.
- * @template L - The type of the message level. Defaults to BaseMessageLevels.SUCCESS.
+ * @template C - The message code. Defaults to BaseSuccessCodes.OK.
+ * @template L - The message level. Defaults to BaseMessageLevels.SUCCESS.
  * @template B - The type of the message body. Defaults to any.
  * @template D - The type of the message data. Defaults to any.
  * 

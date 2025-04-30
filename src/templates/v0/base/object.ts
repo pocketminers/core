@@ -14,6 +14,7 @@ import { BaseMetadata } from "./metadata";
  * Each type is represented as a string.
  */
 enum BaseObjects {
+    Identifier = 'Identifier',
     Configuration = 'Configuration',
     Process = 'Process',
     Command = 'Command',

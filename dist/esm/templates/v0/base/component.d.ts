@@ -5,7 +5,12 @@
 declare enum BaseComponents {
     Argument = "Argument",
     Parameter = "Parameter",
-    Identity = "Identity"
+    Identity = "Identity",
+    Instance = "Instance",
+    Process = "Process",
+    Command = "Command",
+    Configuration = "Configuration",
+    Job = "Job"
 }
 /**
  * BaseComponent
@@ -15,5 +20,5 @@ type BaseComponent = keyof typeof BaseComponents;
 type BaseComponentsTypes = {
     [key in BaseComponent]: BaseComponentsTypes[key];
 };
-export { BaseComponents, BaseComponentsTypes };
+export { BaseComponents, type BaseComponent, type BaseComponentsTypes };
 //# sourceMappingURL=component.d.ts.map

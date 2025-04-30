@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 
 
-import { checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '@services/server/middleware/security.middleware';
+import { checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '@services/server/middleware/security';
 import { IdentifierUtilities } from '@utilities/identifier';
 import { BaseArguments } from '@templates/v0';
 import { getPocketServerParameters } from './parameters';
@@ -12,7 +12,7 @@ import { healthRouter } from './health/routes';
 import { Freezer } from '@utilities/freezer';
 import { adminRouter } from './admin';
 import { configureMiddleware } from './middleware/configureMiddleware';
-import { PocketServerStatus } from './statuses';
+import { PocketServerStatus } from './status';
 
 class PocketServerManager {
     public id: string;
@@ -66,7 +66,7 @@ class PocketServerManager {
         this.description = config.getPreparedArgByName<string>('description')?.value as string;
 
         this.app = express();
-        this.app = configureMiddleware(this.app);
+        this.app = configureMiddleware({app: this.app, serverId: this.id});
         this.configureRoutes();
 
         // Listen for termination signals

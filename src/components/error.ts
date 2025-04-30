@@ -1,7 +1,12 @@
 import { PocketMessage } from '@components/message';
-import { BaseClientErrorCodes, BaseMessageLevels, BaseServerErrorCodes, BaseWarningCodes } from '@templates/v0/base/message';
+import { BaseClientErrorCodes, BaseServerErrorCodes, BaseWarningCodes } from '@templates/v0';
+import { BaseMessageLevels } from '@templates/v0/base/message';
 
 
+/**
+ * PocketErrorMessage is a class that represents an error message in the Pocket framework.
+ * It extends the PocketMessage class and provides additional functionality for handling errors.
+ */
 class PocketErrorMessage
 <
     C extends BaseClientErrorCodes | BaseWarningCodes | BaseServerErrorCodes = BaseClientErrorCodes.BAD_REQUEST,

@@ -1,9 +1,9 @@
 "use strict";
 /**
- * file: identifier.ts
- * description: This file contains the definition of the BaseIdentifier type and its associated types.
- * It is used to represent various types of identifiers that can be used in the Pocket Network.
- */
+* file: identifier.ts
+* description: This file contains the definition of the BaseIdentifier type and its associated types.
+* It is used to represent various types of identifiers that can be used in the Pocket Network.
+*/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseIdentifierTypeList = exports.BaseIdentifierFormats = void 0;
 /**

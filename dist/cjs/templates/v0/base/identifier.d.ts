@@ -1,8 +1,10 @@
 /**
- * file: identifier.ts
- * description: This file contains the definition of the BaseIdentifier type and its associated types.
- * It is used to represent various types of identifiers that can be used in the Pocket Network.
- */
+* file: identifier.ts
+* description: This file contains the definition of the BaseIdentifier type and its associated types.
+* It is used to represent various types of identifiers that can be used in the Pocket Network.
+*/
+import { BaseParameters } from "./configuration.js";
+import { BaseObject, BaseObjects, BaseObjectType } from "./object.js";
 /**
  * IdentifierType is an enumeration of various types of identifiers
  * that can be used in the Pocket Network. These identifiers include
@@ -104,7 +106,7 @@ declare enum BaseIdentifierFormats {
 }
 /**
  * BaseIdentifierTypeKey is a type that represents the keys of the BaseIdentifierFormat enum.
- * It is used to ensure that only valid keys from the enum can be used in certain contexts.
+ * It is ued to ensure that only valid keys from the enum can be used in certain contexts.
  */
 type BaseIdentifierFormat = keyof typeof BaseIdentifierFormats;
 /**
@@ -128,5 +130,20 @@ interface BaseIdentifier<I extends BaseIdentifierFormat> extends Record<'value',
  */
 interface BaseIdentifierOptions extends Partial<Record<'prefix', string>>, Partial<Record<'suffix', string>>, Partial<Record<'length', number>>, Partial<Record<'seriesStart', number>>, Partial<Record<'seriesEnd', number>>, Partial<Record<'seriesStep', number>>, Partial<Record<'seriesCount', number>> {
 }
-export { type BaseIdentifier, type BaseIdentifierFormat, type BaseIdentifierOptions, BaseIdentifierFormats, BaseIdentifierTypeList };
+/**
+ * BaseIdentifiableObject is a generic type that represents an object with a unique identifier.
+ * It includes the identifier and options for creating the identifier.
+ *
+ * @template I - The type of the identifier, which extends BaseIdentifierFormat.
+ * @template O - The type of the object, which extends BaseObjectType.
+ */
+interface BaseIdentifiableObject<I extends BaseIdentifierFormat = BaseIdentifierFormat, O extends BaseObjectType = BaseObjects.Unknown, P extends BaseParameters = []> extends BaseObject<{
+    id: BaseIdentifier<I>;
+    name?: BaseIdentifier<BaseIdentifierFormats.Name>;
+    description?: string;
+    parameters?: BaseParameters<P>;
+    createdAt: Date;
+}, I, O> {
+}
+export { type BaseIdentifier, type BaseIdentifierFormat, type BaseIdentifierOptions, BaseIdentifierFormats, BaseIdentifierTypeList, type BaseIdentifiableObject };
 //# sourceMappingURL=identifier.d.ts.map

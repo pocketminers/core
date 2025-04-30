@@ -2,7 +2,7 @@ import express from 'express';
 import { BaseArguments } from '../../templates/v0/index.js';
 import { PocketConfiguration } from '../../components/configuration.js';
 import { PocketParameter } from '../../components/parameter.js';
-import { PocketServerStatus } from './statuses.js';
+import { PocketServerStatus } from './status.js';
 declare class PocketServerManager {
     id: string;
     name: string;

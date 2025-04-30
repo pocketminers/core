@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PocketServerManager = void 0;
 const express_1 = __importDefault(require("express"));
-const security_middleware_1 = require("../server/middleware/security.middleware.js");
+const security_1 = require("../server/middleware/security.js");
 const identifier_1 = require("../../utilities/identifier.js");
 const parameters_1 = require("./parameters.js");
 const checks_1 = require("../../utilities/checks.js");
@@ -48,7 +48,7 @@ class PocketServerManager {
         this.version = config.getPreparedArgByName('version')?.value;
         this.description = config.getPreparedArgByName('description')?.value;
         this.app = (0, express_1.default)();
-        this.app = (0, configureMiddleware_1.configureMiddleware)(this.app);
+        this.app = (0, configureMiddleware_1.configureMiddleware)({ app: this.app, serverId: this.id });
         this.configureRoutes();
         // Listen for termination signals
         process.on('SIGTERM', this.handleShutdown.bind(this));
@@ -84,8 +84,8 @@ class PocketServerManager {
         this.status = 'OFFLINE';
     }
     configureRoutes() {
-        this.app.use(`/${this.type}/${this.version}/${this.name}`, security_middleware_1.checkPublicApiKey, routes_1.healthRouter);
-        this.app.use(`/${this.type}/${this.version}/${this.name}/admin`, security_middleware_1.checkForAdminRequestHeader, security_middleware_1.checkForShutdownCode, admin_1.adminRouter);
+        this.app.use(`/${this.type}/${this.version}/${this.name}`, security_1.checkPublicApiKey, routes_1.healthRouter);
+        this.app.use(`/${this.type}/${this.version}/${this.name}/admin`, security_1.checkForAdminRequestHeader, security_1.checkForShutdownCode, admin_1.adminRouter);
     }
     async start() {
         let port = this.config.getPreparedArgByName('port')?.value;

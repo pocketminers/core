@@ -1,5 +1,6 @@
 import { PocketErrorMessage } from "@components/error";
-import { BaseClientErrorCodes, BaseMessageLevels } from "@templates/v0/base/message";
+import { BaseMessageLevels } from "@templates/v0/base/message";
+import { BaseClientErrorCodes } from "@templates/v0/base/statuses";
 
 
 describe("PocketErrorMessage", () => {

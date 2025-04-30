@@ -6,7 +6,12 @@
 enum BaseComponents {
     Argument = 'Argument',
     Parameter = 'Parameter',
-    Identity = 'Identity'
+    Identity = 'Identity',
+    Instance = 'Instance',
+    Process = 'Process',
+    Command = 'Command',
+    Configuration = 'Configuration',
+    Job = 'Job'
 }
 
 
@@ -24,5 +29,6 @@ type BaseComponentsTypes = {
 
 export {
     BaseComponents,
-    BaseComponentsTypes
+    type BaseComponent,
+    type BaseComponentsTypes
 }

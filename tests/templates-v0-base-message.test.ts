@@ -1,4 +1,5 @@
-import { BaseMessageEntry, BaseMessageCode, BaseMessageLevel, BaseMessageLevelHierarchy, BaseMessageCodes, BaseMessageLevels, BaseSuccessCodes, BaseClientErrorCodes, BaseServerErrorCodes } from "../src/templates/v0/base/message";
+import { BaseMessageEntry, BaseMessageLevelHierarchy, BaseMessageCodes, BaseMessageLevels } from "../src/templates/v0/base/message";
+import { BaseSuccessCodes, BaseClientErrorCodes, BaseServerErrorCodes } from "@templates/v0/base/statuses"
 
 describe("BaseMessageLevels", () => {
     it("should have the correct enum values", () => {

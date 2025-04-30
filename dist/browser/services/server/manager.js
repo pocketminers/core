@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import express from 'express';
-import { checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '../server/middleware/security.middleware.js';
+import { checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '../server/middleware/security.js';
 import { IdentifierUtilities } from '../../utilities/identifier.js';
 import { getPocketServerParameters } from './parameters.js';
 import { Checks } from '../../utilities/checks.js';
@@ -73,7 +73,7 @@ var PocketServerManager = /** @class */ (function () {
         this.version = (_h = config.getPreparedArgByName('version')) === null || _h === void 0 ? void 0 : _h.value;
         this.description = (_j = config.getPreparedArgByName('description')) === null || _j === void 0 ? void 0 : _j.value;
         this.app = express();
-        this.app = configureMiddleware(this.app);
+        this.app = configureMiddleware({ app: this.app, serverId: this.id });
         this.configureRoutes();
         // Listen for termination signals
         process.on('SIGTERM', this.handleShutdown.bind(this));

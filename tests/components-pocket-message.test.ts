@@ -1,5 +1,6 @@
 import { PocketMessage } from "@components/message";
-import { BaseMessageCodes, BaseSuccessCodes, BaseMessageLevels, BaseWarningCodes, BaseServerErrorCodes } from "@templates/v0/base/message";
+import { BaseMessageCodes, BaseMessageLevels} from "@templates/v0/base/message";
+import { BaseServerErrorCodes, BaseSuccessCodes, BaseWarningCodes } from "@templates/v0/base/statuses";
 
 describe("PocketMessage", () => {
     it("should create a PocketMessage with default values", () => {

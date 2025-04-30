@@ -1,5 +1,14 @@
-import { BaseMessageCode, BaseSuccessCodes } from "@templates/v0/base/message";
+import { BaseMessageCode } from "@templates/v0/base/message";
 
+
+/**
+ * BaseServiceResponse is an interface that represents a generic service response.
+ * It contains a code, data, and an optional error property.
+ * 
+ * @template C - The type of the code. It defaults to BaseMessageCode.
+ * @template D - The type of the data. It defaults to any.
+ * @template E - The type of the error. It defaults to Error.
+ */
 interface BaseServiceResponse
 <
     C = BaseMessageCode,
