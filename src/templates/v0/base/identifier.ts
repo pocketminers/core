@@ -185,7 +185,7 @@ interface BaseIdentifierOptions
  */
 interface BaseIdentifiableObject
 <
-    D = {},
+    D = any,
     I extends BaseIdentifierFormat = BaseIdentifierFormat,
     O extends BaseObjectType = BaseObjects.Unknown,
     P extends BaseParameters = []

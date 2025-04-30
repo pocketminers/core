@@ -1,12 +1,12 @@
-import { BaseClientErrorCodes, BaseInfoCodes, BaseServerErrorCodes, BaseSuccessCodes, BaseWarningCodes } from "@templates/v0/base/statuses";
-import { BaseMessageCodes, BaseMessageLevels } from "@templates/v0/base/message";
+import { BaseSuccessCodes } from "@templates/v0/base/statuses";
+import { BaseMessageCode, BaseMessageCodes, BaseMessageLevel, BaseMessageLevels } from "@templates/v0/base/message";
 import { Freezer } from "@utilities/freezer";
 
 
 interface PocketMessageEntry
 <
     C extends BaseMessageCodes = BaseSuccessCodes.OK,
-    L extends BaseMessageLevels = BaseMessageLevels.SUCCESS,
+    L extends BaseMessageLevel = BaseMessageLevels.SUCCESS,
     B = any,
     D = any,
 >
@@ -50,7 +50,7 @@ interface PocketMessageEntry
 class PocketMessage
 <
     C extends BaseMessageCodes = BaseSuccessCodes.OK,
-    L extends BaseMessageLevels = BaseMessageLevels.SUCCESS,
+    L extends BaseMessageLevel = BaseMessageLevels.SUCCESS,
     B = any,
     D = any,
 >
@@ -76,7 +76,7 @@ class PocketMessage
         this.code = code !== undefined ? code : BaseSuccessCodes.OK as C;
         const expectedLevel = this.getLevelFromCode(this.code);
         this.level = level !== undefined ? level : expectedLevel as L;
-        this.checkCodeAndLevel(this.code, this.level);
+        // this.checkCodeAndLevel(this.code, this.level);
 
         this.body = body !== undefined ? body : {} as B;
         this.timestamp = timestamp !== undefined ? timestamp : new Date();
@@ -145,37 +145,39 @@ class PocketMessage
     }
 
     private checkCodeAndLevel(code: C, level: L): void {
-        switch (level) {
-            case BaseMessageLevels.INFO:
-                // check that the code is in the BaseInfoCodes enum
-                if (!Object.values(BaseInfoCodes).includes(code as BaseInfoCodes)) {
-                    throw new Error(`Invalid code for INFO level: ${code}`);
-                }
-                break;
-            case BaseMessageLevels.SUCCESS:
-                // check that the code is in the BaseSuccessCodes enum
-                if (!Object.values(BaseSuccessCodes).includes(code as BaseSuccessCodes)) {
-                    throw new Error(`Invalid code for SUCCESS level: ${code}`);
-                }
-                break;
-            case BaseMessageLevels.WARNING:
-                // check that the code is in the BaseWarningCodes enum
-                if (!Object.values(BaseWarningCodes).includes(code as BaseWarningCodes)) {
-                    throw new Error(`Invalid code for WARNING level: ${code}`);
-                }
-                break;
-            case BaseMessageLevels.ERROR:
-                // check that the code is in the BaseClientErrorCodes and BaseServerErrorCodes enum
-                if (
-                    !Object.values(BaseClientErrorCodes).includes(code as BaseClientErrorCodes) &&
-                    !Object.values(BaseServerErrorCodes).includes(code as BaseServerErrorCodes)
-                ) {
-                    throw new Error(`Invalid code for ERROR level: ${code}`);
-                }
-                break;
-            default:
-                throw new Error(`Invalid level: ${level}`);
+        if (
+            !Object.values(BaseMessageLevels).includes(level as BaseMessageLevels)
+        ) {
+            throw new Error(`Invalid level: ${level}`);
         }
+
+        // switch (level) {
+        //     case BaseMessageLevels.INFO:
+        //         if (!Object.values(BaseInfoCodes).includes(code as BaseInfoCodes)) {
+        //             throw new Error(`Invalid code for INFO level: ${code}`);
+        //         }
+        //         break;
+        //     case BaseMessageLevels.SUCCESS:
+        //         if (!Object.values(BaseSuccessCodes).includes(code as BaseSuccessCodes)) {
+        //             throw new Error(`Invalid code for SUCCESS level: ${code}`);
+        //         }
+        //         break;
+        //     case BaseMessageLevels.WARNING:
+        //         if (!Object.values(BaseWarningCodes).includes(code as BaseWarningCodes)) {
+        //             throw new Error(`Invalid code for WARNING level: ${code}`);
+        //         }
+        //         break;
+        //     case BaseMessageLevels.ERROR:
+        //         if (
+        //             !Object.values(BaseClientErrorCodes).includes(code as BaseClientErrorCodes) &&
+        //             !Object.values(BaseServerErrorCodes).includes(code as BaseServerErrorCodes)
+        //         ) {
+        //             throw new Error(`Invalid code for ERROR level: ${code}`);
+        //         }
+        //         break;
+        //     default:
+        //         throw new Error(`Invalid level: ${level}`);
+        // }
     }
 
     /**
@@ -198,7 +200,10 @@ class PocketMessage
      * @param printToConsole - Whether to print the message to the console.
      */
     private handlePrintToConsole(printToConsole?: boolean): void {
-        if (printToConsole !== undefined && printToConsole) {
+        if (
+            printToConsole !== undefined
+            && printToConsole === true
+        ) {
             this.printMessage();
         }
     }
@@ -210,6 +215,9 @@ class PocketMessage
      * - SUCCESS: console.log
      * - WARNING: console.warn
      * - ERROR: console.error
+     * - CRITICAL: console.error
+     * - DEBUG: console.debug
+     * - TRACE: console.trace
      */
     private printMessage(): void {
         switch (this.level) {

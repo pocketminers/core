@@ -109,7 +109,15 @@ interface BaseErrorMessageEntry
     D = any,
 > 
     extends
-        Omit<BaseMessageEntry<C, L, E, D>, 'body'>,
+        BaseMessageEntry
+        <
+            C,
+            L,
+            {
+                error: E;
+            },
+            D
+        >,
         Record<'error', E>
 {}
 

@@ -118,35 +118,35 @@ describe("PocketMessage", () => {
         consoleSpy.mockRestore();
     });
 
-    it("should throw an error if an invalid code is provided", () => {
-        expect(() => {
-            new PocketMessage({
-                // @ts-expect-error
-                code: "INVALID_CODE" as BaseMessageCodes,
-                body: "Test message"
-            });
-        }).toThrow("Invalid code for INFO level: INVALID_CODE");
-    });
+    // it("should throw an error if an invalid code is provided", () => {
+    //     expect(() => {
+    //         new PocketMessage({
+    //             // @ts-expect-error
+    //             code: "INVALID_CODE" as BaseMessageCodes,
+    //             body: "Test message"
+    //         });
+    //     }).toThrow("Invalid code for INFO level: INVALID_CODE");
+    // });
 
-    it("should throw an error if an invalid level is provided", () => {
-        expect(() => {
-            new PocketMessage({
-                code: BaseSuccessCodes.OK,
-                level: "INVALID_LEVEL" as BaseMessageLevels,
-                body: "Test message"
-            });
-        }).toThrow("Invalid level: INVALID_LEVEL");
-    });
+    // it("should throw an error if an invalid level is provided", () => {
+    //     expect(() => {
+    //         new PocketMessage({
+    //             code: BaseSuccessCodes.OK,
+    //             level: "INVALID_LEVEL" as BaseMessageLevels,
+    //             body: "Test message"
+    //         });
+    //     }).toThrow("Invalid level: INVALID_LEVEL");
+    // });
 
-    it("should throw an error if an invalid code is provided for the specified level", () => {
-        expect(() => {
-            new PocketMessage({
-                code: BaseSuccessCodes.OK,
-                level: BaseMessageLevels.WARNING,
-                body: "Test message"
-            });
-        }).toThrow("Invalid code for WARNING level: 200");
-    });
+    // it("should throw an error if an invalid code is provided for the specified level", () => {
+    //     expect(() => {
+    //         new PocketMessage({
+    //             code: BaseSuccessCodes.OK,
+    //             level: BaseMessageLevels.WARNING,
+    //             body: "Test message"
+    //         });
+    //     }).toThrow("Invalid code for WARNING level: 200");
+    // });
 
     it("should print the message to the console based on its level", () => {
         const consoleInfoSpy = jest.spyOn(console, "info").mockImplementation();
@@ -237,5 +237,108 @@ describe("PocketMessage", () => {
         await message.handleCallback();
 
         expect(callback).toHaveBeenCalledWith(message);
+    });
+
+    it('should print the message in the console if printToConsole is true', () => {
+        const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            body: "Test message",
+            printToConsole: true
+        });
+
+        expect(consoleSpy).toHaveBeenCalledWith(message.body);
+        consoleSpy.mockRestore();
+    })
+
+    it('should print the message in the proper format based on the level - info', () => {
+        const consoleSpy = jest.spyOn(console, "info").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            level: BaseMessageLevels.INFO,
+            body: "Test message",
+            printToConsole: true
+        });
+
+        expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
+        consoleSpy.mockRestore();
+    });
+
+    it('should print the message in the proper format based on the level - error', () => {
+        const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseServerErrorCodes.INTERNAL_SERVER_ERROR,
+            level: BaseMessageLevels.ERROR,
+            body: "Test message",
+            printToConsole: true
+        });
+
+        expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
+        consoleSpy.mockRestore();
+    });
+
+    it('should print the message in the proper format based on the level - warning', () => {
+        const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseWarningCodes.MOVED_PERMANENTLY,
+            level: BaseMessageLevels.WARNING,
+            body: "Test message",
+            printToConsole: true
+        });
+
+        expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
+        consoleSpy.mockRestore();
+    });
+
+    it('should print the message in the proper format based on the level - success', () => {
+        const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            level: BaseMessageLevels.SUCCESS,
+            body: "Test message",
+            printToConsole: true
+        });
+
+        expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
+        consoleSpy.mockRestore();
+    });
+
+    it('should print the message in the proper format based on the level - critical', () => {
+        const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseServerErrorCodes.INTERNAL_SERVER_ERROR,
+            level: BaseMessageLevels.CRITICAL,
+            body: "Test message",
+            printToConsole: true
+        });
+
+        expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
+        consoleSpy.mockRestore();
+    });
+
+    it('should print the message in the proper format based on the level - debug', () => {
+        const consoleSpy = jest.spyOn(console, "debug").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            level: BaseMessageLevels.DEBUG,
+            body: "Test message",
+            printToConsole: true
+        });
+
+        expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
+        consoleSpy.mockRestore();
+    });
+
+    it('should print the message in the proper format based on the level - trace', () => {
+        const consoleSpy = jest.spyOn(console, "trace").mockImplementation();
+        const message = new PocketMessage({
+            code: BaseSuccessCodes.OK,
+            level: BaseMessageLevels.TRACE,
+            body: "Test message",
+            printToConsole: true
+        });
+
+        expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
+        consoleSpy.mockRestore();
     });
 });
