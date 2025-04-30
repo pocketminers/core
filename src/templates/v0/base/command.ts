@@ -45,6 +45,7 @@ type BaseCommandRunner
  */
 interface BaseCommand
 <
+    P = [],
     R = any,
     T extends BaseInstance = BaseInstance<R>
 > 
@@ -62,7 +63,7 @@ interface BaseCommand
     /**
      * The command parameters.
      */
-    parameters: BaseParameters;
+    parameters: BaseParameters<P>;
 
     /**
      * The command runner.

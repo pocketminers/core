@@ -1,4 +1,5 @@
-import { BaseMessageCode } from "@templates/v0/base/message";
+import { BaseMessageCodes } from "@templates/v0/base/message";
+import { BaseSuccessCodes } from "./statuses";
 
 
 /**
@@ -11,12 +12,12 @@ import { BaseMessageCode } from "@templates/v0/base/message";
  */
 interface BaseServiceResponse
 <
-    C = BaseMessageCode,
+    C extends BaseMessageCodes = BaseSuccessCodes.OK,
     D = any,
-    E extends Error = Error
+    E extends Error | undefined = undefined
 >
     extends
-        Record<'code', C>,
+        Partial<Record<'code', C>>,
         Record<'data', D>,
         Partial<Record<'error', E>>
 {}

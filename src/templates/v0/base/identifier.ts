@@ -185,6 +185,7 @@ interface BaseIdentifierOptions
  */
 interface BaseIdentifiableObject
 <
+    D = {},
     I extends BaseIdentifierFormat = BaseIdentifierFormat,
     O extends BaseObjectType = BaseObjects.Unknown,
     P extends BaseParameters = []
@@ -198,6 +199,7 @@ interface BaseIdentifiableObject
                 description?: string;
                 parameters?: BaseParameters<P>;
                 createdAt: Date;
+                object: D;
             },
             I,
             O
@@ -205,13 +207,34 @@ interface BaseIdentifiableObject
 {}
 
 
+/**
+ * BaseIdentifiableEntry is a generic type that represents an entry with a unique identifier.
+ * It includes the identifier, data, name, description, and creation date.
+ *
+ * @template D - The type of the data. It can be any type.
+ * @template I - The type of the identifier, which extends BaseIdentifierFormat.
+ */
+interface BaseIdentifiableComponent
+<
+    D = any,
+    I extends BaseIdentifierFormat = BaseIdentifierFormat,
+>
+    extends
+        Record<'id', BaseIdentifier<I>>,
+        Record<'data', D>,
+        Partial<Record<'name', BaseIdentifierFormats.Name>>,
+        Partial<Record<'description', string>>,
+        Record<'createdAt', Date>
+{}
+
 export {
     type BaseIdentifier,
     type BaseIdentifierFormat,
     type BaseIdentifierOptions,
     BaseIdentifierFormats,
     BaseIdentifierTypeList,
-    type BaseIdentifiableObject
+    type BaseIdentifiableObject,
+    type BaseIdentifiableComponent,
 }
 
 
