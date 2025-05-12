@@ -14,14 +14,14 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-import { Checks } from "../utilities/checks.js";
-import { Freezer } from "../utilities/freezer.js";
+import { Checks } from "@utilities/checks";
+import { Freezer } from "@utilities/freezer";
 /**
  * PocketArgument is a class that represents a key-value pair.
  * - It is used to encapsulate arguments in the Pocket framework.
  * - The class is generic and can be used with different types of values.
  * - This class does not extend the PocketObject class, as it does not include a metadata object.
- * - This class is designed to be immutable after creation.
+ * - This class is designed to be immutable after creation, but can be left unfrozen by setting the 'freeze' option.
  * - The class includes methods for creating PocketArgument objects from strings, records, key-value pairs, and JSON.
  *
  * @template T - The type of the value. It can be any type.
@@ -40,18 +40,24 @@ var PocketArgument = /** @class */ (function () {
      *
      * @param name - The name of the argument.
      * @param value - The value of the argument.
+     * @param options - Optional settings for the argument.
      */
     function PocketArgument(_a) {
-        var name = _a.name, value = _a.value;
-        if (Checks.isEmpty(name) == true) {
-            throw new Error("Name is required");
-        }
-        if (Checks.isEmpty(value) == true) {
-            throw new Error("Value is required");
-        }
+        var name = _a.name, value = _a.value, _b = _a.options, _c = _b === void 0 ? {} : _b, _d = _c.allowEmpty, allowEmpty = _d === void 0 ? true : _d, _e = _c.freeze, freeze = _e === void 0 ? true : _e;
+        // Check if the argument is valid
+        PocketArgument.checkIfValid({
+            name: name,
+            value: value,
+            options: {
+                allowEmpty: allowEmpty
+            }
+        });
+        // 
         this.name = name;
         this.value = value;
-        Freezer.deepFreeze(this);
+        if (freeze == true) {
+            Freezer.deepFreeze(this);
+        }
     }
     Object.defineProperty(PocketArgument.prototype, "nameString", {
         get: function () {
@@ -60,12 +66,27 @@ var PocketArgument = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    PocketArgument.checkIfValid = function (_a) {
+        var name = _a.name, value = _a.value, _b = _a.options, _c = _b === void 0 ? {} : _b, _d = _c.allowEmpty, allowEmpty = _d === void 0 ? true : _d;
+        if (name === undefined
+            || name === null) {
+            throw new Error("Name is required");
+        }
+        if (allowEmpty == false
+            && Checks.isEmpty(value) == true) {
+            throw new Error("Value for the ".concat(String(name), " argument is required because allowEmpty is false"));
+        }
+        return true;
+    };
     /**
      * Creates a PocketArgument from a string.
      * Expects the string to be in the format "name=value", "name:value", or JSON.
      */
     PocketArgument.fromString = function (str) {
-        if (!str) {
+        if (str === undefined
+            || Checks.isEmpty(str) == true
+            || Checks.isEmpty(str.trim()) == true
+            || str.trim().length === 0) {
             throw new Error("String is required");
         }
         var parsed;

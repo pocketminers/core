@@ -1,4 +1,4 @@
-import { BaseApiClient } from "./client.js";
+import { BaseApiClient } from "./client";
 declare class PocketV0Client extends BaseApiClient {
     constructor();
     createPocketRequestHeaders(): {

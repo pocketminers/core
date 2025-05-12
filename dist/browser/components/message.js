@@ -34,9 +34,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { BaseClientErrorCodes, BaseInfoCodes, BaseServerErrorCodes, BaseSuccessCodes, BaseWarningCodes } from "../templates/v0/base/statuses.js";
-import { BaseMessageLevels } from "../templates/v0/base/message.js";
-import { Freezer } from "../utilities/freezer.js";
+import { BaseSuccessCodes } from "@templates/v0/base/statuses";
+import { BaseMessageLevels } from "@templates/v0/base/message";
+import { Freezer } from "@utilities/freezer";
 /**
  * PocketMessage is a class that represents a message with a code, level, body, timestamp, and optional data.
  * - It is used to encapsulate messages in the Pocket framework.
@@ -70,7 +70,7 @@ var PocketMessage = /** @class */ (function () {
         this.code = code !== undefined ? code : BaseSuccessCodes.OK;
         var expectedLevel = this.getLevelFromCode(this.code);
         this.level = level !== undefined ? level : expectedLevel;
-        this.checkCodeAndLevel(this.code, this.level);
+        // this.checkCodeAndLevel(this.code, this.level);
         this.body = body !== undefined ? body : {};
         this.timestamp = timestamp !== undefined ? timestamp : new Date();
         this.data = data !== undefined ? data : {};
@@ -123,35 +123,36 @@ var PocketMessage = /** @class */ (function () {
         }
     };
     PocketMessage.prototype.checkCodeAndLevel = function (code, level) {
-        switch (level) {
-            case BaseMessageLevels.INFO:
-                // check that the code is in the BaseInfoCodes enum
-                if (!Object.values(BaseInfoCodes).includes(code)) {
-                    throw new Error("Invalid code for INFO level: ".concat(code));
-                }
-                break;
-            case BaseMessageLevels.SUCCESS:
-                // check that the code is in the BaseSuccessCodes enum
-                if (!Object.values(BaseSuccessCodes).includes(code)) {
-                    throw new Error("Invalid code for SUCCESS level: ".concat(code));
-                }
-                break;
-            case BaseMessageLevels.WARNING:
-                // check that the code is in the BaseWarningCodes enum
-                if (!Object.values(BaseWarningCodes).includes(code)) {
-                    throw new Error("Invalid code for WARNING level: ".concat(code));
-                }
-                break;
-            case BaseMessageLevels.ERROR:
-                // check that the code is in the BaseClientErrorCodes and BaseServerErrorCodes enum
-                if (!Object.values(BaseClientErrorCodes).includes(code) &&
-                    !Object.values(BaseServerErrorCodes).includes(code)) {
-                    throw new Error("Invalid code for ERROR level: ".concat(code));
-                }
-                break;
-            default:
-                throw new Error("Invalid level: ".concat(level));
+        if (!Object.values(BaseMessageLevels).includes(level)) {
+            throw new Error("Invalid level: ".concat(level));
         }
+        // switch (level) {
+        //     case BaseMessageLevels.INFO:
+        //         if (!Object.values(BaseInfoCodes).includes(code as BaseInfoCodes)) {
+        //             throw new Error(`Invalid code for INFO level: ${code}`);
+        //         }
+        //         break;
+        //     case BaseMessageLevels.SUCCESS:
+        //         if (!Object.values(BaseSuccessCodes).includes(code as BaseSuccessCodes)) {
+        //             throw new Error(`Invalid code for SUCCESS level: ${code}`);
+        //         }
+        //         break;
+        //     case BaseMessageLevels.WARNING:
+        //         if (!Object.values(BaseWarningCodes).includes(code as BaseWarningCodes)) {
+        //             throw new Error(`Invalid code for WARNING level: ${code}`);
+        //         }
+        //         break;
+        //     case BaseMessageLevels.ERROR:
+        //         if (
+        //             !Object.values(BaseClientErrorCodes).includes(code as BaseClientErrorCodes) &&
+        //             !Object.values(BaseServerErrorCodes).includes(code as BaseServerErrorCodes)
+        //         ) {
+        //             throw new Error(`Invalid code for ERROR level: ${code}`);
+        //         }
+        //         break;
+        //     default:
+        //         throw new Error(`Invalid level: ${level}`);
+        // }
     };
     /**
      * Sets the callback function to be called when the message is created.
@@ -184,7 +185,8 @@ var PocketMessage = /** @class */ (function () {
      * @param printToConsole - Whether to print the message to the console.
      */
     PocketMessage.prototype.handlePrintToConsole = function (printToConsole) {
-        if (printToConsole !== undefined && printToConsole) {
+        if (printToConsole !== undefined
+            && printToConsole === true) {
             this.printMessage();
         }
     };
@@ -194,6 +196,9 @@ var PocketMessage = /** @class */ (function () {
      * - SUCCESS: console.log
      * - WARNING: console.warn
      * - ERROR: console.error
+     * - CRITICAL: console.error
+     * - DEBUG: console.debug
+     * - TRACE: console.trace
      */
     PocketMessage.prototype.printMessage = function () {
         switch (this.level) {

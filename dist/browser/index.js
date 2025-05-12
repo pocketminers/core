@@ -1,5 +1,5 @@
-export * from './components/index.js';
-// export * from './services/index.js';
-export * from './templates/index.js';
-export * from './utilities/index.js';
+export * from './components';
+// export * from './services';
+export * from './templates';
+export * from './utilities';
 //# sourceMappingURL=index.js.map

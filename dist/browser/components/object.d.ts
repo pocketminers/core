@@ -1,6 +1,6 @@
-import { BaseObject, BaseObjectType } from "../templates/v0/base/object.js";
-import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "../templates/v0/base/identifier.js";
-import { PocketMetadata } from "./metadata.js";
+import { BaseObject, BaseObjectType } from "@templates/v0/base/object";
+import { BaseIdentifier, BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0/base/identifier";
+import { PocketMetadata } from "./metadata";
 /**
  * PocketObject is a class that represents an object in the Pocket framework.
  * - It is a generic class that can be used with different types of data and metadata.

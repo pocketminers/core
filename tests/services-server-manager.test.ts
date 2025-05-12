@@ -17,6 +17,18 @@ describe("PocketServerManager", () => {
             {
                 name: "description",
                 value: "test-description",
+            },
+            {
+                name: 'version',
+                value: 'v0',
+            },
+            {
+                name: 'type',
+                value: 'api',
+            },
+            {
+                name: 'port',
+                value: '3000',
             }]
         });
     });

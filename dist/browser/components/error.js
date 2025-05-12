@@ -13,8 +13,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { PocketMessage } from './message.js';
-import { BaseMessageLevels } from '../templates/v0/base/message.js';
+import { PocketMessage } from '@components/message';
+import { BaseMessageLevels } from '@templates/v0/base/message';
 /**
  * PocketErrorMessage is a class that represents an error message in the Pocket framework.
  * It extends the PocketMessage class and provides additional functionality for handling errors.

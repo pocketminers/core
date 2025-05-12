@@ -4,7 +4,7 @@
  * It includes methods for generating ISO 8601, RFC 7231, UNIX timestamp, and UTC formatted strings.
  * These methods are useful for formatting dates in a standardized way for use in APIs, databases, and other applications.
  */
-import { Checks } from "./checks.js";
+import { Checks } from "./checks";
 var DateUtilities = /** @class */ (function () {
     function DateUtilities() {
     }

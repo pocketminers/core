@@ -1,4 +1,4 @@
-import { BaseParameter, BaseValue, BaseValueKey } from "../templates/v0/index.js";
+import { BaseParameter, BaseValue, BaseValueKey } from "@templates/v0";
 /**
  * PocketParameter is a class that represents a parameter object.
  * - It is used to encapsulate parameters in the Pocket framework.

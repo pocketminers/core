@@ -1,6 +1,6 @@
-export * from './attachments.js';
-export * from './configureMiddleware.js';
-export * from './encoder.js';
-export * from './limiter.js';
-export * from './security.js';
+export * from './attachments';
+export * from './configureMiddleware';
+export * from './encoder';
+export * from './limiter';
+export * from './security';
 //# sourceMappingURL=index.d.ts.map

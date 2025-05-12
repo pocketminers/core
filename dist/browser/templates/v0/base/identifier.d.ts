@@ -3,8 +3,8 @@
 * description: This file contains the definition of the BaseIdentifier type and its associated types.
 * It is used to represent various types of identifiers that can be used in the Pocket Network.
 */
-import { BaseParameters } from "./configuration.js";
-import { BaseObject, BaseObjects, BaseObjectType } from "./object.js";
+import { BaseParameters } from "./configuration";
+import { BaseObject, BaseObjects, BaseObjectType } from "./object";
 /**
  * IdentifierType is an enumeration of various types of identifiers
  * that can be used in the Pocket Network. These identifiers include
@@ -137,13 +137,23 @@ interface BaseIdentifierOptions extends Partial<Record<'prefix', string>>, Parti
  * @template I - The type of the identifier, which extends BaseIdentifierFormat.
  * @template O - The type of the object, which extends BaseObjectType.
  */
-interface BaseIdentifiableObject<I extends BaseIdentifierFormat = BaseIdentifierFormat, O extends BaseObjectType = BaseObjects.Unknown, P extends BaseParameters = []> extends BaseObject<{
+interface BaseIdentifiableObject<D = any, I extends BaseIdentifierFormat = BaseIdentifierFormat, O extends BaseObjectType = BaseObjects.Unknown, P extends BaseParameters = []> extends BaseObject<{
     id: BaseIdentifier<I>;
     name?: BaseIdentifier<BaseIdentifierFormats.Name>;
     description?: string;
     parameters?: BaseParameters<P>;
     createdAt: Date;
+    object: D;
 }, I, O> {
 }
-export { type BaseIdentifier, type BaseIdentifierFormat, type BaseIdentifierOptions, BaseIdentifierFormats, BaseIdentifierTypeList, type BaseIdentifiableObject };
+/**
+ * BaseIdentifiableEntry is a generic type that represents an entry with a unique identifier.
+ * It includes the identifier, data, name, description, and creation date.
+ *
+ * @template D - The type of the data. It can be any type.
+ * @template I - The type of the identifier, which extends BaseIdentifierFormat.
+ */
+interface BaseIdentifiableComponent<D = any, I extends BaseIdentifierFormat = BaseIdentifierFormat> extends Record<'id', BaseIdentifier<I>>, Record<'data', D>, Partial<Record<'name', BaseIdentifierFormats.Name>>, Partial<Record<'description', string>>, Record<'createdAt', Date> {
+}
+export { type BaseIdentifier, type BaseIdentifierFormat, type BaseIdentifierOptions, BaseIdentifierFormats, BaseIdentifierTypeList, type BaseIdentifiableObject, type BaseIdentifiableComponent, };
 //# sourceMappingURL=identifier.d.ts.map

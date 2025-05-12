@@ -1,2 +1,2 @@
-export * from './routes.js';
+export * from './routes';
 //# sourceMappingURL=index.d.ts.map

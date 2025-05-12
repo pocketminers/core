@@ -1,4 +1,4 @@
-import { BaseValueKey, NumberOrEmpty, StringOrEmpty } from "../../v0/base/value.js";
+import { BaseValueKey, NumberOrEmpty, StringOrEmpty } from "@templates/v0/base/value";
 /**
  * BaseTimestampUnits represents the different units of time that can be used in the Pocket Network.
  * It includes milliseconds, seconds, minutes, hours, days, weeks, months, and years.

@@ -1,1 +1,0 @@
-{"version":3,"file":"attachments.js","sourceRoot":"","sources":["../../../../../src/services/server/middleware/attachments.ts"],"names":[],"mappings":";;;AAUA,MAAM,cAAc,GAAG,CAAC,EAAU,EAAE,EAAE;IAClC,OAAO,CAAC,GAAY,EAAE,GAAa,EAAE,IAAkB,EAAE,EAAE;QACvD,GAAG,CAAC,QAAQ,GAAG,EAAE,CAAC;QAClB,IAAI,EAAE,CAAC;IACX,CAAC,CAAC;AACN,CAAC,CAAA;AAGG,wCAAc"}

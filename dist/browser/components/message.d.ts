@@ -1,6 +1,6 @@
-import { BaseSuccessCodes } from "../templates/v0/base/statuses.js";
-import { BaseMessageCodes, BaseMessageLevels } from "../templates/v0/base/message.js";
-interface PocketMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevels = BaseMessageLevels.SUCCESS, B = any, D = any> extends Partial<Record<'code', C>>, Partial<Record<'level', L>>, Partial<Record<'body', B>>, Partial<Record<'timestamp', Date>>, Partial<Record<'data', D>>, Partial<Record<'printToConsole', boolean>>, Partial<Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>>, Partial<Record<'delayCallback', number>> {
+import { BaseSuccessCodes } from "@templates/v0/base/statuses";
+import { BaseMessageCodes, BaseMessageLevel, BaseMessageLevels } from "@templates/v0/base/message";
+interface PocketMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevel = BaseMessageLevels.SUCCESS, B = any, D = any> extends Partial<Record<'code', C>>, Partial<Record<'level', L>>, Partial<Record<'body', B>>, Partial<Record<'timestamp', Date>>, Partial<Record<'data', D>>, Partial<Record<'printToConsole', boolean>>, Partial<Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>>, Partial<Record<'delayCallback', number>> {
 }
 /**
  * PocketMessage is a class that represents a message with a code, level, body, timestamp, and optional data.
@@ -28,7 +28,7 @@ interface PocketMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L
  *    delayCallback: 1000
  * });
  */
-declare class PocketMessage<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevels = BaseMessageLevels.SUCCESS, B = any, D = any> {
+declare class PocketMessage<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevel = BaseMessageLevels.SUCCESS, B = any, D = any> {
     readonly code: C;
     readonly level: L;
     readonly body: B;
@@ -54,6 +54,9 @@ declare class PocketMessage<C extends BaseMessageCodes = BaseSuccessCodes.OK, L 
      * - SUCCESS: console.log
      * - WARNING: console.warn
      * - ERROR: console.error
+     * - CRITICAL: console.error
+     * - DEBUG: console.debug
+     * - TRACE: console.trace
      */
     private printMessage;
     /**

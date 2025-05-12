@@ -1,4 +1,8 @@
 /**
+ * component.ts
+ * This file defines the base components of a system.
+ */
+/**
  * BaseComponents
  * This enum defines the different parts of a component.
  */

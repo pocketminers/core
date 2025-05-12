@@ -3,10 +3,14 @@ import { Checks } from "@utilities/checks";
 import { Freezer } from "@utilities/freezer";
 
 
+/**
+ * PocketArgumentOptions is an interface that represents the options for a PocketArgument.
+ * - It is used to encapsulate optional settings for the PocketArgument class.
+ */
 interface PocketArgumentOptions
     extends
         Partial<Record<'allowEmpty', boolean>>,
-        Partial<Record<'frozen', boolean>>
+        Partial<Record<'freeze', boolean>>
 {}
 
 
@@ -30,7 +34,7 @@ interface PocketArgumentEntry
  * - It is used to encapsulate arguments in the Pocket framework.
  * - The class is generic and can be used with different types of values.
  * - This class does not extend the PocketObject class, as it does not include a metadata object.
- * - This class is designed to be immutable after creation.
+ * - This class is designed to be immutable after creation, but can be left unfrozen by setting the 'freeze' option.
  * - The class includes methods for creating PocketArgument objects from strings, records, key-value pairs, and JSON.
  * 
  * @template T - The type of the value. It can be any type.
@@ -49,7 +53,16 @@ class PocketArgument
     implements
         BaseArgument<T>
 {
+    /**
+     * The name of the argument.
+     * - It is a required field and cannot be empty.
+     */
     public readonly name: BaseValueKey;
+
+    /**
+     * The value of the argument.
+     * - It is a required field, but can be empty if allowEmpty is true.
+     */
     public readonly value: BaseValue<T>;
 
     /**
@@ -65,30 +78,53 @@ class PocketArgument
         value,
         options: {
             allowEmpty = true,
-            frozen = true
+            freeze = true
         } = {}
     }: PocketArgumentEntry<T>) {
-        if (Checks.isEmpty(name) == true) {
-            throw new Error("Name is required");
-        }
+        // Check if the argument is valid
+        PocketArgument.checkIfValid({
+            name,
+            value,
+            options: {
+                allowEmpty
+            }
+        });
 
-        if (
-            Checks.isEmpty(value) == true
-            && allowEmpty == false
-        ) {
-            throw new Error(`Value for Argument ${String(name)} is required because allowEmpty is false`);
-        }
-
+        // 
         this.name = name;
         this.value = value;
 
-        if (frozen == true) {
+        if (freeze == true) {
             Freezer.deepFreeze(this);
         }
     }
 
     public get nameString(): string {
         return String(this.name);
+    }
+
+    public static checkIfValid({
+        name,
+        value,
+        options: {
+            allowEmpty = true
+        } = {}
+    }: PocketArgumentEntry): boolean {
+        if (
+            name === undefined
+            || name === null
+        ) {
+            throw new Error("Name is required");
+        }
+
+        if (
+            allowEmpty == false 
+            && Checks.isEmpty(value) == true
+        ) {
+            throw new Error(`Value for the ${String(name)} argument is required because allowEmpty is false`);
+        }
+
+        return true;    
     }
 
     /**

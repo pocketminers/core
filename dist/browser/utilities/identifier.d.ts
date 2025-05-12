@@ -1,4 +1,4 @@
-import { BaseIdentifierFormat, BaseIdentifierFormats } from "../templates/v0/index.js";
+import { BaseIdentifierFormat, BaseIdentifierFormats } from "@templates/v0";
 /**
  * PocketIdentity is a generic class that represents an identity object.
  */

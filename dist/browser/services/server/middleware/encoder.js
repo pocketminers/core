@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import crypto from 'crypto';
-import { SecretManager } from '../../../utilities/secret.js';
+import { SecretManager } from '@utilities/secret';
 var SHARED_KEY = SecretManager.getSecret("POCKET_SHARED_SECRET") || "pocketminers-defualt-shared-key-development-purposes-only";
 /**
  * HMAC signature generation **Currently not used**

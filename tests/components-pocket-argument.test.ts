@@ -113,7 +113,7 @@ describe("PocketArgument", () => {
             argument.toKeyValuePair();
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
+            expect(error.message).toBe("Value for the testName argument is required because allowEmpty is false");
         }
     });
 

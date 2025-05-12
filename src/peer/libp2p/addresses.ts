@@ -230,5 +230,6 @@ const generateListenAddresses = (args: PocketArgument[]): { listen: Array<string
 
 
 export {
-    getLibp2pListenAddressParameters
+    getLibp2pListenAddressParameters,
+    generateListenAddresses
 }

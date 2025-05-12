@@ -108,41 +108,6 @@ declare enum BaseServerErrorCodes {
     NETWORK_AUTHENTICATION_REQUIRED = 511
 }
 /**
- * PocketServerStatuses is an enum that defines the various statuses of a Pocket server.
- * These statuses can be used to indicate the current state of the server.
- */
-declare enum BaseServerStatuses {
-    OFFLINE = "OFFLINE",
-    ONLINE = "ONLINE",
-    INITIALIZING = "INITIALIZING",
-    READY = "READY",
-    STARTING = "STARTING",
-    STOPPING = "STOPPING",
-    RESTARTING = "RESTARTING",
-    UPDATING = "UPDATING",
-    ERROR = "ERROR"
-}
-/**
- * BaseServerStatus is a type that represents the keys of the BaseServerStatuses enum.
- * It is used to restrict the values to the defined statuses.
- */
-type BaseServerStatus = keyof typeof BaseServerStatuses;
-/**
- * BaseServerStatusCodes is an enum that defines the mapping of Pocket server statuses to HTTP status codes.
- * This mapping is used to return appropriate HTTP status codes based on the server status.
- */
-declare enum BaseServerStatusCodes {
-    OFFLINE = 503,
-    ONLINE = 200,
-    INITIALIZING = 102,
-    READY = 200,
-    STARTING = 102,
-    STOPPING = 102,
-    RESTARTING = 102,
-    UPDATING = 102,
-    ERROR = 500
-}
-/**
  * BaseJobStatuses is an enum that defines the various statuses of a Pocket job.
  * These statuses can be used to indicate the current state of the job.
  */
@@ -188,5 +153,5 @@ declare enum BaseJobStatusCodes {
     TERMINATED = 400,
     UNKNOWN = 500
 }
-export { BaseInfoCodes, BaseSuccessCodes, BaseWarningCodes, BaseClientErrorCodes, BaseServerErrorCodes, BaseServerStatuses, type BaseServerStatus, BaseServerStatusCodes, BaseJobStatuses, type BaseJobStatus, BaseJobStatusCodes };
+export { BaseInfoCodes, BaseSuccessCodes, BaseWarningCodes, BaseClientErrorCodes, BaseServerErrorCodes, BaseJobStatuses, type BaseJobStatus, BaseJobStatusCodes };
 //# sourceMappingURL=statuses.d.ts.map

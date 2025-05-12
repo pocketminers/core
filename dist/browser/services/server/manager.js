@@ -35,15 +35,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import express from 'express';
-import { checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '../server/middleware/security.js';
-import { IdentifierUtilities } from '../../utilities/identifier.js';
-import { getPocketServerParameters } from './parameters.js';
-import { Checks } from '../../utilities/checks.js';
-import { PocketConfiguration } from '../../components/configuration.js';
-import { healthRouter } from './health/routes.js';
-import { Freezer } from '../../utilities/freezer.js';
-import { adminRouter } from './admin/index.js';
-import { configureMiddleware } from './middleware/configureMiddleware.js';
+import { checkPublicApiKey, checkForAdminRequestHeader, checkForShutdownCode } from '@services/server/middleware/security';
+import { IdentifierUtilities } from '@utilities/identifier';
+import { getPocketServerParameters } from './parameters';
+import { Checks } from '@utilities/checks';
+import { PocketConfiguration } from '@components/configuration';
+import { healthRouter } from './health/routes';
+import { Freezer } from '@utilities/freezer';
+import { adminRouter } from './admin';
+import { configureMiddleware } from './middleware/configureMiddleware';
 var PocketServerManager = /** @class */ (function () {
     function PocketServerManager(_a) {
         var _b = _a === void 0 ? {} : _a, _c = _b.arguments_, arguments_ = _c === void 0 ? [] : _c, _d = _b.parameters_, parameters_ = _d === void 0 ? [] : _d;

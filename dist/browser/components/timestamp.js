@@ -1,6 +1,6 @@
-import { Checks } from "../utilities/checks.js";
-import { DateUtilities } from "../utilities/date.js";
-import { Freezer } from "../utilities/freezer.js";
+import { Checks } from "@utilities/checks";
+import { DateUtilities } from "@utilities/date";
+import { Freezer } from "@utilities/freezer";
 /**
  * PocketTimestamp represents a timestamp, defaulting to the current date and time.
  * - It can also be an empty string or a number representing a timestamp.
@@ -26,10 +26,10 @@ var PocketTimestamp = /** @class */ (function () {
      */
     function PocketTimestamp(date) {
         if (date === void 0) { date = Date.now(); }
-        if (typeof date === "string"
+        if ((typeof date === "string"
             || typeof date === "number"
-            || date instanceof Date
-                && Checks.isEmpty(date) === false) {
+            || date instanceof Date)
+            && Checks.isEmpty(date) === false) {
             this.date = new Date(date);
         }
         else {

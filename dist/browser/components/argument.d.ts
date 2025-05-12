@@ -1,16 +1,22 @@
-import { BaseArgument, BaseValue, BaseValueKey } from "../templates/v0/index.js";
+import { BaseArgument, BaseValue, BaseValueKey } from "@templates/v0";
+/**
+ * PocketArgumentOptions is an interface that represents the options for a PocketArgument.
+ * - It is used to encapsulate optional settings for the PocketArgument class.
+ */
+interface PocketArgumentOptions extends Partial<Record<'allowEmpty', boolean>>, Partial<Record<'freeze', boolean>> {
+}
 /**
  * PocketARgumentEntry is an interface that represents a key-value pair.
  * - It is used to encapsulate arguments in the Pocket framework.
  */
-interface PocketArgumentEntry<T = any> extends Record<'name', BaseValueKey>, Record<'value', BaseValue<T>> {
+interface PocketArgumentEntry<T = any> extends Record<'name', BaseValueKey>, Record<'value', BaseValue<T>>, Partial<Record<'options', PocketArgumentOptions>> {
 }
 /**
  * PocketArgument is a class that represents a key-value pair.
  * - It is used to encapsulate arguments in the Pocket framework.
  * - The class is generic and can be used with different types of values.
  * - This class does not extend the PocketObject class, as it does not include a metadata object.
- * - This class is designed to be immutable after creation.
+ * - This class is designed to be immutable after creation, but can be left unfrozen by setting the 'freeze' option.
  * - The class includes methods for creating PocketArgument objects from strings, records, key-value pairs, and JSON.
  *
  * @template T - The type of the value. It can be any type.
@@ -23,7 +29,15 @@ interface PocketArgumentEntry<T = any> extends Record<'name', BaseValueKey>, Rec
  * console.log(arg.toString()); // Output: "arg1: value1"
  */
 declare class PocketArgument<T = any> implements BaseArgument<T> {
+    /**
+     * The name of the argument.
+     * - It is a required field and cannot be empty.
+     */
     readonly name: BaseValueKey;
+    /**
+     * The value of the argument.
+     * - It is a required field, but can be empty if allowEmpty is true.
+     */
     readonly value: BaseValue<T>;
     /**
      * The constructor initializes the name and value properties with the provided arguments.
@@ -31,9 +45,11 @@ declare class PocketArgument<T = any> implements BaseArgument<T> {
      *
      * @param name - The name of the argument.
      * @param value - The value of the argument.
+     * @param options - Optional settings for the argument.
      */
-    constructor({ name, value }: PocketArgumentEntry<T>);
+    constructor({ name, value, options: { allowEmpty, freeze } }: PocketArgumentEntry<T>);
     get nameString(): string;
+    static checkIfValid({ name, value, options: { allowEmpty } }: PocketArgumentEntry): boolean;
     /**
      * Creates a PocketArgument from a string.
      * Expects the string to be in the format "name=value", "name:value", or JSON.

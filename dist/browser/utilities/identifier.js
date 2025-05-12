@@ -1,5 +1,5 @@
-import { BaseIdentifierFormats, BaseIdentifierTypeList } from "../templates/v0/index.js";
-import { MultiHashUtilities } from "./multiHash.js";
+import { BaseIdentifierFormats, BaseIdentifierTypeList } from "@templates/v0";
+import { MultiHashUtilities } from "@utilities/multiHash";
 /**
  * PocketIdentity is a generic class that represents an identity object.
  */

@@ -14,6 +14,10 @@ var PocketServerStatuses;
     PocketServerStatuses["UPDATING"] = "UPDATING";
     PocketServerStatuses["ERROR"] = "ERROR";
 })(PocketServerStatuses || (PocketServerStatuses = {}));
+/**
+ * PocketServerStatusCodes is an enum that defines the mapping of Pocket server statuses to HTTP status codes.
+ * This mapping is used to return appropriate HTTP status codes based on the server status.
+ */
 var PocketServerStatusCodes;
 (function (PocketServerStatusCodes) {
     PocketServerStatusCodes[PocketServerStatusCodes["OFFLINE"] = 503] = "OFFLINE";

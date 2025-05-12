@@ -13,7 +13,15 @@ declare enum PocketServerStatuses {
     UPDATING = "UPDATING",
     ERROR = "ERROR"
 }
+/**
+ * PocketServerStatus is a type that represents the keys of the PocketServerStatuses enum.
+ * It is used to restrict the values to the defined server statuses.
+ */
 type PocketServerStatus = keyof typeof PocketServerStatuses;
+/**
+ * PocketServerStatusCodes is an enum that defines the mapping of Pocket server statuses to HTTP status codes.
+ * This mapping is used to return appropriate HTTP status codes based on the server status.
+ */
 declare enum PocketServerStatusCodes {
     OFFLINE = 503,
     ONLINE = 200,

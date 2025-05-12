@@ -1,6 +1,6 @@
-export * from './health/index.js';
-export * from './manager.js';
-export * from './middleware/index.js';
-export * from './parameters.js';
-export * from './run.js';
+export * from './health';
+export * from './manager';
+export * from './middleware';
+export * from './parameters';
+export * from './run';
 //# sourceMappingURL=index.js.map

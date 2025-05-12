@@ -108,5 +108,5 @@ var BaseIdentifierFormats;
  * It is used to provide a list of all possible identifier types that can be used in the Pocket Network.
  */
 var BaseIdentifierTypeList = Object.values(BaseIdentifierFormats);
-export { BaseIdentifierFormats, BaseIdentifierTypeList };
+export { BaseIdentifierFormats, BaseIdentifierTypeList, };
 //# sourceMappingURL=identifier.js.map

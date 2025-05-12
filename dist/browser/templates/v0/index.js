@@ -1,3 +1,3 @@
-// export * from './user/index.js';
-export * from './base/index.js';
+// export * from './user';
+export * from './base';
 //# sourceMappingURL=index.js.map

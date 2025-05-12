@@ -1,4 +1,4 @@
-import { BaseClientErrorCodes, BaseInfoCodes, BaseServerErrorCodes, BaseServerStatusCodes, BaseSuccessCodes, BaseWarningCodes } from "../../v0/base/statuses.js";
+import { BaseClientErrorCodes, BaseInfoCodes, BaseServerErrorCodes, BaseSuccessCodes, BaseWarningCodes } from "@templates/v0/base/statuses";
 /**
  * BaseMessageLevels is an enum that defines various message levels.
  * These levels can be used to categorize messages based on their severity or type.
@@ -41,7 +41,7 @@ type BaseMessageCodes = BaseInfoCodes | BaseSuccessCodes | BaseWarningCodes | Ba
  * BaseMessageCode is a type that represents the keys of the BaseMessageCodes enum.
  * It can be used to restrict values to only those defined in the enum.
  */
-type BaseMessageCode = keyof typeof BaseInfoCodes | keyof typeof BaseSuccessCodes | keyof typeof BaseWarningCodes | keyof typeof BaseClientErrorCodes | keyof typeof BaseServerErrorCodes | keyof typeof BaseServerStatusCodes;
+type BaseMessageCode = keyof typeof BaseInfoCodes | keyof typeof BaseSuccessCodes | keyof typeof BaseWarningCodes | keyof typeof BaseClientErrorCodes | keyof typeof BaseServerErrorCodes;
 /**
  * BaseMessageEntry is an interface that represents a message entry.
  * It contains a code and a level, which are used to categorize the message.
@@ -52,7 +52,9 @@ interface BaseMessageEntry<C extends BaseMessageCodes = BaseMessageCodes, L exte
  * BaseErrorMessageEntry is an interface that extends the BaseMessageEntry interface.
  * It adds an error property, which is used to store an error object.
  */
-interface BaseErrorMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevels = BaseMessageLevels.INFO, E extends Error = any, D = any> extends Omit<BaseMessageEntry<C, L, E, D>, 'body'>, Record<'error', E> {
+interface BaseErrorMessageEntry<C extends BaseMessageCodes = BaseSuccessCodes.OK, L extends BaseMessageLevels = BaseMessageLevels.INFO, E extends Error = any, D = any> extends BaseMessageEntry<C, L, {
+    error: E;
+}, D> {
 }
 export { type BaseMessageEntry, type BaseErrorMessageEntry, type BaseMessageCode, type BaseMessageCodes, type BaseMessageLevel, BaseMessageLevelHierarchy, BaseMessageLevels };
 //# sourceMappingURL=message.d.ts.map

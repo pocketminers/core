@@ -1,4 +1,4 @@
-import { PocketParameter } from "../../components/parameter.js";
+import { PocketParameter } from "@components/parameter";
 var getPocketServerParameters = function () {
     var PocketServerParameters = new Array();
     PocketServerParameters.push(new PocketParameter({

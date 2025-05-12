@@ -1,4 +1,4 @@
-import { BaseIdentifier, BaseIdentifierFormats } from "../templates/v0/base/identifier.js";
+import { BaseIdentifier, BaseIdentifierFormats } from "@templates/v0/base/identifier";
 declare class MultiHashUtilities {
     static hashString(input: string): Promise<string>;
     /**

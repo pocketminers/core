@@ -49,6 +49,13 @@ describe("PocketConfiguration", () => {
         }
     });
 
+    it('should freeze the configuration object', () => {
+        const config = new PocketConfiguration();
+        expect(Object.isFrozen(config)).toBe(true);
+    });
+
+    
+
     it("should return required parameters", () => {
         const param1 = new PocketParameter({ name: "param1", required: true });
         const param2 = new PocketParameter({ name: "param2", required: false });

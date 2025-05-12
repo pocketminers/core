@@ -1,9 +1,31 @@
 import { PocketArgument } from "./argument";
 import { PocketParameter } from "./parameter";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
-import { BaseConfiguration } from "@templates/v0";
+import { BaseConfiguration, BaseMessageLevels, BaseSuccessCodes } from "@templates/v0";
 import { Freezer } from "@utilities/freezer";
 import { Checks } from "@utilities/checks";
+import { PocketMessage } from "./message";
+
+
+/**
+ * PocketConfigurationOptions is a type that represents the options for the PocketConfiguration class.
+ */
+interface PocketConfigurationOptions
+    extends
+        Partial<Record<'freeze', boolean>>,
+        Partial<Record<'allowDuplicateArgs', boolean>>
+{}
+
+
+/**
+ * PocketConfigurationEntry is a type that represents the entry for the PocketConfiguration class.
+ */
+interface PocketConfigurationEntry<T = any[]>
+    extends
+        Partial<Record<'args', Array<PocketArgument<T>>>>,
+        Partial<Record<'params', Array<PocketParameter<T>>>>,
+        Partial<Record<'options', PocketConfigurationOptions>>
+{}
 
 
 /**
@@ -35,31 +57,144 @@ class PocketConfiguration
      */
     public constructor({
         args = [],
-        params = []
-    }: { 
-        args?: Array<PocketArgument<T>>;
-        params?: Array<PocketParameter<T>>;
-    } = {}) {
+        params = [],
+        options: {
+            freeze = true,
+            allowDuplicateArgs = false
+        } = {} as PocketConfigurationOptions
+    }: PocketConfigurationEntry<T> = {}) {
+        // Check if the arguments and parameters are valid
+        PocketConfiguration.checkArgsForDuplicates({ args, allowDuplicateArgs });
+        PocketConfiguration.checkParamsForDuplicates({ params });
+
+        // Initialize the arguments and parameters
         this.arguments = args;
         this.parameters = params;
 
-        // Freeze the object to make it immutable
-        Freezer.deepFreeze(this);
+        // Freeze the arguments and parameters if the freeze option is set to true
+        if (freeze === true) {
+            Freezer.deepFreeze(this.arguments);
+            Freezer.deepFreeze(this.parameters);
+            Freezer.deepFreeze(this);
+        }
     }
 
-    public static getParameterNameOrKey(param: PocketParameter): BaseValueKey {
+    public static checkArgsForDuplicates({
+        args = [],
+        allowDuplicateArgs = false
+    }: {
+        args?: Array<PocketArgument>;
+        allowDuplicateArgs?: boolean;
+    }): boolean {
+        if (allowDuplicateArgs === true) {
+            return true;
+        }
+        const argNames = args.map((arg) => arg.name);
+        const uniqueArgNames = new Set(argNames);
+        if (argNames.length !== uniqueArgNames.size) {
+            throw new Error(`Duplicate argument names found: ${argNames.join(", ")}`);
+        }
+        return true;
+    }
+
+    public static checkParamsForDuplicates({
+        params = []
+    }: {
+        params?: Array<PocketParameter>;
+    }): boolean {
+        const paramNames = params.map((param) => param.name);
+        const uniqueParamNames = new Set(paramNames);
+        if (paramNames.length !== uniqueParamNames.size) {
+            throw new Error(`Duplicate parameter names found: ${paramNames.join(", ")}`);
+        }
+        return true;
+    }
+
+    public static checkIfParameterIsValid({
+        params,
+        param
+    }: {
+        params: Array<PocketParameter>;
+        param: PocketParameter;
+    }): boolean {
+        // Check if the parameter is valid
+        if (param === undefined) {
+            throw new Error(`Parameter is undefined.`);
+        }
+
+        if (Checks.isEmpty(param.name) === true) {
+            throw new Error(`Parameter ${param.nameString} does not have a name.`);
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns the name or key of a parameter.
+     * - If the parameter has a key, it is returned.
+     * - If the parameter does not have a key, the name is returned.
+     * - If neither is available, an error is thrown.
+     * 
+     * @param param - The parameter to get the name or key from.
+     * @returns The name or key of the parameter.
+     */
+    public static getParameterNameOrKey(
+        param: PocketParameter,
+        toString: boolean = false
+    ): BaseValueKey {
+
+        /**
+         * The key of the parameter is returned if it is defined.
+         */
         if (param.key) {
             return param.key;
         }
+        /**
+         * The name of the parameter is returned if it is defined.
+         */
         else if (
-            param.nameString !== undefined
-            && Checks.isEmpty(param.nameString) === false
+            param.name !== undefined
+            && Checks.isEmpty(param.name) === false
         ) {
             return param.name;
         }
+        /**
+         * The nameString of the parameter is returned if "toString" is true and the nameString is defined.
+         * This is useful for converting the parameter to a string representation for display purposes.
+         */
+        else if (
+            toString === true
+            && param.nameString !== undefined
+            && Checks.isEmpty(param.nameString) === false
+        ) {
+            return param.nameString;
+        }
+        /**
+         * An error is thrown if neither the key nor the name is defined.
+         */
         else {
             throw new Error(`Parameter ${param.nameString} does not have a key or name.`);
         }
+    }
+
+    public addParameter(param: PocketParameter<T>): PocketMessage {
+        // Check if the parameter is valid
+        if (param === undefined) {
+            throw new Error(`Parameter is undefined.`);
+        }
+        if (param.name === undefined) {
+            throw new Error(`Parameter ${param.nameString} does not have a name.`);
+        }
+        if (param.key === undefined) {
+            throw new Error(`Parameter ${param.nameString} does not have a key.`);
+        }
+
+        this.parameters.push(param);
+        return new PocketMessage({
+            body: `Parameter ${param.nameString} added to configuration.`,
+            code: BaseSuccessCodes.OK,
+            level: BaseMessageLevels.SUCCESS,
+        });
     }
 
 

@@ -1,5 +1,5 @@
-import { BaseArgument } from "../../templates/v0/index.js";
-import { PocketServerManager } from "./manager.js";
+import { BaseArgument } from "@templates/v0";
+import { PocketServerManager } from "./manager";
 declare const runServer: ({ manager, args }?: {
     manager?: PocketServerManager;
     args?: BaseArgument[];

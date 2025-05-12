@@ -1,4 +1,4 @@
-import { BaseValue, BaseValueKey, StringOrEmpty } from "../../v0/base/value.js";
+import { BaseValue, BaseValueKey, StringOrEmpty } from "@templates/v0/base/value";
 /**
  * BaseArgument is a generic type that represents an argument object.
  * - The name is equivalent to the name of the parameter.  If a key is specified, it will be used as the name of the argument.

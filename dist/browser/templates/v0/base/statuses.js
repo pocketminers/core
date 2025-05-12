@@ -118,38 +118,6 @@ var BaseServerErrorCodes;
     BaseServerErrorCodes[BaseServerErrorCodes["NETWORK_AUTHENTICATION_REQUIRED"] = 511] = "NETWORK_AUTHENTICATION_REQUIRED";
 })(BaseServerErrorCodes || (BaseServerErrorCodes = {}));
 /**
- * PocketServerStatuses is an enum that defines the various statuses of a Pocket server.
- * These statuses can be used to indicate the current state of the server.
- */
-var BaseServerStatuses;
-(function (BaseServerStatuses) {
-    BaseServerStatuses["OFFLINE"] = "OFFLINE";
-    BaseServerStatuses["ONLINE"] = "ONLINE";
-    BaseServerStatuses["INITIALIZING"] = "INITIALIZING";
-    BaseServerStatuses["READY"] = "READY";
-    BaseServerStatuses["STARTING"] = "STARTING";
-    BaseServerStatuses["STOPPING"] = "STOPPING";
-    BaseServerStatuses["RESTARTING"] = "RESTARTING";
-    BaseServerStatuses["UPDATING"] = "UPDATING";
-    BaseServerStatuses["ERROR"] = "ERROR";
-})(BaseServerStatuses || (BaseServerStatuses = {}));
-/**
- * BaseServerStatusCodes is an enum that defines the mapping of Pocket server statuses to HTTP status codes.
- * This mapping is used to return appropriate HTTP status codes based on the server status.
- */
-var BaseServerStatusCodes;
-(function (BaseServerStatusCodes) {
-    BaseServerStatusCodes[BaseServerStatusCodes["OFFLINE"] = 503] = "OFFLINE";
-    BaseServerStatusCodes[BaseServerStatusCodes["ONLINE"] = 200] = "ONLINE";
-    BaseServerStatusCodes[BaseServerStatusCodes["INITIALIZING"] = 102] = "INITIALIZING";
-    BaseServerStatusCodes[BaseServerStatusCodes["READY"] = 200] = "READY";
-    BaseServerStatusCodes[BaseServerStatusCodes["STARTING"] = 102] = "STARTING";
-    BaseServerStatusCodes[BaseServerStatusCodes["STOPPING"] = 102] = "STOPPING";
-    BaseServerStatusCodes[BaseServerStatusCodes["RESTARTING"] = 102] = "RESTARTING";
-    BaseServerStatusCodes[BaseServerStatusCodes["UPDATING"] = 102] = "UPDATING";
-    BaseServerStatusCodes[BaseServerStatusCodes["ERROR"] = 500] = "ERROR";
-})(BaseServerStatusCodes || (BaseServerStatusCodes = {}));
-/**
  * BaseJobStatuses is an enum that defines the various statuses of a Pocket job.
  * These statuses can be used to indicate the current state of the job.
  */
@@ -192,5 +160,5 @@ var BaseJobStatusCodes;
     BaseJobStatusCodes[BaseJobStatusCodes["TERMINATED"] = 400] = "TERMINATED";
     BaseJobStatusCodes[BaseJobStatusCodes["UNKNOWN"] = 500] = "UNKNOWN";
 })(BaseJobStatusCodes || (BaseJobStatusCodes = {}));
-export { BaseInfoCodes, BaseSuccessCodes, BaseWarningCodes, BaseClientErrorCodes, BaseServerErrorCodes, BaseServerStatuses, BaseServerStatusCodes, BaseJobStatuses, BaseJobStatusCodes };
+export { BaseInfoCodes, BaseSuccessCodes, BaseWarningCodes, BaseClientErrorCodes, BaseServerErrorCodes, BaseJobStatuses, BaseJobStatusCodes };
 //# sourceMappingURL=statuses.js.map
