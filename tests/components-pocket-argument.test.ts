@@ -9,7 +9,7 @@ describe("PocketArgument", () => {
             new PocketArgument({ name, value });
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value is required");
+            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
         }
     });
 
@@ -21,7 +21,7 @@ describe("PocketArgument", () => {
             new PocketArgument({ name, value });
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value is required");
+            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
         }
     });
 
@@ -32,7 +32,7 @@ describe("PocketArgument", () => {
             new PocketArgument({ name, value });
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value is required");
+            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
         }
     });
 
@@ -92,7 +92,7 @@ describe("PocketArgument", () => {
     it("should handle empty object for toObject", () => {
         const name = "testName";
         const value = {};
-        const argument = new PocketArgument({ name, value });
+        const argument = new PocketArgument({ name, value, options: { allowEmpty: true }});
         const obj = argument.toObject();
         expect(obj).toEqual({ name, value });
     });
@@ -100,7 +100,7 @@ describe("PocketArgument", () => {
     it("should handle empty record for toRecord", () => {
         const name = "testName";
         const value = {};
-        const argument = new PocketArgument({ name, value });
+        const argument = new PocketArgument({ name, value, options: { allowEmpty: true }});
         const record = argument.toRecord();
         expect(record).toEqual({ [name]: value });
     });
@@ -109,12 +109,11 @@ describe("PocketArgument", () => {
         try {
             const name = "testName";
             const value = null;
-            // @ts-ignore
-            const argument = new PocketArgument({ name, value });
+            const argument = new PocketArgument({ name, value, options: { allowEmpty: false }});
             argument.toKeyValuePair();
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value is required");
+            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
         }
     });
 
@@ -127,7 +126,7 @@ describe("PocketArgument", () => {
             argument.toKeyValuePair();
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value is required");
+            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
         }
     });
 
@@ -164,7 +163,7 @@ describe("PocketArgument", () => {
             PocketArgument.fromRecord(record);
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value is required");
+            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
         }
     });
 
@@ -174,7 +173,7 @@ describe("PocketArgument", () => {
             PocketArgument.fromRecord(record);
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value is required");
+            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
         }
     });
 
@@ -184,7 +183,7 @@ describe("PocketArgument", () => {
             PocketArgument.fromRecord(record);
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value is required");
+            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
         }
     });
 
@@ -195,7 +194,54 @@ describe("PocketArgument", () => {
             PocketArgument.fromKeyValuePair([name, value]);
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value is required");
+            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
         }
+    });
+
+    it("should handle arguments with special characters in name and value", () => {
+        const name = 123;
+        const value = "value$%^&⭐️";
+        const argument = new PocketArgument({ name, value });
+        console.log(argument);
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe(name);
+        expect(argument.value).toBe(value);
+    })
+
+    it('should handle arguments with special characters in name and value', () => {
+        const name = "⭐️";
+        const value = 123;
+        const argument = new PocketArgument({ name, value });
+        console.log(argument);
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe(name);
+        expect(argument.value).toBe(value);
+    })
+
+    it('should create an argument from a JSON string', () => {
+        const json = JSON.stringify({
+            name: 234,
+            value: "testValue"
+        });
+        const argument = PocketArgument.fromJSON(json);
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe(234);
+        expect(argument.value).toBe("testValue");
+    });
+
+    it('should create an argument from a string', () => {
+        const str = "testName:testValue";
+        const argument = PocketArgument.fromString(str);
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe("testName");
+        expect(argument.value).toBe("testValue");
+    });
+
+    it('should create an argument from a record', () => {
+        const record = { testName: "testValue" };
+        const argument = PocketArgument.fromRecord(record);
+        expect(argument).toBeInstanceOf(PocketArgument);
+        expect(argument.name).toBe("testName");
+        expect(argument.value).toBe("testValue");
     });
 });

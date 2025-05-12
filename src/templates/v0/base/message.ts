@@ -1,8 +1,7 @@
 import { 
     BaseClientErrorCodes, 
     BaseInfoCodes, 
-    BaseServerErrorCodes, 
-    BaseServerStatusCodes, 
+    BaseServerErrorCodes,
     BaseSuccessCodes, 
     BaseWarningCodes 
 } from "@templates/v0/base/statuses";
@@ -76,7 +75,6 @@ type BaseMessageCode =
     | keyof typeof BaseWarningCodes
     | keyof typeof BaseClientErrorCodes
     | keyof typeof BaseServerErrorCodes
-    | keyof typeof BaseServerStatusCodes;
 
 /**
  * BaseMessageEntry is an interface that represents a message entry.
@@ -87,7 +85,7 @@ interface BaseMessageEntry
     C extends BaseMessageCodes = BaseMessageCodes,
     L extends BaseMessageLevels = BaseMessageLevels.INFO,
     B = any,
-    D = any,
+    D = any
 >
     extends
         Record<'code', C>,
@@ -115,10 +113,10 @@ interface BaseErrorMessageEntry
             L,
             {
                 error: E;
+                
             },
             D
-        >,
-        Record<'error', E>
+        >
 {}
 
 

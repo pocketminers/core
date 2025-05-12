@@ -3,6 +3,13 @@ import { Checks } from "@utilities/checks";
 import { Freezer } from "@utilities/freezer";
 
 
+interface PocketArgumentOptions
+    extends
+        Partial<Record<'allowEmpty', boolean>>,
+        Partial<Record<'frozen', boolean>>
+{}
+
+
 /**
  * PocketARgumentEntry is an interface that represents a key-value pair.
  * - It is used to encapsulate arguments in the Pocket framework.
@@ -13,7 +20,8 @@ interface PocketArgumentEntry
 >
     extends
         Record<'name', BaseValueKey>,
-        Record<'value', BaseValue<T>>
+        Record<'value', BaseValue<T>>,
+        Partial<Record<'options', PocketArgumentOptions>>
 {}
 
 
@@ -50,23 +58,33 @@ class PocketArgument
      *
      * @param name - The name of the argument.
      * @param value - The value of the argument.
+     * @param options - Optional settings for the argument.
      */
     constructor({
         name,
-        value
+        value,
+        options: {
+            allowEmpty = true,
+            frozen = true
+        } = {}
     }: PocketArgumentEntry<T>) {
         if (Checks.isEmpty(name) == true) {
             throw new Error("Name is required");
         }
 
-        if (Checks.isEmpty(value) == true) {
-            throw new Error("Value is required");
+        if (
+            Checks.isEmpty(value) == true
+            && allowEmpty == false
+        ) {
+            throw new Error(`Value for Argument ${String(name)} is required because allowEmpty is false`);
         }
 
         this.name = name;
         this.value = value;
 
-        Freezer.deepFreeze(this);
+        if (frozen == true) {
+            Freezer.deepFreeze(this);
+        }
     }
 
     public get nameString(): string {
@@ -83,7 +101,12 @@ class PocketArgument
     >(
         str: string
     ): PocketArgument<T> {
-        if (!str) {
+        if (
+            str === undefined
+            || Checks.isEmpty(str) == true
+            || Checks.isEmpty(str.trim()) == true
+            || str.trim().length === 0
+        ) {
             throw new Error("String is required");
         }
         

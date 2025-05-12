@@ -37,9 +37,11 @@ class PocketTimestamp
      */
     public constructor(date: DateEntry = Date.now()) {
         if (
-            typeof date === "string"
-            || typeof date === "number"
-            || date instanceof Date
+            ( 
+                typeof date === "string"
+                || typeof date === "number"
+                || date instanceof Date
+            )
             && Checks.isEmpty(date) === false
         ) {
             this.date = new Date(date);

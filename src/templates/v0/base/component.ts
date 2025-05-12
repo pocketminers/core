@@ -1,3 +1,8 @@
+/**
+ * component.ts
+ * This file defines the base components of a system.
+ */
+
 
 /**
  * BaseComponents
@@ -22,6 +27,10 @@ enum BaseComponents {
 type BaseComponent = keyof typeof BaseComponents;
 
 
+/**
+ * BaseComponentsTypes
+ * This type defines the different parts of a component.
+ */
 type BaseComponentsTypes = {
     [key in BaseComponent]: BaseComponentsTypes[key];
 }
