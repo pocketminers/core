@@ -1,4 +1,4 @@
-import { PocketTimestamp } from "@components/timestamp";
+import { PocketTimestamp } from "@components/base/timestamp";
 
 
 describe("PocketTimestamp", () => {

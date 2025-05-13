@@ -80,7 +80,7 @@ interface BaseTimestamp
 
 
 /**
- * PocketUserAccountTimestamps represents the timestamps associated with a user account.
+ * BaseTimestamps represents the timestamps associated with a user account.
  * It includes the creation date, last login date, and other relevant timestamps.
  */
 interface BaseTimestamps

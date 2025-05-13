@@ -1,6 +1,6 @@
 import { BaseArgument, BaseMessageLevels, BaseServerErrorCodes } from "@templates/v0"
 import { PocketServerManager } from "./manager"
-import { PocketErrorMessage } from "@components/error";
+import { PocketErrorMessage } from "@components/base/error";
 
 const runServer = async ({
     manager = undefined,

@@ -4,7 +4,7 @@ import { Freezer } from "@utilities/freezer";
 
 
 /**
- * PocketArgumentOptions is an interface that represents the options for a PocketArgument.
+ * PocketArgumentOptions is an interface that represents the configuration for a PocketArgument.
  * - It is used to encapsulate optional settings for the PocketArgument class.
  */
 interface PocketArgumentOptions
@@ -25,7 +25,7 @@ interface PocketArgumentEntry
     extends
         Record<'name', BaseValueKey>,
         Record<'value', BaseValue<T>>,
-        Partial<Record<'options', PocketArgumentOptions>>
+        Partial<Record<'configuration', PocketArgumentOptions>>
 {}
 
 
@@ -71,12 +71,12 @@ class PocketArgument
      *
      * @param name - The name of the argument.
      * @param value - The value of the argument.
-     * @param options - Optional settings for the argument.
+     * @param configuration - Optional settings for the argument.
      */
     constructor({
         name,
         value,
-        options: {
+        configuration: {
             allowEmpty = true,
             freeze = true
         } = {}
@@ -85,7 +85,7 @@ class PocketArgument
         PocketArgument.checkIfValid({
             name,
             value,
-            options: {
+            configuration: {
                 allowEmpty
             }
         });
@@ -106,7 +106,7 @@ class PocketArgument
     public static checkIfValid({
         name,
         value,
-        options: {
+        configuration: {
             allowEmpty = true
         } = {}
     }: PocketArgumentEntry): boolean {
@@ -264,7 +264,7 @@ class PocketArgument
     >(
         json: string
     ): PocketArgument<T> {
-        let parsed: { name: BaseValueKey; value: BaseValue<T> };
+        let parsed: { name: BaseValueKey; value: BaseValue<T>; configuration?: PocketArgumentOptions };
         
         if (Checks.isEmpty(json) == true) {
             throw new Error("JSON string is required");
@@ -278,10 +278,12 @@ class PocketArgument
 
         const name = parsed.name;
         const value = parsed.value;
+        const configuration = parsed.configuration;
 
         return new PocketArgument<T>({
             name,
-            value
+            value,
+            configuration
         });
     }
 
@@ -405,5 +407,7 @@ class PocketArgument
 }
 
 export {
-    PocketArgument
+    PocketArgument,
+    type PocketArgumentEntry,
+    type PocketArgumentOptions
 }

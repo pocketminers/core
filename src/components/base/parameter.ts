@@ -130,6 +130,7 @@ class PocketParameter
         return String(this.key);
     }
 
+
     /**
      * Checks if the provided value is valid according to the parameter's rules.
      * - If the value is required and empty, it throws an error.
@@ -154,7 +155,7 @@ class PocketParameter
             && Checks.isEmpty(this.options) == false
             && Checks.isEmpty(this.options.find((option) => option == value)) == true
             && !this.options.includes(value as BaseValue<T>)
-            && !this.default == value
+            && !this.default === value
         ) {
             throw new Error(`Parameter ${this.nameString} must be one of ${this.options.join(", ")} or ${this.default}, but got ${value}`);
         }
@@ -205,55 +206,6 @@ class PocketParameter
     }
         
 }
-
-
-// class PocketParameters
-// <
-//     T = any[]
-// >
-//     extends Array<PocketParameter<T>>
-// {
-//     /**
-//      * The PocketParameters class is an array of PocketParameter objects.
-//      * - It is used to encapsulate multiple parameters in the Pocket framework.
-//      * - The class is generic and can be used with different types of values.
-//      * - This class does not extend the PocketObject class, as it does
-//      *   not include a metadata object.
-//      * - This class is designed to be immutable after creation.
-//      */
-//     [index: number]: PocketParameter<T>;
-
-//     /**
-//      * The constructor initializes the PocketParameters array.
-//      * - It accepts an array of PocketParameter objects.
-//      * - It calls the parent constructor with the provided array.
-//      * - It freezes the array to make it immutable.
-//      */
-//     public constructor(
-//         ...parameters: PocketParameter<T>[],
-//         options: {
-//             frozen?: boolean;
-//         } = {
-//             frozen: true
-//         }
-//     ) {
-//         super(...parameters);
-//         if (options.frozen == true) {
-//             this.freeze()
-//         }
-//     }
-
-//     public freeze(): void {
-//         Freezer.deepFreeze(this);
-//     }
-
-//     public static getDefaults(): { [key: BaseValueKey]: BaseValue<any> } {
-//         const defaults: { [key: BaseValueKey]: BaseValue<any> } = {};
-
-//         for (const parameter: PocketParameter of this) {
-//             const defaultValue = parameter.getDefaults();
-            
-//     /**
 
 export {
     PocketParameter

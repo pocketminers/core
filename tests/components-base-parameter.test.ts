@@ -1,4 +1,4 @@
-import { PocketParameter } from "@components/parameter";
+import { PocketParameter } from "@components/base/parameter";
 
 describe("PocketParameter", () => {
     it('should create an instance with name and default value', () => {

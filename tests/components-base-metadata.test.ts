@@ -1,4 +1,4 @@
-import { PocketMetadata } from "@components/metadata";
+import { PocketMetadata } from "@components/base/metadata";
 import { BaseIdentifierFormats } from "@templates/v0/base/identifier";
 import { BaseObjects, BaseObject} from "@templates/v0/base/object";
 

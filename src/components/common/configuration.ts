@@ -1,10 +1,10 @@
-import { PocketArgument } from "./argument";
-import { PocketParameter } from "./parameter";
+import { PocketArgument } from "@components/base/argument";
+import { PocketParameter } from "@components/base/parameter";
 import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
 import { BaseConfiguration, BaseMessageLevels, BaseSuccessCodes } from "@templates/v0";
 import { Freezer } from "@utilities/freezer";
 import { Checks } from "@utilities/checks";
-import { PocketMessage } from "./message";
+import { PocketMessage } from "@components/base/message";
 
 
 /**
@@ -37,6 +37,7 @@ class PocketConfiguration
 >
     implements
         BaseConfiguration<T>
+    
 {
     /**
      * The arguments for the configuration.
@@ -571,5 +572,7 @@ class PocketConfiguration
 }
 
 export {
-    PocketConfiguration
+    PocketConfiguration,
+    type PocketConfigurationEntry,
+    type PocketConfigurationOptions
 }

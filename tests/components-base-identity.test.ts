@@ -1,4 +1,4 @@
-import { PocketIdentity } from "@components/identity";
+import { PocketIdentity } from "@components/base/identity";
 
 describe('PocketIdentity', () => {
     it('should create a PocketIdentity with valid type and value', () => {

@@ -1,4 +1,4 @@
-import { PocketErrorMessage } from "@components/error";
+import { PocketErrorMessage } from "@components/base/error";
 import { BaseMessageLevels } from "@templates/v0/base/message";
 import { BaseClientErrorCodes } from "@templates/v0/base/statuses";
 

@@ -1,5 +1,5 @@
-import { PocketObject } from "@components/object";
-import { PocketMetadata } from "@components/metadata";
+import { PocketObject } from "@components/base/object";
+import { PocketMetadata } from "@components/base/metadata";
 
 
 describe('PocketObject', () => {

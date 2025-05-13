@@ -1,4 +1,4 @@
-import { PocketParameter } from "@components/parameter";
+import { PocketParameter } from "@components/base/parameter";
 import { BaseParameter, BaseParameters } from "@templates/v0";
 
 

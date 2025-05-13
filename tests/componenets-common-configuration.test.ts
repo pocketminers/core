@@ -1,6 +1,6 @@
-import { PocketConfiguration } from "@components/configuration";
-import { PocketParameter } from "@components/parameter";
-import { PocketArgument } from "@components/argument";
+import { PocketConfiguration } from "@components/common/configuration";
+import { PocketParameter } from "@components/base/parameter";
+import { PocketArgument } from "@components/base/argument";
 
 describe("PocketConfiguration", () => {
     it("should create a PocketConfiguration instance", () => {
