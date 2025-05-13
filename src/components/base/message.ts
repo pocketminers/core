@@ -242,7 +242,7 @@ class PocketMessage
                 console.debug(this.body);
                 break;
  
-                case BaseMessageLevels.TRACE:
+            case BaseMessageLevels.TRACE:
                 console.trace(this.body);
                 break;
  

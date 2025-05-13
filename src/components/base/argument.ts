@@ -1,6 +1,7 @@
 import { BaseArgument, BaseValue, BaseValueKey } from "@templates/v0";
 import { Checks } from "@utilities/checks";
 import { Freezer } from "@utilities/freezer";
+import { Immuteable } from "@components/base/immuteable";
 
 
 /**
@@ -50,6 +51,8 @@ class PocketArgument
 <
     T = any,
 >
+    extends
+        Immuteable
     implements
         BaseArgument<T>
 {
@@ -90,14 +93,21 @@ class PocketArgument
             }
         });
 
-        // 
+        super({ freeze, allowEmpty }, PocketArgument.prototype);
+
         this.name = name;
         this.value = value;
 
-        if (freeze == true) {
-            Freezer.deepFreeze(this);
-        }
+        this.initialize(this.constructor.prototype);
     }
+
+    // public override initialize(): void {
+    //     if (this.getOption('freeze') === true) {
+    //         Freezer.deepFreeze(this);
+    //     }
+
+    //     Object.freeze(this);
+    // }
 
     public get nameString(): string {
         return String(this.name);

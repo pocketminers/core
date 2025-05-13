@@ -236,11 +236,9 @@ class PocketConfiguration
     }: {
         params: Array<PocketParameter>;
     }): Array<PocketArgument> {
-        // Check if the arguments and parameters are valid
         const defaultRequiredParams = PocketConfiguration.getRequiredParameters({ params });
 
         const defaultRequiredParamValues = new Array<PocketArgument>();
-        // const missingDefaultRequiredParams = new Array<PocketParameter>();
 
         for (const param of defaultRequiredParams) {
             const defaultValue = param.default;
@@ -259,9 +257,6 @@ class PocketConfiguration
                     value: undefined
                 }));
             }
-            // else {
-            //     missingDefaultRequiredParams.push(param);
-            // }
         }
 
         return defaultRequiredParamValues;

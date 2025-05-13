@@ -1,4 +1,4 @@
-import { PocketMessage } from "@components/message";
+import { PocketMessage } from "@components/base/message";
 import { BaseMessageCodes, BaseMessageLevel, BaseMessageLevels, BaseSuccessCodes } from "@templates/v0";
 
 class PocketServiceResponse

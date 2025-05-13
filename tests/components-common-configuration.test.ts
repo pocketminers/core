@@ -77,7 +77,7 @@ describe("PocketConfiguration", () => {
         const param2 = new PocketParameter({ name: "param2", default: "default2", required: false });
         const config = new PocketConfiguration({params: [param1, param2]});
         const defaultRequiredParams = PocketConfiguration.getDefaultRequiredParameterValues({ params: config.parameters });
-        expect(defaultRequiredParams).toEqual([{name: "param1", value: "default1" }]);
+        expect(defaultRequiredParams.toString()).toEqual('param1: default1');
     });
 
     it('should get the proper argument by name from an array of arguments', () => {
