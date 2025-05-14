@@ -1,7 +1,9 @@
-import { BaseValue, BaseValueKey } from "@templates/v0";
 import { Freezer } from "@utilities/freezer";
-import { Configurable, ConfigurableOptions } from "./configurable";
+import { Configurable, ConfigurableOptions } from "@components/base/configurable";
 
+/**
+ * ImmuteableConfigurationOptions is an interface that defines the options for the Immuteable class.
+ */
 interface ImmuteableConfigurationOptions
     extends
         ConfigurableOptions,
@@ -11,8 +13,8 @@ interface ImmuteableConfigurationOptions
 
 /**
  * The Immuteable class is a base class that provides immutability to its instances.
- * It uses the Freezer utility to deep freeze the object and its properties.
- * This ensures that the object cannot be modified after it has been created.
+ * - It uses the Freezer utility to deep freeze the object and its properties.
+ * - This ensures that the object cannot be modified after it has been created.
  */
 class Immuteable
     extends
@@ -26,7 +28,7 @@ class Immuteable
         configuration: ImmuteableConfigurationOptions = {
             freeze: true
         },
-        prototype: any = Object.getPrototypeOf(Immuteable.prototype)
+        prototype: any = Immuteable.prototype
     ) {
         super({
             ...Immuteable.defaultOptions,
@@ -34,10 +36,34 @@ class Immuteable
         },
             prototype
         );
+
+        this.initializeImmuteable(prototype);
+    }
+
+    public initializeImmuteable(overridePrototype?: any): void {
+        if (
+            overridePrototype !== undefined
+            && overridePrototype !== null
+            && ( 
+                overridePrototype === Immuteable.prototype
+            )
+        ) {
+            if (this.getOption('freeze') === true) {
+                Immuteable.deepFreeze(this);
+            }
+        }
+        else if (
+            overridePrototype === undefined
+        ) {
+            // Override the prototype with the provided one
+            if (this.getOption('freeze') === true) {
+                Immuteable.deepFreeze(this);
+            }
+        }
     }
 
     public static deepFreeze<T>(object: T): T {
-        if (Immuteable.isFrozen(object)) {
+        if (Immuteable.isFrozen(object) === true) {
             return object;
         }
 
@@ -54,5 +80,6 @@ class Immuteable
 }
 
 export {
+    type ImmuteableConfigurationOptions,
     Immuteable
 }

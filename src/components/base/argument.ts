@@ -98,17 +98,9 @@ class PocketArgument
         this.name = name;
         this.value = value;
 
-        this.initialize(this.constructor.prototype);
+        this.initializeImmuteable();
     }
-
-    // public override initialize(): void {
-    //     if (this.getOption('freeze') === true) {
-    //         Freezer.deepFreeze(this);
-    //     }
-
-    //     Object.freeze(this);
-    // }
-
+    
     public get nameString(): string {
         return String(this.name);
     }

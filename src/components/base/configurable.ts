@@ -7,8 +7,7 @@ interface ConfigurableOptions
 
 
 class Configurable {
-    public static readonly defaultOptions: ConfigurableOptions = {
-    };
+    public static readonly defaultOptions: ConfigurableOptions = {};
 
     private configuration: ConfigurableOptions; 
 
@@ -21,10 +20,10 @@ class Configurable {
             ...configuration
         };
 
-        this.initialize(prototype);
+        this.initializeConfigurable(prototype);
     }
 
-    public initialize(overridePrototype?: any): void {
+    public initializeConfigurable(overridePrototype?: any): void {
         if (overridePrototype === undefined) {
             overridePrototype = Object.getPrototypeOf(this);
         }
