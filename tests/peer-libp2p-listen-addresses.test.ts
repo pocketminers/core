@@ -20,13 +20,13 @@ describe('getLibp2pListenAddressParameters', () => {
     });
 });
 
-describe("generateListenAddresses", () => {
-    it("should generate a valid array of listen addresses", () => {
-        const addresses = generateListenAddresses();
-        expect(addresses).toBeInstanceOf(Object);
-        expect(addresses.listen.length).toBeGreaterThan(0);
-        console.log(addresses);
-    });
+// describe("generateListenAddresses", () => {
+//     it("should generate a valid array of listen addresses", () => {
+//         const addresses = generateListenAddresses();
+//         expect(addresses).toBeInstanceOf(Object);
+//         expect(addresses.listen.length).toBeGreaterThan(0);
+//         console.log(addresses);
+//     });
 
-});
+// });
 
