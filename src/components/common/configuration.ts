@@ -330,7 +330,17 @@ class PocketConfiguration
 
 
         const requiredArgs: Array<PocketArgument> = new Array<PocketArgument>();
-        // const defaultArgs = PocketConfiguration.getDefaultRequiredParameterValues({ params });
+        const defaultArgs = PocketConfiguration.getDefaultRequiredParameterValues({ params });
+
+        for (const defaultArg of defaultArgs) {
+            const arg = args.find((arg) => arg.name === defaultArg.name);
+            if (arg !== undefined) {
+                requiredArgs.push(arg);
+            }
+            else {
+                requiredArgs.push(defaultArg);
+            }
+        }
         
         // for (const arg of args) {
         //     const param = params.find((param) => PocketConfiguration.getParameterNameOrKey(param) === arg.name);

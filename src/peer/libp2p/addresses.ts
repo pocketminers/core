@@ -17,28 +17,28 @@ const getLibp2pListenAddressParameters = (): PocketParameter[] => {
             key: "enableTcp",
             description: "Enable TCP transport.",
             default: true,
-            required: false
+            required: true
         }),
         new PocketParameter<number>({
             name: "TCP Listen Port",
             key: "tcpPort",
             description: "The port the TCP transport will listen on.",
             default: 0,
-            required: false
+            required: true
         }),
         new PocketParameter<boolean>({
             name: "Enable IPv4",
             key: "enableIp4",
             description: "Enable IPv4 transport",
             default: true,
-            required: false
+            required: true
         }),
         new PocketParameter<string>({
             name: "IPv4 Domain",
             key: "ip4Domain",
             description: "IPv4 domain",
             default: "0.0.0.0",
-            required: false
+            required: true
         }),
         new PocketParameter<boolean>({
             name: "Enable UDP",
@@ -134,7 +134,7 @@ const getLibp2pListenAddressParameters = (): PocketParameter[] => {
     return Libp2pListenAddresses;
 }
 
-const generateListenAddresses = (args: PocketArgument[]): { listen: Array<string> } => {
+const generateListenAddresses = (args?: PocketArgument[]): { listen: Array<string> } => {
     const listenAddressConfig = new PocketConfiguration({
         args,
         params: getLibp2pListenAddressParameters()
@@ -157,9 +157,9 @@ const generateListenAddresses = (args: PocketArgument[]): { listen: Array<string
         enableWebRTCStar,
         webRTCStarAddress,
         additionalMultiaddrs
-    } = listenAddressConfig.preparedArgs();
+    } = listenAddressConfig.preparedArgs({ allowNonRequired: true });
 
-    const listenAddresses = new Array<string>();
+    const listenAddresses: Array<string> = new Array<string>();
 
     if (enableIp4) {
         if (enableTcp) {
