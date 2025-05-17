@@ -154,6 +154,13 @@ class PocketConfiguration
         return true;
     }
 
+
+    /**
+     * Checks if a parameter is valid.
+     * - If the parameter is undefined, an error is thrown.
+     * - If the parameter does not have a name, an error is thrown.
+     * - If the parameter is valid, true is returned.
+     */
     public static checkIfParameterIsValid({
         params,
         param
@@ -286,6 +293,11 @@ class PocketConfiguration
     }
 
 
+    /**
+     * Get an array of arguments from an array of parameters.
+     * - The arguments are created from the default values of the parameters.
+     * - The arguments are created with the name or key of the parameter (key takes precendence).
+     */
     public static getDefaultParameterValuesAsArguments({
         params,
         allowNonRequired = false
@@ -397,10 +409,13 @@ class PocketConfiguration
      */
     public static getRequiredAndSetArguments({
         args = [],
-        params
+        params = [],
+        includeAdditionalArgs = true
     }: {
         args?: Array<PocketArgument>;
-        params: Array<PocketParameter>;
+        params?: Array<PocketParameter>;
+        includeAdditionalArgs?: boolean;
+        includeNonRequiredArgs?: boolean;
     }): Array<PocketArgument> {
 
 
@@ -439,210 +454,144 @@ class PocketConfiguration
             }
         }
 
+        for (const arg of args) {
+            const param = params.find((param) => PocketConfiguration.getParameterNameOrKey(param) === arg.name);
+            if (
+                param === undefined
+                && Checks.isEmpty(arg.value) === false
+                && Checks.isEmpty(arg.name) === false
+                && includeAdditionalArgs === true
+            ) {
+                requiredAndSetArgs.push(arg);   
+            }
+        }
+
         return requiredAndSetArgs;
-
-
-
-        // for (const defaultArg of defaultArgs) {
-        //     const arg = args.find((arg) => arg.name === defaultArg.name);
-        //     if (arg !== undefined) {
-        //         requiredArgs.push(arg);
-        //     }
-        //     else {
-        //         requiredArgs.push(defaultArg);
-        //     }
-        // }
-        
-        // for (const arg of args) {
-        //     const param = params.find((param) => PocketConfiguration.getParameterNameOrKey(param) === arg.name);
-        //     if (param !== undefined) {
-        //         if (
-        //             param.required === true
-        //             && Checks.isEmpty(arg.value) === false
-        //         ) {
-        //             requiredArgs.push(arg);
-        //         }
-        //         else if (
-        //             param.required === true
-        //             && Checks.isEmpty(arg.value) === true
-        //         ) {
-        //             requiredArgs.push(new PocketArgument({
-        //                 name: PocketConfiguration.getParameterNameOrKey(param),
-        //                 value: defaultArgs.find((defaultArg) => defaultArg.name === arg.name)?.value
-        //             }));
-        //         }
-        //     }
-        // }
-        // for (const param of params) {
-        //     const arg = args.find((arg) => arg.name === PocketConfiguration.getParameterNameOrKey(param));
-        //     if (arg === undefined) {
-        //         if (
-        //             param.required === true
-        //             && Checks.isEmpty(param.default) === false
-        //         ) {
-        //             requiredArgs.push(new PocketArgument({
-        //                 name: PocketConfiguration.getParameterNameOrKey(param),
-        //                 value: param.default
-        //             }));
-        //         }
-        //     }
-        // }
-
-
-        // return requiredArgs;
-
-
-        // const requiredParams = PocketConfiguration.getRequiredParameters({ params });
-
-        // const missingRequiredParams = new Array<PocketParameter>();
-        // const arguments_ = new Array<PocketArgument>();
-
-        // for (const param of requiredParams) {
-        //     const arg = args.find((arg) => arg.name === PocketConfiguration.getParameterNameOrKey(param));
-        //     if (arg) {
-        //         arguments_.push(arg);
-        //     }
-        //     else if (param.default !== undefined) {
-        //         arguments_.push(new PocketArgument({
-        //             name: PocketConfiguration.getParameterNameOrKey(param),
-        //             value: param.default
-        //         }));
-        //     }
-        //     else {
-        //         missingRequiredParams.push(param);
-        //     }
-        // }
-
-        // if (missingRequiredParams.length > 0) {
-        //     throw new Error(`Missing required parameters: ${missingRequiredParams.map((param) => param.name).join(", ")}`);
-        // }
-
-        // return arguments_;
     }
 
-    public static getArgRecords({
-        args = [],
-        params,
-        allowAdditionalArgs = true,
-        allowNonRequired = false
-    }: {
-        args?: Array<PocketArgument>;
-        params: Array<PocketParameter>;
-        allowAdditionalArgs?: boolean;
-        allowNonRequired?: boolean;
-    }): Array<Record<BaseValueKey, BaseValue>> {
-        const argRecords = new Array<Record<BaseValueKey, BaseValue>>();
-        const missingArgs = new Array<PocketArgument>();
+    // public static getArgRecords({
+    //     args = [],
+    //     params,
+    //     allowAdditionalArgs = true,
+    //     allowNonRequired = false
+    // }: {
+    //     args?: Array<PocketArgument>;
+    //     params: Array<PocketParameter>;
+    //     allowAdditionalArgs?: boolean;
+    //     allowNonRequired?: boolean;
+    // }): Array<Record<BaseValueKey, BaseValue>> {
+    //     const argRecords = new Array<Record<BaseValueKey, BaseValue>>();
+    //     const missingArgs = new Array<PocketArgument>();
 
-        const checkedArgs = PocketConfiguration.getRequiredAndSetArguments({
-            args,
-            params
-        });
+    //     const checkedArgs = PocketConfiguration.getRequiredAndSetArguments({
+    //         args,
+    //         params
+    //     });
 
-        for (const checkedArg of checkedArgs) {
-            if (checkedArg.value !== undefined) {
-                argRecords.push({
-                    [checkedArg.name]: checkedArg.value
-                });
-            }
-            else {
-                missingArgs.push(checkedArg);
-            }
-        }
+    //     for (const checkedArg of checkedArgs) {
+    //         if (checkedArg.value !== undefined) {
+    //             argRecords.push({
+    //                 [checkedArg.name]: checkedArg.value
+    //             });
+    //         }
+    //         else {
+    //             missingArgs.push(checkedArg);
+    //         }
+    //     }
 
-        if (missingArgs.length > 0) {
-            throw new Error(`Missing required arguments: ${missingArgs.map((arg) => arg.name).join(", ")}`);
-        }
+    //     if (missingArgs.length > 0) {
+    //         throw new Error(`Missing required arguments: ${missingArgs.map((arg) => arg.name).join(", ")}`);
+    //     }
 
-        // if (args === undefined) {
-        //     args = new Array<PocketArgument>();
-        // }
+    //     // if (args === undefined) {
+    //     //     args = new Array<PocketArgument>();
+    //     // }
        
-        // for (const param of params) {
-        //     const arg = args.find((arg) => arg.name === PocketConfiguration.getParameterNameOrKey(param));
+    //     // for (const param of params) {
+    //     //     const arg = args.find((arg) => arg.name === PocketConfiguration.getParameterNameOrKey(param));
 
-        //     // Check if an argument is required and defined either in the argument or parameter
-        //     if (
-        //         arg === undefined
-        //         && param.required === true
-        //         && param.default === undefined
-        //         // && arg.value === undefined
-        //     ) {
-        //         throw new Error(`Argument ${arg.nameString} is required but has no value.`);
-        //     }
+    //     //     // Check if an argument is required and defined either in the argument or parameter
+    //     //     if (
+    //     //         arg === undefined
+    //     //         && param.required === true
+    //     //         && param.default === undefined
+    //     //         // && arg.value === undefined
+    //     //     ) {
+    //     //         throw new Error(`Argument ${arg.nameString} is required but has no value.`);
+    //     //     }
         
-        //     else if (
-        //         arg !== undefined
-        //         && param.required === true
-        //         && param.default === undefined
-        //         && arg.value !== undefined
-        //         && Checks.isEmpty(arg.value) === false
-        //     ) {
-        //         argRecords.push({
-        //             [PocketConfiguration.getParameterNameOrKey(param)]: arg.value
-        //         }); 
-        //     }
-        //     else if (
-        //         param.required === true
-        //         && param.default !== undefined
-        //     ) {
-        //         argRecords.push({
-        //             [PocketConfiguration.getParameterNameOrKey(param)]: param.default
-        //         });
-        //     }
-        //     else if (
-        //         param.required === false
-        //         && param.default !== undefined
-        //         && allowNonRequired === true
-        //     ) {
-        //         argRecords.push({
-        //             [PocketConfiguration.getParameterNameOrKey(param)]: param.default
-        //         });
-        //     }
-        //     else if (
-        //         param.required === false
-        //         && arg !== undefined
-        //         && arg.value !== undefined
-        //         && Checks.isEmpty(arg.value) === false
-        //         && allowNonRequired === true
-        //     ) {
-        //         argRecords.push({
-        //             [PocketConfiguration.getParameterNameOrKey(param)]: arg.value
-        //         });
-        //     }
-        // }
+    //     //     else if (
+    //     //         arg !== undefined
+    //     //         && param.required === true
+    //     //         && param.default === undefined
+    //     //         && arg.value !== undefined
+    //     //         && Checks.isEmpty(arg.value) === false
+    //     //     ) {
+    //     //         argRecords.push({
+    //     //             [PocketConfiguration.getParameterNameOrKey(param)]: arg.value
+    //     //         }); 
+    //     //     }
+    //     //     else if (
+    //     //         param.required === true
+    //     //         && param.default !== undefined
+    //     //     ) {
+    //     //         argRecords.push({
+    //     //             [PocketConfiguration.getParameterNameOrKey(param)]: param.default
+    //     //         });
+    //     //     }
+    //     //     else if (
+    //     //         param.required === false
+    //     //         && param.default !== undefined
+    //     //         && allowNonRequired === true
+    //     //     ) {
+    //     //         argRecords.push({
+    //     //             [PocketConfiguration.getParameterNameOrKey(param)]: param.default
+    //     //         });
+    //     //     }
+    //     //     else if (
+    //     //         param.required === false
+    //     //         && arg !== undefined
+    //     //         && arg.value !== undefined
+    //     //         && Checks.isEmpty(arg.value) === false
+    //     //         && allowNonRequired === true
+    //     //     ) {
+    //     //         argRecords.push({
+    //     //             [PocketConfiguration.getParameterNameOrKey(param)]: arg.value
+    //     //         });
+    //     //     }
+    //     // }
 
-        // if (allowAdditionalArgs === true) {
-        //     for (const arg of args) {
-        //         // Check if the argument has a corresponding parameter
-        //         const param = params.find((param) => PocketConfiguration.getParameterNameOrKey(param) === arg.name);
-        //         if (
-        //             param === undefined
-        //             && allowAdditionalArgs === true
-        //         ) {
-        //             argRecords.push({
-        //                 [arg.name]: arg.value
-        //             });
-        //         }
-        //     }
-        // }
+    //     // if (allowAdditionalArgs === true) {
+    //     //     for (const arg of args) {
+    //     //         // Check if the argument has a corresponding parameter
+    //     //         const param = params.find((param) => PocketConfiguration.getParameterNameOrKey(param) === arg.name);
+    //     //         if (
+    //     //             param === undefined
+    //     //             && allowAdditionalArgs === true
+    //     //         ) {
+    //     //             argRecords.push({
+    //     //                 [arg.name]: arg.value
+    //     //             });
+    //     //         }
+    //     //     }
+    //     // }
 
-        // const requiredParams = PocketConfiguration.getRequiredParameters({ params });
+    //     // const requiredParams = PocketConfiguration.getRequiredParameters({ params });
 
-        // const missingRequiredParams = new Array<PocketParameter>();
-        // for (const param of requiredParams) {
-        //     const arg = argRecords.find((argRecord) => argRecord[PocketConfiguration.getParameterNameOrKey(param)] !== undefined);
-        //     if (arg === undefined) {
-        //         missingRequiredParams.push(param);
-        //     }
-        // }
+    //     // const missingRequiredParams = new Array<PocketParameter>();
+    //     // for (const param of requiredParams) {
+    //     //     const arg = argRecords.find((argRecord) => argRecord[PocketConfiguration.getParameterNameOrKey(param)] !== undefined);
+    //     //     if (arg === undefined) {
+    //     //         missingRequiredParams.push(param);
+    //     //     }
+    //     // }
 
-        // if (missingRequiredParams.length > 0) {
-        //     throw new Error(`Missing required parameters: ${missingRequiredParams.map((param) => param.name).join(", ")}`);
-        // }
+    //     // if (missingRequiredParams.length > 0) {
+    //     //     throw new Error(`Missing required parameters: ${missingRequiredParams.map((param) => param.name).join(", ")}`);
+    //     // }
 
-        return argRecords;
-    }
+    //     return argRecords;
+    // }
 
     public preparedArgs({
         allowAdditionalArgs = true,
@@ -651,11 +600,9 @@ class PocketConfiguration
         allowAdditionalArgs?: boolean;
         allowNonRequired?: boolean;
     } = {}): Record<BaseValueKey, BaseValue> {
-        const preparedArgs: Array<Record<BaseValueKey, BaseValue>> = PocketConfiguration.getArgRecords({
+        const preparedArgs: Array<Record<BaseValueKey, BaseValue>> = PocketConfiguration.getRequiredAndSetArguments({
             args: this.arguments,
-            params: this.parameters,
-            allowAdditionalArgs,
-            allowNonRequired
+            params: this.parameters
         });
 
         const preparedArgsObject: Record<BaseValueKey, BaseValue> = {};

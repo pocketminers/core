@@ -188,4 +188,34 @@ describe("PocketConfiguration", () => {
             expect(error.message).toBe("Value for the param1 argument is required because allowEmpty is false");
         }
     });
+
+    it("should check if the passed in argument is valid or default with an empty value and allowEmpty is true", () => {
+        const param1 = new PocketParameter({ name: "param1", default: "default1", required: true, options: ["value1", "value2"]});
+        const arg1 = new PocketArgument({ name: "param1", value: "" , configuration: { allowEmpty: true, freeze: false } });
+        const argValueCheck: boolean = PocketConfiguration.checkIfArgumentValueIsValidOrDefault({ arg: arg1, param: param1 });
+        expect(argValueCheck).toBe(true);
+    });
+
+    it("should get the required and set arguments", () => {
+        const arg1 = new PocketArgument({ name: "arg1", value: "value1" });
+        const arg2 = new PocketArgument({ name: "arg2", value: "value2" });
+        const arg3 = new PocketArgument({ name: "arg3", value: "value3" });
+        const args = [arg1, arg2, arg3];
+        const config = new PocketConfiguration({ args });
+        const requiredArgs = PocketConfiguration.getRequiredAndSetArguments({ args: config.arguments });
+        expect(requiredArgs).toEqual([arg1, arg2, arg3]);
+    });
+
+    it("should get the required and set arguments from args and params", () => {
+        const arg1 = new PocketArgument({ name: "arg1", value: "value1" });
+        const arg2 = new PocketArgument({ name: "arg2", value: "value2" });
+        const arg3 = new PocketArgument({ name: "arg3", value: "value3" });
+        const args = [arg1, arg2, arg3];
+        const param1 = new PocketParameter({ name: "param1", default: "default1", required: true });
+        const param2 = new PocketParameter({ name: "param2", default: "default2", required: false });
+        const params = [param1, param2];
+        const config = new PocketConfiguration({ args, params });
+        const requiredArgs = PocketConfiguration.getRequiredAndSetArguments({ args: config.arguments, params: config.parameters });
+        expect(requiredArgs).toEqual([new PocketArgument({name: 'param1', value: 'default1', configuration: {freeze: true, allowEmpty: true}}), arg1, arg2, arg3, ]);
+    });
 });
