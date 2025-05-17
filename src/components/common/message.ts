@@ -48,13 +48,15 @@ interface PocketMessageEntry
  *    code: BaseSuccessCodes.OK,
  *    level: BaseMessageLevels.SUCCESS,
  *    body: "Operation completed successfully",
- *    timestamp: new Date(),
+ *    timestamp: new PocketTimestamp(new Date()),
  *    data: { id: 1 },
- *    printToConsole: true,
- *    callback: async (message) => {
- *       console.log("Callback executed:", message);
- *    },
- *    delayCallback: 1000
+ *    configuration: {
+ *        printToConsole: true,
+ *        callback: async (message) => {
+ *            console.log("Callback executed:", message);
+ *        },
+ *        delayCallback: 1000
+ *    }
  * });
  */
 class PocketMessage
