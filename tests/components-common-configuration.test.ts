@@ -76,7 +76,8 @@ describe("PocketConfiguration", () => {
         const param1 = new PocketParameter({ name: "param1", default: "default1", required: true });
         const param2 = new PocketParameter({ name: "param2", default: "default2", required: false });
         const config = new PocketConfiguration({params: [param1, param2]});
-        const defaultRequiredParams = PocketConfiguration.getDefaultRequiredParameterValues({ params: config.parameters });
+        const defaultRequiredParams = PocketConfiguration.getDefaultParameterValuesAsArguments({ params: config.parameters });
+        console.log(defaultRequiredParams);
         expect(defaultRequiredParams.toString()).toEqual('param1: default1');
     });
 
@@ -86,7 +87,7 @@ describe("PocketConfiguration", () => {
         const arg3 = new PocketArgument({ name: "arg3", value: "value3" });
         const args = [arg1, arg2, arg3];
         const selectedArg = PocketConfiguration.getArgumentFromArray({ args, name: "arg2" });
-        expect(selectedArg).toEqual(arg2);
+        expect(selectedArg).toEqual([arg2]);
     });
 
     it('should get the proper argument by name from an array of arguments with a default value', () => {
@@ -96,6 +97,52 @@ describe("PocketConfiguration", () => {
         const args = [arg1, arg2, arg3];
         const selectedArg = PocketConfiguration.getArgumentFromArray({ args, name: "arg4"});
         expect(selectedArg).toEqual(undefined);
+    });
+
+    it('should check an array of arguments for duplicates, and throw an error if duplicates are found and allowDuplicates is false', () => {
+        const arg1 = new PocketArgument({ name: "arg1", value: "value1" });
+        const arg2 = new PocketArgument({ name: "arg1", value: "value2" });
+        const arg3 = new PocketArgument({ name: "arg3", value: "value3" });
+        const args = [arg1, arg2, arg3];
+
+        try {
+            PocketConfiguration.checkForDuplicateArguments({ args, allowDuplicateArgs: false });
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error.message).toBe("Duplicate argument found: arg1, arg1");
+        }
+    });
+
+    it('should check an array of arguments for duplicates, and not throw an error if duplicates are found and allowDuplicates is true', () => {
+        const arg1 = new PocketArgument({ name: "arg1", value: "value1" });
+        const arg2 = new PocketArgument({ name: "arg1", value: "value2" });
+        const arg3 = new PocketArgument({ name: "arg3", value: "value3" });
+        const args = [arg1, arg2, arg3];
+
+        const duplicateArgsCheck = PocketConfiguration.checkForDuplicateArguments({ args, allowDuplicateArgs: true });
+        expect(duplicateArgsCheck).toBe(true);
+    });
+
+    it("should check an array of parameters for duplicates, and throw an error if duplicates are found and allowDuplicates is false", () => {
+        const param1 = new PocketParameter({ name: "param1", default: "default1", required: true });
+        const param2 = new PocketParameter({ name: "param1", default: "default2", required: false });
+        const param3 = new PocketParameter({ name: "param3", default: "default3", required: true });
+        const params = [param1, param2, param3];
+        try {
+            PocketConfiguration.checkForDuplicateParameters({ params, allowDuplicateParams: false });
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error.message).toBe("Duplicate parameter found: param1, param1");
+        }
+    });
+
+    it("should check an array of parameters for duplicates, and not throw an error if duplicates are found and allowDuplicates is true", () => {
+        const param1 = new PocketParameter({ name: "param1", default: "default1", required: true });
+        const param2 = new PocketParameter({ name: "param1", default: "default2", required: false });
+        const param3 = new PocketParameter({ name: "param3", default: "default3", required: true });
+        const params = [param1, param2, param3];
+        const duplicateParamsCheck = PocketConfiguration.checkForDuplicateParameters({ params, allowDuplicateParams: true });
+        expect(duplicateParamsCheck).toBe(true);
     });
 
     it('should check if the passed in argument is valid or default', () => {
@@ -126,7 +173,7 @@ describe("PocketConfiguration", () => {
             PocketConfiguration.checkIfArgumentValueIsValidOrDefault({ arg: arg1, param: param1, throwError: true });
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Argument param1 is not a valid value. Possible values are: value1, value2");
+            expect(error.message).toBe("Argument param1 is not a valid value. Possible values are: default1, value1, value2");
         }
     });
 
