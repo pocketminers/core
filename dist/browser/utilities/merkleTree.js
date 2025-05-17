@@ -45,7 +45,7 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-import { MultiHashUtilities } from "./multiHash";
+import { MultiHashUtilities } from "./multiHash.js";
 var MerkleTree = /** @class */ (function () {
     function MerkleTree(leaves) {
         this.leaves = leaves;

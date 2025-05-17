@@ -35,8 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import crypto from 'crypto';
-import { SecretManager } from '@utilities/secret';
-import { Checks } from '@utilities/checks';
+import { SecretManager } from '../../../utilities/secret.js';
+import { Checks } from '../../../utilities/checks.js';
 // Configuration
 var SHARED_KEY = process.env.POCKET_SHARED_SECRET || "pocketminers-defualt-shared-key-development-purposes-only";
 var WHITELIST = ['127.0.0.1'];

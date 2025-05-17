@@ -34,7 +34,48 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { BaseIdentifierFormats } from "@templates/v0/base/identifier";
+import { BaseIdentifierFormats } from "../templates/v0/base/identifier.js";
+import { Checks } from "./checks.js";
+/**
+ * MultiHashAlgorithms is an enum that represents the different hashing algorithms
+ */
+var MultiHashAlgorithms;
+(function (MultiHashAlgorithms) {
+    /**
+     * SHA-256 is a cryptographic hash function that produces a 256-bit hash value.
+     */
+    MultiHashAlgorithms["SHA256"] = "SHA-256";
+    /**
+     * SHA-512 is a cryptographic hash function that produces a 512-bit hash value.
+     */
+    MultiHashAlgorithms["SHA512"] = "SHA-512";
+    // /**
+    //  * SHA3-256 is a cryptographic hash function that produces a 256-bit hash value.
+    //  * - It is part of the SHA-3 family of hash functions.
+    //  * - It is designed to be more secure than SHA-2.
+    //  * - It is used in various applications, including digital signatures and certificates.
+    //  * - It is also used in blockchain technology for hashing transactions and blocks.
+    //  */
+    // SHA3_256 = 'SHA3-256',
+    // /**
+    //  * SHA3-512 is a cryptographic hash function, from the SHA-3 family, that produces a 512-bit hash value
+    //  */
+    // SHA3_512 = 'SHA3-512',
+    // /** BROKEN - DOESN'T WORK IN SUBTLE CRYPTO
+    //  * BLAKE2 is a cryptographic hash function that is faster than MD5, SHA-1, and SHA-2.
+    //  * - It is designed to be more secure than MD5 and SHA-1.
+    //  */
+    //  RIPEMD160 = 'RIPEMD160'
+})(MultiHashAlgorithms || (MultiHashAlgorithms = {}));
+// | MultiHashAlgorithms.SHA3_256
+// | MultiHashAlgorithms.SHA3_512
+// | MultiHashAlgorithms.RIPEMD160;
+/**
+ * MultiHashUtilities is a utility class that provides methods for hashing strings and generating multihashes.
+ * - It uses the SubtleCrypto API for cryptographic operations.
+ * - It provides methods for hashing strings, generating multihashes, and validating multihashes.
+ * - It also provides methods for generating identifiers from multihashes.
+ */
 var MultiHashUtilities = /** @class */ (function () {
     function MultiHashUtilities() {
     }
@@ -96,7 +137,25 @@ var MultiHashUtilities = /** @class */ (function () {
         var regex = /^0x[a-fA-F0-9]{64}$/;
         return regex.test(input);
     };
+    MultiHashUtilities.hashStringWithAlgorithm = function (input, algorithm) {
+        return __awaiter(this, void 0, void 0, function () {
+            var encoder, data;
+            return __generator(this, function (_a) {
+                if (Checks.isEmpty(input)) {
+                    throw new Error("Input string cannot be empty");
+                }
+                encoder = new TextEncoder();
+                data = encoder.encode(input);
+                return [2 /*return*/, crypto.subtle.digest(algorithm, data)
+                        .then(function (hashBuffer) {
+                        return Array.from(new Uint8Array(hashBuffer))
+                            .map(function (byte) { return byte.toString(16).padStart(2, '0'); })
+                            .join('');
+                    })];
+            });
+        });
+    };
     return MultiHashUtilities;
 }());
-export { MultiHashUtilities };
+export { MultiHashAlgorithms, MultiHashUtilities };
 //# sourceMappingURL=multiHash.js.map

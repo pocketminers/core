@@ -1,5 +1,5 @@
-import { PocketConfiguration } from "@components/configuration";
-import { PocketParameter } from "@components/parameter";
+import { PocketConfiguration } from "../../components/common/configuration.js";
+import { PocketParameter } from "../../components/base/parameter.js";
 /**
  * The getLibp2pListenAddresses function returns an array of PocketParameter objects for configuring libp2p listen addresses.
  */

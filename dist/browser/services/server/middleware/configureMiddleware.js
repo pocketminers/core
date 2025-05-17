@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
-import { limiter } from '@services/server/middleware/limiter';
-import { attachServerId } from '@services/server/middleware/attachments';
+import { limiter } from '../../server/middleware/limiter.js';
+import { attachServerId } from '../../server/middleware/attachments.js';
 var configureMiddleware = function (_a) {
     var app = _a.app, serverId = _a.serverId;
     /**

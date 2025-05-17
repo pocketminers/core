@@ -138,7 +138,7 @@ describe("PocketConfiguration", () => {
         }
         catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value for Argument param1 is required because allowEmpty is false");
+            expect(error.message).toBe("Value for the param1 argument is required because allowEmpty is false");
         }
     });
 });

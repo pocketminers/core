@@ -59,9 +59,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-import { BaseMessageLevels, BaseServerErrorCodes } from "@templates/v0";
-import { PocketServerManager } from "./manager";
-import { PocketErrorMessage } from "@components/error";
+import { BaseMessageLevels, BaseServerErrorCodes } from "../../templates/v0/index.js";
+import { PocketServerManager } from "./manager.js";
+import { PocketErrorMessage } from "../../components/base/error.js";
 var runServer = function () {
     var args_1 = [];
     for (var _i = 0; _i < arguments.length; _i++) {
