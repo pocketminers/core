@@ -1,17 +1,17 @@
 import { BaseArgument, BaseValue, BaseValueKey } from "@templates/v0";
 import { Checks } from "@utilities/checks";
 import { Freezer } from "@utilities/freezer";
-import { Immuteable } from "@components/base/immuteable";
+import { Immuteable, ImmuteableConfigurationOptions } from "@components/base/immuteable";
 
 
 /**
- * PocketArgumentOptions is an interface that represents the configuration for a PocketArgument.
+ * PocketArgumentConfigurationOptions is an interface that represents the configuration for a PocketArgument.
  * - It is used to encapsulate optional settings for the PocketArgument class.
  */
-interface PocketArgumentOptions
+interface PocketArgumentConfigurationOptions
     extends
-        Partial<Record<'allowEmpty', boolean>>,
-        Partial<Record<'freeze', boolean>>
+        Partial<ImmuteableConfigurationOptions>,
+        Partial<Record<'allowEmpty', boolean>>
 {}
 
 
@@ -26,7 +26,7 @@ interface PocketArgumentEntry
     extends
         Record<'name', BaseValueKey>,
         Record<'value', BaseValue<T>>,
-        Partial<Record<'configuration', PocketArgumentOptions>>
+        Partial<Record<'configuration', PocketArgumentConfigurationOptions>>
 {}
 
 
@@ -68,6 +68,14 @@ class PocketArgument
      */
     public readonly value: BaseValue<T>;
 
+    public static readonly defaultOptions: {
+        freeze: boolean;
+        allowEmpty: boolean;
+    } = {
+        ...Immuteable.defaultOptions,
+        allowEmpty: false
+    };
+
     /**
      * The constructor initializes the name and value properties with the provided arguments.
      * If the name or value is empty, it throws an error.
@@ -79,17 +87,21 @@ class PocketArgument
     constructor({
         name,
         value,
-        configuration: {
-            allowEmpty = true,
-            freeze = true
-        } = {}
+        configuration:{
+            freeze,
+            allowEmpty
+        } = {
+            freeze: PocketArgument.defaultOptions.freeze !== undefined ? PocketArgument.defaultOptions.freeze : true,
+            allowEmpty: PocketArgument.defaultOptions.allowEmpty !== undefined ? PocketArgument.defaultOptions.allowEmpty : true
+        }
     }: PocketArgumentEntry<T>) {
         // Check if the argument is valid
         PocketArgument.checkIfValid({
             name,
             value,
             configuration: {
-                allowEmpty
+                freeze: freeze !== undefined ? freeze : PocketArgument.defaultOptions.freeze,
+                allowEmpty: allowEmpty !== undefined ? allowEmpty : PocketArgument.defaultOptions.allowEmpty
             }
         });
 
@@ -98,7 +110,7 @@ class PocketArgument
         this.name = name;
         this.value = value;
 
-        this.initializeImmuteable();
+        this.initializeImmuteable({force: true});
     }
     
     public get nameString(): string {
@@ -109,8 +121,12 @@ class PocketArgument
         name,
         value,
         configuration: {
-            allowEmpty = true
-        } = {}
+            freeze,
+            allowEmpty
+        } = {
+            freeze: PocketArgument.defaultOptions.freeze !== undefined ? PocketArgument.defaultOptions.freeze : true,
+            allowEmpty: PocketArgument.defaultOptions.allowEmpty !== undefined ? PocketArgument.defaultOptions.allowEmpty : true
+        }
     }: PocketArgumentEntry): boolean {
         if (
             name === undefined
@@ -266,7 +282,7 @@ class PocketArgument
     >(
         json: string
     ): PocketArgument<T> {
-        let parsed: { name: BaseValueKey; value: BaseValue<T>; configuration?: PocketArgumentOptions };
+        let parsed: { name: BaseValueKey; value: BaseValue<T>; configuration?: PocketArgumentConfigurationOptions };
         
         if (Checks.isEmpty(json) == true) {
             throw new Error("JSON string is required");
@@ -411,5 +427,5 @@ class PocketArgument
 export {
     PocketArgument,
     type PocketArgumentEntry,
-    type PocketArgumentOptions
+    type PocketArgumentConfigurationOptions
 }

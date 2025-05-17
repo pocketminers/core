@@ -9,7 +9,7 @@ describe("PocketArgument", () => {
             new PocketArgument({ name, value });
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
+            expect(error.message).toBe("Value for the testName argument is required because allowEmpty is false");
         }
     });
 
@@ -21,7 +21,7 @@ describe("PocketArgument", () => {
             new PocketArgument({ name, value });
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
+            expect(error.message).toBe("Value for the testName argument is required because allowEmpty is false");
         }
     });
 
@@ -32,7 +32,7 @@ describe("PocketArgument", () => {
             new PocketArgument({ name, value });
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
+            expect(error.message).toBe("Value for the testName argument is required because allowEmpty is false");
         }
     });
 
@@ -181,7 +181,7 @@ describe("PocketArgument", () => {
             PocketArgument.fromRecord(record);
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
+            expect(error.message).toBe("Value for the testName argument is required because allowEmpty is false");
         }
     });
 
@@ -191,7 +191,7 @@ describe("PocketArgument", () => {
             PocketArgument.fromRecord(record);
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
+            expect(error.message).toBe("Value for the testName argument is required because allowEmpty is false");
         }
     });
 
@@ -201,7 +201,7 @@ describe("PocketArgument", () => {
             PocketArgument.fromRecord(record);
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
+            expect(error.message).toBe("Value for the testName argument is required because allowEmpty is false");
         }
     });
 
@@ -212,7 +212,7 @@ describe("PocketArgument", () => {
             PocketArgument.fromKeyValuePair([name, value]);
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
-            expect(error.message).toBe("Value for Argument testName is required because allowEmpty is false");
+            expect(error.message).toBe("Value for the testName argument is required because allowEmpty is false");
         }
     });
 
@@ -230,6 +230,7 @@ describe("PocketArgument", () => {
         const name = "⭐️";
         const value = 123;
         const argument = new PocketArgument({ name, value });
+        console.log(argument.toJSON());
         console.log(argument);
         expect(argument).toBeInstanceOf(PocketArgument);
         expect(argument.name).toBe(name);
@@ -261,5 +262,27 @@ describe("PocketArgument", () => {
         expect(argument).toBeInstanceOf(PocketArgument);
         expect(argument.name).toBe("testName");
         expect(argument.value).toBe("testValue");
+    });
+
+    it("should get the hash of the argument", async () => {
+        const name = "testName";
+        const value = "testValue";
+        const argument = new PocketArgument({ name, value });
+        const hash = await argument.gethash({ keys: ["name", "value"] });
+        console.log(argument.toJSON())
+        console.log(hash);
+        expect(hash).toBeDefined();
+    });
+    
+    it("should handle empty string values in fromKeyValuePair", async () => {
+        const name = "testName";
+        const value = "";
+        try {
+            const arg = PocketArgument.fromKeyValuePair([name, value]);
+            console.log(await arg.gethash({keys: ["name", "value"]}));
+        } catch (error: any) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error.message).toBe("Value for the testName argument is required because allowEmpty is false");
+        }
     });
 });

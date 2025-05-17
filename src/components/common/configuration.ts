@@ -5,6 +5,7 @@ import { BaseConfiguration, BaseMessageLevels, BaseSuccessCodes } from "@templat
 import { Freezer } from "@utilities/freezer";
 import { Checks } from "@utilities/checks";
 import { PocketMessage } from "@components/base/message";
+import { Immuteable } from "@components/base";
 
 
 /**
@@ -35,6 +36,8 @@ class PocketConfiguration
 <
     T = any
 >
+    extends
+        Immuteable
     implements
         BaseConfiguration<T>
     
@@ -68,16 +71,19 @@ class PocketConfiguration
         PocketConfiguration.checkArgsForDuplicates({ args, allowDuplicateArgs });
         PocketConfiguration.checkParamsForDuplicates({ params });
 
+        super(
+            {
+                freeze,
+                allowDuplicateArgs
+            }, 
+            PocketConfiguration.prototype
+        );
+
         // Initialize the arguments and parameters
         this.arguments = args;
         this.parameters = params;
 
-        // Freeze the arguments and parameters if the freeze option is set to true
-        if (freeze === true) {
-            Freezer.deepFreeze(this.arguments);
-            Freezer.deepFreeze(this.parameters);
-            Freezer.deepFreeze(this);
-        }
+        this.initializeImmuteable({force: true});
     }
 
     public static checkArgsForDuplicates({

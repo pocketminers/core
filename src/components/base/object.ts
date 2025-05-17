@@ -6,6 +6,13 @@ import { MultiHashUtilities } from "@utilities/multiHash";
 import { Checks } from "@utilities/checks";
 
 
+interface PocketObjectOptions
+    extends
+        Partial<Record<"allowEmpty", boolean>>,
+        Partial<Record<"freeze", boolean>>,
+        Partial<Record<"hashAlgorithm", string>>
+{}
+
 /**
  * PocketObject is a class that represents an object in the Pocket framework.
  * - It is a generic class that can be used with different types of data and metadata.

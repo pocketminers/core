@@ -1,5 +1,6 @@
 export * from './argument';
 // export * from './arguments';
+export * from './configurable';
 export * from './error';
 export * from './identity';
 export * from './immuteable';

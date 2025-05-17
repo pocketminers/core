@@ -1,7 +1,29 @@
 import { BaseParameter, BaseValue, BaseValueKey } from "@templates/v0";
 import { Checks } from "@utilities/checks";
 import { Freezer } from "@utilities/freezer";
+import { Immuteable } from "./immuteable";
+import { PocketArgumentConfigurationOptions } from "./argument";
 
+
+interface PocketParameterConfigurationOptions
+    extends
+        PocketArgumentConfigurationOptions
+{}
+
+
+interface PocketParameterEntry
+< 
+    T = any
+>
+    extends
+        Record<"name", BaseValueKey>,
+        Partial<Record<"key", BaseValueKey>>,
+        Partial<Record<"description", string>>,
+        Partial<Record<"default", BaseValue<T>>>,
+        Partial<Record<"required", boolean>>,
+        Partial<Record<"options", BaseValue<T>[]>>,
+        Partial<Record<'configuration', PocketParameterConfigurationOptions>>
+{}
 
 
 /**
@@ -30,6 +52,8 @@ class PocketParameter
 <
     T = any
 >
+    extends
+        Immuteable
     implements
         BaseParameter<T>
 {
@@ -85,15 +109,15 @@ class PocketParameter
         description = "",
         default: defaultValue = undefined,
         required = false,
-        options = []
-    }: {
-        name: BaseValueKey;
-        key?: BaseValueKey;
-        description?: string;
-        default?: BaseValue<T>;
-        required?: boolean;
-        options?: BaseValue<T>[];
-    }) {
+        options = [],
+        configuration: {
+            freeze,
+            allowEmpty
+        } = {
+            freeze: true,
+            allowEmpty: false
+        },
+    }: PocketParameterEntry<T>) {
         if (Checks.isEmpty(name) == true) {
             throw new Error("Name is required");
         }
@@ -102,6 +126,14 @@ class PocketParameter
             key = name;
         }
 
+        super(
+            {
+                freeze,
+                allowEmpty
+            },
+            PocketParameter.prototype
+        )
+
         this.name = name;
         this.key = key;
         this.description = description;
@@ -109,7 +141,9 @@ class PocketParameter
         this.required = required;
         this.options = options;
 
-        Freezer.deepFreeze(this);
+        this.initializeImmuteable({
+            force: true
+        });
     }
 
     /**
@@ -208,5 +242,7 @@ class PocketParameter
 }
 
 export {
+    type PocketParameterConfigurationOptions,
+    type PocketParameterEntry,
     PocketParameter
 }
