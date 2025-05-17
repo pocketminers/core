@@ -13,7 +13,7 @@ class Configurable {
 
     public constructor(
         configuration: ConfigurableOptions = {},
-        prototype: any = Object.getPrototypeOf(Configurable.prototype)
+        prototype: any = Configurable.prototype
     ) {
         this.configuration = {
             ...Configurable.defaultOptions,
@@ -27,9 +27,7 @@ class Configurable {
         if (overridePrototype === undefined) {
             overridePrototype = Object.getPrototypeOf(this);
         }
-        // Override the prototype with the provided one
         Object.setPrototypeOf(this, overridePrototype);
-        // Initialization logic can be added here if needed
     }
 
     public addOption(
