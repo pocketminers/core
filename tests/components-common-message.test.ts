@@ -1,6 +1,7 @@
-import { PocketMessage } from "@components/base/message";
-import { BaseMessageCodes, BaseMessageLevels} from "@templates/v0/base/message";
+import { PocketMessage } from "@components/common/message";
+import { BaseMessageLevels} from "@templates/v0/base/message";
 import { BaseServerErrorCodes, BaseSuccessCodes, BaseWarningCodes } from "@templates/v0/base/statuses";
+import { PocketTimestamp } from "@components/base/timestamp";
 
 describe("PocketMessage", () => {
     it("should create a PocketMessage with default values", () => {
@@ -11,7 +12,7 @@ describe("PocketMessage", () => {
         expect(message.code).toBe(BaseSuccessCodes.OK);
         expect(message.level).toBe(BaseMessageLevels.SUCCESS);
         expect(message.body).toBe("Test message");
-        expect(message.timestamp).toBeInstanceOf(Date);
+        expect(message.timestamp).toBeInstanceOf(PocketTimestamp);
         expect(message.data).toEqual({});
     });
 
@@ -20,14 +21,14 @@ describe("PocketMessage", () => {
             code: BaseSuccessCodes.CREATED,
             level: BaseMessageLevels.SUCCESS,
             body: "Custom message",
-            timestamp: new Date("2023-01-01"),
+            timestamp: new PocketTimestamp(new Date("2023-01-01")),
             data: { key: "value" }
         });
 
         expect(message.code).toBe(BaseSuccessCodes.CREATED);
         expect(message.level).toBe(BaseMessageLevels.SUCCESS);
         expect(message.body).toBe("Custom message");
-        expect(message.timestamp).toEqual(new Date("2023-01-01"));
+        expect(message.timestamp).toEqual(new PocketTimestamp(new Date("2023-01-01")));
         expect(message.data).toEqual({ key: "value" });
     });
 
@@ -60,7 +61,12 @@ describe("PocketMessage", () => {
         const message = new PocketMessage({
             code: BaseSuccessCodes.OK,
             body: "Test message",
-            callback
+            configuration: {
+                callback,
+                freeze: false,
+                delayCallback: 0,
+                printToConsole: false
+            }
         });
 
         // await message.handleCallback();
@@ -88,7 +94,13 @@ describe("PocketMessage", () => {
         const message = new PocketMessage({
             code: BaseSuccessCodes.OK,
             body: "Test message",
-            callback
+            configuration: {
+                printToConsole: false,
+                freeze: false,
+                delayCallback: 0,
+                callback
+            }
+
         });
 
         expect(callback).toHaveBeenCalled();
@@ -99,7 +111,11 @@ describe("PocketMessage", () => {
         const message = new PocketMessage({
             code: BaseSuccessCodes.OK,
             body: "Test message",
-            printToConsole: true
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            },
         });
 
         expect(consoleSpy).toHaveBeenCalledWith(message.body);
@@ -111,7 +127,12 @@ describe("PocketMessage", () => {
         const message = new PocketMessage({
             code: BaseSuccessCodes.OK,
             body: "Test message",
-            printToConsole: false
+            configuration: {
+                printToConsole: false,
+                freeze: false,
+                delayCallback: 0
+            },
+            
         });
 
         expect(consoleSpy).not.toHaveBeenCalled();
@@ -158,7 +179,11 @@ describe("PocketMessage", () => {
             code: BaseSuccessCodes.OK,
             level: BaseMessageLevels.SUCCESS,
             body: "Test message",
-            printToConsole: true
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            }
         });
 
         expect(consoleLogSpy).toHaveBeenCalledWith("Test message");
@@ -178,7 +203,12 @@ describe("PocketMessage", () => {
             code: BaseWarningCodes.MOVED_PERMANENTLY,
             level: BaseMessageLevels.WARNING,
             body: "Warning message",
-            printToConsole: true
+
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            }
         });
 
         expect(consoleWarnSpy).toHaveBeenCalledWith("Warning message");
@@ -191,7 +221,11 @@ describe("PocketMessage", () => {
             code: BaseServerErrorCodes.INTERNAL_SERVER_ERROR,
             level: BaseMessageLevels.ERROR,
             body: "Error message",
-            printToConsole: true
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            }
         });
 
         expect(consoleErrorSpy).toHaveBeenCalledWith("Error message");
@@ -203,8 +237,12 @@ describe("PocketMessage", () => {
         const message = new PocketMessage({
             code: BaseSuccessCodes.OK,
             body: "Test message",
-            callback,
-            delayCallback: 1000
+            configuration: {
+                callback,
+                freeze: false,
+                delayCallback: 1000,
+                printToConsole: false
+            }
         });
 
         // Simulate the delay
@@ -218,7 +256,12 @@ describe("PocketMessage", () => {
         const message = new PocketMessage({
             code: BaseSuccessCodes.OK,
             body: "Test message",
-            callback
+            configuration: {
+                freeze: false,
+                delayCallback: 0,
+                printToConsole: false,
+                callback
+            }
         });
 
         expect(callback).toHaveBeenCalledWith(message);
@@ -229,8 +272,12 @@ describe("PocketMessage", () => {
         const message = new PocketMessage({
             code: BaseSuccessCodes.OK,
             body: "Test message",
-            callback,
-            delayCallback: -1
+            configuration: {
+                callback,
+                freeze: false,
+                delayCallback: -1,
+                printToConsole: false
+            }
         });
 
         // Simulate the delay
@@ -244,7 +291,11 @@ describe("PocketMessage", () => {
         const message = new PocketMessage({
             code: BaseSuccessCodes.OK,
             body: "Test message",
-            printToConsole: true
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            }
         });
 
         expect(consoleSpy).toHaveBeenCalledWith(message.body);
@@ -257,7 +308,11 @@ describe("PocketMessage", () => {
             code: BaseSuccessCodes.OK,
             level: BaseMessageLevels.INFO,
             body: "Test message",
-            printToConsole: true
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            }
         });
 
         expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
@@ -270,7 +325,11 @@ describe("PocketMessage", () => {
             code: BaseServerErrorCodes.INTERNAL_SERVER_ERROR,
             level: BaseMessageLevels.ERROR,
             body: "Test message",
-            printToConsole: true
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            }
         });
 
         expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
@@ -283,7 +342,11 @@ describe("PocketMessage", () => {
             code: BaseWarningCodes.MOVED_PERMANENTLY,
             level: BaseMessageLevels.WARNING,
             body: "Test message",
-            printToConsole: true
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            }
         });
 
         expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
@@ -296,7 +359,11 @@ describe("PocketMessage", () => {
             code: BaseSuccessCodes.OK,
             level: BaseMessageLevels.SUCCESS,
             body: "Test message",
-            printToConsole: true
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            }
         });
 
         expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
@@ -309,7 +376,11 @@ describe("PocketMessage", () => {
             code: BaseServerErrorCodes.INTERNAL_SERVER_ERROR,
             level: BaseMessageLevels.CRITICAL,
             body: "Test message",
-            printToConsole: true
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            }
         });
 
         expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
@@ -322,7 +393,11 @@ describe("PocketMessage", () => {
             code: BaseSuccessCodes.OK,
             level: BaseMessageLevels.DEBUG,
             body: "Test message",
-            printToConsole: true
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            }
         });
 
         expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);
@@ -335,7 +410,11 @@ describe("PocketMessage", () => {
             code: BaseSuccessCodes.OK,
             level: BaseMessageLevels.TRACE,
             body: "Test message",
-            printToConsole: true
+            configuration: {
+                printToConsole: true,
+                freeze: false,
+                delayCallback: 0
+            }
         });
 
         expect(consoleSpy).toHaveBeenCalledWith(`${message.body}`);

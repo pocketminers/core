@@ -1,6 +1,6 @@
 import { BaseArgument, BaseMessageLevels, BaseServerErrorCodes } from "@templates/v0"
 import { PocketServerManager } from "./manager"
-import { PocketErrorMessage } from "@components/base/error";
+import { PocketErrorMessage } from "@components/common/error";
 
 const runServer = async ({
     manager = undefined,
@@ -14,14 +14,12 @@ const runServer = async ({
     });
 
     if (server === undefined) {
-        throw new PocketErrorMessage({
-            error: new Error('Server is undefined'),
-            code: BaseServerErrorCodes.SERVICE_UNAVAILABLE,
-            level: BaseMessageLevels.ERROR,
-            callback: async (message) => {
-                console.error('Server is undefined', message);
-            },
-            throwError: true
+        new PocketErrorMessage<
+            BaseServerErrorCodes.SERVICE_UNAVAILABLE,
+            BaseMessageLevels.ERROR,
+            Error
+        >({
+            code: BaseServerErrorCodes.SERVICE_UNAVAILABLE
         });
     }
 

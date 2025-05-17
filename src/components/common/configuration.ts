@@ -4,7 +4,7 @@ import { BaseValue, BaseValueKey } from "@templates/v0/base/value";
 import { BaseConfiguration, BaseMessageLevels, BaseSuccessCodes } from "@templates/v0";
 import { Freezer } from "@utilities/freezer";
 import { Checks } from "@utilities/checks";
-import { PocketMessage } from "@components/base/message";
+import { PocketMessage } from "@components/common/message";
 import { Immuteable } from "@components/base";
 
 

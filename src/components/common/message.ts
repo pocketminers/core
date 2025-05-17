@@ -1,6 +1,17 @@
 import { BaseSuccessCodes } from "@templates/v0/base/statuses";
 import { BaseMessageCode, BaseMessageCodes, BaseMessageLevel, BaseMessageLevels } from "@templates/v0/base/message";
 import { Freezer } from "@utilities/freezer";
+import { PocketTimestamp } from "@components/base/timestamp";
+import { Immuteable, ImmuteableConfigurationOptions } from "@components/base";
+
+
+interface PocketMessageConfigurationOptions
+    extends
+        ImmuteableConfigurationOptions,
+        Record<'printToConsole', boolean>,
+        Partial<Record<'callback', (message?: PocketMessage) => Promise<void>>>,
+        Record<'delayCallback', number>
+{}
 
 
 interface PocketMessageEntry
@@ -14,12 +25,11 @@ interface PocketMessageEntry
         Partial<Record<'code', C>>,
         Partial<Record<'level', L>>,
         Partial<Record<'body', B>>,
-        Partial<Record<'timestamp', Date>>,
         Partial<Record<'data', D>>,
-        Partial<Record<'printToConsole', boolean>>,
-        Partial<Record<'callback', (message?: PocketMessage<C, L, B, D>) => Promise<void>>>,
-        Partial<Record<'delayCallback', number>>
+        Partial<Record<'timestamp', PocketTimestamp>>,
+        Partial<Record<'configuration', PocketMessageConfigurationOptions>>
 {}
+
 
 /**
  * PocketMessage is a class that represents a message with a code, level, body, timestamp, and optional data.
@@ -54,13 +64,22 @@ class PocketMessage
     B = any,
     D = any,
 >
+    extends
+        Immuteable
 {
     public readonly code: C;
     public readonly level: L;
     public readonly body: B;
-    public readonly timestamp: Date;
+    public readonly timestamp: PocketTimestamp;
     public readonly data?: D;
-    public readonly callback?: (message?: PocketMessage<C, L, B, D>) => Promise<void>;
+    public readonly callback?: (message?: any) => Promise<void>;
+
+    public static readonly defaultOptions: PocketMessageConfigurationOptions = {
+        printToConsole: false,
+        callback: undefined,
+        delayCallback: 0,
+        freeze: true
+    };
 
     constructor({
         code,
@@ -68,10 +87,28 @@ class PocketMessage
         body,
         timestamp,
         data,
-        printToConsole = false,
-        callback,
-        delayCallback = 0
+        configuration: {
+            printToConsole,
+            callback,
+            delayCallback,
+            freeze
+        } = {
+            printToConsole: false,
+            callback: undefined,
+            delayCallback: 0,
+            freeze: true
+        }
     }: PocketMessageEntry<C, L, B, D>) {
+
+        super(
+            {
+                printToConsole: printToConsole !== undefined ? printToConsole : PocketMessage.defaultOptions.printToConsole,
+                callback: callback !== undefined ? callback : PocketMessage.defaultOptions.callback,
+                delayCallback: delayCallback !== undefined ? delayCallback : PocketMessage.defaultOptions.delayCallback,
+                freeze : freeze !== undefined ? freeze : PocketMessage.defaultOptions.freeze
+            },
+            PocketMessage.prototype
+        )
 
         this.code = code !== undefined ? code : BaseSuccessCodes.OK as C;
         const expectedLevel = this.getLevelFromCode(this.code);
@@ -79,11 +116,14 @@ class PocketMessage
         // this.checkCodeAndLevel(this.code, this.level);
 
         this.body = body !== undefined ? body : {} as B;
-        this.timestamp = timestamp !== undefined ? timestamp : new Date();
+        this.timestamp = timestamp !== undefined ? timestamp : new PocketTimestamp(new Date());
         this.data = data !== undefined ? data : {} as D;
         this.callback = callback;
 
-        Freezer.deepFreeze(this);
+        this.initializeImmuteable({
+            force: freeze !== undefined ? freeze : PocketMessage.defaultOptions.freeze
+        });
+
 
         this.handlePrintToConsole(printToConsole);
 
@@ -283,7 +323,7 @@ class PocketMessage
         code: C;
         level: L;
         body: B;
-        timestamp: Date;
+        timestamp: PocketTimestamp;
         data?: D;
     } {
         return {
@@ -298,5 +338,6 @@ class PocketMessage
 
  export {
     type PocketMessageEntry,
+    type PocketMessageConfigurationOptions,
     PocketMessage
  }       

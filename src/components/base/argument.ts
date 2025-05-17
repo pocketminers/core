@@ -1,6 +1,5 @@
 import { BaseArgument, BaseValue, BaseValueKey } from "@templates/v0";
 import { Checks } from "@utilities/checks";
-import { Freezer } from "@utilities/freezer";
 import { Immuteable, ImmuteableConfigurationOptions } from "@components/base/immuteable";
 
 
@@ -10,7 +9,7 @@ import { Immuteable, ImmuteableConfigurationOptions } from "@components/base/imm
  */
 interface PocketArgumentConfigurationOptions
     extends
-        Partial<ImmuteableConfigurationOptions>,
+        ImmuteableConfigurationOptions,
         Partial<Record<'allowEmpty', boolean>>
 {}
 

@@ -68,7 +68,7 @@ describe("PocketArgument", () => {
     it('should set the configuration to allowEmpty to false', () => {
         const name = "testName";
         const value = "testValue";
-        const argument = new PocketArgument({ name, value, configuration: { allowEmpty: false }});
+        const argument = new PocketArgument({ name, value, configuration: { allowEmpty: false, freeze: false }});
         expect(argument).toBeInstanceOf(PocketArgument);
         expect(argument.name).toBe(name);
         expect(argument.value).toBe(value);
@@ -77,7 +77,7 @@ describe("PocketArgument", () => {
     it("should not throw an error if value is empty and allowEmpty is true", () => {
         const name = "testName";
         const value = "";
-        const argument = new PocketArgument({ name, value, configuration: { allowEmpty: true }});
+        const argument = new PocketArgument({ name, value, configuration: { allowEmpty: true, freeze: false }});
         expect(argument).toBeInstanceOf(PocketArgument);
         expect(argument.name).toBe(name);
         expect(argument.value).toBe(value);
@@ -110,7 +110,7 @@ describe("PocketArgument", () => {
     it("should handle empty object for toObject", () => {
         const name = "testName";
         const value = {};
-        const argument = new PocketArgument({ name, value, configuration: { allowEmpty: true }});
+        const argument = new PocketArgument({ name, value, configuration: { allowEmpty: true, freeze: false }});
         const obj = argument.toObject();
         expect(obj).toEqual({ name, value });
     });
@@ -118,7 +118,7 @@ describe("PocketArgument", () => {
     it("should handle empty record for toRecord", () => {
         const name = "testName";
         const value = {};
-        const argument = new PocketArgument({ name, value, configuration: { allowEmpty: true }});
+        const argument = new PocketArgument({ name, value, configuration: { allowEmpty: true, freeze: false }});
         const record = argument.toRecord();
         expect(record).toEqual({ [name]: value });
     });
@@ -127,7 +127,7 @@ describe("PocketArgument", () => {
         try {
             const name = "testName";
             const value = null;
-            const argument = new PocketArgument({ name, value, configuration: { allowEmpty: false }});
+            const argument = new PocketArgument({ name, value, configuration: { allowEmpty: false, freeze: false }});
             argument.toKeyValuePair();
         } catch (error: any) {
             expect(error).toBeInstanceOf(Error);
