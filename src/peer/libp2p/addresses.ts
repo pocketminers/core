@@ -17,28 +17,28 @@ const getLibp2pListenAddressParameters = (): PocketParameter[] => {
             key: "enableTcp",
             description: "Enable TCP transport.",
             default: true,
-            required: true
+            required: false
         }),
         new PocketParameter<number>({
             name: "TCP Listen Port",
             key: "tcpPort",
             description: "The port the TCP transport will listen on.",
             default: 0,
-            required: true
+            required: false
         }),
         new PocketParameter<boolean>({
             name: "Enable IPv4",
             key: "enableIp4",
             description: "Enable IPv4 transport",
             default: true,
-            required: true
+            required: false
         }),
         new PocketParameter<string>({
             name: "IPv4 Domain",
             key: "ip4Domain",
             description: "IPv4 domain",
             default: "0.0.0.0",
-            required: true
+            required: false
         }),
         new PocketParameter<boolean>({
             name: "Enable UDP",
