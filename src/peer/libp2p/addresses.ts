@@ -1,8 +1,7 @@
 import { PocketArgument } from "@components/base/argument";
 import { PocketConfiguration } from "@components/common/configuration";
 import { PocketParameter } from "@components/base/parameter";
-import { BaseValue, BaseValueKey } from "@templates/v0";
-import { Multiaddr } from "multiaddr";
+import { Multiaddr } from "@multiformats/multiaddr";
 
 
 /**
