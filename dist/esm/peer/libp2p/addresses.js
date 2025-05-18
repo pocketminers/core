@@ -113,7 +113,7 @@ const generateListenAddresses = (args) => {
         args,
         params: getLibp2pListenAddressParameters()
     });
-    const { enableTcp, tcpPort, enableIp4, ip4Domain, enableUdp, udpPort, enableIp6, ip6Domain, enableCircuitRelayTransportListening, enableQuicv1, enableWebTransport, enableWebSockets, enableWebRTC, enableWebRTCStar, webRTCStarAddress, additionalMultiaddrs } = listenAddressConfig.preparedArgs();
+    const { enableTcp, tcpPort, enableIp4, ip4Domain, enableUdp, udpPort, enableIp6, ip6Domain, enableCircuitRelayTransportListening, enableQuicv1, enableWebTransport, enableWebSockets, enableWebRTC, enableWebRTCStar, webRTCStarAddress, additionalMultiaddrs } = listenAddressConfig.preparedArgs({ allowNonRequired: true });
     const listenAddresses = new Array();
     if (enableIp4) {
         if (enableTcp) {

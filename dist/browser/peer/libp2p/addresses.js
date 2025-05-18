@@ -113,7 +113,7 @@ var generateListenAddresses = function (args) {
         args: args,
         params: getLibp2pListenAddressParameters()
     });
-    var _a = listenAddressConfig.preparedArgs(), enableTcp = _a.enableTcp, tcpPort = _a.tcpPort, enableIp4 = _a.enableIp4, ip4Domain = _a.ip4Domain, enableUdp = _a.enableUdp, udpPort = _a.udpPort, enableIp6 = _a.enableIp6, ip6Domain = _a.ip6Domain, enableCircuitRelayTransportListening = _a.enableCircuitRelayTransportListening, enableQuicv1 = _a.enableQuicv1, enableWebTransport = _a.enableWebTransport, enableWebSockets = _a.enableWebSockets, enableWebRTC = _a.enableWebRTC, enableWebRTCStar = _a.enableWebRTCStar, webRTCStarAddress = _a.webRTCStarAddress, additionalMultiaddrs = _a.additionalMultiaddrs;
+    var _a = listenAddressConfig.preparedArgs({ allowNonRequired: true }), enableTcp = _a.enableTcp, tcpPort = _a.tcpPort, enableIp4 = _a.enableIp4, ip4Domain = _a.ip4Domain, enableUdp = _a.enableUdp, udpPort = _a.udpPort, enableIp6 = _a.enableIp6, ip6Domain = _a.ip6Domain, enableCircuitRelayTransportListening = _a.enableCircuitRelayTransportListening, enableQuicv1 = _a.enableQuicv1, enableWebTransport = _a.enableWebTransport, enableWebSockets = _a.enableWebSockets, enableWebRTC = _a.enableWebRTC, enableWebRTCStar = _a.enableWebRTCStar, webRTCStarAddress = _a.webRTCStarAddress, additionalMultiaddrs = _a.additionalMultiaddrs;
     var listenAddresses = new Array();
     if (enableIp4) {
         if (enableTcp) {

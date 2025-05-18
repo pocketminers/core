@@ -4,7 +4,7 @@ import { Immuteable, ImmuteableConfigurationOptions } from "../base/immuteable.j
  * PocketArgumentConfigurationOptions is an interface that represents the configuration for a PocketArgument.
  * - It is used to encapsulate optional settings for the PocketArgument class.
  */
-interface PocketArgumentConfigurationOptions extends Partial<ImmuteableConfigurationOptions>, Partial<Record<'allowEmpty', boolean>> {
+interface PocketArgumentConfigurationOptions extends ImmuteableConfigurationOptions, Partial<Record<'allowEmpty', boolean>> {
 }
 /**
  * PocketARgumentEntry is an interface that represents a key-value pair.

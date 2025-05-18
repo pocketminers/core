@@ -77,7 +77,7 @@ class PocketParameter extends immuteable_1.Immuteable {
             key = name;
         }
         super({
-            freeze,
+            freeze: freeze !== undefined ? freeze : PocketParameter.defaultOptions.freeze,
             allowEmpty
         }, PocketParameter.prototype);
         this.name = name;

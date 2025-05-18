@@ -31,7 +31,7 @@ var SecretManager = /** @class */ (function () {
             //     return 'development';
             // }
             // Check for a react environment
-            if (this.isReactApp()) {
+            if (SecretManager.isReactApp()) {
                 console.log('React environment detected');
                 return 'react';
             }
@@ -43,7 +43,7 @@ var SecretManager = /** @class */ (function () {
     };
     SecretManager.getSecret = function (key, options) {
         if (options === void 0) { options = {}; }
-        var environment = this.getEnvironment();
+        var environment = SecretManager.getEnvironment();
         if (options.inReact !== undefined
             && options.inReact === true
             || environment === 'react') {

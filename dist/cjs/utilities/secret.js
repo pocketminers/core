@@ -35,7 +35,7 @@ class SecretManager {
             //     return 'development';
             // }
             // Check for a react environment
-            if (this.isReactApp()) {
+            if (SecretManager.isReactApp()) {
                 console.log('React environment detected');
                 return 'react';
             }
@@ -46,7 +46,7 @@ class SecretManager {
         return 'node';
     }
     static getSecret(key, options = {}) {
-        const environment = this.getEnvironment();
+        const environment = SecretManager.getEnvironment();
         if (options.inReact !== undefined
             && options.inReact === true
             || environment === 'react') {

@@ -59,9 +59,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-import { BaseMessageLevels, BaseServerErrorCodes } from "../../templates/v0/index.js";
+import { BaseServerErrorCodes } from "../../templates/v0/index.js";
 import { PocketServerManager } from "./manager.js";
-import { PocketErrorMessage } from "../../components/base/error.js";
+import { PocketErrorMessage } from "../../components/common/error.js";
 var runServer = function () {
     var args_1 = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -77,17 +77,8 @@ var runServer = function () {
                         arguments_: args
                     });
                     if (server === undefined) {
-                        throw new PocketErrorMessage({
-                            error: new Error('Server is undefined'),
-                            code: BaseServerErrorCodes.SERVICE_UNAVAILABLE,
-                            level: BaseMessageLevels.ERROR,
-                            callback: function (message) { return __awaiter(void 0, void 0, void 0, function () {
-                                return __generator(this, function (_a) {
-                                    console.error('Server is undefined', message);
-                                    return [2 /*return*/];
-                                });
-                            }); },
-                            throwError: true
+                        new PocketErrorMessage({
+                            code: BaseServerErrorCodes.SERVICE_UNAVAILABLE
                         });
                     }
                     return [4 /*yield*/, server.start()];

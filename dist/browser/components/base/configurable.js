@@ -23,7 +23,7 @@ var __values = (this && this.__values) || function(o) {
 var Configurable = /** @class */ (function () {
     function Configurable(configuration, prototype) {
         if (configuration === void 0) { configuration = {}; }
-        if (prototype === void 0) { prototype = Object.getPrototypeOf(Configurable.prototype); }
+        if (prototype === void 0) { prototype = Configurable.prototype; }
         this.configuration = __assign(__assign({}, Configurable.defaultOptions), configuration);
         this.initializeConfigurable(prototype);
     }
@@ -31,9 +31,7 @@ var Configurable = /** @class */ (function () {
         if (overridePrototype === undefined) {
             overridePrototype = Object.getPrototypeOf(this);
         }
-        // Override the prototype with the provided one
         Object.setPrototypeOf(this, overridePrototype);
-        // Initialization logic can be added here if needed
     };
     Configurable.prototype.addOption = function (key, value) {
         this.configuration[key] = value;

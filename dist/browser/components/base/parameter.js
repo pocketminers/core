@@ -56,7 +56,7 @@ var PocketParameter = /** @class */ (function (_super) {
             key = name;
         }
         _this = _super.call(this, {
-            freeze: freeze,
+            freeze: freeze !== undefined ? freeze : PocketParameter.defaultOptions.freeze,
             allowEmpty: allowEmpty
         }, PocketParameter.prototype) || this;
         _this.name = name;

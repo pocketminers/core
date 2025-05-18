@@ -4,7 +4,7 @@ exports.Configurable = void 0;
 class Configurable {
     static defaultOptions = {};
     configuration;
-    constructor(configuration = {}, prototype = Object.getPrototypeOf(Configurable.prototype)) {
+    constructor(configuration = {}, prototype = Configurable.prototype) {
         this.configuration = {
             ...Configurable.defaultOptions,
             ...configuration
@@ -15,9 +15,7 @@ class Configurable {
         if (overridePrototype === undefined) {
             overridePrototype = Object.getPrototypeOf(this);
         }
-        // Override the prototype with the provided one
         Object.setPrototypeOf(this, overridePrototype);
-        // Initialization logic can be added here if needed
     }
     addOption(key, value) {
         this.configuration[key] = value;
