@@ -1,8 +1,10 @@
 import { Router, Request, Response } from 'express';
-const loadAverage: number[] = require('os').loadavg();
-const freeMemory: number = require('os').freemem();
-const totalMemory: number = require('os').totalmem();
-const platform: string = require('os').platform();
+import os from 'os';
+
+const loadAverage: number[] = os.loadavg();
+const freeMemory: number = os.freemem();
+const totalMemory: number = os.totalmem();
+const platform: string = os.platform();
 
 
 const router = Router();

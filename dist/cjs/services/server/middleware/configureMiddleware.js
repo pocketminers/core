@@ -35,7 +35,8 @@ const configureMiddleware = ({ app, serverId }) => {
         origin: [
             'http://localhost:3000',
             'https://wallet.pocketminers.xyz',
-            'https://dev.pocketminers.xyz'
+            'https://dev.pocketminers.xyz',
+            'https://pocketminers.xyz',
         ],
         credentials: true,
         exposedHeaders: [

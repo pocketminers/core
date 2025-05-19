@@ -1,11 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.healthRouter = void 0;
 const express_1 = require("express");
-const loadAverage = require('os').loadavg();
-const freeMemory = require('os').freemem();
-const totalMemory = require('os').totalmem();
-const platform = require('os').platform();
+const os_1 = __importDefault(require("os"));
+const loadAverage = os_1.default.loadavg();
+const freeMemory = os_1.default.freemem();
+const totalMemory = os_1.default.totalmem();
+const platform = os_1.default.platform();
 const router = (0, express_1.Router)();
 exports.healthRouter = router;
 router.get('/ping', (req, res) => {

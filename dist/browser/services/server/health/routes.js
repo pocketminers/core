@@ -1,8 +1,9 @@
 import { Router } from 'express';
-var loadAverage = require('os').loadavg();
-var freeMemory = require('os').freemem();
-var totalMemory = require('os').totalmem();
-var platform = require('os').platform();
+import os from 'os';
+var loadAverage = os.loadavg();
+var freeMemory = os.freemem();
+var totalMemory = os.totalmem();
+var platform = os.platform();
 var router = Router();
 router.get('/ping', function (req, res) {
     var requestId = req.header('x-pocket-request-id');

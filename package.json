@@ -1,7 +1,7 @@
 {
     "name": "@pocketminers/core",
     "description": "Core package for PocketMiners",
-    "version": "0.0.1-preAlpha5",
+    "version": "0.0.1-preAlpha22",
     "author": "Pocket Labs LLC",
     "license": "MIT",
     "main": "./dist/esm/index.js",
@@ -24,17 +24,10 @@
         "src",
         "README.md",
         "LICENSE",
-        "tsconfig.json"
+        "tsconfig.aliases.json",
+        "tsconfig.json",
+        "package.json"
     ],
-    "exports": {
-        ".": {
-            "import": "./dist/esm/index.js",
-            "require": "./dist/cjs/index.js",
-            "browser": "./dist/browser/index.js",
-            "types": "./dist/esm/index.d.ts"
-        },
-        "./package.json": "./package.json"
-    },
     "homepage": "https://github.com/pocketminers/core#readme",
     "scripts": {
         "lint": "eslint --config eslint.config.js ./src",
@@ -99,7 +92,6 @@
         ]
     },
     "exclude": [
-        "node_modules",
         "docs"
     ],
     "include": [
