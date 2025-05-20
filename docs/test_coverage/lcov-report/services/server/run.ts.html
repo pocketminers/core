@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">75.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>25/35</span>
+                <span class='fraction'>25/33</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">75.75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/35</span>
+                <span class='fraction'>25/33</span>
             </div>
         
             
@@ -95,24 +95,22 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -121,19 +119,17 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { BaseArgument, BaseMessageLevels, BaseServerErrorCodes } from "@templates/v0"
 import { PocketServerManager } from "./manager"
-import { PocketErrorMessage } from "@components/error";
+import { PocketErrorMessage } from "@components/common/error";
 &nbsp;
 const runServer = async ({
     manager = undefined,
@@ -141,26 +137,24 @@ const runServer = async ({
 }: {
     manager?: PocketServerManager,
     args?: BaseArgument[]
-} = {}): Promise&lt;Express.Application&gt; =&gt; {
+} = {}): Promise&lt;PocketServerManager&gt; =&gt; {
     const server = new PocketServerManager({
         arguments_: args
     });
 &nbsp;
     if (server === undefined) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >        throw new PocketErrorMessage({</span>
-<span class="cstat-no" title="statement not covered" >            error: new Error('Server is undefined'),</span>
-<span class="cstat-no" title="statement not covered" >            code: BaseServerErrorCodes.SERVICE_UNAVAILABLE,</span>
-<span class="cstat-no" title="statement not covered" >            level: BaseMessageLevels.ERROR,</span>
-<span class="cstat-no" title="statement not covered" >            callback: <span class="fstat-no" title="function not covered" >async (message) =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >                console.error('Server is undefined', message);</span>
-<span class="cstat-no" title="statement not covered" >            },</span>
-<span class="cstat-no" title="statement not covered" >            throwError: true</span>
+<span class="cstat-no" title="statement not covered" >        new PocketErrorMessage&lt;</span>
+<span class="cstat-no" title="statement not covered" >            BaseServerErrorCodes.SERVICE_UNAVAILABLE,</span>
+<span class="cstat-no" title="statement not covered" >            BaseMessageLevels.ERROR,</span>
+<span class="cstat-no" title="statement not covered" >            Error</span>
+<span class="cstat-no" title="statement not covered" >        &gt;({</span>
+<span class="cstat-no" title="statement not covered" >            code: BaseServerErrorCodes.SERVICE_UNAVAILABLE</span>
 <span class="cstat-no" title="statement not covered" >        });</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
     await server.start();
 &nbsp;
-    return server.app
+    return server
 }
 &nbsp;
 export {
@@ -172,7 +166,7 @@ export {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-28T21:04:50.707Z
+                at 2025-05-19T16:11:24.856Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

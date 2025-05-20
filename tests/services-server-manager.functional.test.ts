@@ -168,6 +168,4 @@ describe('PocketServerManager', () => {
         expect(serverManager.status).toBe('OFFLINE');
     });
 
-
-
 });
